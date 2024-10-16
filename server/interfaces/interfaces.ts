@@ -1,0 +1,4 @@
+
+interface app {
+    port: number;
+}
