@@ -12,7 +12,7 @@ const PORT = process.env.PORT || 3000;
 app.use(cors());
 app.use(express.json());
 
-app.use('/api/posts', postRoutes); // Ruta base para las entradas de blog
+app.use('/api/posts', postRoutes); // Ruta base para las entradas posts del blog
 
 // Conexión a la base de datos
 sequelize
