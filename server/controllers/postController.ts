@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import PostModel from '../models/postModel';
+import PostModel from '../models/postModel.js';
 
 // Controlador para obtener todos los posts
 export const getAllPosts = async (req: Request, res: Response) => {
