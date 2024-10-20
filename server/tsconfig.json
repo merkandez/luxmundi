@@ -1,0 +1,15 @@
+{
+  "compilerOptions": {
+    "target": "ES6", // Compatibilidad con ES6
+    "module": "ESNext", // Soporte para ESM (import/export)
+    "moduleResolution": "node", // Resolver módulos como Node.js
+    "outDir": "./dist", // Directorio donde se colocarán los archivos compilados
+    "rootDir": "./", // Directorio raíz de los archivos de entrada
+    "strict": true, // Activar todas las verificaciones estrictas
+    "esModuleInterop": true, // Interoperabilidad con módulos CommonJS
+    "skipLibCheck": true, // Saltar verificación de archivos .d.ts
+    "forceConsistentCasingInFileNames": true // Asegurar consistencia en nombres de archivo
+  },
+  "include": ["**/*.ts", "database/connection_db.ts"], // Incluir todos los archivos TypeScript
+  "exclude": ["node_modules"] // Excluir la carpeta node_modules
+}
