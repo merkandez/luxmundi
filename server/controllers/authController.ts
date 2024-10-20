@@ -2,7 +2,7 @@ import {Request, Response} from 'express';
 import jwt from 'jsonwebtoken';
 import bcrypt from 'bcryptjs';
 import {validationResult} from 'express-validator';
-//import {User} from '../models/user';
+import {User} from '../models/user';
 import { error } from 'console';
 
 
@@ -10,7 +10,7 @@ import { error } from 'console';
 
 
 //Registro de nuevo usuario
-export const registreUser = async (req: Request, res: Response) => {
+export const registerUser = async (req: Request, res: Response) => {
 
     //validación de datos
     const errors = validationResult(req);
@@ -84,7 +84,7 @@ export const loginUser = async (req: Request, res: Response) => {
   
       jwt.sign(
         payload,
-        process.env.JWT_SECRET as string,
+        process.env.JWT_SECURE as string,
         { expiresIn: '1h' },
         (err, token) => {
           if (err) throw err;
