@@ -2,11 +2,8 @@ import {Request, Response} from 'express';
 import jwt from 'jsonwebtoken';
 import bcrypt from 'bcryptjs';
 import {validationResult} from 'express-validator';
-import {User} from '../models/user';
+import {User} from '../models/User';
 import { error } from 'console';
-
-
-
 
 
 //Registro de nuevo usuario
@@ -40,7 +37,7 @@ export const registerUser = async (req: Request, res: Response) => {
             },
         };
 
-        jwt.sign(payload, process.env.JWT_SECURE as string,
+        jwt.sign(payload, process.env.JWT_SECRET as string,
             {expiresIn: '1h'}, // Token por 1 hora
             (error, token) => {
                 if (error) throw error;
@@ -84,15 +81,15 @@ export const loginUser = async (req: Request, res: Response) => {
   
       jwt.sign(
         payload,
-        process.env.JWT_SECURE as string,
+        process.env.JWT_SECRET as string,
         { expiresIn: '1h' },
         (err, token) => {
-          if (err) throw err;
+          if (error) throw error;
           res.json({ token });
         }
       );
-    } catch (err) {
-      console.error(err.message);
+    } catch (error) {
+      console.error(error.message);
       res.status(500).send('Error en el servidor');
     }
   };
