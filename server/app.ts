@@ -1,8 +1,8 @@
 import dotenv from 'dotenv';
 import express from 'express';
 import cors from 'cors';
-import sequelize from './database/connection_db.js'; // Conexión a la base de datos
-import postRoutes from './routes/postRoutes.js'; // Rutas de posts
+import sequelize from './database/connection_db'; // Conexión a la base de datos
+import postRoutes from './routes/postRoutes'; // Rutas de posts
 
 dotenv.config();
 

@@ -1,5 +1,5 @@
 import { DataTypes, Model } from 'sequelize';
-import sequelize from '../database/connection_db.js'; // Conexión a la base de datos
+import sequelize from '../database/connection_db'; // Conexión a la base de datos
 
 class PostModel extends Model {
   //Post: Es la clase que representa cada entrada del blog. Extiende de Model, que es                                  la clase base de Sequelize.

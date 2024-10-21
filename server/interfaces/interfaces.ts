@@ -1,4 +1,4 @@
 
-interface app {
+/* interface app {
     port: number;
-}
+} */
