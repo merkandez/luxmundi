@@ -13,8 +13,8 @@ export const getAllPosts = async (req: Request, res: Response) => {
     });
   }
 };
-
 // Controlador para obtener una entrada por ID
+
 export const getPostById = async (req: Request, res: Response) => {
   const { id } = req.params;
   try {
