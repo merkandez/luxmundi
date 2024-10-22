@@ -2,17 +2,17 @@ import dotenv from 'dotenv';
 import express from 'express';
 import cors from 'cors';
 import sequelize from './database/connection_db'; // Conexión a la base de datos
-import postRoutes from './routes/postRoutes'; // Rutas de posts
+import userRoutes from './routes/userRoutes'; // Rutas de posts
 
 dotenv.config();
 
 const app = express();
-const PORT = process.env.PORT || 8000;
+const PORT = process.env.PORT || 8080;
 
 app.use(cors());
 app.use(express.json());
 
-app.use('/api/posts', postRoutes); // Ruta base para las entradas posts del blog
+app.use('/api/users', userRoutes); // Ruta base para las entradas posts del blog
 
 // Conexión a la base de datos
 sequelize

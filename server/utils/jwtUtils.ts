@@ -10,4 +10,3 @@ export const generateToken = (userId: number): string => {
 export const verifyToken = (token: string): any => {
   return jwt.verify(token, JWT_SECRET);
 };
-

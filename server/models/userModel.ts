@@ -7,9 +7,11 @@ class User extends Model<IUser> implements IUser {
   public username!: string;
   public email!: string;
   public password!: string;
-
-  public readonly createdAt!: Date;
-  public readonly updatedAt!: Date;
+  public role!: 'admin' | 'user'; // Campo para el rol
+  public profile_image_url?: string; // URL de la imagen de perfil
+  public last_login?: Date; // Fecha del último inicio de sesión
+  public readonly createdAt!: Date; // Timestamp de creación
+  public readonly updatedAt!: Date; // Timestamp de actualización
 }
 
 // Definir el modelo User en Sequelize
@@ -21,12 +23,12 @@ User.init(
       primaryKey: true,
     },
     username: {
-      type: DataTypes.STRING(50),
+      type: DataTypes.STRING(100), 
       allowNull: false,
       unique: true,
     },
     email: {
-      type: DataTypes.STRING(100),
+      type: DataTypes.STRING(150), 
       allowNull: false,
       unique: true,
       validate: {
@@ -34,17 +36,29 @@ User.init(
       },
     },
     password: {
-      type: DataTypes.STRING,
+      type: DataTypes.STRING(255), 
       allowNull: false,
+    },
+    role: {
+      type: DataTypes.ENUM('admin', 'user'), // Campo para el rol
+      allowNull: false,
+      defaultValue: 'user', // Valor por defecto
+    },
+    profile_image_url: {
+      type: DataTypes.STRING(255), // URL de la imagen de perfil
+      allowNull: true,
+    },
+    last_login: {
+      type: DataTypes.DATE, // Fecha del último inicio de sesión
+      allowNull: true,
     },
   },
   {
     sequelize,
     tableName: 'users',
     modelName: 'User',
+    timestamps: true, // Habilitar los timestamps automáticamente
   }
 );
 
 export default User;
-
-
