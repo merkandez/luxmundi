@@ -1,13 +1,13 @@
-import { Router } from "express";
+import express from "express";
 import {
   getAllPosts,
   getPostById,
   createPost,
   updatePost,
   deletePost,
-} from "../controllers/postController";
+} from "../controllers/controllers";
 
-const router = Router();
+const router = express.Router();
 
 router.get("/", getAllPosts);
 router.get("/:id", getPostById);
