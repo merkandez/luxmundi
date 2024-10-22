@@ -4,7 +4,8 @@
   "main": "app.ts",
   "scripts": {
     "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js --watchAll --no-cache",
-    "dev": "ts-node-dev --respawn ./app.ts"
+    "dev": "ts-node-dev src/app.ts",
+    "build": "tsc"
   },
   "keywords": [],
   "author": "",
