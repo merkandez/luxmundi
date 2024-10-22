@@ -9,7 +9,7 @@ const DB_PASSWORD: string | undefined = process.env.DB_PASSWORD;
 const DB_HOST: string | undefined = process.env.DB_HOST;
 const DB_TEST_NAME: string | undefined = process.env.DB_TEST_NAME;
 const NODE_ENV: string | undefined = process.env.NODE_ENV;
-const DB_PORT = 5432;
+const DB_PORT = 8000;
 
 if (!DB_DEV_NAME || !DB_USER || !DB_PASSWORD || !DB_HOST) {
   throw new Error(
