@@ -1,30 +1,20 @@
-import express, { Application } from "express";
-import connectToMongoDB from "./database/db";
-import memeRoutes from "./routes/memeRoutes";
+import dotenv from "dotenv";
+import express from "express";
 import cors from "cors";
+import postRoutes from "./routes/postRoutes";
+import { Sequelize } from "sequelize";
 
-export const app: Application = express();
-app.use(cors());
+dotenv.config();
+
+const app = express();
 const PORT = process.env.PORT || 8000;
 
-//middleware es para convertir json/js-js/json
+app.use(cors());
 app.use(express.json());
 
-//para usar la ruta que queremos
-app.use("/api/memes", memeRoutes);
+app.use("/api/posts", postRoutes); // Ruta base para las entradas posts del blog
 
-const startServer = async () => {
-  try {
-    await connectToMongoDB();
-    console.log("👍 Connection has been established successfully.");
-  } catch (error) {
-    console.error("❌ Unable to connect to MongoDB", error);
-    throw error;
-  }
-};
-
-export const server = app.listen(PORT, () => {
-  console.log(`🏃‍♂️ Server running on http://localhost:${PORT}`);
+// Inicio del servidor
+app.listen(PORT, () => {
+  console.log(`Servidor corriendo en el puerto ${PORT}`);
 });
-
-startServer();
