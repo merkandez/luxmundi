@@ -1,7 +1,7 @@
 import express, { Application } from "express";
 import connectToMongoDB from "./database/db";
 import memeRoutes from "./routes/memeRoutes";
-import cors from 'cors';
+import cors from "cors";
 
 export const app: Application = express();
 app.use(cors());
