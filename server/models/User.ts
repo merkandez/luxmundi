@@ -1,8 +1,8 @@
 import { Model, DataTypes } from 'sequelize';
-import { sequelize } from '../config'; // Asegúrate de tener una instancia de Sequelize exportada desde tu configuración
+import  sequelize from '../config'; // Asegúrate de tener una instancia de Sequelize exportada desde tu configuración
 
 interface UserAttributes {
-  id: number;
+  id?: number;
   username: string;
   email: string;
   password: string;

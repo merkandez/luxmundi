@@ -3,8 +3,7 @@ import jwt from 'jsonwebtoken';
 import bcrypt from 'bcryptjs';
 import {validationResult} from 'express-validator';
 import {User} from '../models/User';
-import { error } from 'console';
-
+import sequelize from  '../config';   
 
 //Registro de nuevo usuario
 export const registerUser = async (req: Request, res: Response) => {
@@ -14,7 +13,7 @@ export const registerUser = async (req: Request, res: Response) => {
     if (!errors.isEmpty()) {
         return res.status(400).json({errors: errors.array() });
     }
-    const {email, password} = req.body;
+    const {username, email, password, avatar_url, role} = req.body;
     
     try {
         //verificar si el usuario ya existe
@@ -27,9 +26,15 @@ export const registerUser = async (req: Request, res: Response) => {
         const salt = await bcrypt.genSalt(10);
         const hashedPassword = await bcrypt.hash(password, salt);
 
-        user = await User.create({email, password: hashedPassword})
+        user = await User.create({
+          username,
+          email,
+          password: hashedPassword,
+          avatar_url: avatar_url || 'default-avatar-url.png',
+          role: role || 'user'
+        });
 
-        //Genero token JWT
+        //Genero token JWT 
         const payload = {
             user: {
                 id: user.id,
@@ -37,20 +42,19 @@ export const registerUser = async (req: Request, res: Response) => {
             },
         };
 
-        jwt.sign(payload, process.env.JWT_SECRET as string,
+        jwt.sign(
+            payload,
+            process.env.JWT_SECRET as string,
             {expiresIn: '1h'}, // Token por 1 hora
             (error, token) => {
                 if (error) throw error;
                 res.json({token});
             }
-            
         );
         
-    } catch (error) {
-        console.error(error.message);
-        res.status(500).send('Error en el servidor')
-
-        
+    } catch (err) {
+        console.error(err);
+        res.status(500).send('Error en el servidor');
     }
 };
 
@@ -83,13 +87,13 @@ export const loginUser = async (req: Request, res: Response) => {
         payload,
         process.env.JWT_SECRET as string,
         { expiresIn: '1h' },
-        (err, token) => {
+        (error, token) => {
           if (error) throw error;
           res.json({ token });
         }
       );
-    } catch (error) {
-      console.error(error.message);
+    } catch (err) {
+      console.error(err);
       res.status(500).send('Error en el servidor');
     }
   };
