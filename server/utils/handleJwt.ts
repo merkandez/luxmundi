@@ -1,6 +1,4 @@
 import jwt from 'jsonwebtoken';
-import dotenv from 'dotenv';
-dotenv.config();
 
 // Función para firmar el token JWT
 export const tokenSign = (user: any): string => {

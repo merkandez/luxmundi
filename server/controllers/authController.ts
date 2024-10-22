@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
-import bcrypt from 'bcryptjs';
-import jwt from 'jsonwebtoken';
+import { encrypt, compare } from '../utils/handlePassword';
+import { tokenSign } from '../utils/handleJwt';
 import User from '../models/userModel';
 
 // Registro de usuario con avatar opcional
@@ -14,11 +14,15 @@ export const registerUser = async (req: Request, res: Response): Promise<void> =
       return;
     }
 
-    const hashedPassword = await bcrypt.hash(password, 10);
+    const hashedPassword = await encrypt(password); // Usamos la función encrypt
     const newUser = await User.create({ username, email, password: hashedPassword, avatarUrl });
     res.status(201).json({ message: 'Usuario registrado con éxito', user: newUser });
   } catch (error) {
-    res.status(500).json({ message: 'Error en el servidor', error });
+    if (error instanceof Error) {
+      res.status(500).json({ message: 'Error en el servidor', error: error.message });
+    } else {
+      res.status(500).json({ message: 'Error en el servidor', error });
+    }
   }
 };
 
@@ -33,18 +37,19 @@ export const loginUser = async (req: Request, res: Response): Promise<void> => {
       return;
     }
 
-    const isMatch = await bcrypt.compare(password, user.password);
+    const isMatch = await compare(password, user.password); // Usamos la función compare
     if (!isMatch) {
       res.status(400).json({ message: 'Credenciales incorrectas' });
       return;
     }
 
-    const token = jwt.sign({ id: user.id, username: user.username, role: user.role }, process.env.JWT_SECRET!, {
-      expiresIn: '24h',
-    });
-
+    const token = tokenSign(user); // Generamos el token JWT
     res.json({ message: 'Inicio de sesión exitoso', token });
   } catch (error) {
-    res.status(500).json({ message: 'Error en el servidor', error });
+    if (error instanceof Error) {
+      res.status(500).json({ message: 'Error en el servidor', error: error.message });
+    } else {
+      res.status(500).json({ message: 'Error en el servidor', error });
+    }
   }
 };
