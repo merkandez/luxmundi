@@ -4,6 +4,7 @@ import cors from 'cors';
 import sequelize from './database/connection_db'; // Conexión a la base de datos
 import postRoutes from './routes/postRoutes'; // Rutas de posts
 import authRoutes from './routes/authRoutes'; // Rutas de autenticación
+import './models/index'; // Importar los modelos
 
 dotenv.config();
 
@@ -17,7 +18,7 @@ app.use('/api/posts', postRoutes); // Ruta base para las entradas posts del blog
 app.use('/api/auth', authRoutes); // Ruta base para las rutas de autenticación
 // Conexión a la base de datos
 sequelize
-  .sync({ alter: false })
+  .sync({ alter: true })
   .then(() => {
     console.log('Conexión a la base de datos exitosa (￣y▽￣)╭ Ohohoho.....');
   })

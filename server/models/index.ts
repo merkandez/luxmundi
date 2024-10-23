@@ -1,5 +1,7 @@
-/* import User from './userModel,ts'; */
-/* import Post from './postModel.js'; */
+import User from './userModel';
+import Post from './postModel';
 
-/* User.hasMany(Post, { foreignKey: 'userId', as: 'posts' }); */
-/* Post.belongsTo(User, { foreignKey: 'userId', as: 'user' }); */
+User.hasMany(Post, { foreignKey: 'userId', as: 'posts' });
+Post.belongsTo(User, { foreignKey: 'userId', as: 'user' });
+
+export { User, Post };

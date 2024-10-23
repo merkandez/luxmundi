@@ -32,17 +32,21 @@ export const getPostById = async (req: Request, res: Response) => {
 };
 
 // Crear un nuevo post
-export const createPost = async (req: Request, res: Response) => {
-  const { userId, title, content, imageUrl } = req.body;
+// Controlador para crear un nuevo post
+export const createPost = async (req: Request, res: Response): Promise<void> => {
+  const { title, content, imageUrl } = req.body;
+  const userId = (req as any).user.id;
+
   try {
     const post = await PostModel.create({ userId, title, content, imageUrl });
     res.status(201).json(post);
-  } catch (error: any) {
-    res
-      .status(500)
-      .json({ message: 'Error al crear post', error: error.message });
+  } catch (error) {
+    if (error instanceof Error) {
+      res.status(500).json({ message: 'Error al crear post', error: error.message });
+    }
   }
 };
+
 
 // Actualizar una entrada existente
 export const updatePost = async (req: Request, res: Response) => {

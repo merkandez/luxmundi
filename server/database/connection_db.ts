@@ -1,4 +1,5 @@
 import { Sequelize } from 'sequelize';
+
 import { DB_DEV_NAME, DB_USER, DB_PASSWORD, DB_HOST, DB_PORT, NODE_ENV, DB_TEST_NAME } from '../config';
 
 // Definir el nombre de la base de datos dependiendo del entorno
