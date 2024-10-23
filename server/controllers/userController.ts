@@ -5,22 +5,33 @@ import { generateToken } from '../utils/jwtUtils';
 
 // Registro de usuario
 export const registerUser = async (req: Request, res: Response): Promise<void> => { // Retorno 'void'
-  const { username, email, password, profile_image_urlavatarUrl } = req.body;
+  const { username, email, password, profile_image_url, role } = req.body;
 
   try {
     // Verificar si el usuario ya existe
     const existingUser = await User.findOne({ where: { email } });
     if (existingUser) {
       res.status(400).json({ message: '📧 El correo ya está registrado' });
-      return;
+      return;// Detenemos la ejecución, pero sin retornar un Response explícito
     }
 
+    // Verificar si se está intentando asignar el rol de "admin"
+    if (role === 'admin') {
+      // Verificar si el usuario actual tiene permisos de administrador
+      const requestingUser = (req as any).user; // Asumimos que el usuario autenticado ya está en req.user
+      if (requestingUser.role !== 'admin') {
+       res.status(403).json({ message: '❌ No tienes permisos para asignar el rol de admin' });
+       return;
+     }
+   }
+  
     // Encriptar la contraseña y crear el nuevo usuario
     const hashedPassword = await hashPassword(password);
     await User.create({ 
         username, 
         email, 
         password: hashedPassword,
+        profile_image_url,
         role: 'user', // Valor por defecto    
     });
 
