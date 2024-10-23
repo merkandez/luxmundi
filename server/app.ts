@@ -2,7 +2,7 @@ import dotenv from 'dotenv';
 import express from 'express';
 import cors from 'cors';
 import sequelize from './database/connection_db'; // Conexión a la base de datos
-import userRoutes from './routes/userRoutes'; // Rutas de posts
+import userRoutes from './routes/userRoutes'; // Rutas de user
 
 dotenv.config();
 
@@ -16,7 +16,7 @@ app.use('/api/users', userRoutes); // Ruta base para las entradas posts del blog
 
 // Conexión a la base de datos
 sequelize
-  .sync()
+  .sync({alter: true})
   .then(() => {
     console.log('Conexión a la base de datos exitosa (￣y▽￣)╭ Ohohoho.....');
   })
