@@ -14,8 +14,6 @@ app.use(express.json());
 
 app.use("/api/posts", postRoutes); // Ruta base para las entradas posts del blog
 
-// conexion base de datos
-
 sequelize
   .sync({ alter: false })
   .then(() => {
@@ -25,7 +23,6 @@ sequelize
     console.error("Error al conectar a la base de datos (•ˋ _ ˊ•)", error);
   });
 
-// Inicio del servidor
 app.listen(PORT, () => {
   console.log(`Servidor corriendo en el puerto ${PORT}`);
 });

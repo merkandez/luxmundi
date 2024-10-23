@@ -1,11 +1,10 @@
 import { Request, Response } from "express";
 import PostModel from "../models/postModel";
 
-// Controlador para obtener todos los posts
 export const getAllPosts = async (req: Request, res: Response) => {
   try {
     const posts = await PostModel.findAll();
-    res.json(posts); // Envía los posts como respuesta JSON
+    res.json(posts);
   } catch (error: any) {
     res.status(500).json({
       message: "Error al obtener posts",
@@ -13,7 +12,6 @@ export const getAllPosts = async (req: Request, res: Response) => {
     });
   }
 };
-// Controlador para obtener una entrada por ID
 
 export const getPostById = async (req: Request, res: Response) => {
   const { id } = req.params;
@@ -44,7 +42,6 @@ export const createPost = async (req: Request, res: Response) => {
   }
 };
 
-// Actualizar una entrada existente
 export const updatePost = async (req: Request, res: Response) => {
   const { id } = req.params;
   const { title, content, imageUrl } = req.body;
@@ -63,7 +60,6 @@ export const updatePost = async (req: Request, res: Response) => {
   }
 };
 
-// Eliminar un post
 export const deletePost = async (req: Request, res: Response) => {
   const { id } = req.params;
   try {

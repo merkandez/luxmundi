@@ -1,5 +1,4 @@
 import { config as dotenvConfig } from "dotenv";
-// Then use it as config.DB_PORT
 
 dotenvConfig();
 
