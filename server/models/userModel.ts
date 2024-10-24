@@ -8,7 +8,7 @@ class User extends Model<IUser> implements IUser {
   public email!: string;
   public password!: string;
   public role!: 'admin' | 'user'; // Campo para el rol
-  public profile_image_url?: string; // URL de la imagen de perfil
+  public imageUrl?: string; // URL de la imagen de perfil
   public last_login?: Date; // Fecha del último inicio de sesión
   public readonly createdAt!: Date; // Timestamp de creación
   public readonly updatedAt!: Date; // Timestamp de actualización
@@ -44,7 +44,7 @@ User.init(
       allowNull: false,
       defaultValue: 'user', // Valor por defecto
     },
-    profile_image_url: {
+    imageUrl: {
       type: DataTypes.STRING(255), // URL de la imagen de perfil
       allowNull: true,
     },

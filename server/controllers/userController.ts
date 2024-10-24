@@ -5,7 +5,7 @@ import { generateToken } from '../utils/jwtUtils';
 
 // Registro de usuario
 export const registerUser = async (req: Request, res: Response): Promise<void> => { // Retorno 'void'
-  const { username, email, password, profile_image_url, role } = req.body;
+  const { username, email, password, imageUrl, role } = req.body;
 
   try {
     // Verificar si el usuario ya existe
@@ -31,7 +31,7 @@ export const registerUser = async (req: Request, res: Response): Promise<void> =
         username, 
         email, 
         password: hashedPassword,
-        profile_image_url,
+        imageUrl,
         role: 'user', // Valor por defecto    
     });
 
