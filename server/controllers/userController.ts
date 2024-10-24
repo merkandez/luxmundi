@@ -1,14 +1,23 @@
 import { Request, Response } from 'express';
+import { validationResult } from 'express-validator';
 import User from '../models/userModel';
 import { hashPassword, comparePassword } from '../utils/hashUtils';
 import { generateToken } from '../utils/jwtUtils';
 
 // Registro de usuario
-export const registerUser = async (req: Request, res: Response): Promise<void> => { // Retorno 'void'
-  const { username, email, password, imageUrl, role } = req.body;
+export const registerUser = async (req: Request, res: Response): Promise<void> => { // Retorno 'void' para indicar que la función no devuelve una respuesta explícita
 
-  try {
-    // Verificar si el usuario ya existe
+// Procesar los errores de validación
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    res.status(400).json({ errors: errors.array() });
+    return;
+  }
+
+  const { username, email, password, imageUrl, role } = req.body;
+  
+    try {
+    //Usuario ya existe?
     const existingUser = await User.findOne({ where: { email } });
     if (existingUser) {
       res.status(400).json({ message: '📧 El correo ya está registrado' });
@@ -43,6 +52,12 @@ export const registerUser = async (req: Request, res: Response): Promise<void> =
 
 // Login de usuario
 export const loginUser = async (req: Request, res: Response): Promise<void> => { // Retorno 'void'
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    res.status(400).json({ errors: errors.array() });
+    return
+  }   
+  
   const { email, password } = req.body;
 
   try {
