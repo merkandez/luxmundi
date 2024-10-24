@@ -3,10 +3,11 @@ import {
   registerUser,
   loginUser,
   updateUser,
+  deleteUser,
 } from '../controllers/authController';
 import { body } from 'express-validator';
 import { authMiddleware } from '../middlewares/authMiddleware';
-
+import { adminMiddleware } from '../middlewares/adminMiddleware';
 const router = Router();
 
 // Rutas de registro y login con validación
@@ -52,5 +53,7 @@ router.put(
   ],
   updateUser
 );
+// Ruta para eliminar un usuario (solo admin)
+router.delete('/:id', authMiddleware, adminMiddleware, deleteUser);
 
 export default router;

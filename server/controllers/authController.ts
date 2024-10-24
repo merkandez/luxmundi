@@ -94,3 +94,24 @@ export const updateUser = async (req: Request, res: Response): Promise<void> => 
     }
   }
 };
+// Controlador para eliminar un usuario (solo administradores)
+export const deleteUser = async (req: Request, res: Response): Promise<void> => {
+  const { id } = req.params;
+
+  try {
+    const user = await User.findByPk(id);
+
+    if (!user) {
+      res.status(404).json({ message: 'Usuario no encontrado' });
+      return;
+    }
+
+    // Eliminar el usuario
+    await user.destroy();
+    res.json({ message: 'Usuario eliminado con éxito' });
+  } catch (error) {
+    if (error instanceof Error) {
+      res.status(500).json({ message: 'Error al eliminar el usuario', error: error.message });
+    }
+  }
+};
