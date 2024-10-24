@@ -80,4 +80,28 @@ export const updateUser = async (req: Request, res: Response): Promise<void> => 
     }
   }
 };
+// Controlador para actualizar rol del usuario (solo para administradores)
+export const updateUserRole = async (req: Request, res: Response): Promise<void> => {
+  const { id } = req.params;  // ID del usuario cuyo rol se va a cambiar
+  const { role } = req.body;  // El nuevo rol a asignar
 
+  if (role !== 'admin' && role !== 'user') {
+    res.status(400).json({ message: 'Rol no válido' });
+    return;
+  }
+
+  try {
+    const user = await User.findByPk(id);
+    if (!user) {
+      res.status(404).json({ message: 'Usuario no encontrado' });
+      return;
+    }
+
+    await user.update({ role });
+    res.json({ message: 'Rol actualizado con éxito', user });
+  } catch (error) {
+    if (error instanceof Error) {
+      res.status(500).json({ message: 'Error al actualizar rol', error: error.message });
+    }
+  }
+};
