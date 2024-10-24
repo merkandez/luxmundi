@@ -53,10 +53,12 @@ export const loginUser = async (req: Request, res: Response): Promise<void> => {
     }
   }
 };
-// Controlador para actualizar datos del usuario
+// Controlador para actualizar datos del usuario (incluyendo rol, si es admin)
+
 export const updateUser = async (req: Request, res: Response): Promise<void> => {
-  const { id } = (req as any).user;  // Extraemos el ID del usuario logueado
-  const { username, email, password, avatarUrl } = req.body;
+  const { id } = req.params;  // El ID del usuario que se va a actualizar
+  const { username, email, password, avatarUrl, role } = req.body;
+  const userRole = (req as any).user; // Usuario que realiza la solicitud
 
   try {
     const user = await User.findByPk(id);
@@ -65,43 +67,30 @@ export const updateUser = async (req: Request, res: Response): Promise<void> => 
       return;
     }
 
-    // Si hay un nuevo password, lo encriptamos
+    // Solo un admin puede actualizar el rol
+    if (role && userRole.role !== 'admin') {
+      res.status(403).json({ message: 'No autorizado para cambiar el rol' });
+      return;
+    }
+
+    // Si hay una nueva contraseña, la encriptamos
     if (password) {
       const hashedPassword = await encrypt(password);
       user.password = hashedPassword;
     }
 
-    // Actualizamos los datos
-    await user.update({ username, email, avatarUrl });
-    res.json({ message: 'Datos actualizados con éxito', user });
+    // Actualizar los datos
+    await user.update({
+      username,
+      email,
+      avatarUrl,
+      role: userRole.role === 'admin' ? role : user.role // Solo cambia el rol si es admin
+    });
+
+    res.json({ message: 'Usuario actualizado con éxito', user });
   } catch (error) {
     if (error instanceof Error) {
       res.status(500).json({ message: 'Error al actualizar usuario', error: error.message });
-    }
-  }
-};
-// Controlador para actualizar rol del usuario (solo para administradores)
-export const updateUserRole = async (req: Request, res: Response): Promise<void> => {
-  const { id } = req.params;  // ID del usuario cuyo rol se va a cambiar
-  const { role } = req.body;  // El nuevo rol a asignar
-
-  if (role !== 'admin' && role !== 'user') {
-    res.status(400).json({ message: 'Rol no válido' });
-    return;
-  }
-
-  try {
-    const user = await User.findByPk(id);
-    if (!user) {
-      res.status(404).json({ message: 'Usuario no encontrado' });
-      return;
-    }
-
-    await user.update({ role });
-    res.json({ message: 'Rol actualizado con éxito', user });
-  } catch (error) {
-    if (error instanceof Error) {
-      res.status(500).json({ message: 'Error al actualizar rol', error: error.message });
     }
   }
 };
