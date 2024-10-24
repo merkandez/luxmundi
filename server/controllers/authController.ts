@@ -1,7 +1,7 @@
 import { Request, Response } from 'express';
 import jwt from 'jsonwebtoken';
 import bcrypt from 'bcryptjs';
-import { User } from '../models/User';
+import User from '../models/User';
 
 // Registro de nuevo usuario
 export const registerUser = async (req: Request, res: Response): Promise<void> => {

@@ -1,27 +1,15 @@
 import { Model, DataTypes }  from "sequelize";
 import sequelize from "../database/database";  // Asegúrate de tener una instancia de Sequelize exportada desde tu configuración
 
-interface UserAttributes {
-  id?: number;
-  username: string;
-  email: string;
-  password: string;
-  role: 'admin' | 'user'; // Enum para los roles
-  avatar_url: string;
-  created_at?: Date;
-  updated_at?: Date;
-}
-
-export class User extends Model<UserAttributes> implements UserAttributes {
+class User extends Model {
   public id!: number;
   public username!: string;
   public email!: string;
   public password!: string;
-  public role!: 'admin' | 'user';
-  public avatar_url!: string;
-  public created_at?: Date;
-  public updated_at?: Date;
+  public avatarUrl?: string; // URL opcional de avatar
+  public role!: 'user' | 'admin';
 }
+
 
 // Definición del modelo
 User.init(
@@ -71,3 +59,5 @@ User.init(
     underscored: true, // Para que Sequelize utilice el snake_case en lugar de camelCase
   }
 );
+
+export default User;

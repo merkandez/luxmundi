@@ -14,16 +14,16 @@ import {
 const DB_NAME = NODE_ENV === "test" ? DB_TEST_NAME : DB_DEV_NAME;
 
 // Crear la conexión a Sequelize
-const sequelize = new Sequelize(DB_NAME!, DB_USER!, DB_PASSWORD!, {
+const sequelize = new Sequelize(DB_NAME, DB_USER, DB_PASSWORD, {
   host: DB_HOST,
   dialect: "mysql",
-  port: DB_PORT!,
+  port: DB_PORT,
 });
 // Autenticación y manejo de errores de la base de datos
 (async () => {
   try {
     await sequelize.authenticate();
-    console.log("Conexión a la base de datos establecida correctamente.");
+    console.log("Conexión a la base de datos establecida correctamente.", DB_NAME);
   } catch (error) {
     console.error("No se pudo conectar a la base de datos:", error);
   }
