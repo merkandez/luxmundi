@@ -5,9 +5,9 @@ const data = {
     name: 'Jenny',
     password: 'password'
 }
-const token = jwt.sign(data, process.env.JWT_SECRET,{
-    expiresIn: '5m' //cuanto quieres que dure el JWT
-    })
+//const token = jwt.sign(data, process.env.JWT_SECRET,{
+  //  expiresIn: '5m' //cuanto quieres que dure el JWT
+    //})
 
 }
 
