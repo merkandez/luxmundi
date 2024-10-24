@@ -21,7 +21,7 @@ export const authMiddleware = (req: Request, res: Response, next: NextFunction):
       }
   
       (req as any).user = verified;
-      next(); // Pasar al siguiente middleware o controlador
+      next(); // Pasamos al siguiente middleware o controlador
     } catch (error) {
       console.log("Error verificando el token:", error);
       res.status(401).json({ message: 'Token inválido o expirado' });

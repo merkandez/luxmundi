@@ -3,7 +3,7 @@ import { encrypt, compare } from '../utils/handlePassword';
 import { tokenSign } from '../utils/handleJwt';
 import User from '../models/userModel';
 
-// Registro de usuario con avatar opcional
+// Controlador de registro de usuario con avatar opcional
 export const registerUser = async (req: Request, res: Response): Promise<void> => {
   const { username, email, password, avatarUrl } = req.body;
 
@@ -26,7 +26,7 @@ export const registerUser = async (req: Request, res: Response): Promise<void> =
   }
 };
 
-// Inicio de sesión
+// Controlador de inicio de sesión
 export const loginUser = async (req: Request, res: Response): Promise<void> => {
   const { email, password } = req.body;
 
@@ -53,3 +53,31 @@ export const loginUser = async (req: Request, res: Response): Promise<void> => {
     }
   }
 };
+// Controlador para actualizar datos del usuario
+export const updateUser = async (req: Request, res: Response): Promise<void> => {
+  const { id } = (req as any).user;  // Extraemos el ID del usuario logueado
+  const { username, email, password, avatarUrl } = req.body;
+
+  try {
+    const user = await User.findByPk(id);
+    if (!user) {
+      res.status(404).json({ message: 'Usuario no encontrado' });
+      return;
+    }
+
+    // Si hay un nuevo password, lo encriptamos
+    if (password) {
+      const hashedPassword = await encrypt(password);
+      user.password = hashedPassword;
+    }
+
+    // Actualizamos los datos
+    await user.update({ username, email, avatarUrl });
+    res.json({ message: 'Datos actualizados con éxito', user });
+  } catch (error) {
+    if (error instanceof Error) {
+      res.status(500).json({ message: 'Error al actualizar usuario', error: error.message });
+    }
+  }
+};
+
