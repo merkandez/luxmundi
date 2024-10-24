@@ -22,5 +22,5 @@ export {
   DB_PORT,
   NODE_ENV,
   DB_TEST_NAME,
-  JWT_SECRET, // Asegúrate de exportar JWT_SECRET
+  JWT_SECRET, // para exportar JWT_SECRET
 };
