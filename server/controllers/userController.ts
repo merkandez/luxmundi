@@ -1,7 +1,7 @@
 import { Request, Response } from 'express';
 import { validationResult } from 'express-validator';
 import User from '../models/userModel';
-import { hashPassword, comparePassword } from '../utils/hashUtils';
+import { hashPassword, comparePassword } from '../utils/bcryptUtils';
 import { generateToken } from '../utils/jwtUtils';
 
 // Registro de usuario

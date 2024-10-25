@@ -44,7 +44,7 @@ User.init(
       allowNull: false,
       defaultValue: 'user', // Valor por defecto
     },
-    imageUrl: {
+     imageUrl: {
       type: DataTypes.STRING(255), // URL de la imagen de perfil
       allowNull: true,
     },

@@ -1,4 +1,0 @@
-
-/* interface app {
-    port: number;
-} */

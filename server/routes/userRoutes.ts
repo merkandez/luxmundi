@@ -12,7 +12,9 @@ router.post('/register',
         check('email').isEmail().withMessage('📧Introduce un email válido'),
         check('password')
           .isLength({ min: 6 }).withMessage('💭La contraseña debe tener al menos 6 caracteres'),
-     
+        check('imageUrl')
+          .optional() // Hace que sea opcional
+          .isURL().withMessage('📸 Puedes subir un avatar'),
     ],
     registerUser
 );
