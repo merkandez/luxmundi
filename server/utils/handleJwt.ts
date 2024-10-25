@@ -1,4 +1,4 @@
-import  jwt  from "jsonwebtoken";
+import jwt from 'jsonwebtoken';
 
 // Función para firmar el token JWT
 export const tokenSign = (user: any): string => {
@@ -18,5 +18,3 @@ export const tokenVerify = (token: string): any => {
     return null;
   }
 };
-
-
