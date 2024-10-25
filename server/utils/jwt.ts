@@ -1,13 +1,22 @@
 import  jwt  from "jsonwebtoken";
 
-export const generateJWT = () => {
-const data = {
-    name: 'Jenny',
-    password: 'password'
-}
-//const token = jwt.sign(data, process.env.JWT_SECRET,{
-  //  expiresIn: '5m' //cuanto quieres que dure el JWT
-    //})
+// Función para firmar el token JWT
+export const tokenSign = (user: any): string => {
+  const token = jwt.sign(
+    { id: user.id, role: user.role },
+    process.env.JWT_SECRET!,
+    { expiresIn: '24h' }
+  );
+  return token;
+};
 
-}
+// Función para verificar el token JWT
+export const tokenVerify = (token: string): any => {
+  try {
+    return jwt.verify(token, process.env.JWT_SECRET!);
+  } catch (error) {
+    return null;
+  }
+};
+
 

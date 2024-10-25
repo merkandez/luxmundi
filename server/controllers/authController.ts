@@ -48,32 +48,43 @@ export const registerUser = async (req: Request, res: Response): Promise<void> =
     }
 };
 // Login de usuario
-export const loginUser = async (req: Request, res: Response) => {
+export const loginUser = async (req: Request, res: Response): Promise<void> => {
     const { email, password } = req.body;
-
+  
     try {
-        let user = await User.findOne({ where: { email } });
-        if (!user) {
-            return res.status(400).json({ msg: 'Credenciales inválidas' });
-        }
+      const user = await User.findOne({ where: { email } });
+      if (!user) {
+        res.status(400).json({ message: 'Credenciales incorrectas' });
+        return;
+      }
+  
+      const isMatch = await bcrypt.compare(password, user.password); // Usamos bcrypt.compare
+      if (!isMatch) {
+        res.status(400).json({ message: 'Credenciales incorrectas' });
+        return;
+      }
+  
+    // Generar el token JWT
+    const payload = {
+        user: {
+            id: user.id,
+            role: user.role,
+        },
+    };
 
-        const isMatch = await bcrypt.compare(password, user.password);
-        if (!isMatch) {
-            return res.status(400).json({ msg: 'Credenciales inválidas' });
-        }
+    const token = jwt.sign(
+        payload,
+        process.env.JWT_SECRET as string,
+        { expiresIn: '1h' } // Token válido por 1 hora
+    );
 
-        const payload = {
-            user: {
-                id: user.id,
-                role: user.role,
-            },
-        };
-
-        const token = jwt.sign(payload, process.env.JWT_SECRET as string, { expiresIn: '1h' });
-
-        return res.json({ token });
-    } catch (err) {
-        console.error(err);
-        return res.status(500).send('Error en el servidor');
+    res.json({ message: 'Inicio de sesión exitoso', token });
+} catch (error) {
+    if (error instanceof Error) {
+        res.status(500).json({ message: 'Error en el servidor', error: error.message });
+    } else {
+        res.status(500).json({ message: 'Error en el servidor', error });
     }
-};
+}
+};  
+  
