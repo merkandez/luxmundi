@@ -18,17 +18,17 @@ class User extends Model<IUser> implements IUser {
 User.init(
   {
     id: {
-      type: DataTypes.INTEGER,
+      type: DataTypes.INTEGER.UNSIGNED,
       autoIncrement: true,
       primaryKey: true,
     },
     username: {
-      type: DataTypes.STRING(100), 
+      type: DataTypes.STRING(100),
       allowNull: false,
       unique: true,
     },
     email: {
-      type: DataTypes.STRING(150), 
+      type: DataTypes.STRING(150),
       allowNull: false,
       unique: true,
       validate: {
@@ -36,15 +36,15 @@ User.init(
       },
     },
     password: {
-      type: DataTypes.STRING(255), 
+      type: DataTypes.STRING(255),
       allowNull: false,
     },
     role: {
-      type: DataTypes.ENUM('admin', 'user'), // Campo para el rol
+      type: DataTypes.ENUM('admin', 'user'),
       allowNull: false,
       defaultValue: 'user', // Valor por defecto
     },
-     imageUrl: {
+    imageUrl: {
       type: DataTypes.STRING(255), // URL de la imagen de perfil
       allowNull: true,
     },
@@ -62,3 +62,4 @@ User.init(
 );
 
 export default User;
+
