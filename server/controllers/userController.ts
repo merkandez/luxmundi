@@ -89,13 +89,13 @@ export const updateUser = async (req: Request, res: Response): Promise<void> => 
   try {
     const user = await User.findByPk(id);
     if (!user) {
-      res.status(404).json({ message: 'Usuario no encontrado' });
+      res.status(404).json({ message: '🔎Usuario no encontrado' });
       return;
     }
 
     // Solo un admin puede actualizar el rol
     if (role && userRole.role !== 'admin') {
-      res.status(403).json({ message: 'No autorizado para cambiar el rol' });
+      res.status(403).json({ message: '🚫 No autorizado para cambiar el rol' });
       return;
     }
 
@@ -113,9 +113,9 @@ export const updateUser = async (req: Request, res: Response): Promise<void> => 
       role: userRole.role === 'admin' ? role : user.role, // Cambia el rol solo si es admin
     });
 
-    res.json({ message: 'Usuario actualizado con éxito', user });
+    res.json({ message: '🔃Usuario actualizado con éxito', user });
   } catch (error: any) {
-    res.status(500).json({ message: 'Error al actualizar usuario', error: error.message });
+    res.status(500).json({ message: '❎Error al actualizar usuario', error: error.message });
   }
 };
 
@@ -126,20 +126,20 @@ export const deleteUser = async (req: Request, res: Response): Promise<void> => 
   try {
     const user = await User.findByPk(id);
     if (!user) {
-      res.status(404).json({ message: 'Usuario no encontrado' });
+      res.status(404).json({ message: '🚫Usuario no encontrado' });
       return;
     }
 
     // Eliminar el usuario
     await user.destroy();
-    res.json({ message: 'Usuario eliminado con éxito' });
+    res.json({ message: '✅Usuario eliminado con éxito' });
   } catch (error: any) {
-    res.status(500).json({ message: 'Error al eliminar el usuario', error: error.message });
+    res.status(500).json({ message: '❌Error al eliminar el usuario', error: error.message });
   }
 };
 
 // Crear un usuario admin inicial (ejecutar solo una vez al iniciar la aplicación)
-export const createInitialAdmin = async (): Promise<void> => {
+export const createAdminUser = async (): Promise<void> => {
   const adminEmail = 'admin@example.com'; // Cambiar el correo según sea necesario
   const adminUsername = 'admin';
   const adminPassword = 'admin123'; // Cambiar la contraseña según sea necesario
@@ -153,8 +153,8 @@ export const createInitialAdmin = async (): Promise<void> => {
       password: hashedPassword,
       role: 'admin',
     });
-    console.log('Usuario administrador creado con éxito');
+    console.log('✅Usuario administrador creado con éxito');
   } else {
-    console.log('El usuario administrador ya existe');
+    console.log('❗El usuario administrador ya existe');
   }
 };
