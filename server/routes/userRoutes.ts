@@ -55,6 +55,6 @@ router.put(
 );
 
 // Ruta para eliminar un usuario (solo admin)
-router.delete('/:id', authMiddleware, adminMiddleware, deleteUser);
+//router.delete('/:id', authMiddleware, adminMiddleware, deleteUser);
 
 export default router;
