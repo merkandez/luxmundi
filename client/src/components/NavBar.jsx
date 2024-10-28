@@ -1,3 +1,4 @@
+import React from "react";
 import styled from "styled-components";
 import NavigationPillItem from "./NavigationPillItem";
 import AuthButton from "./AuthButton";

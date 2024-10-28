@@ -3,7 +3,7 @@ import NavigationPillItem from "./NavigationPillItem";
 import AuthButton from "./AuthButton";
 import Logo from "./Logo";
 
-const NAVIGATION_ITEMS = [
+const NAV_ITEMS = [
   { label: "Nosotros", isActive: true },
   { label: "Destinos", isActive: false },
   { label: "Contacto", isActive: false },
@@ -14,15 +14,15 @@ const AUTH_BUTTONS = [
   { label: "Register", variant: "primary" },
 ];
 
-const NavigationHeader = () => (
+const NavBar = () => (
   <HeaderWrapper>
     <Logo />
-    <PillList role="navigation">
-      {NAVIGATION_ITEMS.map((item) => (
+    <PillList aria-label="Main Navigation">
+      {NAV_ITEMS.map((item) => (
         <NavigationPillItem key={item.label} {...item} />
       ))}
     </PillList>
-    <AuthSection>
+    <AuthSection aria-label="Authentication Options">
       {AUTH_BUTTONS.map((button) => (
         <AuthButton key={button.label} {...button} />
       ))}
@@ -48,10 +48,10 @@ const PillList = styled.nav`
   gap: 0.5rem;
   flex: 1;
   justify-content: flex-end;
-  color: var(--sds-color-text-default-default);
-  font: var(--sds-typography-body-font-weight-regular)
-    var(--sds-typography-body-size-medium) / 1
-    var(--sds-typography-body-font-family);
+  color: #ffffff;
+  font-weight: 400;
+  font-size: 1rem;
+  font-family: Arial, sans-serif;
   white-space: nowrap;
   min-width: 240px;
 
@@ -61,12 +61,14 @@ const PillList = styled.nav`
   }
 `;
 
-const AuthSection = styled.div`
+const AuthSection = styled.nav`
   display: flex;
   align-items: center;
   gap: 0.75rem;
   width: 178px;
-  font: inherit;
+  font-weight: 400;
+  font-size: 1rem;
+  font-family: Arial, sans-serif;
 `;
 
-export default NavigationHeader;
+export default NavBar;
