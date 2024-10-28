@@ -1,92 +1,74 @@
-import React from "react";
 import styled from "styled-components";
 import NavigationPillItem from "./NavigationPillItem";
 import AuthButton from "./AuthButton";
 import Logo from "./Logo";
 
-const navigationItems = [
+const NAV_ITEMS = [
   { label: "Nosotros", isActive: true },
   { label: "Destinos", isActive: false },
   { label: "Contacto", isActive: false },
 ];
 
-const authButtons = [
+const AUTH_BUTTONS = [
   { label: "Log in", variant: "secondary" },
   { label: "Register", variant: "primary" },
 ];
 
-function NavigationHeader() {
-  return (
-    <HeaderWrapper>
-      <Logo />
-      <nav>
-        <PillList role="navigation" aria-label="Main navigation">
-          {navigationItems.map((item, index) => (
-            <NavigationPillItem
-              key={index}
-              label={item.label}
-              isActive={item.isActive}
-            />
-          ))}
-        </PillList>
-      </nav>
-      <AuthSection>
-        {authButtons.map((button, index) => (
-          <AuthButton
-            key={index}
-            label={button.label}
-            variant={button.variant}
-          />
-        ))}
-      </AuthSection>
-    </HeaderWrapper>
-  );
-}
+const NavBar = () => (
+  <HeaderWrapper>
+    <Logo />
+    <PillList aria-label="Main Navigation">
+      {NAV_ITEMS.map((item) => (
+        <NavigationPillItem key={item.label} {...item} />
+      ))}
+    </PillList>
+    <AuthSection aria-label="Authentication Options">
+      {AUTH_BUTTONS.map((button) => (
+        <AuthButton key={button.label} {...button} />
+      ))}
+    </AuthSection>
+  </HeaderWrapper>
+);
 
 const HeaderWrapper = styled.header`
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  padding: 2rem;
   background-color: rgba(30, 30, 30, 1);
   border-bottom: 1px solid rgba(68, 68, 68, 1);
-  display: flex;
-  align-items: center;
-  gap: 24px;
-  overflow: hidden;
-  padding: 32px;
+
   @media (max-width: 991px) {
-    padding: 0 20px;
+    padding: 1rem;
   }
 `;
 
-const PillList = styled.div`
-  align-self: stretch;
+const PillList = styled.nav`
   display: flex;
-  min-width: 240px;
-  align-items: start;
-  gap: 8px;
-  color: var(--sds-color-text-default-default);
-  white-space: nowrap;
-  justify-content: end;
+  gap: 0.5rem;
   flex: 1;
-  flex-basis: 0%;
-  margin: auto 0;
-  font: var(--sds-typography-body-font-weight-regular)
-    var(--sds-typography-body-size-medium) / 1
-    var(--sds-typography-body-font-family);
+  justify-content: flex-end;
+  color: #ffffff;
+  font-weight: 400;
+  font-size: 1rem;
+  font-family: Arial, sans-serif;
+  white-space: nowrap;
+  min-width: 240px;
+
   @media (max-width: 991px) {
     max-width: 100%;
-    white-space: initial;
+    white-space: normal;
   }
 `;
 
-const AuthSection = styled.div`
-  align-self: stretch;
+const AuthSection = styled.nav`
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 0.75rem;
   width: 178px;
-  margin: auto 0;
-  font: var(--sds-typography-body-font-weight-regular)
-    var(--sds-typography-body-size-medium) / 1
-    var(--sds-typography-body-font-family);
+  font-weight: 400;
+  font-size: 1rem;
+  font-family: Arial, sans-serif;
 `;
 
-export default NavigationHeader;
+export default NavBar;
