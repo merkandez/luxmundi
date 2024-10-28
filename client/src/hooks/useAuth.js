@@ -1,0 +1,1 @@
+/* Aquí crearemos un hook personalizado que simplifique el uso del contexto de autenticación en tus componentes. */

@@ -1,10 +1,16 @@
-import { StrictMode } from 'react'
-import { createRoot } from 'react-dom/client'
-import App from './App.jsx'
-import './index.css'
+// src/main.jsx
+import React from 'react';
+import ReactDOM from 'react-dom/client';
+import { RouterProvider } from 'react-router-dom';
+import { router } from './router/AppRouter'; // Importamos el enrutador
+import { AuthProvider } from './context/AuthContext'; // Para autenticación global
+import GlobalStyles from './styles/GlobalStyles'; // Estilos globales
 
-createRoot(document.getElementById('root')).render(
-  <StrictMode>
-    <App />
-  </StrictMode>,
-)
+ReactDOM.createRoot(document.getElementById('root')).render(
+  <React.StrictMode>
+    <AuthProvider>
+      <GlobalStyles />
+      <RouterProvider router={router} />
+    </AuthProvider>
+  </React.StrictMode>
+);
