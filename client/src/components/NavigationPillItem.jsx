@@ -1,5 +1,4 @@
 // client/src/components/NavigationPillItem.jsx
-import React from "react";
 import PropTypes from "prop-types";
 import styled from "styled-components";
 
@@ -8,12 +7,17 @@ const NavigationPillItem = ({ label, isActive }) => (
 );
 
 const Pill = styled.div`
-  padding: 0.5rem 1rem;
-  background-color: ${({ isActive }) => (isActive ? "#444" : "#1e1e1e")};
-  color: #fff;
-  border-radius: 1rem;
+  padding: 8px 16px;
+  background-color: ${({ isActive }) => (isActive ? "#444" : "transparent")};
+  color: #ffffff;
+  border-radius: 8px;
+  font-weight: ${({ isActive }) => (isActive ? "600" : "400")};
   cursor: pointer;
+  &:hover {
+    background-color: #444;
+  }
 `;
+
 NavigationPillItem.propTypes = {
   label: PropTypes.string.isRequired,
   isActive: PropTypes.bool.isRequired,

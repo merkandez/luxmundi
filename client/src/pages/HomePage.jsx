@@ -1,15 +1,17 @@
-import React from "react";
-import NavigationMenu from "../components/NavigationMenu"; // Ensure this path is correct
-import HeroContent from "../components/HeroContent"; // Ensure this path is correct
+import Header from "../components/Header";
+import { ButtonGroup } from "../components/ButtonGroup";
+import LuxMundiHero from "../components/LuxMundiHero";
+import Footer from "../components/Footer";
 
-const HomePage = () => {
+function HomePage() {
   return (
     <div>
-      <NavigationMenu />
-      <HeroContent />
-      {/* Other components or content for the HomePage */}
+      <Header />
+      <LuxMundiHero />
+      <ButtonGroup />
+      <Footer />
     </div>
   );
-};
+}
 
 export default HomePage;

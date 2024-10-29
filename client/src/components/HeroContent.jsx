@@ -1,7 +1,6 @@
-import React from "react";
 import styled from "styled-components";
 import HeroContent from "./HeroContent";
-import ButtonGroup from "./ButtonGroup";
+import { ButtonGroup } from "../components/ButtonGroup";
 
 function LuxMundiHero() {
   return (

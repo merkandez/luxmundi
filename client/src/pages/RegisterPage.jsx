@@ -1,7 +1,6 @@
-import React from "react";
 import styled from "styled-components";
-import SocialButton from "./SocialButton";
-import SliderDot from "./SliderDot";
+import SocialButton from "../components/SocialButton";
+import SliderDot from "../components/SliderDot";
 
 const socialButtons = [
   {
@@ -22,7 +21,7 @@ const socialButtons = [
   },
 ];
 
-function SignUpPage() {
+function RegisterPage() {
   return (
     <SignUpContainer>
       <LeftSection>
@@ -245,4 +244,4 @@ const SliderDotsContainer = styled.div`
   }
 `;
 
-export default SignUpPage;
+export default RegisterPage;
