@@ -8,7 +8,6 @@ const Layout = () => {
   const { isAuthenticated, role, logout } = useContext(AuthContext);
   const navigate = useNavigate();
 
-  // Manejo de logout
   const handleLogout = () => {
     logout();
     navigate('/login');
@@ -22,7 +21,7 @@ const Layout = () => {
           {isAuthenticated ? (
             <>
               <StyledLink to="/profile">Profile</StyledLink>
-              {role === 'admin' && <StyledLink to="/admin-only">Admin Area</StyledLink>}
+              {role === 'admin' && <StyledLink to="/admin">Admin Area</StyledLink>}
               <LogoutButton onClick={handleLogout}>Logout</LogoutButton>
             </>
           ) : (
@@ -31,11 +30,10 @@ const Layout = () => {
               <StyledLink to="/register">Register</StyledLink>
             </>
           )}
-          <StyledLink to="/aboutus">About Us</StyledLink>
         </Nav>
       </Header>
       <Content>
-        <Outlet /> {/* Renderiza el componente correspondiente a la ruta */}
+        <Outlet />
       </Content>
     </MainContainer>
   );

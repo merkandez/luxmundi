@@ -1,1 +1,6 @@
-/* Aquí crearemos un hook personalizado que simplifique el uso del contexto de autenticación en tus componentes. */
+import { useContext } from 'react';
+import { AuthContext } from '../context/AuthContext';
+
+const useAuth = () => useContext(AuthContext);
+
+export default useAuth;
