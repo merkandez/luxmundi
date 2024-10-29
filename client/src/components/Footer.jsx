@@ -5,8 +5,6 @@ export default function Footer() {
   return <FooterWrapper>{/* Footer content */}</FooterWrapper>;
 }
 
-// ... styled components
-
 const FooterWrapper = styled.footer`
   background-color: #1e1e1e;
   border-top: 1px solid #444;
