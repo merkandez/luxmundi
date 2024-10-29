@@ -15,7 +15,7 @@ const AUTH_BUTTONS = [
   { label: "Register", variant: "primary" },
 ];
 
-const Navbar = () => (
+const NavBar = () => (
   <NavContainer aria-label="Primary Navigation">
     <HeaderWrapper>
       <Logo />
@@ -35,15 +35,15 @@ const Navbar = () => (
 
 const NavContainer = styled.nav`
   width: 100%;
-  background-color: rgba(30, 30, 30, 1);
-  border-bottom: 1px solid rgba(68, 68, 68, 1);
+  background-color: #1e1e1e;
+  border-bottom: 1px solid #444;
 `;
 
 const HeaderWrapper = styled.div`
   display: flex;
   align-items: center;
   gap: 1.5rem;
-  padding: 2rem;
+  padding: 1.5rem 2rem;
   max-width: 1200px;
   margin: 0 auto;
 
@@ -58,20 +58,12 @@ const PillList = styled.div`
   justify-content: flex-end;
   gap: 0.5rem;
   color: #ffffff;
-  white-space: nowrap;
-  min-width: 240px;
-
-  @media (max-width: 991px) {
-    max-width: 100%;
-    white-space: normal;
-  }
 `;
 
 const AuthSection = styled.div`
   display: flex;
   align-items: center;
   gap: 0.75rem;
-  width: 178px;
 `;
 
-export default Navbar;
+export default NavBar;
