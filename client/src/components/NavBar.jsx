@@ -15,44 +15,49 @@ const AUTH_BUTTONS = [
   { label: "Register", variant: "primary" },
 ];
 
-const NavBar = () => (
-  <HeaderWrapper>
-    <Logo />
-    <PillList aria-label="Main Navigation">
-      {NAV_ITEMS.map((item) => (
-        <NavigationPillItem key={item.label} {...item} />
-      ))}
-    </PillList>
-    <AuthSection aria-label="Authentication Options">
-      {AUTH_BUTTONS.map((button) => (
-        <AuthButton key={button.label} {...button} />
-      ))}
-    </AuthSection>
-  </HeaderWrapper>
+const Navbar = () => (
+  <NavContainer aria-label="Primary Navigation">
+    <HeaderWrapper>
+      <Logo />
+      <PillList>
+        {NAV_ITEMS.map((item) => (
+          <NavigationPillItem key={item.label} {...item} />
+        ))}
+      </PillList>
+      <AuthSection>
+        {AUTH_BUTTONS.map((button) => (
+          <AuthButton key={button.label} {...button} />
+        ))}
+      </AuthSection>
+    </HeaderWrapper>
+  </NavContainer>
 );
 
-const HeaderWrapper = styled.header`
+const NavContainer = styled.nav`
+  width: 100%;
+  background-color: rgba(30, 30, 30, 1);
+  border-bottom: 1px solid rgba(68, 68, 68, 1);
+`;
+
+const HeaderWrapper = styled.div`
   display: flex;
   align-items: center;
   gap: 1.5rem;
   padding: 2rem;
-  background-color: rgba(30, 30, 30, 1);
-  border-bottom: 1px solid rgba(68, 68, 68, 1);
+  max-width: 1200px;
+  margin: 0 auto;
 
   @media (max-width: 991px) {
     padding: 1rem;
   }
 `;
 
-const PillList = styled.nav`
+const PillList = styled.div`
   display: flex;
-  gap: 0.5rem;
   flex: 1;
   justify-content: flex-end;
+  gap: 0.5rem;
   color: #ffffff;
-  font-weight: 400;
-  font-size: 1rem;
-  font-family: Arial, sans-serif;
   white-space: nowrap;
   min-width: 240px;
 
@@ -62,14 +67,11 @@ const PillList = styled.nav`
   }
 `;
 
-const AuthSection = styled.nav`
+const AuthSection = styled.div`
   display: flex;
   align-items: center;
   gap: 0.75rem;
   width: 178px;
-  font-weight: 400;
-  font-size: 1rem;
-  font-family: Arial, sans-serif;
 `;
 
-export default NavBar;
+export default Navbar;
