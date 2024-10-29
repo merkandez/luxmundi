@@ -1,12 +1,13 @@
 // src/router/AppRouter.jsx
 import { createBrowserRouter } from 'react-router-dom';
-import Layout from '../layout/Layout.jsx';
-import HomePage from '../pages/HomePage.jsx';
-import LoginPage from '../pages/LoginPage.jsx';
-import RegisterPage from '../pages/RegisterPage.jsx';
-import AboutUs from '../pages/AboutUs.jsx';
-import NotFound from '../pages/NotFound.jsx';
+import Layout from '../layout/Layout';
+import HomePage from '../pages/HomePage';
+import LoginPage from '../pages/LoginPage';
+import RegisterPage from '../pages/RegisterPage';
+import AdminPage from '../pages/AdminPage.jsx'; // Ruta solo para admin
 import ProtectedRoute from './ProtectedRoute';
+import NotFound from '../pages/NotFound';
+import NoAccess from '../pages/NoAccess';
 
 export const router = createBrowserRouter([
   {
@@ -14,10 +15,17 @@ export const router = createBrowserRouter([
     element: <Layout />,
     errorElement: <NotFound />,
     children: [
-      { index: true, element: <ProtectedRoute component={<HomePage />} /> },
+      { index: true, element: <HomePage /> },
       { path: 'login', element: <LoginPage /> },
       { path: 'register', element: <RegisterPage /> },
-      { path: 'aboutus', element: <ProtectedRoute component={<AboutUs />} /> },
+      {
+        path: 'admin',
+        element: <ProtectedRoute requiredRole="admin" />, // Ruta protegida para admin
+        children: [
+          { index: true, element: <AdminPage /> }
+        ],
+      },
+      { path: 'no-access', element: <NoAccess /> } // Página para acceso denegado
     ],
   },
 ]);
