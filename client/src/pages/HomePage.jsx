@@ -1,10 +1,12 @@
 import React from "react";
-import Navbar from "../components/NavBar"; // Adjust the path as necessary
+import NavigationMenu from "../components/NavigationMenu"; // Ensure this path is correct
+import HeroContent from "../components/HeroContent"; // Ensure this path is correct
 
 const HomePage = () => {
   return (
     <div>
-      <Navbar />
+      <NavigationMenu />
+      <HeroContent />
       {/* Other components or content for the HomePage */}
     </div>
   );

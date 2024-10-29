@@ -1,5 +1,6 @@
 // client/src/components/NavigationPillItem.jsx
 import React from "react";
+import PropTypes from "prop-types";
 import styled from "styled-components";
 
 const NavigationPillItem = ({ label, isActive }) => (
@@ -13,5 +14,9 @@ const Pill = styled.div`
   border-radius: 1rem;
   cursor: pointer;
 `;
+NavigationPillItem.propTypes = {
+  label: PropTypes.string.isRequired,
+  isActive: PropTypes.bool.isRequired,
+};
 
 export default NavigationPillItem;
