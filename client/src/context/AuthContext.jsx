@@ -1,5 +1,3 @@
-
-// src/context/AuthContext.jsx
 import React, { createContext, useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
@@ -15,7 +13,7 @@ export const AuthProvider = ({ children }) => {
   useEffect(() => {
     const savedToken = localStorage.getItem('token');
     const savedRole = localStorage.getItem('userRole');
-    
+
     if (savedToken) {
       setToken(savedToken);
       setIsAuthenticated(true);
@@ -44,7 +42,9 @@ export const AuthProvider = ({ children }) => {
   };
 
   return (
-    <AuthContext.Provider value={{ isAuthenticated, userRole, login, logout, token }}>
+    <AuthContext.Provider
+      value={{ isAuthenticated, userRole, login, logout, token }}
+    >
       {children}
     </AuthContext.Provider>
   );

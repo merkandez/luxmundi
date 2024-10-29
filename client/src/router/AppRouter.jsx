@@ -1,31 +1,23 @@
-// src/router/AppRouter.js
+// src/router/AppRouter.jsx
 import { createBrowserRouter } from 'react-router-dom';
-import Layout from '../layout/Layout';
-import HomePage from '../pages/HomePage';
-import LoginPage from '../pages/LoginPage';
-import RegisterPage from '../pages/RegisterPage';
-
-/* import NotFound from '../pages/NotFound'; */
+import Layout from '../layout/Layout.jsx';
+import HomePage from '../pages/HomePage.jsx';
+import LoginPage from '../pages/LoginPage.jsx';
+import RegisterPage from '../pages/RegisterPage.jsx';
+import AboutUs from '../pages/AboutUs.jsx';
+import NotFound from '../pages/NotFound.jsx';
+import ProtectedRoute from './ProtectedRoute';
 
 export const router = createBrowserRouter([
   {
     path: '/',
     element: <Layout />,
-    /* errorElement: <NotFound />, */ // Página para rutas no encontradas
+    errorElement: <NotFound />,
     children: [
-      {
-        index: true,
-        element: <HomePage />,
-      },
-      {
-        path: 'login',
-        element: <LoginPage />,
-      },
-      {
-        path: 'register',
-        element: <RegisterPage />,
-      },
-    
+      { index: true, element: <ProtectedRoute component={<HomePage />} /> },
+      { path: 'login', element: <LoginPage /> },
+      { path: 'register', element: <RegisterPage /> },
+      { path: 'aboutus', element: <ProtectedRoute component={<AboutUs />} /> },
     ],
   },
 ]);
