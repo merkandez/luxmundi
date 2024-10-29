@@ -7,9 +7,10 @@ import GlobalStyles from './styles/GlobalStyles'; // Estilos globales
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
-    <AuthProvider>
-      <GlobalStyles />
-      <RouterProvider router={router} />
-    </AuthProvider>
+    <RouterProvider router={router}>
+      <AuthProvider>
+        <GlobalStyles />
+      </AuthProvider>
+    </RouterProvider>
   </React.StrictMode>
 );

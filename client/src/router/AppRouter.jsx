@@ -1,4 +1,3 @@
-// src/router/AppRouter.jsx
 import { createBrowserRouter } from 'react-router-dom';
 import Layout from '../layout/Layout';
 import HomePage from '../pages/HomePage';
@@ -20,12 +19,10 @@ export const router = createBrowserRouter([
       { path: 'register', element: <RegisterPage /> },
       {
         path: 'admin',
-        element: <ProtectedRoute requiredRole="admin" />, // Ruta protegida para admin
-        children: [
-          { index: true, element: <AdminPage /> }
-        ],
+        element: <ProtectedRoute requiredRole='admin' />, // Ruta protegida para admin
+        children: [{ index: true, element: <AdminPage /> }],
       },
-      { path: 'no-access', element: <NoAccess /> } // Página para acceso denegado
+      { path: 'no-access', element: <NoAccess /> }, // Página para acceso denegado
     ],
   },
 ]);
