@@ -1,6 +1,5 @@
 import styled from "styled-components";
 import Slider from "react-slick";
-import HeroContent from "./HeroContent";
 import { ButtonGroup } from "../components/ButtonGroup";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
@@ -19,7 +18,6 @@ function LuxMundiHero() {
 
   return (
     <HeroSection>
-      <HeroContent title="Lux Mundi" subtitle="algo muy guay aqui" />
       <ButtonWrapper>
         <ButtonGroup
           buttons={[
@@ -63,6 +61,8 @@ const HeroSection = styled.section`
   padding: 50px 24px;
   color: #ffffff;
   text-align: center;
+  width: 100%;
+  height: 50vh;
 
   @media (max-width: 991px) {
     padding: 40px 20px;

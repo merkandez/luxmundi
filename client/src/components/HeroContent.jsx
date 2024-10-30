@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import PropTypes from "prop-types";
 
 function HeroContent({ title, subtitle }) {
   return (
@@ -8,6 +9,11 @@ function HeroContent({ title, subtitle }) {
     </ContentWrapper>
   );
 }
+
+HeroContent.propTypes = {
+  title: PropTypes.string.isRequired,
+  subtitle: PropTypes.string.isRequired,
+};
 
 const ContentWrapper = styled.div`
   display: flex;
