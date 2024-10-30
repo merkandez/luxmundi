@@ -1,31 +1,41 @@
 import styled from "styled-components";
-import HeroContent from "./HeroContent";
-import { ButtonGroup } from "../components/ButtonGroup";
 
-function LuxMundiHero() {
+function HeroContent({ title, subtitle }) {
   return (
-    <HeroSection>
-      <HeroContent title="Lux Mundi" subtitle="algo muy guay aqui" />
-      <ButtonGroup
-        buttons={[
-          { text: "Ver", variant: "outline" },
-          { text: "Crear", variant: "solid" },
-        ]}
-      />
-    </HeroSection>
+    <ContentWrapper>
+      <Title>{title}</Title>
+      <Subtitle>{subtitle}</Subtitle>
+    </ContentWrapper>
   );
 }
 
-const HeroSection = styled.section`
-  background-color: #2c2c2c;
+const ContentWrapper = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
-  padding: 107px 24px;
-  @media (max-width: 991px) {
-    padding: 100px 20px;
+  text-align: center;
+`;
+
+const Title = styled.h1`
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: #ffffff;
+  margin: 0;
+
+  @media (max-width: 768px) {
+    font-size: 2rem;
   }
 `;
 
-export default LuxMundiHero;
+const Subtitle = styled.h2`
+  font-size: 1.2rem;
+  font-weight: 400;
+  color: #cccccc;
+  margin-top: 8px;
+
+  @media (max-width: 768px) {
+    font-size: 1rem;
+  }
+`;
+
+export default HeroContent;
