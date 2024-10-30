@@ -9,10 +9,10 @@ export const adminMiddleware = (req: Request, res: Response, next: NextFunction)
     return;
   }
 
-  const verified = tokenVerify(token);
+  const verified = tokenVerify(token.split(" ")[1]);
   
   if (!verified || verified.role !== 'admin') {
-    res.status(403).json({ message: 'No tienes permisos de administrador' });
+    res.status(403).json({ message: 'No tienes permisos de administrador', verified });
     return;
   }
 
