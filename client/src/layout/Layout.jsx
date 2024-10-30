@@ -1,4 +1,3 @@
-// src/layout/Layout.jsx
 import React, { useContext } from 'react';
 import { Link, Outlet, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
@@ -17,17 +16,19 @@ const Layout = () => {
     <MainContainer>
       <Header>
         <Nav>
-          <StyledLink to="/">Home</StyledLink>
+          <StyledLink to='/'>Home</StyledLink>
           {isAuthenticated ? (
             <>
-              <StyledLink to="/profile">Profile</StyledLink>
-              {role === 'admin' && <StyledLink to="/admin">Admin Area</StyledLink>}
+              <StyledLink to='/profile'>Profile</StyledLink>
+              {role === 'admin' && (
+                <StyledLink to='/admin'>Admin Area</StyledLink>
+              )}
               <LogoutButton onClick={handleLogout}>Logout</LogoutButton>
             </>
           ) : (
             <>
-              <StyledLink to="/login">Login</StyledLink>
-              <StyledLink to="/register">Register</StyledLink>
+              <StyledLink to='/login'>Login</StyledLink>
+              <StyledLink to='/register'>Register</StyledLink>
             </>
           )}
         </Nav>
