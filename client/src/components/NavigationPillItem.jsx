@@ -6,7 +6,9 @@ const NavigationPillItem = ({ label, isActive }) => (
   <Pill isActive={isActive}>{label}</Pill>
 );
 
-const Pill = styled.div`
+const Pill = styled.div.withConfig({
+  shouldForwardProp: (prop) => prop !== "isActive",
+})`
   padding: 8px 16px;
   background-color: ${({ isActive }) => (isActive ? "#444" : "transparent")};
   color: #ffffff;
