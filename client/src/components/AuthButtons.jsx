@@ -29,7 +29,7 @@ const Button = styled.button`
 
 const LoginButton = styled(Button)`
   background-color: #303030;
-  color: var(--sds-color-text-default-default);
+  color: #ffffff;
   border-color: #949494;
 `;
 

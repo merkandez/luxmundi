@@ -10,7 +10,8 @@ const NavWrapper = styled.nav`
   justify-content: flex-end;
   flex-wrap: wrap;
   flex: 1;
-  margin: auto 0;
+  margin: 0;
+  padding: 0;
   color: #ffffff;
 
   @media (max-width: 991px) {
@@ -20,7 +21,7 @@ const NavWrapper = styled.nav`
 `;
 
 const navigationItems = [
-  { label: "Nosotros", isActive: true },
+  { label: "Nosotros", isActive: false },
   { label: "Destinos", isActive: false },
   { label: "Contacto", isActive: false },
 ];
