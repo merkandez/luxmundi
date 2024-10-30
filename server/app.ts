@@ -18,7 +18,7 @@ app.use('/api/posts', postRoutes); // Ruta base para las entradas posts del blog
 app.use('/api/auth', authRoutes); // Ruta base para las rutas de autenticación
 // Conexión a la base de datos
 sequelize
-  .sync({ alter: true })
+  .sync({ alter: false })
   .then(() => {
     console.log('Conexión a la base de datos exitosa (￣y▽￣)╭ Ohohoho.....');
   })
