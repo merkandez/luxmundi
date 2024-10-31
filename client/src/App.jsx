@@ -7,7 +7,6 @@ const App = () => {
     <div className="App">
       <h1>Explore</h1>
       <p>Últimos posts</p>
-      <CardList posts={posts} />
     </div>
   );
 };
