@@ -3,9 +3,11 @@ import PropTypes from "prop-types";
 
 const CardsContainer = styled.div`
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  grid-template-columns: repeat(3, 1fr);
   gap: 16px;
-  padding: 0 24px;
+  padding: 0 24px;  
+  @media (max-width: 768px) {  
+  grid-template-columns: repeat(1, 1fr); }
 `;
 
 const Card = ({ title, content }) => (
@@ -29,6 +31,10 @@ const CardWrapper = styled.div`
   padding: 16px;
   text-align: left;
   color: #ffffff;
+  display: flex; 
+  flex-direction: column; 
+  @media (max-width: 768px) { 
+  padding: 12px; }
 `;
 
 const CardImage = styled.div`

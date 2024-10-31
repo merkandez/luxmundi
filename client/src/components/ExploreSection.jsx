@@ -56,6 +56,14 @@ const SectionWrapper = styled.section`
     color: #aaaaaa;
     margin-bottom: 24px;
   }
+  @media (max-width: 768px) { 
+  padding: 20px 12px; 
+  h2 { font-size: 1.5rem; 
+  } 
+  p { 
+  font-size: 0.9rem; 
+  } 
+  } 
 `;
 
 export default ExploreSection;

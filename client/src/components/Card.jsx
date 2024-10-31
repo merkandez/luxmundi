@@ -24,6 +24,8 @@ const Card = ({ title, content }) => (
     padding: 16px;
     text-align: left;
     color: #ffffff;
+    flex-direction: column; @media (max-width: 768px) { 
+    padding: 12px; }
   `;
   
   const CardImage = styled.div`
