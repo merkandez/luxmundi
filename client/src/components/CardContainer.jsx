@@ -50,5 +50,4 @@ const CardContent = styled.div`
     color: #cccccc;
   }
 `;
-export default Card;
-export { CardsContainer };
+export default CardsContainer;

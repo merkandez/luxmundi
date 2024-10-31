@@ -3,6 +3,8 @@ import Logo from "./Logo";
 import NavigationMenu from "./NavigationMenu";
 import AuthButtons from "./AuthButtons";
 
+//ajustar o tamanho do header para Tablet e Mobile mudando o menu
+
 const HeaderWrapper = styled.header`
   background-color: #1e1e1e;
   border-bottom: 1px solid #444444;
