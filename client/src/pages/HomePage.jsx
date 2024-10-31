@@ -5,6 +5,9 @@ import ExploreSection from "../components/ExploreSection";
 import CardsContainer from "../components/CardContainer";
 import Card from "../components/Card";
 
+//cambiar el json por la base de datos
+//description cambiar por contenido de hasta 10 palabras.
+
 const cardData = [
   {
     title: "Machu Pichu",
