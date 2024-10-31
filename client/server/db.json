@@ -1,0 +1,34 @@
+{
+    "posts": [
+      {
+        "id": 1,
+        "title": "Machu Pichu",
+        "content": "Discover the ancient Incan city nestled in the Andes Mountains..."
+      },
+      {
+        "id": 2,
+        "title": "Nueva Zelandia",
+        "content": "Explore the stunning landscapes and vibrant culture of New Zealand.."
+      },
+      {
+        "id": 3,
+        "title": "The Great Wall",
+        "content": "Experience the grandeur of one of the world's most famous landmarks."
+      },
+      {
+        "id": 4,
+        "title": "Machu Pichu",
+        "content": "Discover the ancient Incan city nestled in the Andes Mountains..."
+      },
+      {
+        "id": 5,
+        "title": "Nueva Zelandia",
+        "content": "Explore the stunning landscapes and vibrant culture of New Zealand.."
+      },
+      {
+        "id": 6,
+        "title": "The Great Wall",
+        "content": "Experience the grandeur of one of the world's most famous landmarks."
+      }
+    ]
+  }
