@@ -4,7 +4,7 @@ import styled from 'styled-components';
 const Footer = () => {
   return (
     <FooterContainer>
-      <p>© 2024 My Website. Todos los derechos reservados.</p>
+      <p>© 2024 LuxMundi. Todos los derechos reservados.</p>
     </FooterContainer>
   );
 };

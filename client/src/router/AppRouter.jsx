@@ -6,6 +6,7 @@ import LoginPage from '../pages/LoginPage';
 import RegisterPage from '../pages/RegisterPage';
 import AdminPage from '../pages/AdminPage';
 import NoAccessPage from '../pages/NoAccessPage';
+import AboutPage from '../pages/AboutPage';
 import ProtectedRoute from './ProtectedRoute';
 
 export const router = createBrowserRouter([
@@ -16,6 +17,9 @@ export const router = createBrowserRouter([
       { index: true, element: <HomePage /> },
       { path: 'login', element: <LoginPage /> },
       { path: 'register', element: <RegisterPage /> },
+      { path: 'aboutus', element: <AboutPage /> },
+
+      // Rutas protegidas
       {
         path: 'admin',
         element: (
