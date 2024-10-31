@@ -8,12 +8,12 @@ const CardsContainer = styled.div`
   padding: 0 24px;
 `;
 
-const Card = ({ title, description }) => (
+const Card = ({ title, content }) => (
   <CardWrapper>
     <CardImage />
     <CardContent>
       <h3>{title}</h3>
-      <p>{description}</p>
+      <p>{content}</p>
     </CardContent>
   </CardWrapper>
 );

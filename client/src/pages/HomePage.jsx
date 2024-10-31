@@ -5,32 +5,32 @@ import Card from "../components/Card";
 const cardData = [
   {
     title: "Machu Pichu",
-    description:
+    content:
       "Discover the ancient Incan city nestled in the Andes Mountains.",
   },
   {
     title: "Nueva Zelandia",
-    description:
+    content:
       "Explore the stunning landscapes and vibrant culture of New Zealand.",
   },
   {
     title: "The Great Wall",
-    description:
+    content:
       "Experience the grandeur of one of the world's most famous landmarks.",
   },
   {
     title: "Eiffel Tower",
-    description:
+    content:
       "Visit the iconic symbol of Paris and enjoy breathtaking views.",
   },
   {
     title: "Grand Canyon",
-    description:
+    content:
       "Marvel at the immense size and beauty of this natural wonder.",
   },
   {
     title: "Sydney Opera House",
-    description:
+    content:
       "Enjoy a performance at this architectural masterpiece in Australia.",
   },
 ];
@@ -46,7 +46,7 @@ function HomePage() {
             <Card
               key={index}
               title={card.title}
-              description={card.description}
+              content={card.content}
             />
           ))}
         </CardsContainer>
