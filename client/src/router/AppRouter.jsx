@@ -8,6 +8,7 @@ import RegisterPage from '../pages/RegisterPage.jsx';
 import AboutUs from '../pages/AboutUs.jsx';
 import NotFound from '../pages/NotFound.jsx';
 
+
 export const router = createBrowserRouter([
   {
     path: '/',

@@ -1,37 +1,28 @@
-<Section padding="1600">
-    <Panel gap="1200" type="half">
-        <FlexItem size="half">
-            <Flex direction="column" gap="600">
-                <TextContentHeading
-                    heading="Heading"
-                    subheading="Subheading"
-                />
-                <Text>
-                    Body text for your whole article or post.
-                    We’ll put in some lorem ipsum to show how a
-                    filled-out page might look:
-                </Text>
-                <Text>
-                    Excepteur efficient emerging, minim veniam
-                    anim aute carefully curated Ginza conversation
-                    exquisite perfect nostrud nisi intricate
-                    Content. Qui international first-class nulla
-                    ut. Punctual adipisicing, essential lovely
-                    queen tempor eiusmod irure. Exclusive izakaya
-                    charming Scandinavian impeccable aute quality
-                    of life soft power pariatur Melbourne occaecat
-                    discerning. Qui wardrobe aliquip, et Porter
-                    destination Toto remarkable officia Helsinki
-                    excepteur Basset hound. Zürich sleepy perfect
-                    consectetur.
-                </Text>
-            </Flex>
-        </FlexItem>
-        <Image
-            src={placeholder}
-            alt="Always use image alt"
-            aspectRatio="4-3"
-            size="medium"
-        />
-    </Panel>
-</Section>
+import Card from './Card';
+import styled from 'styled-components'
+
+
+const CardPost = () => {
+  
+  return (
+      <CardContainer>
+          {posts.map((post) => (
+              <Card
+                  key={post.id}
+                  title={post.title}
+                  description={post.description}
+                  image={post.image || "https://via.placeholder.com/160x160"}
+              />
+          ))}
+      </CardContainer>
+  );
+};
+
+export default CardPost;
+
+const CardContainer = styled.div`
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 1rem;
+    padding: 1rem;
+`;
