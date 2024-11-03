@@ -1,5 +1,3 @@
-// src/layout/Layout.jsx
-//import React from 'react';
 import { Outlet, Link } from 'react-router-dom';
 import styled from 'styled-components';
 
