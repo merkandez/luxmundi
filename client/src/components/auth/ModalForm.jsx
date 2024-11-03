@@ -1,14 +1,12 @@
+// src/components/auth/ModalForm.jsx
 import React from 'react';
-import RegisterForm from './RegisterForm';
 
-const Modal = ({ onClose }) => {
+const ModalForm = ({ children, onClose }) => {
   return (
-    <div style={overlayStyles}>
-      <div style={modalStyles}>
-        <button onClick={onClose} style={closeButtonStyles}>
-          X
-        </button>
-        <RegisterForm onClose={onClose} />
+    <div style={overlayStyles} onClick={onClose}>
+      <div style={modalStyles} onClick={(e) => e.stopPropagation()}>
+        <button onClick={onClose} style={closeButtonStyles}>X</button>
+        {children}
       </div>
     </div>
   );
@@ -24,6 +22,7 @@ const overlayStyles = {
   display: 'flex',
   justifyContent: 'center',
   alignItems: 'center',
+  zIndex: 1000,
 };
 
 const modalStyles = {
@@ -32,6 +31,8 @@ const modalStyles = {
   borderRadius: '5px',
   width: '400px',
   boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.2)',
+  position: 'relative',
+  zIndex: 1001,
 };
 
 const closeButtonStyles = {
@@ -44,4 +45,4 @@ const closeButtonStyles = {
   fontSize: '16px',
 };
 
-export default Modal;
+export default ModalForm;

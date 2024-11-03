@@ -15,35 +15,37 @@ const LoginForm = ({ onClose }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // Aquí se manejará la lógica de login
     console.log('Datos del login:', formData);
     onClose();
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <label>
-        Email:
-        <input
-          type='email'
-          name='email'
-          value={formData.email}
-          onChange={handleChange}
-          required
-        />
-      </label>
-      <label>
-        Password:
-        <input
-          type='password'
-          name='password'
-          value={formData.password}
-          onChange={handleChange}
-          required
-        />
-      </label>
-      <button type='submit'>Login</button>
-    </form>
+    <div style={{ padding: '20px', textAlign: 'center' }}>
+      <h2>Iniciar Sesión</h2>
+      <form onSubmit={handleSubmit}>
+        <div>
+          <label>Email:</label>
+          <input
+            type='email'
+            name='email'
+            value={formData.email}
+            onChange={handleChange}
+            required
+          />
+        </div>
+        <div>
+          <label>Contraseña:</label>
+          <input
+            type='password'
+            name='password'
+            value={formData.password}
+            onChange={handleChange}
+            required
+          />
+        </div>
+        <button type='submit'>Login</button>
+      </form>
+    </div>
   );
 };
 

@@ -1,37 +1,41 @@
+// src/layout/Layout.jsx
 import React, { useState } from 'react';
 import { Outlet } from 'react-router-dom';
-import Header from '../components/design/Header'; // Componente personalizado de Header
-import Footer from '../components/design/Footer'; // Componente personalizado de Footer
+import Header from '../components/design/Header';
+import Footer from '../components/design/Footer';
 import useAuth from '../hooks/useAuth';
 import styled from 'styled-components';
 import ModalForm from '../components/auth/ModalForm';
-import RegisterForm from '../components/auth/RegisterForm'; // Formulario de registro
+import RegisterForm from '../components/auth/RegisterForm';
 import LoginForm from '../components/auth/LoginForm';
+import ProtectedWrapper from '../components/auth/ProtectedWrapper';
 
 const Layout = () => {
-  const { isAuthenticated, role, logout } = useAuth(false);
+  const { isAuthenticated, role, logout } = useAuth();
   const [showModalForm, setShowModalForm] = useState(false);
-  const [isLogin, setIsLogin] = useState(true); // Controla si se muestra el login o registro
+  const [isLogin, setIsLogin] = useState(true);
 
   const openModalForm = (isLoginForm) => {
     setIsLogin(isLoginForm);
     setShowModalForm(true);
   };
-  // Función para cerrar el modal
+
   const closeModalForm = () => setShowModalForm(false);
 
   return (
     <MainContainer>
       <Header
         isAuthenticated={isAuthenticated}
-        role={role} // Pasamos el role al Header
+        role={role}
         logout={logout}
-        openLoginModal={() => openModalForm(true)} // Abre el modal de login
-        openRegisterModal={() => openModalForm(false)} // Abre el modal de registro
+        openLoginModal={() => openModalForm(true)}
+        openRegisterModal={() => openModalForm(false)}
       />
       <Content>
-        <Outlet />
-        {/* Renderizar el modal solo si el usuario no está autenticado y se requiere login o registro */}
+        <ProtectedWrapper onTrigger={() => openModalForm(false)}>
+          <Outlet />
+        </ProtectedWrapper>
+        {/* Modal para login o registro */}
         {!isAuthenticated && showModalForm && (
           <ModalForm onClose={closeModalForm}>
             {isLogin ? <LoginForm onClose={closeModalForm} /> : <RegisterForm onClose={closeModalForm} />}
@@ -58,12 +62,13 @@ const Content = styled.main`
   padding: 2rem;
   background-color: #f4f4f9;
 `;
+
 const Overlay = styled.div`
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: rgba(0, 0, 0, 0.5); // Color semitransparente
-  z-index: 10; // Asegura que esté detrás del modal
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 10;
 `;
