@@ -1,38 +1,43 @@
-import { createContext, useState, useEffect, useContext } from 'react';
+import { createContext, useState, useEffect } from 'react';
+import { useContext } from 'react';
+import PropTypes from 'prop-types'; // Importa PropTypes
 
-export const AuthContext = createContext(); // Agregando la definición del contexto
+const AuthContext = createContext(); // Asegúrate de definir el contexto aquí
 
 export const useAuth = () => {
-    return useContext(AuthContext);
+  return useContext(AuthContext);
 };
 
 export const AuthProvider = ({ children }) => {
-    const [isAuthenticated, setIsAuthenticated] = useState(false);
-    const [user, setUser] = useState(null); // Agregar estado para el usuario
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
 
-    useEffect(() => {
-        const token = localStorage.getItem('token');
-        if (token) {
-            setIsAuthenticated(true);
-            // Aquí puedes agregar lógica para decodificar el token y establecer el usuario
-        }
-    }, []);
+  useEffect(() => {
+    const token = localStorage.getItem('token');
+    if (token) {
+      setIsAuthenticated(true);
+    }
+  }, []);
 
-    const login = (token) => {
-        localStorage.setItem('token', token);
-        setIsAuthenticated(true);
-        // Lógica para establecer el usuario tras el login (decodificación del token)
-    };
+  const login = (token) => {
+    localStorage.setItem('token', token);
+    setIsAuthenticated(true);
+  };
 
-    const logout = () => {
-        localStorage.removeItem('token');
-        setIsAuthenticated(false);
-        setUser(null); // Limpiar el estado del usuario al cerrar sesión
-    };
+  const logout = () => {
+    localStorage.removeItem('token');
+    setIsAuthenticated(false);
+  };
 
-    return (
-        <AuthContext.Provider value={{ isAuthenticated, user, login, logout }}>
-            {children}
-        </AuthContext.Provider>
-    );
+  return (
+    <AuthContext.Provider value={{ isAuthenticated, login, logout }}>
+      {children}
+    </AuthContext.Provider>
+  );
 };
+
+// Validación de PropTypes
+AuthProvider.propTypes = {
+  children: PropTypes.node.isRequired, // 'children' debe ser un nodo React y es obligatorio
+};
+
+export default AuthProvider; // Asegúrate de que este sea el único export por defecto
