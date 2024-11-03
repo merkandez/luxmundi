@@ -7,6 +7,7 @@ import CardsContainer from "./CardContainer"
 const ExploreSection = () => {
   // Crea un estado para guardar los posts obtenidos
   const [posts, setPosts] = useState([]);
+  const [filteredPosts, setFilteredPosts] = useState([]);
 
   // Este hook se ejecuta al cargar el componente y llama a la API
   useEffect(() => {
@@ -14,6 +15,7 @@ const ExploreSection = () => {
       try {
         const data = await getPosts(); // Llama a la API
         setPosts(data); // Guarda los posts en el estado
+        setFilteredPosts(data); //Inicialmente, post filtrador son todos
       } catch (error) {
         console.error("Error fetching posts:", error);
       }
@@ -29,7 +31,10 @@ const ExploreSection = () => {
       <CardsContainer>
         {/* Mapea cada post y lo muestra en un componente Card */}
         {posts.map((post) => (
-          <Card key={post.id} title={post.title} content={post.content} />
+          <Card 
+          key={post.id} 
+          title={post.title} 
+          content={post.content} />
         ))}
       </CardsContainer>
     </SectionWrapper>
