@@ -2,8 +2,9 @@ import dotenv from 'dotenv';
 import express from 'express';
 import cors from 'cors';
 import sequelize from './database/connection_db'; // Conexión a la base de datos
-import userRoutes from './routes/userRoutes'; // Rutas de user
-
+import postRoutes from './routes/postRoutes'; // Rutas de posts
+import authRoutes from './routes/authRoutes'; // Rutas de autenticación
+import './models/index'; // Importar los modelos
 
 dotenv.config();
 
@@ -13,12 +14,12 @@ const PORT = process.env.PORT || 8080;
 app.use(cors());
 app.use(express.json());
 
-app.use('/api/users', userRoutes); // 
-
-// Función para crear admin y el que conecte 
-const startServer = async () => {
-  try { // Sincronizar la base de datos
-  await sequelize.sync({alter: true})
+app.use('/api/posts', postRoutes); // Ruta base para las entradas posts del blog
+app.use('/api/auth', authRoutes); // Ruta base para las rutas de autenticación
+// Conexión a la base de datos
+sequelize
+  .sync({ alter: false })
+  .then(() => {
     console.log('Conexión a la base de datos exitosa (￣y▽￣)╭ Ohohoho.....');
 
     // Llama a la función para crear el usuario admin

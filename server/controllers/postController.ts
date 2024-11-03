@@ -1,21 +1,18 @@
 import { Request, Response } from 'express';
 import PostModel from '../models/postModel';
 
-// Controlador para obtener todos los posts
-export const getAllPosts = async (req: Request, res: Response) => {
+// Controlador para obtener todos los posts (disponible solo para usuarios autenticados)
+export const getAllPosts = async (req: Request, res: Response): Promise<void> => {
   try {
     const posts = await PostModel.findAll();
-    res.json(posts); // Envía los posts como respuesta JSON
+    res.json(posts);
   } catch (error: any) {
-    res.status(500).json({
-      message: 'Error al obtener posts',
-      error: error.message,
-    });
+    res.status(500).json({ message: 'Error al obtener posts', error: error.message });
   }
 };
 
-// Controlador para obtener una entrada por ID
-export const getPostById = async (req: Request, res: Response) => {
+// Controlador para obtener un post por ID (disponible solo para usuarios autenticados)
+export const getPostById = async (req: Request, res: Response): Promise<void> => {
   const { id } = req.params;
   try {
     const post = await PostModel.findByPk(id);
@@ -25,27 +22,25 @@ export const getPostById = async (req: Request, res: Response) => {
       res.status(404).json({ message: 'Post no encontrado' });
     }
   } catch (error: any) {
-    res
-      .status(500)
-      .json({ message: 'Error al obtener posts', error: error.message });
+    res.status(500).json({ message: 'Error al obtener post', error: error.message });
   }
 };
 
-// Crear un nuevo post
-export const createPost = async (req: Request, res: Response) => {
-  const { userId, title, content, imageUrl } = req.body;
+// Controlador para crear un nuevo post (solo para administradores)
+export const createPost = async (req: Request, res: Response): Promise<void> => {
+  const { title, content, imageUrl } = req.body;
+  const userId = (req as any).user.id; // Extraer el userId del token
+
   try {
     const post = await PostModel.create({ userId, title, content, imageUrl });
     res.status(201).json(post);
   } catch (error: any) {
-    res
-      .status(500)
-      .json({ message: 'Error al crear post', error: error.message });
+    res.status(500).json({ message: 'Error al crear post', error: error.message });
   }
 };
 
-// Actualizar una entrada existente
-export const updatePost = async (req: Request, res: Response) => {
+// Controlador para actualizar un post (solo para administradores)
+export const updatePost = async (req: Request, res: Response): Promise<void> => {
   const { id } = req.params;
   const { title, content, imageUrl } = req.body;
   try {
@@ -57,14 +52,12 @@ export const updatePost = async (req: Request, res: Response) => {
       res.status(404).json({ message: 'Post no encontrado' });
     }
   } catch (error: any) {
-    res
-      .status(500)
-      .json({ message: 'Error al actualizar el post', error: error.message });
+    res.status(500).json({ message: 'Error al actualizar post', error: error.message });
   }
 };
 
-// Eliminar un post
-export const deletePost = async (req: Request, res: Response) => {
+// Controlador para eliminar un post (solo para administradores)
+export const deletePost = async (req: Request, res: Response): Promise<void> => {
   const { id } = req.params;
   try {
     const post = await PostModel.findByPk(id);
@@ -75,8 +68,6 @@ export const deletePost = async (req: Request, res: Response) => {
       res.status(404).json({ message: 'Post no encontrado' });
     }
   } catch (error: any) {
-    res
-      .status(500)
-      .json({ message: 'Error al eliminar el post', error: error.message });
+    res.status(500).json({ message: 'Error al eliminar post', error: error.message });
   }
 };
