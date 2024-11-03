@@ -19,20 +19,22 @@ app.use('/api/auth', authRoutes); // Ruta base para las rutas de autenticación
 // Conexión a la base de datos
 sequelize
   .sync({ alter: false })
-  .then(() => {
+  .then(async () => {
     console.log('Conexión a la base de datos exitosa (￣y▽￣)╭ Ohohoho.....');
 
     // Llama a la función para crear el usuario admin
-  await createAdminUser();
+    // await createAdminUser();
 
-  // Inicio del servidor
-  app.listen(PORT, () => {
-    console.log(`Servidor corriendo en el puerto ${PORT}`);
-  });
-  } catch (error)  {
-    console.error('Error al conectar a la base de datos (•ˋ _ ˊ•)', error);
+    // Inicio del servidor
+    app.listen(PORT, () => {
+      console.log(`Servidor corriendo en el puerto ${PORT}`);
+    });
+  })
+  .catch((error) => {    console.error('Error al conectar a la base de datos (•ˋ _ ˊ•)', error);
   }
-};
-
   // Llama a la función para iniciar el servidor
-startServer();
+)
+// Inicio del servidor
+app.listen(PORT);
+console.log(`Servidor corriendo en el puerto ${PORT}`);
+  
