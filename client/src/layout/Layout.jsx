@@ -9,7 +9,7 @@ import RegisterForm from '../components/auth/RegisterForm'; // Formulario de reg
 import LoginForm from '../components/auth/LoginForm';
 
 const Layout = () => {
-  const { isAuthenticated, role, logout } = useAuth();
+  const { isAuthenticated, role, logout } = useAuth(false);
   const [showModalForm, setShowModalForm] = useState(false);
   const [isLogin, setIsLogin] = useState(true); // Controla si se muestra el login o registro
 
