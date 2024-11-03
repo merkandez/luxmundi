@@ -2,8 +2,6 @@ import React from 'react';
 import { createBrowserRouter } from 'react-router-dom';
 import Layout from '../layout/Layout';
 import HomePage from '../pages/HomePage';
-import LoginPage from '../pages/LoginPage';
-import RegisterPage from '../pages/RegisterPage';
 import AdminPage from '../pages/AdminPage';
 import NoAccessPage from '../pages/NoAccessPage';
 import AboutPage from '../pages/AboutPage';
@@ -12,18 +10,16 @@ import ProtectedRoute from './ProtectedRoute';
 export const router = createBrowserRouter([
   {
     path: '/',
-    element: <Layout />,
+    element: <Layout />, // El Layout gestionará el modal de autenticación
     children: [
       { index: true, element: <HomePage /> },
-      { path: 'login', element: <LoginPage /> },
-      { path: 'register', element: <RegisterPage /> },
       { path: 'aboutus', element: <AboutPage /> },
 
       // Rutas protegidas
       {
         path: 'admin',
         element: (
-          <ProtectedRoute requiredRole='admin'>
+          <ProtectedRoute requiredRole="admin">
             <AdminPage />
           </ProtectedRoute>
         ),
