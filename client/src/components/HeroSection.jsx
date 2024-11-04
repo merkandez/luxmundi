@@ -1,18 +1,15 @@
 import React from "react";
 import styled from "styled-components";
-import CloseButtonComponent from '../components/CloseButtonComponent';
+
 
 function HeroSection({ }) {
-  const handleFlip = () => {
-    console.log('Botón de cerrar presionado');
-  };
+  
 
     return (
         <HeroWrapper>
         <ContentContainer>
           <MainTitle>Lux Mundi</MainTitle>
           <SubTitle>Subtitle</SubTitle>
-          <CloseButtonComponent handleFlip={handleFlip}/>
         </ContentContainer>
       </HeroWrapper>
       
