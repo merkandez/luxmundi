@@ -23,7 +23,7 @@ function Logo() {
     <LogoWrapper>
       <LogoImage
         src="https://cdn.builder.io/api/v1/image/assets/4a6b075cba4d439db44d5a2134fb5890/4f5ec0c47e978737e43c29258abd006f66c9cb9fb2d933cce91751060a91e067?apiKey=4a6b075cba4d439db44d5a2134fb5890&"
-        alt="Company Logo"
+        alt="Lux Mundi Logo"
         loading="lazy"
       />
     </LogoWrapper>
