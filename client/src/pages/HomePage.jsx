@@ -3,6 +3,8 @@ import ExploreSection from "../components/ExploreSection";
 import CardsContainer from "../components/CardContainer";
 import HeroSection from "../components/HeroSection";
 import ImageContent from "../components/ImagenContent";
+import axios from 'axios';
+import Card from '../components/Card';
 
 
 function HomePage() {
@@ -13,8 +15,8 @@ function HomePage() {
         <p>Ultimos posts</p>
         <CardsContainer></CardsContainer>
         </ExploreSection>
-        <HeroSection></HeroSection>
-        <ImageContent></ImageContent>
+      {/*<HeroSection></HeroSection> */}
+      {/*<ImageContent></ImageContent> */}
        
     </div>
   );

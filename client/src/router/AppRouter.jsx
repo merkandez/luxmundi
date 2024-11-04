@@ -7,6 +7,7 @@ import LoginPage from '../pages/LoginPage.jsx';
 import RegisterPage from '../pages/RegisterPage.jsx';
 import AboutUs from '../pages/AboutUs.jsx';
 import NotFound from '../pages/NotFound.jsx';
+import ArticlePage from '../pages/ArticlePage.jsx'
 
 
 export const router = createBrowserRouter([
@@ -19,6 +20,7 @@ export const router = createBrowserRouter([
       { path: 'login', element: <LoginPage /> }, // Ruta de login
       { path: 'register', element: <RegisterPage /> }, // Ruta de registro
       { path: 'aboutus', element: <AboutUs /> }, // Ruta de "About Us"
+      { path: 'articlePage/:id', element: <ArticlePage/> }
     ],
   },
 ]);

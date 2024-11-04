@@ -1,17 +1,28 @@
+import React from 'react'
 import styled from "styled-components";
 import PropTypes from "prop-types";
+import { useNavigate } from 'react-router-dom';
 
-const Card = ({ title, content }) => (
-    <CardWrapper>
+const Card = ({ id, title, content }) => {
+  const navigate = useNavigate();
+
+  const handleClick = () => {
+    navigate(`/articlePage/${id}`); // Ajusta la ruta según lo que necesites
+  };
+    
+  return (
+    <CardWrapper onClick={handleClick}>
       <CardImage />
       <CardContent>
         <h3>{title}</h3>
         <p>{content}</p>
       </CardContent>
     </CardWrapper>
-  );
+  )
+  };
   
   Card.propTypes = {
+    id: PropTypes.number.isRequired,
     title: PropTypes.string.isRequired,
     content: PropTypes.string.isRequired,
   };
