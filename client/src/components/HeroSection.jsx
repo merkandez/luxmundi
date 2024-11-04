@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import CloseButton from '../components/CloseButton'
+import CloseButtonComponent from '../components/CloseButtonComponent';
 
 function HeroSection({ }) {
   const handleFlip = () => {
@@ -12,7 +12,7 @@ function HeroSection({ }) {
         <ContentContainer>
           <MainTitle>Lux Mundi</MainTitle>
           <SubTitle>Subtitle</SubTitle>
-          <CloseButton handleFlip={handleFlip}/>
+          <CloseButtonComponent handleFlip={handleFlip}/>
         </ContentContainer>
       </HeroWrapper>
       
