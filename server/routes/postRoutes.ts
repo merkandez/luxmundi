@@ -7,7 +7,7 @@ import {
   deletePost
 } from '../controllers/postController';
 import { authMiddleware } from '../middlewares/authMiddleware'; // Importamos el middleware autenticación
-import { adminMiddleware } from '../middlewares/adminMiddleware'; // Importamos el middleware de admin
+import { adminMiddleware } from '../middleware/adminMiddleware'; // Importamos el middleware de admin
 
 const router = Router();
 

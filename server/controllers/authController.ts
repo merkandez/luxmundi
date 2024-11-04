@@ -10,18 +10,18 @@ export const registerUser = async (req: Request, res: Response): Promise<void> =
   try {
     const existingUser = await User.findOne({ where: { email } });
     if (existingUser) {
-      res.status(400).json({ message: 'El correo ya está en uso' });
+      res.status(400).json({ message: '📧El correo ya está en uso' });
       return;
     }
 
     const hashedPassword = await encrypt(password); // Usamos la función encrypt
     const newUser = await User.create({ username, email, password: hashedPassword, avatarUrl });
-    res.status(201).json({ message: 'Usuario registrado con éxito', user: newUser });
+    res.status(201).json({ message: '✅Usuario registrado con éxito', user: newUser });
   } catch (error) {
     if (error instanceof Error) {
-      res.status(500).json({ message: 'Error en el servidor', error: error.message });
+      res.status(500).json({ message: '❗Error en el servidor', error: error.message });
     } else {
-      res.status(500).json({ message: 'Error en el servidor', error });
+      res.status(500).json({ message: '❗Error en el servidor', error });
     }
   }
 };
@@ -33,23 +33,23 @@ export const loginUser = async (req: Request, res: Response): Promise<void> => {
   try {
     const user = await User.findOne({ where: { email } });
     if (!user) {
-      res.status(400).json({ message: 'Credenciales incorrectas' });
+      res.status(400).json({ message: '❌Credenciales incorrectas' });
       return;
     }
 
     const isMatch = await compare(password, user.password); // Usamos la función compare
     if (!isMatch) {
-      res.status(400).json({ message: 'Credenciales incorrectas' });
+      res.status(400).json({ message: '❌Credenciales incorrectas' });
       return;
     }
 
     const token = tokenSign(user); // Generamos el token JWT
-    res.json({ message: 'Inicio de sesión exitoso', token });
+    res.json({ message: '✅Inicio de sesión exitoso', token });
   } catch (error) {
     if (error instanceof Error) {
-      res.status(500).json({ message: 'Error en el servidor', error: error.message });
+      res.status(500).json({ message: '❗Error en el servidor', error: error.message });
     } else {
-      res.status(500).json({ message: 'Error en el servidor', error });
+      res.status(500).json({ message: '❗Error en el servidor', error });
     }
   }
 };
@@ -63,13 +63,13 @@ export const updateUser = async (req: Request, res: Response): Promise<void> => 
   try {
     const user = await User.findByPk(id);
     if (!user) {
-      res.status(404).json({ message: 'Usuario no encontrado' });
+      res.status(404).json({ message: '❎Usuario no encontrado' });
       return;
     }
 
     // Solo un admin puede actualizar el rol
     if (role && userRole.role !== 'admin') {
-      res.status(403).json({ message: 'No autorizado para cambiar el rol' });
+      res.status(403).json({ message: '🚫No autorizado para cambiar el rol' });
       return;
     }
 
@@ -87,10 +87,10 @@ export const updateUser = async (req: Request, res: Response): Promise<void> => 
       role: userRole.role === 'admin' ? role : user.role // Solo cambia el rol si es admin
     });
 
-    res.json({ message: 'Usuario actualizado con éxito', user });
+    res.json({ message: '✅Usuario actualizado con éxito', user });
   } catch (error) {
     if (error instanceof Error) {
-      res.status(500).json({ message: 'Error al actualizar usuario', error: error.message });
+      res.status(500).json({ message: '❗Error al actualizar usuario', error: error.message });
     }
   }
 };
@@ -102,16 +102,16 @@ export const deleteUser = async (req: Request, res: Response): Promise<void> => 
     const user = await User.findByPk(id);
 
     if (!user) {
-      res.status(404).json({ message: 'Usuario no encontrado' });
+      res.status(404).json({ message: '❗Usuario no encontrado' });
       return;
     }
 
     // Eliminar el usuario
     await user.destroy();
-    res.json({ message: 'Usuario eliminado con éxito' });
+    res.json({ message: '✅Usuario eliminado con éxito' });
   } catch (error) {
     if (error instanceof Error) {
-      res.status(500).json({ message: 'Error al eliminar el usuario', error: error.message });
+      res.status(500).json({ message: '❌Error al eliminar el usuario', error: error.message });
     }
   }
 };
