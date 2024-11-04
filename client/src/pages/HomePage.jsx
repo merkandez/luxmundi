@@ -1,10 +1,9 @@
 import React from "react";
 import ExploreSection from "../components/ExploreSection";
 import CardsContainer from "../components/CardContainer";
-import HeroSection from "../components/HeroSection";
-import ImageContent from "../components/ImagenContent";
+
 import axios from 'axios';
-import Card from '../components/Card';
+
 
 
 function HomePage() {

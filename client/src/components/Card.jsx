@@ -22,7 +22,7 @@ const Card = ({ id, title, content }) => {
   };
   
   Card.propTypes = {
-    id: PropTypes.number.isRequired,
+    
     title: PropTypes.string.isRequired,
     content: PropTypes.string.isRequired,
   };

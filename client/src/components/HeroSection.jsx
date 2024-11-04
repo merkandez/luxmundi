@@ -1,16 +1,26 @@
 import React from "react";
 import styled from "styled-components";
+import CloseButton from '../components/CloseButton'
 
 function HeroSection({ }) {
+  const handleFlip = () => {
+    console.log('Botón de cerrar presionado');
+  };
+
     return (
         <HeroWrapper>
         <ContentContainer>
           <MainTitle>Lux Mundi</MainTitle>
           <SubTitle>Subtitle</SubTitle>
+          <CloseButton handleFlip={handleFlip}/>
         </ContentContainer>
       </HeroWrapper>
+      
+      
     );
   };
+
+
   
   const HeroWrapper = styled.section`
     background-color: rgba(44, 44, 44, 1);
