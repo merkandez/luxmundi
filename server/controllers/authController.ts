@@ -4,7 +4,10 @@ import { tokenSign } from '../utils/handleJwt';
 import User from '../models/userModel';
 
 // Controlador de registro de usuario con avatar opcional
-export const registerUser = async (req: Request, res: Response): Promise<void> => {
+export const registerUser = async (
+  req: Request,
+  res: Response
+): Promise<void> => {
   const { username, email, password, avatarUrl } = req.body;
 
   try {
@@ -15,11 +18,20 @@ export const registerUser = async (req: Request, res: Response): Promise<void> =
     }
 
     const hashedPassword = await encrypt(password); // Usamos la función encrypt
-    const newUser = await User.create({ username, email, password: hashedPassword, avatarUrl });
-    res.status(201).json({ message: 'Usuario registrado con éxito', user: newUser });
+    const newUser = await User.create({
+      username,
+      email,
+      password: hashedPassword,
+      avatarUrl,
+    });
+    res
+      .status(201)
+      .json({ message: 'Usuario registrado con éxito', user: newUser });
   } catch (error) {
     if (error instanceof Error) {
-      res.status(500).json({ message: 'Error en el servidor', error: error.message });
+      res
+        .status(500)
+        .json({ message: 'Error en el servidor', error: error.message });
     } else {
       res.status(500).json({ message: 'Error en el servidor', error });
     }
@@ -47,7 +59,9 @@ export const loginUser = async (req: Request, res: Response): Promise<void> => {
     res.json({ message: 'Inicio de sesión exitoso', token });
   } catch (error) {
     if (error instanceof Error) {
-      res.status(500).json({ message: 'Error en el servidor', error: error.message });
+      res
+        .status(500)
+        .json({ message: 'Error en el servidor', error: error.message });
     } else {
       res.status(500).json({ message: 'Error en el servidor', error });
     }
@@ -55,8 +69,11 @@ export const loginUser = async (req: Request, res: Response): Promise<void> => {
 };
 // Controlador para actualizar datos del usuario (incluyendo rol, si es admin)
 
-export const updateUser = async (req: Request, res: Response): Promise<void> => {
-  const { id } = req.params;  // El ID del usuario que se va a actualizar
+export const updateUser = async (
+  req: Request,
+  res: Response
+): Promise<void> => {
+  const { id } = req.params; // El ID del usuario que se va a actualizar
   const { username, email, password, avatarUrl, role } = req.body;
   const userRole = (req as any).user; // Usuario que realiza la solicitud
 
@@ -84,18 +101,23 @@ export const updateUser = async (req: Request, res: Response): Promise<void> => 
       username,
       email,
       avatarUrl,
-      role: userRole.role === 'admin' ? role : user.role // Solo cambia el rol si es admin
+      role: userRole.role === 'admin' ? role : user.role, // Solo cambia el rol si es admin
     });
 
     res.json({ message: 'Usuario actualizado con éxito', user });
   } catch (error) {
     if (error instanceof Error) {
-      res.status(500).json({ message: 'Error al actualizar usuario', error: error.message });
+      res
+        .status(500)
+        .json({ message: 'Error al actualizar usuario', error: error.message });
     }
   }
 };
 // Controlador para eliminar un usuario (solo administradores)
-export const deleteUser = async (req: Request, res: Response): Promise<void> => {
+export const deleteUser = async (
+  req: Request,
+  res: Response
+): Promise<void> => {
   const { id } = req.params;
 
   try {
@@ -111,7 +133,76 @@ export const deleteUser = async (req: Request, res: Response): Promise<void> => 
     res.json({ message: 'Usuario eliminado con éxito' });
   } catch (error) {
     if (error instanceof Error) {
-      res.status(500).json({ message: 'Error al eliminar el usuario', error: error.message });
+      res.status(500).json({
+        message: 'Error al eliminar el usuario',
+        error: error.message,
+      });
+    }
+  }
+};
+
+// Controlador para obtener todos los usuarios (solo accesible para administradores)
+
+export const getAllUsers = async (
+  req: Request,
+  res: Response
+): Promise<void> => {
+  const userRole = (req as any).user.role;
+
+  if (userRole !== 'admin') {
+    res
+      .status(403)
+      .json({ message: 'No autorizado para ver todos los usuarios' });
+    return;
+  }
+
+  try {
+    const users = await User.findAll({
+      attributes: { exclude: ['password'] }, // Excluimos el password por seguridad
+    });
+    res.json(users);
+  } catch (error) {
+    if (error instanceof Error) {
+      res.status(500).json({
+        message: 'Error al obtener los usuarios',
+        error: error.message,
+      });
+    }
+  }
+};
+
+// Controlador para obtener un usuario por ID (admin o el propio usuario)
+
+export const getUserById = async (
+  req: Request,
+  res: Response
+): Promise<void> => {
+  const { id } = req.params;
+  const userRole = (req as any).user.role;
+  const userId = (req as any).user.id; // ID del usuario autenticado
+
+  // Solo un admin o el propio usuario pueden ver los datos
+  if (userRole !== 'admin' && userId !== parseInt(id)) {
+    res.status(403).json({ message: 'No autorizado para ver este usuario' });
+    return;
+  }
+
+  try {
+    const user = await User.findByPk(id, {
+      attributes: { exclude: ['password'] },
+    });
+
+    if (!user) {
+      res.status(404).json({ message: 'Usuario no encontrado' });
+      return;
+    }
+
+    res.json(user);
+  } catch (error) {
+    if (error instanceof Error) {
+      res
+        .status(500)
+        .json({ message: 'Error al obtener el usuario', error: error.message });
     }
   }
 };

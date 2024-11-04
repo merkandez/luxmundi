@@ -1,1 +1,0 @@
-/* configura las llamadas a las rutas de login y registro del backend usando fetch o axios. */
