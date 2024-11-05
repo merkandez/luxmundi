@@ -3,6 +3,8 @@ import React, { useEffect, useState } from "react";
 import { getPosts } from "../services/api"; // Importa la función de API
 import Card from "./Card"; // Importa el componente Card para mostrar cada post
 import CardsContainer from "./CardContainer"
+import Pagination from "./Pagination";// Llamar a paginacion
+
 
 const ExploreSection = () => {
   // Crea un estado para guardar los posts obtenidos
@@ -62,6 +64,7 @@ const ExploreSection = () => {
           content={post.content} />
         ))}
       </CardsContainer>
+      <Pagination/> {/* Llamar solo a Pagination */}
     </SectionWrapper>
   );
 };
@@ -102,7 +105,7 @@ const SectionWrapper = styled.section`
     border: none;
     border-radius: 5px;
   }
-
+ 
 
   @media (max-width: 768px) { 
   padding: 20px 12px; 
