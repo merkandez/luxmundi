@@ -15,6 +15,18 @@ export const fetchUsers = async () => {
     throw error;
   }
 };
+// Obtener usuario por ID
+export const fetchUserById = async (userId) => {
+  try {
+    const response = await axios.get(`${API_URL}/users/${userId}`, {
+      headers: { Authorization: `Bearer ${localStorage.getItem('token')}` },
+    });
+    return response.data;
+  } catch (error) {
+    console.error('Error al obtener el usuario:', error);
+    throw error;
+  }
+};
 
 // Función para actualizar el rol de un usuario
 export const updateUserRole = async (userId, newRole) => {
