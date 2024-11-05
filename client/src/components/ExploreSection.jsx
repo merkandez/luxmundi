@@ -71,28 +71,34 @@ const ExploreSection = () => {
 // Estilos para la sección
 const SectionWrapper = styled.section`
   background-color: #2c2c2c;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
   color: #ffffff;
-  padding: 40px 24px;
+  padding: 64px 64px 146px;
   text-align: center;
 
   h2 {
     font-size: 2rem;
     font-weight: 600;
     margin-bottom: 8px;
+    
   }
 
   p {
     font-size: 1rem;
     color: #aaaaaa;
     margin-bottom: 24px;
+    
   }
 
-  /* Estilos para el campo de búsqueda */
+  //Estilos para el campo de búsqueda 
+  
   input {
     padding: 10px;
     width: 80%;
     max-width: 400px;
-    margin-bottom: 20px;
+    margin: 0 auto 20px auto; /* Centra el campo búsqueda */
     border: none;
     border-radius: 5px;
   }

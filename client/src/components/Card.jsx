@@ -30,7 +30,7 @@ const Card = ({ id, title, content }) => {
   export default Card;
   
   const CardWrapper = styled.div`
-    background-color: #1e1e1e;
+    background-color: red;
     border-radius: 8px;
     padding: 16px;
     text-align: left;
@@ -41,7 +41,7 @@ const Card = ({ id, title, content }) => {
   
   const CardImage = styled.div`
     background-color: #444444;
-    width: 100%;
+    width: 50%;
     height: 150px;
     border-radius: 8px;
     margin-bottom: 12px;

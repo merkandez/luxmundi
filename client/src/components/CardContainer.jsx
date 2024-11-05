@@ -40,7 +40,7 @@ const CardWrapper = styled.div`
 const CardImage = styled.div`
   background-color: #444444;
   width: 100%;
-  height: 150px;
+  height: 130px;
   border-radius: 8px;
   margin-bottom: 12px;
 `;

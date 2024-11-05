@@ -21,16 +21,15 @@ const ImageContentPanel = () => {
 };
 
 const StyledPanel = styled.section`
-  background-color: #1e1e1e;
+  background-color: rgba(30, 30, 30, 1);
   display: flex;
   align-items: center;
-  gap: 40px 48px;
-  line-height: 22px;
-  justify-content: flex-start;
-  flex-wrap: wrap;
+  gap: 40px;
+  justify-content: space-between;
   padding: 114px 64px;
 
   @media (max-width: 991px) {
+    flex-direction: column;
     padding: 100px 20px;
   }
 `;
@@ -38,18 +37,14 @@ const StyledPanel = styled.section`
 const StyledImage = styled.img`
   aspect-ratio: 1.54;
   object-fit: contain;
-  object-position: center;
-  width: 100%;
-  align-self: stretch;
+  width: 50%; /* La imagen ocupa el 50% del ancho */
   min-width: 240px;
-  min-height: 350px;
-  flex: 1;
-  flex-basis: 0%;
-  margin: auto 0;
+  max-width: 500px;
+  flex-shrink: 0;
+  margin: auto;
 
   @media (max-width: 991px) {
-    max-width: 100%;
+    width: 100%; /* En pantallas más pequeñas, la imagen ocupa el 100% */
   }
 `;
-
 export default ImageContentPanel;
