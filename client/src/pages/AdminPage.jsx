@@ -13,8 +13,8 @@ import styled from 'styled-components';
 const AdminPage = () => {
   const [users, setUsers] = useState([]);
   const [posts, setPosts] = useState([]);
- /*  const [selectedUser, setSelectedUser] = useState(null);
-  const [selectedPost, setSelectedPost] = useState(null); */
+  const [selectedUser, setSelectedUser] = useState(null);
+  const [selectedPost, setSelectedPost] = useState(null);
 
   useEffect(() => {
     // Cargar usuarios y publicaciones al montar el componente
@@ -60,20 +60,22 @@ const AdminPage = () => {
       <Section>
         <h2>Gestión de Usuarios</h2>
         <UserManagement
-          users={users}
-          onUpdateUser={handleUserUpdate}
-          onDeleteUser={handleUserDelete}
-          /* onSelectUser={setSelectedUser} */
+            users={users}
+            selectedUser={selectedUser}
+            onSelectUser={setSelectedUser}
+            onUpdateUser={handleUserUpdate}
+            onDeleteUser={handleUserDelete}
         />
       </Section>
       <Section>
         <h2>Gestión de Publicaciones</h2>
         <PostManagement
-          posts={posts}
-          onUpdatePost={handlePostUpdate}
-          onDeletePost={handlePostDelete}
-          onCreatePost={handlePostCreate}
-         /*  onSelectPost={setSelectedPost} */
+           posts={posts}
+           selectedPost={selectedPost}
+           onSelectPost={setSelectedPost}
+           onUpdatePost={handlePostUpdate}
+           onDeletePost={handlePostDelete}
+           onCreatePost={handlePostCreate}
         />
       </Section>
     </Container>
