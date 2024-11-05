@@ -1,16 +1,10 @@
 import { Router } from 'express';
-import {
-  registerUser,
-  loginUser,
-  updateUser,
-  deleteUser,
-} from '../controllers/authController';
+import { registerUser, loginUser } from '../controllers/authController';
 import { body } from 'express-validator';
-import { authMiddleware } from '../middlewares/authMiddleware';
-import { adminMiddleware } from '../middlewares/adminMiddleware';
+
 const router = Router();
 
-// Rutas de registro y login con validación
+// Ruta de registro
 router.post(
   '/register',
   [
@@ -26,6 +20,7 @@ router.post(
   registerUser
 );
 
+// Ruta del login
 router.post(
   '/login',
   [
@@ -34,26 +29,5 @@ router.post(
   ],
   loginUser
 );
-
-// Ruta para actualizar usuario (datos o rol)
-router.put(
-  '/:id',
-  authMiddleware,
-  [
-    body('email').optional().isEmail().withMessage('Correo no válido'),
-    body('username').optional().isString().withMessage('Nombre no válido'),
-    body('password')
-      .optional()
-      .isLength({ min: 6 })
-      .withMessage('Contraseña debe tener al menos 6 caracteres'),
-    body('role')
-      .optional()
-      .isIn(['admin', 'user'])
-      .withMessage('Rol no válido'),
-  ],
-  updateUser
-);
-// Ruta para eliminar un usuario (solo admin)
-router.delete('/:id', authMiddleware, adminMiddleware, deleteUser);
 
 export default router;

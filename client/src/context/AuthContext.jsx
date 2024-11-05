@@ -1,42 +1,40 @@
-import { createContext, useState, useEffect, useContext } from 'react';
-import PropTypes from 'prop-types'; // Importa PropTypes
+import React, { createContext, useState, useEffect } from 'react';
 
-const AuthContext = createContext(); // Define el contexto
+// Crear el contexto de autenticación
+export const AuthContext = createContext();
 
-// Hook personalizado para acceder al contexto de autenticación
-export const useAuth = () => {
-  return useContext(AuthContext);
-};
-
-// Proveedor de autenticación
 export const AuthProvider = ({ children }) => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [role, setRole] = useState(null); // Estado para el rol del usuario
 
   useEffect(() => {
+    // Simulamos la carga del token y rol desde almacenamiento local
+    const storedRole = localStorage.getItem('role');
     const token = localStorage.getItem('token');
-    setIsAuthenticated(!!token); // Establece el estado según la existencia del token
+
+    if (token) {
+      setIsAuthenticated(true);
+      setRole(storedRole || 'user'); // Definir rol por defecto
+    }
   }, []);
 
-  const login = (token) => {
-    localStorage.setItem('token', token);
-    setIsAuthenticated(true); // Actualiza el estado al iniciar sesión
+  const login = (userRole) => {
+    localStorage.setItem('token', 'fake-token'); // Token simulado
+    localStorage.setItem('role', userRole); // Guardamos el rol
+    setIsAuthenticated(true);
+    setRole(userRole); // Establece el rol del usuario al iniciar sesión
   };
 
   const logout = () => {
     localStorage.removeItem('token');
-    setIsAuthenticated(false); // Actualiza el estado al cerrar sesión
+    localStorage.removeItem('role');
+    setIsAuthenticated(false);
+    setRole(null); // Reinicia el rol a un valor predeterminado
   };
 
   return (
-    <AuthContext.Provider value={{ isAuthenticated, login, logout }}>
+    <AuthContext.Provider value={{ isAuthenticated, role, login, logout }}>
       {children}
     </AuthContext.Provider>
   );
 };
-
-// Validación de PropTypes para el AuthProvider
-AuthProvider.propTypes = {
-  children: PropTypes.node.isRequired, // 'children' debe ser un nodo React y es obligatorio
-};
-
-export default AuthProvider; // Exporta el AuthProvider como exportación por defecto

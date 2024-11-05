@@ -9,7 +9,9 @@ export const adminMiddleware = (req: Request, res: Response, next: NextFunction)
     return;
   }
 
-  const verified = tokenVerify(token);
+  const verified = tokenVerify(token.split(" ")[1]); // Asegurarse de quitar el prefijo "Bearer"
+  
+  console.log("Rol del usuario verificado:", verified?.role); // Verifica el rol en consola
   
   if (!verified || verified.role !== 'admin') {
     res.status(403).json({ message: 'No tienes permisos de administrador' });
