@@ -40,6 +40,7 @@ function HeroSection({ }) {
     max-width: 100%;
     flex-direction: column;
     justify-content: flex-start;
+    padding: 60px;
   `;
   
   const MainTitle = styled.h1`
@@ -47,7 +48,7 @@ function HeroSection({ }) {
     letter-spacing: -2.16px;
     font: var(--sds-typography-title-hero-font-weight) var(--sds-typography-title-hero-size) var(--sds-typography-title-hero-font-family);
     @media (max-width: 991px) {
-      font-size: 40px;
+    font-size: 40px;
     }
   `;
   

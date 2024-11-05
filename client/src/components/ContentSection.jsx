@@ -46,20 +46,19 @@ const StyledHeaderWrapper = styled.header`
 `;
 
 const StyledHeading = styled.h2`
-  color: var(--sds-color-text-default-default);
+  color: white;
   letter-spacing: -0.48px;
-  font: var(--sds-typography-heading-font-weight) var(--sds-typography-heading-size-base) var(--sds-typography-heading-font-family);
-
+  font-size: 30px;
+ 
   @media (max-width: 991px) {
     max-width: 100%;
   }
 `;
 
 const StyledSubheading = styled.h3`
-  color: var(--sds-color-text-default-secondary);
+  color: white;
   margin-top: 8px;
-  font: var(--sds-typography-subheading-font-weight) var(--sds-typography-subheading-size-medium) var(--sds-typography-subheading-font-family);
-
+  font-size: 16px;
   @media (max-width: 991px) {
     max-width: 100%;
   }
@@ -69,8 +68,9 @@ const StyledText = styled.p`
   flex: 1;
   margin-top: 24px;
   width: 100%;
-  color: var(--sds-color-text-default-default);
-  font: var(--sds-typography-body-font-weight-regular) var(--sds-typography-body-size-medium) var(--sds-typography-body-font-family);
+  color: white;
+  font-size: 16px;
+  
 
   @media (max-width: 991px) {
     max-width: 100%;
