@@ -1,46 +1,60 @@
-import { useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
-import PostForm from './PostForm';
-import { useAuth } from '../context/AuthContext';
-import PropTypes from 'prop-types'; // Importa PropTypes
+import { useEffect, useState } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
+import PostForm from '..pages/PostForm';
+import useAuth from '../hooks/useAuth';
 
-const EditPost = ({ postId, initialData }) => {
-    const { user } = useAuth();
+
+const EditPost = () => {
+    const{ postId } = useParams();
+    const { role } = useAuth();
     const navigate = useNavigate();
+    const [initialData, setInitialData] = useState(null);
+
 
     useEffect(() => {
-        if (!user || (initialData.creatorId !== user.id && user.role !== 'admin')) {
+         // Verifica si el usuario tiene permiso para editar
+         if (role !== 'admin') {
             alert('No tienes permiso para editar este post.');
-            navigate('/');
-        }
-    }, [initialData, user, navigate]);
+            navigate('/'); // Redirige si no tiene permiso
+        };
+        // Cargar datos del post por ID
+        const fetchPostData = async () => {
+            try {
+                const PORT = import.meta.env.VITE_PORT || 8080;
+                const response = await fetch(`http://localhost:${PORT}/api/posts/${postId}`);
+                if (!response.ok) throw new Error("Error al cargar el post");
+                const data = await response.json();
+                setInitialData(data);
+            } catch (error) {
+                console.error('Error al cargar el post:', error);
+            }
+        };
+
+        fetchPostData();
+    }, [postId, role, navigate]);  
+
 
     const handleSubmit = async (data) => {
-        const PORT = import.meta.env.VITE_PORT || 8000; // Cambia process.env a import.meta.env
+        try{
+            const PORT = import.meta.env.VITE_PORT || 8080; // Cambia process.env a import.meta.env
         // Lógica para enviar la actualización al backend
-        // Asegúrate de enviar el postId también
         await fetch(`http://localhost:${PORT}/api/posts/${postId}`, {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json',
-                // Añade token de autenticación si es necesario
+                'Authorization': `Bearer ${localStorage.getItem('token')}`,
             },
             body: JSON.stringify(data),
         });
         navigate('/posts'); // Redirige a la lista de posts después de guardar
-    };
-
-    return <PostForm initialData={initialData} onSubmit={handleSubmit} />;
+    } catch (error) {
+        console.error("Error al actualizar el post:", error);
+    }
 };
 
-// Validación de PropTypes
-EditPost.propTypes = {
-    postId: PropTypes.string.isRequired, // Ajusta el tipo según sea necesario
-    initialData: PropTypes.shape({
-        creatorId: PropTypes.string.isRequired, // Ajusta el tipo según sea necesario
-        title: PropTypes.string,
-        content: PropTypes.string,
-    }).isRequired,
+if (!initialData) return <p>Cargando...</p>; // Muestra un loading mientras carga el post
+
+return <PostForm initialData={initialData} onSubmit={handleSubmit} />;
 };
 
 export default EditPost;
