@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import PostForm from '..pages/PostForm';
+import PostForm from '../pages/PostForm';
 import useAuth from '../hooks/useAuth';
 
 

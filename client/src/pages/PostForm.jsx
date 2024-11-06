@@ -1,5 +1,6 @@
 import { useForm } from 'react-hook-form';
 import PropTypes from 'prop-types'; // Importar PropTypes
+import {useState } from 'react';
 
 const PostForm = ({ initialData = {}, onSubmit }) => {
     const {
@@ -10,11 +11,29 @@ const PostForm = ({ initialData = {}, onSubmit }) => {
         defaultValues: initialData,
     });
 
+    const [image, setImage] = useState(null); // Estado para la imagen
+    const [likes, setLikes] = useState(initialData.likes || 0); // Inicializa l
+
     const handleFormSubmit = (data) => {
-        console.log(data);
-        onSubmit(data);
+        const formData = new FormData();
+        formData.append('title', data.title);
+        formData.append('content', data.content);
+        if (image) {
+            formData.append('image', image); // Agrega la imagen si existe
+        }
+        formData.append('likes', likes); // Añade los likes al FormData
+        onSubmit(formData);        
     };
 
+     // Maneja el cambio del input de imagen
+     const handleImageChange = (e) => {
+        setImage(e.target.files[0]);
+    };
+     // Maneja el clic en el botón de "me gusta"
+     const handleLikeClick = () => {
+        setLikes((prevLikes) => prevLikes + 1); // Incrementa el número de likes
+     }
+     
     return (
         <div>
             <h1>{initialData.id ? 'Editar Post' : 'Crear Nuevo Post'}</h1>
@@ -45,7 +64,24 @@ const PostForm = ({ initialData = {}, onSubmit }) => {
                     {errors.content && <p>{errors.content.message}</p>}
                 </div>
 
-                <button type="submit">Guardar</button>
+                <div>
+                    <label htmlFor="image">Subir Imagen</label>
+                    <input
+                        type="file"
+                        id="image"
+                        accept="image/*"
+                        onChange={handleImageChange}
+                    />
+                </div>
+
+                <button type="submit">Enviar</button>
+                {/* Botón de like */}
+                <div style={{ display: 'flex', alignItems: 'center', marginTop: '10px' }}>
+                    <button type="button" onClick={handleLikeClick} style={{ cursor: 'pointer' }}>
+                        👍
+                    </button>
+                    <span style={{ marginLeft: '5px' }}>{likes}</span>
+                </div>
             </form>
         </div>
     );
@@ -57,8 +93,8 @@ PostForm.propTypes = {
         id: PropTypes.string, // o PropTypes.number si 'id' es numérico
         title: PropTypes.string,
         content: PropTypes.string,
+        likes: PropTypes.number, // Agrega likes a las props
     }),
     onSubmit: PropTypes.func.isRequired, // onSubmit es obligatorio y debe ser una función
 };
-
 export default PostForm;

@@ -6,7 +6,7 @@ const CreatePost = () => {
     const navigate = useNavigate();
 
     const handleSubmit = async (data) => {
-        const PORT = import.meta.env.VITE_PORT || 8000;
+        const PORT = import.meta.env.VITE_PORT || 8080;
         await fetch(`http://localhost:${PORT}/api/posts`, {
             method: 'POST',
             headers: {
