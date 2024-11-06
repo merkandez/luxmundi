@@ -1,27 +1,38 @@
 
 // src/router/AppRouter.jsx
-import { createBrowserRouter } from 'react-router-dom';
-import Layout from '../layout/Layout.jsx';
-import HomePage from '../pages/HomePage.jsx';
-import LoginPage from '../pages/LoginPage.jsx';
-import RegisterPage from '../pages/RegisterPage.jsx';
-import AboutUs from '../pages/AboutUs.jsx';
-import NotFound from '../pages/NotFound.jsx';
 import ArticlePage from '../pages/ArticlePage.jsx'
-
+import React from 'react';
+import { createBrowserRouter } from 'react-router-dom';
+import Layout from '../layout/Layout';
+import HomePage from '../pages/HomePage';
+import AdminPage from '../pages/AdminPage';
+import NoAccessPage from '../pages/NoAccessPage';
+import AboutPage from '../pages/AboutPage';
+import ProtectedRoute from './ProtectedRoute';
 
 export const router = createBrowserRouter([
   {
     path: '/',
-    element: <Layout />, // Layout común para todas las rutas
-    errorElement: <NotFound />, // Página de error para rutas no encontradas
+    element: <Layout />, // El Layout gestionará el modal de autenticación
     children: [
-      { index: true, element: <HomePage /> }, // Ruta raíz
-      { path: 'login', element: <LoginPage /> }, // Ruta de login
-      { path: 'register', element: <RegisterPage /> }, // Ruta de registro
-      { path: 'aboutus', element: <AboutUs /> }, // Ruta de "About Us"
-      { path: 'articlePage/:id', element: <ArticlePage/> }
+      { index: true, element: <HomePage /> },
+      { path: 'aboutus', element: <AboutPage /> },
+      { path: 'articlePage/:id', element: <ArticlePage/> },
+
+      // Rutas protegidas
+      {
+        path: 'admin',
+        element: (
+          <ProtectedRoute requiredRole="admin">
+            <AdminPage />
+          </ProtectedRoute>
+        ),
+      },
+      { path: 'no-access', element: <NoAccessPage /> },
+
     ],
   },
 ]);
+
+export default router;
 

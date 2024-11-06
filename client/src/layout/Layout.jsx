@@ -1,22 +1,50 @@
 // src/layout/Layout.jsx
-import React from 'react';
-import { Outlet, Link } from 'react-router-dom';
+import React, { useState } from 'react';
+import { Outlet } from 'react-router-dom';
+import Header from '../components/design/Header';
+import Footer from '../components/design/Footer';
+import useAuth from '../hooks/useAuth';
 import styled from 'styled-components';
+import ModalForm from '../components/auth/ModalForm';
+import RegisterForm from '../components/auth/RegisterForm';
+import LoginForm from '../components/auth/LoginForm';
+import ProtectedWrapper from '../components/auth/ProtectedWrapper';
 
 const Layout = () => {
+  const { isAuthenticated, role, logout } = useAuth();
+  const [showModalForm, setShowModalForm] = useState(false);
+  const [isLogin, setIsLogin] = useState(true);
+
+  const openModalForm = (isLoginForm) => {
+    setIsLogin(isLoginForm);
+    setShowModalForm(true);
+  };
+
+  const closeModalForm = () => setShowModalForm(false);
+
   return (
     <MainContainer>
-      <Header>
-        <Nav>
-          <Link to="/">Home</Link>
-          <Link to="/login">Login</Link>
-          <Link to="/register">Register</Link>
-          <Link to="/aboutus">About Us</Link>
-        </Nav>
-      </Header>
+      <Header
+        isAuthenticated={isAuthenticated}
+        role={role}
+        logout={logout}
+        openLoginModal={() => openModalForm(true)}
+        openRegisterModal={() => openModalForm(false)}
+      />
       <Content>
-        <Outlet /> {/* Renderiza el componente correspondiente a la ruta */}
+        <ProtectedWrapper onTrigger={() => openModalForm(false)}>
+          <Outlet />
+        </ProtectedWrapper>
+        {/* Modal para login o registro */}
+        {!isAuthenticated && showModalForm && (
+          <ModalForm onClose={closeModalForm}>
+            {isLogin ? <LoginForm onClose={closeModalForm} /> : <RegisterForm onClose={closeModalForm} />}
+          </ModalForm>
+        )}
       </Content>
+      <Footer />
+      {/* Overlay oscuro cuando el modal está activo */}
+      {!isAuthenticated && showModalForm && <Overlay onClick={closeModalForm} />}
     </MainContainer>
   );
 };
@@ -26,20 +54,21 @@ export default Layout;
 const MainContainer = styled.div`
   display: flex;
   flex-direction: column;
-`;
-
-const Header = styled.header`
-  background-color: #333;
-  padding: 1rem;
-  color: white;
-`;
-
-const Nav = styled.nav`
-  display: flex;
-  gap: 1rem;
+  min-height: 100vh;
 `;
 
 const Content = styled.main`
+  flex: 1;
   padding: 2rem;
+  background-color: #f4f4f9;
 `;
 
+const Overlay = styled.div`
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 10;
+`;

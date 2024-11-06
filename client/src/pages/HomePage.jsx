@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import React from "react";
 import ExploreSection from "../components/ExploreSection";
 import CardsContainer from "../components/CardContainer";
@@ -21,3 +22,19 @@ function HomePage() {
 
 export default HomePage;
 
+=======
+// src/pages/HomePage.jsx
+import React from 'react';
+import LogoutButton from '../components/LogoutButton';
+
+const HomePage = () => {
+  return (
+    <div>
+      <h2>Página de Inicio</h2>
+      <LogoutButton />
+    </div>
+  );
+};
+
+export default HomePage;
+>>>>>>> d36fd34d3cab24af4782c388bb132064ffcdd900
