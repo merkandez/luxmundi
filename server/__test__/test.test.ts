@@ -117,7 +117,7 @@ describe("Auth Controller", () => {
       const user = await User.findOne({ where: { email: userData.email } });
 
       const responseDelete = await request(app)
-        .delete(`/api/auth/${user?.id}`)
+        .delete(`/api/users/${user?.id}`)
         .set("Authorization", `Bearer ${response.body.token}`)
         .expect(200);
       expect(responseDelete.body.message).toBe("Usuario eliminado con éxito");
