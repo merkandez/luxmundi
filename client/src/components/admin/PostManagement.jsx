@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 const PostManagement = ({
   posts,
   onCreatePost,
-  onUpdatePost,
+  /* onUpdatePost, */
   onDeletePost,
   onSelectPost,
 }) => {

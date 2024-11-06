@@ -2,7 +2,7 @@ import React from 'react';
 
 const UserManagement = ({
   users,
-  onUpdateUser,
+  /* onUpdateUser, */
   onDeleteUser,
   onSelectUser,
 }) => {
