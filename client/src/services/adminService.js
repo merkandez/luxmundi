@@ -28,19 +28,19 @@ export const fetchUserById = async (userId) => {
   }
 };
 
-// Función para actualizar el rol de un usuario
-export const updateUserRole = async (userId, newRole) => {
+// Función para actualizar los datos del usuario (incluyendo rol si es admin)
+export const updateUser = async (userId, updateData) => {
   try {
     const response = await axios.put(
-      `${API_URL}/users/${userId}/role`,
-      { role: newRole },
+      `${API_URL}/users/${userId}`,
+      updateData,
       {
         headers: { Authorization: `Bearer ${localStorage.getItem('token')}` },
       }
     );
     return response.data;
   } catch (error) {
-    console.error('Error al actualizar el rol:', error);
+    console.error('Error al actualizar el usuario:', error);
     throw error;
   }
 };
