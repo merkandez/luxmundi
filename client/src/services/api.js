@@ -6,28 +6,27 @@ export const getPosts = async () => {
     return response.data;
   };
 
- // Función asincrónica para subir una imagen a Cloudinary
-export const subirImagenCloudinary = async (file) => {
-  //Crea un objeto FormData para enviar el archivo
-  const formData = new FormData();
-  //Agrega el archivo al FormData
-  formData.append("file", file);
-  //Agrega el preset de carga de Cloudinary
-  formData.append("upload_preset", "preset_posts");
-
-  try {
-    // Realiza una solicitud POST a la API de Cloudinary con el FormData
-    const response = await axios.post(
-      `https://api.cloudinary.com/v1_1/dbjlow18s/image/upload`, formData,
-    );
-    // Devuelve la URL segura de la imagen subida
-    return response.data.secure_url;
-  } catch (error) {
-    // Si ocurre un error, lo registra en la consola
-    console.error("Error subiendo la imagen:", error);
-    // Lanza el error para que pueda ser manejado por el llamador
-    throw error;
-  }
-
-
-}
+  export const subirImagenCloudinary = async (file) => {
+    // Convierte el archivo a Base64
+    const toBase64 = (file) =>
+      new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.readAsDataURL(file);
+        reader.onload = () => resolve(reader.result);
+        reader.onerror = (error) => reject(error);
+      });
+  
+    const imageBase64 = await toBase64(file);
+  
+    try {
+      // Realiza la solicitud POST al backend con la imagen en formato Base64
+      const response = await axios.post('http://localhost:4000/posts', {
+        image: imageBase64,
+      });
+      // Devuelve la URL segura de la imagen subida
+      return response.data.secure_url;
+    } catch (error) {
+      console.error("Error subiendo la imagen:", error);
+      throw error;
+    }
+  };
