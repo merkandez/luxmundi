@@ -12,6 +12,7 @@ export const AuthProvider = ({ children }) => {
     // Cargar el token y rol desde almacenamiento local al iniciar
     const storedRole = localStorage.getItem('role');
     const token = localStorage.getItem('token');
+    console.log("AuthProvider - Token:", token, "Role:", storedRole); // Verifica los valores aquí
 
     if (token) {
       setIsAuthenticated(true);

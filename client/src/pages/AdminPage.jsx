@@ -17,16 +17,21 @@ const AdminPage = () => {
   const [selectedPost, setSelectedPost] = useState(null);
 
   useEffect(() => {
-    // Cargar usuarios y publicaciones al montar el componente
+    console.log("AdminPage montado");
     const loadUsers = async () => {
+      console.log("Cargando usuarios");
       const data = await fetchUsers();
       setUsers(data);
+      console.log("Usuarios cargados:", data);
     };
-
+  
     const loadPosts = async () => {
+      console.log("Cargando posts");
       const data = await fetchPosts();
       setPosts(data);
+      console.log("Posts cargados:", data);
     };
+  
     loadUsers();
     loadPosts();
   }, []);
@@ -61,22 +66,22 @@ const AdminPage = () => {
       <Section>
         <h2>Gestión de Usuarios</h2>
         <UserManagement
-            users={users}
-            selectedUser={selectedUser}
-            onSelectUser={setSelectedUser}
-            onUpdateUser={handleUserUpdate}
-            onDeleteUser={handleUserDelete}
+          users={users}
+          selectedUser={selectedUser}
+          onSelectUser={setSelectedUser}
+          onUpdateUser={handleUserUpdate}
+          onDeleteUser={handleUserDelete}
         />
       </Section>
       <Section>
         <h2>Gestión de Publicaciones</h2>
         <PostManagement
-           posts={posts}
-           selectedPost={selectedPost}
-           onSelectPost={setSelectedPost}
-           onUpdatePost={handlePostUpdate}
-           onDeletePost={handlePostDelete}
-           onCreatePost={handlePostCreate}
+          posts={posts}
+          selectedPost={selectedPost}
+          onSelectPost={setSelectedPost}
+          onUpdatePost={handlePostUpdate}
+          onDeletePost={handlePostDelete}
+          onCreatePost={handlePostCreate}
         />
       </Section>
     </Container>
