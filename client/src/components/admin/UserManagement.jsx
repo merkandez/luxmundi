@@ -1,10 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 const UserManagement = ({ users, selectedUser, onSelectUser, onUpdateUser, onDeleteUser }) => {
   const [editData, setEditData] = useState(selectedUser || {});
 
   // Actualiza el formulario cuando cambia el usuario seleccionado
-  React.useEffect(() => {
+  useEffect(() => {
     setEditData(selectedUser || {});
   }, [selectedUser]);
 
@@ -20,15 +20,19 @@ const UserManagement = ({ users, selectedUser, onSelectUser, onUpdateUser, onDel
   return (
     <div>
       <h3>Usuarios</h3>
-      <ul>
-        {users.map((user) => (
-          <li key={user.id}>
-            {user.username} - {user.email}
-            <button onClick={() => onSelectUser(user)}>Editar</button>
-            <button onClick={() => onDeleteUser(user.id)}>Eliminar</button>
-          </li>
-        ))}
-      </ul>
+      {users.length === 0 ? ( // Muestra un mensaje si no hay usuarios
+        <p>No hay usuarios para mostrar</p>
+      ) : (
+        <ul>
+          {users.map((user) => (
+            <li key={user.id}>
+              {user.username} - {user.email}
+              <button onClick={() => onSelectUser(user)}>Editar</button>
+              <button onClick={() => onDeleteUser(user.id)}>Eliminar</button>
+            </li>
+          ))}
+        </ul>
+      )}
 
       {selectedUser && (
         <div>
