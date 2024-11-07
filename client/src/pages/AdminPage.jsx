@@ -17,21 +17,21 @@ const AdminPage = () => {
   const [selectedPost, setSelectedPost] = useState(null);
 
   useEffect(() => {
-    console.log("AdminPage montado");
+    console.log('AdminPage montado');
     const loadUsers = async () => {
-      console.log("Cargando usuarios");
+      console.log('Cargando usuarios');
       const data = await fetchUsers();
       setUsers(data);
-      console.log("Usuarios cargados:", data);
+      console.log('Usuarios cargados:', data);
     };
-  
+
     const loadPosts = async () => {
-      console.log("Cargando posts");
+      console.log('Cargando posts');
       const data = await fetchPosts();
       setPosts(data);
-      console.log("Posts cargados:", data);
+      console.log('Posts cargados:', data);
     };
-  
+
     loadUsers();
     loadPosts();
   }, []);
