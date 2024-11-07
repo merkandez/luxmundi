@@ -2,7 +2,7 @@ import React from 'react';
 import { createBrowserRouter } from 'react-router-dom';
 import Layout from '../layout/Layout';
 import HomePage from '../pages/HomePage';
-import CreatePost from '../pages/PostForm'; // Asegúrate de tener este componente
+import CreatePost from '../pages/CreatePost'; 
 import EditPost from '../pages/EditPost';
 import AdminPage from '../pages/AdminPage';
 import NoAccessPage from '../pages/NoAccessPage';

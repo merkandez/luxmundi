@@ -10,6 +10,14 @@ export const fetchPosts = async () => {
   });
   return response.data;
 };
+
+export const fetchPostById = async (postId) => {
+  const response = await axios.get(`${API_URL}/${postId}`, {
+      headers: { Authorization: `Bearer ${localStorage.getItem('token')}` },
+  });
+  return response.data;
+};
+
 //Funcion para crear un nuevo post
 export const createPost = async (postData) => {
   const response = await axios.post(API_URL, postData, {
