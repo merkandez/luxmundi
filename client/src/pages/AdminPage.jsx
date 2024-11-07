@@ -22,6 +22,7 @@ const AdminPage = () => {
       const data = await fetchUsers();
       setUsers(data);
     };
+
     const loadPosts = async () => {
       const data = await fetchPosts();
       setPosts(data);

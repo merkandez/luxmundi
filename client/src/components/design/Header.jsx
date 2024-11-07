@@ -3,15 +3,21 @@ import React from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 
-const Header = ({ isAuthenticated, role, logout, openLoginModal, openRegisterModal }) => (
+const Header = ({
+  isAuthenticated,
+  role,
+  logout,
+  openLoginModal,
+  openRegisterModal,
+}) => (
   <HeaderContainer>
     <NavSection>
-      <StyledLink to="/">Home</StyledLink>
-      <StyledLink to="/aboutus">About Us</StyledLink>
+      <StyledLink to='/'>Home</StyledLink>
+      <StyledLink to='/aboutus'>About Us</StyledLink>
       {isAuthenticated ? (
         <>
-          <StyledLink to="/profile">Profile</StyledLink>
-          {role === 'admin' && <StyledLink to="/admin">Admin Area</StyledLink>}
+          <StyledLink to='/profile'>Profile</StyledLink>
+          {role === 'admin' && <StyledLink to='/admin'>Admin Area</StyledLink>}
           <LogoutButton onClick={logout}>Logout</LogoutButton>
         </>
       ) : (

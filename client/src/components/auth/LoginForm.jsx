@@ -1,6 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
+import { AuthContext } from '../../context/AuthContext';
 
 const LoginForm = ({ onClose }) => {
+  const { login } = useContext(AuthContext); // Accedemos al login del contexto
   const [formData, setFormData] = useState({
     email: '',
     password: '',
@@ -13,10 +15,15 @@ const LoginForm = ({ onClose }) => {
     });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log('Datos del login:', formData);
-    onClose();
+    try {
+      await login(formData); // Usamos el login del contexto
+      alert('Inicio de sesión exitoso');
+      onClose(); // Cierra el modal después de iniciar sesión
+    } catch (error) {
+      alert('Error en el inicio de sesión');
+    }
   };
 
   return (
@@ -26,8 +33,8 @@ const LoginForm = ({ onClose }) => {
         <div>
           <label>Email:</label>
           <input
-            type='email'
-            name='email'
+            type="email"
+            name="email"
             value={formData.email}
             onChange={handleChange}
             required
@@ -36,14 +43,14 @@ const LoginForm = ({ onClose }) => {
         <div>
           <label>Contraseña:</label>
           <input
-            type='password'
-            name='password'
+            type="password"
+            name="password"
             value={formData.password}
             onChange={handleChange}
             required
           />
         </div>
-        <button type='submit'>Login</button>
+        <button type="submit">Login</button>
       </form>
     </div>
   );

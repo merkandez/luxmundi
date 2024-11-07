@@ -56,7 +56,9 @@ export const loginUser = async (req: Request, res: Response): Promise<void> => {
     }
 
     const token = tokenSign(user); // Generamos el token JWT
-    res.json({ message: 'Inicio de sesión exitoso', token });
+    const role = user.role; // Extraemos el rol del usuario
+
+    res.json({ message: 'Inicio de sesión exitoso', token, role });
   } catch (error) {
     if (error instanceof Error) {
       res

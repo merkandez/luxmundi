@@ -1,23 +1,55 @@
-import React from 'react';
+import React, { useState } from 'react';
 
-const UserManagement = ({
-  users,
-  /* onUpdateUser, */
-  onDeleteUser,
-  onSelectUser,
-}) => {
+const UserManagement = ({ users, selectedUser, onSelectUser, onUpdateUser, onDeleteUser }) => {
+  const [editData, setEditData] = useState(selectedUser || {});
+
+  // Actualiza el formulario cuando cambia el usuario seleccionado
+  React.useEffect(() => {
+    setEditData(selectedUser || {});
+  }, [selectedUser]);
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setEditData({ ...editData, [name]: value });
+  };
+
+  const handleUpdate = () => {
+    onUpdateUser(selectedUser.id, editData);
+  };
+
   return (
     <div>
       <h3>Usuarios</h3>
       <ul>
         {users.map((user) => (
           <li key={user.id}>
-            {user.username} - {user.role}
+            {user.username} - {user.email}
             <button onClick={() => onSelectUser(user)}>Editar</button>
             <button onClick={() => onDeleteUser(user.id)}>Eliminar</button>
           </li>
         ))}
       </ul>
+
+      {selectedUser && (
+        <div>
+          <h3>Editar Usuario</h3>
+          <input
+            type="text"
+            name="username"
+            value={editData.username || ''}
+            onChange={handleInputChange}
+            placeholder="Nombre de usuario"
+          />
+          <input
+            type="email"
+            name="email"
+            value={editData.email || ''}
+            onChange={handleInputChange}
+            placeholder="Correo electrónico"
+          />
+          <button onClick={handleUpdate}>Guardar cambios</button>
+        </div>
+      )}
     </div>
   );
 };

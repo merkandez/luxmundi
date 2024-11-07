@@ -1,21 +1,25 @@
 import React, { useState } from 'react';
 
-const PostManagement = ({
-  posts,
-  onCreatePost,
-  /* onUpdatePost, */
-  onDeletePost,
-  onSelectPost,
-}) => {
-  const [newPost, setNewPost] = useState({
-    title: '',
-    content: '',
-    imageUrl: '',
-  });
+const PostManagement = ({ posts, selectedPost, onSelectPost, onUpdatePost, onDeletePost, onCreatePost }) => {
+  const [editData, setEditData] = useState(selectedPost || {});
+  const [newPostData, setNewPostData] = useState({ title: '', content: '', imageUrl: '' });
 
-  const handleCreate = () => {
-    onCreatePost(newPost);
-    setNewPost({ title: '', content: '', imageUrl: '' });
+  React.useEffect(() => {
+    setEditData(selectedPost || {});
+  }, [selectedPost]);
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setEditData({ ...editData, [name]: value });
+  };
+
+  const handleUpdate = () => {
+    onUpdatePost(selectedPost.id, editData);
+  };
+
+  const handleCreatePost = () => {
+    onCreatePost(newPostData);
+    setNewPostData({ title: '', content: '', imageUrl: '' });
   };
 
   return (
@@ -24,33 +28,56 @@ const PostManagement = ({
       <ul>
         {posts.map((post) => (
           <li key={post.id}>
-            <h4>{post.title}</h4>
-            <p>{post.content}</p>
+            {post.title}
             <button onClick={() => onSelectPost(post)}>Editar</button>
             <button onClick={() => onDeletePost(post.id)}>Eliminar</button>
           </li>
         ))}
       </ul>
+
+      {selectedPost && (
+        <div>
+          <h3>Editar Publicación</h3>
+          <input
+            type="text"
+            name="title"
+            value={editData.title || ''}
+            onChange={handleInputChange}
+            placeholder="Título"
+          />
+          <textarea
+            name="content"
+            value={editData.content || ''}
+            onChange={handleInputChange}
+            placeholder="Contenido"
+          />
+          <button onClick={handleUpdate}>Guardar cambios</button>
+        </div>
+      )}
+
       <div>
-        <h4>Crear nueva publicación</h4>
+        <h3>Crear Nueva Publicación</h3>
         <input
-          type='text'
-          placeholder='Título'
-          value={newPost.title}
-          onChange={(e) => setNewPost({ ...newPost, title: e.target.value })}
+          type="text"
+          name="title"
+          value={newPostData.title}
+          onChange={(e) => setNewPostData({ ...newPostData, title: e.target.value })}
+          placeholder="Título"
         />
         <textarea
-          placeholder='Contenido'
-          value={newPost.content}
-          onChange={(e) => setNewPost({ ...newPost, content: e.target.value })}
+          name="content"
+          value={newPostData.content}
+          onChange={(e) => setNewPostData({ ...newPostData, content: e.target.value })}
+          placeholder="Contenido"
         />
         <input
-          type='text'
-          placeholder='URL de la imagen'
-          value={newPost.imageUrl}
-          onChange={(e) => setNewPost({ ...newPost, imageUrl: e.target.value })}
+          type="text"
+          name="imageUrl"
+          value={newPostData.imageUrl}
+          onChange={(e) => setNewPostData({ ...newPostData, imageUrl: e.target.value })}
+          placeholder="URL de la imagen"
         />
-        <button onClick={handleCreate}>Crear publicación</button>
+        <button onClick={handleCreatePost}>Crear Publicación</button>
       </div>
     </div>
   );
