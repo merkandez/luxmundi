@@ -40,8 +40,11 @@ const Nav = styled.nav`
 const NavLink = styled.a`
   color: #fff;
   text-decoration: none;
+  transition: transform 0.3s ease;
+
   &:hover {
     color: #ccc;
+    transform: scale(1.2);
   }
 `;
 
@@ -120,8 +123,11 @@ const MobileNavLink = styled.a`
   padding: 0.5rem 1rem;
   color: #fff;
   text-decoration: none;
+  transition: transform 0.3s ease;
+
   &:hover {
     background-color: #444;
+    transform: scale(1.1);
   }
 `;
 
@@ -130,9 +136,9 @@ const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const navLinks = [
-    { name: "NOSOTROS", href: "#" },
-    { name: "DESTINOS", href: "#" },
-    { name: "CONTACTO", href: "#" },
+    { name: "Nosotros", href: "#" },
+    { name: "Destinos", href: "#" },
+    { name: "Contacto", href: "#" },
   ];
 
   return (

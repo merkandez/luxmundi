@@ -1,21 +1,12 @@
 import styled from "styled-components";
-import Slider from "react-slick";
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Navigation, Pagination, Autoplay } from "swiper/modules";
 import { ButtonGroup } from "../components/ButtonGroup";
-import "slick-carousel/slick/slick.css";
-import "slick-carousel/slick/slick-theme.css";
+
+// Only import the base Swiper styles (required)
+import "swiper/css";
 
 function LuxMundiHero() {
-  const sliderSettings = {
-    dots: true,
-    infinite: true,
-    speed: 500,
-    slidesToShow: 1,
-    slidesToScroll: 1,
-    autoplay: true,
-    autoplaySpeed: 4000,
-    arrows: false,
-  };
-
   return (
     <HeroSection>
       <ButtonWrapper>
@@ -27,26 +18,35 @@ function LuxMundiHero() {
         />
       </ButtonWrapper>
       <SliderWrapper>
-        <Slider {...sliderSettings}>
-          <div>
+        <Swiper
+          modules={[Navigation, Pagination, Autoplay]}
+          pagination={{ clickable: true }}
+          autoplay={{
+            delay: 4000,
+            disableOnInteraction: false,
+          }}
+          loop={true}
+          speed={500}
+        >
+          <SwiperSlide>
             <Image
               src="https://via.placeholder.com/800x400?text=Image+1"
               alt="Lux Mundi Image 1"
             />
-          </div>
-          <div>
+          </SwiperSlide>
+          <SwiperSlide>
             <Image
               src="https://via.placeholder.com/800x400?text=Image+2"
               alt="Lux Mundi Image 2"
             />
-          </div>
-          <div>
+          </SwiperSlide>
+          <SwiperSlide>
             <Image
               src="https://via.placeholder.com/800x400?text=Image+3"
               alt="Lux Mundi Image 3"
             />
-          </div>
-        </Slider>
+          </SwiperSlide>
+        </Swiper>
       </SliderWrapper>
     </HeroSection>
   );
@@ -78,13 +78,16 @@ const SliderWrapper = styled.div`
   max-width: 800px;
   margin-top: 40px;
 
-  .slick-slide img {
+  .swiper {
     width: 100%;
-    border-radius: 8px;
   }
 
-  .slick-dots li button:before {
-    color: #ffffff; // Dots color
+  .swiper-pagination-bullet {
+    background: #ffffff;
+    opacity: 0.5;
+    &-active {
+      opacity: 1;
+    }
   }
 `;
 
