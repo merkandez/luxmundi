@@ -1,5 +1,3 @@
-
-// src/router/AppRouter.jsx
 import ArticlePage from '../pages/ArticlePage.jsx'
 import React from 'react';
 import { createBrowserRouter } from 'react-router-dom';
