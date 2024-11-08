@@ -9,6 +9,7 @@ import {
 import UserManagement from '../components/admin/UserManagement';
 import PostManagement from '../components/admin/PostManagement';
 import styled from 'styled-components';
+import NavbarAdmin from '../components/admin/navbarAdmin';
 
 const AdminPage = () => {
   const [users, setUsers] = useState([]);
@@ -61,20 +62,14 @@ const AdminPage = () => {
     setPosts([...posts, newPost]);
   };
 
+  const [activeComponent, setActiveComponent] = useState('UserManagement');
+
   return (
     <Container>
-      <Section>
-        <h2>Gestión de Usuarios</h2>
-        <UserManagement
-          users={users}
-          selectedUser={selectedUser}
-          onSelectUser={setSelectedUser}
-          onUpdateUser={handleUserUpdate}
-          onDeleteUser={handleUserDelete}
-        />
-      </Section>
-      <Section>
-        <h2>Gestión de Publicaciones</h2>
+      <NavbarAdmin setActiveComponent={setActiveComponent} />
+      {/* Renderizado condicional basado en el estado */}
+      {activeComponent === 'home' && <div>Contenido de inicio</div>}
+      {activeComponent === 'PostManagement' && <Section>
         <PostManagement
           posts={posts}
           selectedPost={selectedPost}
@@ -83,8 +78,25 @@ const AdminPage = () => {
           onDeletePost={handlePostDelete}
           onCreatePost={handlePostCreate}
         />
-      </Section>
+        <h2>Gestión de Publicaciones</h2>
+      </Section>}
+      {activeComponent === 'UserManagement' && <Section>
+        <h2>Gestión de Usuarios</h2>
+        <UserManagement
+          users={users}
+          selectedUser={selectedUser}
+          onSelectUser={setSelectedUser}
+          onUpdateUser={handleUserUpdate}
+          onDeleteUser={handleUserDelete}
+        />
+      </Section>}
+
+
+      
+      
     </Container>
+
+    
   );
 };
 
@@ -92,12 +104,14 @@ export default AdminPage;
 
 const Container = styled.div`
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   gap: 2rem;
+  width: 100%;
 `;
 
 const Section = styled.section`
   padding: 1rem;
   border: 1px solid #ccc;
   border-radius: 5px;
+  width: 100%;
 `;

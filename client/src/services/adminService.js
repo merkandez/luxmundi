@@ -18,7 +18,7 @@ export const fetchUsers = async () => {
 // Obtener usuario por ID
 export const fetchUserById = async (userId) => {
   try {
-    const response = await axios.get(`${API_URL}/users/${userId}`, {
+    const response = await axios.get(`${API_URL}/${userId}`, {
       headers: { Authorization: `Bearer ${localStorage.getItem('token')}` },
     });
     return response.data;
@@ -31,7 +31,7 @@ export const fetchUserById = async (userId) => {
 // Función para actualizar los datos del usuario (incluyendo rol si es admin)
 export const updateUser = async (userId, updateData) => {
   try {
-    const response = await axios.put(`${API_URL}/users/${userId}`, updateData, {
+    const response = await axios.put(`${API_URL}/${userId}`, updateData, {
       headers: { Authorization: `Bearer ${localStorage.getItem('token')}` },
     });
     return response.data;
@@ -44,7 +44,7 @@ export const updateUser = async (userId, updateData) => {
 // Función para eliminar un usuario
 export const deleteUser = async (userId) => {
   try {
-    const response = await axios.delete(`${API_URL}/users/${userId}`, {
+    const response = await axios.delete(`${API_URL}/${userId}`, {
       headers: { Authorization: `Bearer ${localStorage.getItem('token')}` },
     });
     return response.data;
