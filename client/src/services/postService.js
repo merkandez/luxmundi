@@ -22,9 +22,13 @@ export const fetchPostById = async (postId) => {
 export const createPost = async (postData) => {
   const response = await axios.post(API_URL, postData, {
     headers: { Authorization: `Bearer ${localStorage.getItem('token')}` },
-  });
+    'Content-Type': 'multipart/form-data'
+  },
+  );
+
   return response.data;
 };
+
 //Funcion para actualizar un post
 export const updatePost = async (postId, postData) => {
   const response = await axios.put(`${API_URL}/${postId}`, postData, {
@@ -32,6 +36,7 @@ export const updatePost = async (postId, postData) => {
   });
   return response.data;
 };
+
 //Funcion para eliminar un post
 export const deletePost = async (postId) => {
   const response = await axios.delete(`${API_URL}/${postId}`, {
