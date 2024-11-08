@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import { Camera, Search, X, Menu } from "lucide-react";
 import { useState } from "react";
+import { Link } from "react-router-dom";
 
 const HeaderContainer = styled.header`
   background-color: #000;
@@ -23,7 +24,7 @@ const LogoSection = styled.div`
   gap: 0.5rem;
 
   span {
-    font-size: 1.25rem;
+    font-size: 1rem;
     font-weight: bold;
   }
 `;
@@ -37,10 +38,11 @@ const Nav = styled.nav`
   }
 `;
 
-const NavLink = styled.a`
+const NavLink = styled(Link)`
   color: #fff;
   text-decoration: none;
   transition: transform 0.3s ease;
+  font-size: 0.9rem;
 
   &:hover {
     color: #ccc;
@@ -124,6 +126,7 @@ const MobileNavLink = styled.a`
   color: #fff;
   text-decoration: none;
   transition: transform 0.3s ease;
+  font-size: 0.9rem;
 
   &:hover {
     background-color: #444;
@@ -153,7 +156,7 @@ const Header = () => {
         {/* Desktop Navigation */}
         <Nav>
           {navLinks.map((link) => (
-            <NavLink key={link.name} href={link.href}>
+            <NavLink key={link.name} to={link.href}>
               {link.name}
             </NavLink>
           ))}

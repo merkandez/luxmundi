@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { Link } from "react-router-dom";
 
 export default function Footer() {
   return (
@@ -29,6 +30,9 @@ export default function Footer() {
           <button type="submit">Submit</button>
         </form>
       </SubscribeColumn>
+      <FooterNav>
+        <FooterLink to="/contact">Contact Us</FooterLink>
+      </FooterNav>
     </FooterWrapper>
   );
 }
@@ -96,4 +100,12 @@ const SubscribeColumn = styled.div`
       cursor: pointer;
     }
   }
+`;
+
+const FooterLink = styled(Link)`
+  // ... existing styles
+`;
+
+const FooterNav = styled.nav`
+  // ... existing styles
 `;

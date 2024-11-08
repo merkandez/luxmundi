@@ -24,6 +24,7 @@ const CardWrapper = styled.div`
   padding: 16px;
   text-align: left;
   color: #ffffff;
+  border: 3px solid #333;
 `;
 
 const CardImage = styled.div`
