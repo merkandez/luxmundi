@@ -1,10 +1,18 @@
 // client/src/components/NavigationPillItem.jsx
 import PropTypes from "prop-types";
 import styled from "styled-components";
+import { Link } from "react-router-dom";
 
-const NavigationPillItem = ({ label, isActive }) => (
-  <Pill isActive={isActive}>{label}</Pill>
+const NavigationPillItem = ({ label, href, isActive }) => (
+  <StyledLink to={href}>
+    <Pill isActive={isActive}>{label}</Pill>
+  </StyledLink>
 );
+
+const StyledLink = styled(Link)`
+  text-decoration: none;
+  color: inherit;
+`;
 
 const Pill = styled.div.withConfig({
   shouldForwardProp: (prop) => prop !== "isActive",
@@ -22,6 +30,7 @@ const Pill = styled.div.withConfig({
 
 NavigationPillItem.propTypes = {
   label: PropTypes.string.isRequired,
+  href: PropTypes.string.isRequired,
   isActive: PropTypes.bool.isRequired,
 };
 

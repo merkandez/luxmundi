@@ -22,7 +22,7 @@ const Button = styled.button`
   margin: auto 0;
   padding: 8px;
   cursor: pointer;
-  border: 1px solid;
+  border: 1px solid #949494;
   font-family: inherit;
   font-size: inherit;
 `;

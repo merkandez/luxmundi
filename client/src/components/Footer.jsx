@@ -1,38 +1,57 @@
 import styled from "styled-components";
 import { Link } from "react-router-dom";
+import { FaInstagram, FaTwitter, FaYoutube, FaLinkedin } from "react-icons/fa";
 
 export default function Footer() {
   return (
     <FooterWrapper>
+      <LogoSection>
+        <CameraIcon size={24} />
+        <LogoText>LUX MUNDI</LogoText>
+      </LogoSection>
       <FooterColumn>
         <h3>Sobre Nosotros</h3>
         <ul>
-          <li>Quien somos</li>
+          <li>
+            <FooterLink to="/quien-somos">Quien somos</FooterLink>
+          </li>
         </ul>
       </FooterColumn>
       <FooterColumn>
         <h3>Explore</h3>
         <ul>
-          <li>Destinos</li>
-          <li>Lo más visto</li>
+          <li>
+            <FooterLink to="/destinos">Destinos</FooterLink>
+          </li>
+          <li>
+            <FooterLink to="/lo-mas-visto">Lo más visto</FooterLink>
+          </li>
         </ul>
       </FooterColumn>
       <FooterColumn>
         <h3>Recursos</h3>
         <ul>
-          <li>Cursos Fotografía</li>
-          <li>Contacto</li>
+          <li>
+            <FooterLink to="/cursos-fotografia">Cursos Fotografía</FooterLink>
+          </li>
+          <li>
+            <FooterLink to="/contacto">Contacto</FooterLink>
+          </li>
         </ul>
       </FooterColumn>
+      <SocialMediaIcons>
+        <FaTwitter size={24} />
+        <FaInstagram size={24} />
+        <FaYoutube size={24} />
+        <FaLinkedin size={24} />
+      </SocialMediaIcons>
       <SubscribeColumn>
+        <p>Suscribate a nuestra newsletter!</p>
         <form>
           <input type="email" placeholder="you@example.com" />
           <button type="submit">Submit</button>
         </form>
       </SubscribeColumn>
-      <FooterNav>
-        <FooterLink to="/contact">Contact Us</FooterLink>
-      </FooterNav>
     </FooterWrapper>
   );
 }
@@ -50,6 +69,25 @@ const FooterWrapper = styled.footer`
     flex-direction: column;
     align-items: center;
   }
+`;
+
+const LogoSection = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 24px;
+`;
+
+const CameraIcon = styled.div`
+  background-image: url("/path-to-logo-image.png"); // Replace with actual path
+  width: 24px;
+  height: 24px;
+  background-size: contain;
+`;
+
+const LogoText = styled.span`
+  font-size: 1rem;
+  font-weight: bold;
 `;
 
 const FooterColumn = styled.div`
@@ -76,9 +114,15 @@ const FooterColumn = styled.div`
 
 const SubscribeColumn = styled.div`
   display: flex;
-  align-items: center;
-  justify-content: center;
+  flex-direction: column;
+  align-items: flex-start;
   margin: 16px;
+
+  p {
+    font-size: 0.9rem;
+    color: #ffffff;
+    margin-bottom: 8px;
+  }
 
   form {
     display: flex;
@@ -102,10 +146,18 @@ const SubscribeColumn = styled.div`
   }
 `;
 
-const FooterLink = styled(Link)`
-  // ... existing styles
+const SocialMediaIcons = styled.div`
+  display: flex;
+  gap: 16px;
+  align-items: center;
+  margin-top: 16px;
 `;
 
-const FooterNav = styled.nav`
-  // ... existing styles
+const FooterLink = styled(Link)`
+  color: #cccccc;
+  text-decoration: none;
+
+  &:hover {
+    color: #ffffff;
+  }
 `;
