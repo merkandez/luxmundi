@@ -1,78 +1,202 @@
-import React, { useState, useCallback, memo } from "react";
-import { ThemeProvider } from "styled-components";
-import { theme } from "./theme";
-import { useResponsive } from "./hooks/useResponsive";
-import { Camera } from "lucide-react";
-import { HeaderContainer, NavContainer } from "./styles/HeaderStyles";
-import Logo from "./components/Logo";
-import DesktopNav from "./components/Navigation/DesktopNav";
-import MobileNav from "./components/Navigation/MobileNav";
-import SearchBar from "./components/Search/SearchBar";
-import AuthButtons from "./components/Buttons/AuthButtons";
-import { HamburgerButton, RightSection } from "./styles/HeaderStyles"; // Ensure these styles are defined
-import { Menu, X } from "lucide-react"; // Ensure these icons are available
+import styled from "styled-components";
+import { Camera, Search, X, Menu } from "lucide-react";
+import { useState } from "react";
 
-const navigationLinks = [
-  { id: 1, label: "Nosotros", url: "#" },
-  { id: 2, label: "Destinos", url: "#" },
-  { id: 3, label: "Contacto", url: "#" },
-];
+const HeaderContainer = styled.header`
+  background-color: #000;
+  color: #fff;
+`;
+
+const Wrapper = styled.div`
+  max-width: 1120px;
+  margin: 0 auto;
+  padding: 0 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 4rem;
+`;
+
+const LogoSection = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+
+  span {
+    font-size: 1.25rem;
+    font-weight: bold;
+  }
+`;
+
+const Nav = styled.nav`
+  display: none;
+
+  @media (min-width: 768px) {
+    display: flex;
+    gap: 2rem;
+  }
+`;
+
+const NavLink = styled.a`
+  color: #fff;
+  text-decoration: none;
+  &:hover {
+    color: #ccc;
+  }
+`;
+
+const SearchSection = styled.div`
+  position: relative;
+`;
+
+const SearchBar = styled.div`
+  display: flex;
+  align-items: center;
+  background-color: #333;
+  border-radius: 4px;
+`;
+
+const SearchInput = styled.input`
+  width: 16rem;
+  padding: 0.25rem 1rem;
+  background-color: transparent;
+  border: none;
+  color: #fff;
+  &:focus {
+    outline: none;
+  }
+`;
+
+const AuthButtons = styled.div`
+  display: none;
+  align-items: center;
+  gap: 1rem;
+
+  @media (min-width: 640px) {
+    display: flex;
+  }
+
+  button {
+    background-color: transparent;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+    &:hover {
+      color: #ccc;
+    }
+  }
+
+  .register {
+    background-color: #fff;
+    color: #000;
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
+    &:hover {
+      background-color: #e0e0e0;
+    }
+  }
+`;
+
+const MobileMenuButton = styled.div`
+  display: flex;
+
+  @media (min-width: 768px) {
+    display: none;
+  }
+`;
+
+const MobileMenu = styled.div`
+  display: none;
+  padding: 1rem;
+
+  @media (max-width: 767px) {
+    display: block;
+    background-color: #333;
+  }
+`;
+
+const MobileNavLink = styled.a`
+  display: block;
+  padding: 0.5rem 1rem;
+  color: #fff;
+  text-decoration: none;
+  &:hover {
+    background-color: #444;
+  }
+`;
 
 const Header = () => {
+  const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [searchValue, setSearchValue] = useState("");
-  const isMobile = useResponsive();
 
-  const handleSearchChange = useCallback((e) => {
-    setSearchValue(e.target.value);
-  }, []);
-
-  const handleMenuToggle = useCallback(() => {
-    setIsMenuOpen((prev) => !prev);
-  }, []);
-
-  const handleLinkClick = useCallback((linkId) => {
-    setIsMenuOpen(false);
-    // Additional link click handling if needed
-  }, []);
+  const navLinks = [
+    { name: "NOSOTROS", href: "#" },
+    { name: "DESTINOS", href: "#" },
+    { name: "CONTACTO", href: "#" },
+  ];
 
   return (
-    <ThemeProvider theme={theme}>
-      <HeaderContainer>
-        <NavContainer>
-          <Logo>
-            <Camera aria-label="Site Logo" />
-          </Logo>
+    <HeaderContainer>
+      <Wrapper>
+        {/* Logo Section */}
+        <LogoSection>
+          <Camera size={24} />
+          <span>LUX MUNDI</span>
+        </LogoSection>
 
-          {!isMobile && <DesktopNav links={navigationLinks} />}
+        {/* Desktop Navigation */}
+        <Nav>
+          {navLinks.map((link) => (
+            <NavLink key={link.name} href={link.href}>
+              {link.name}
+            </NavLink>
+          ))}
+        </Nav>
 
-          <RightSection>
-            <SearchBar value={searchValue} onChange={handleSearchChange} />
-
-            <AuthButtons />
-
-            {isMobile && (
-              <HamburgerButton
-                onClick={handleMenuToggle}
-                aria-expanded={isMenuOpen}
-                aria-label="Toggle Menu"
-              >
-                {isMenuOpen ? <X /> : <Menu />}
-              </HamburgerButton>
-            )}
-          </RightSection>
-
-          {isMobile && (
-            <MobileNav
-              isOpen={isMenuOpen}
-              links={navigationLinks}
-              onLinkClick={handleLinkClick}
-            />
+        {/* Search and Auth Section */}
+        <SearchSection>
+          {isSearchOpen ? (
+            <SearchBar>
+              <SearchInput type="text" placeholder="Buscar" />
+              <button onClick={() => setIsSearchOpen(false)}>
+                <X size={20} />
+              </button>
+            </SearchBar>
+          ) : (
+            <button onClick={() => setIsSearchOpen(true)}>
+              <Search size={20} />
+            </button>
           )}
-        </NavContainer>
-      </HeaderContainer>
-    </ThemeProvider>
+        </SearchSection>
+
+        {/* Auth Buttons */}
+        <AuthButtons>
+          <button>Log in</button>
+          <button className="register">Register</button>
+        </AuthButtons>
+
+        {/* Mobile Menu Button */}
+        <MobileMenuButton>
+          <button onClick={() => setIsMenuOpen(!isMenuOpen)}>
+            <Menu size={24} />
+          </button>
+        </MobileMenuButton>
+      </Wrapper>
+
+      {/* Mobile Menu */}
+      {isMenuOpen && (
+        <MobileMenu>
+          {navLinks.map((link) => (
+            <MobileNavLink key={link.name} href={link.href}>
+              {link.name}
+            </MobileNavLink>
+          ))}
+          <MobileNavLink href="#">Log in</MobileNavLink>
+          <button className="register">Register</button>
+        </MobileMenu>
+      )}
+    </HeaderContainer>
   );
 };
 
-export default memo(Header);
+export default Header;
