@@ -20,6 +20,9 @@ const ContentWrapper = styled.div`
   flex-direction: column;
   align-items: center;
   text-align: center;
+  background-color: #1e1e1e;
+  width: 100%;
+  padding: 40px 0;
 `;
 
 const Title = styled.h1`

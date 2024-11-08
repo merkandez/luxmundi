@@ -53,7 +53,7 @@ function LuxMundiHero() {
 }
 
 const HeroSection = styled.section`
-  background-color: #2c2c2c;
+  background-color: #1e1e1e;
   display: flex;
   flex-direction: column;
   align-items: center;

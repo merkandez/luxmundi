@@ -1,9 +1,11 @@
+import styled from "styled-components";
 import Header from "../components/Header";
 import LuxMundiHero from "../components/LuxMundiHero";
 import Footer from "../components/Footer";
 import ExploreSection from "../components/ExploreSection";
 import CardsContainer from "../components/CardContainer";
 import Card from "../components/Card";
+import HeroContent from "../components/HeroContent";
 
 //cambiar el json por la base de datos
 //description cambiar por contenido de hasta 10 palabras.
@@ -43,8 +45,12 @@ const cardData = [
 
 function HomePage() {
   return (
-    <div>
+    <HomeWrapper>
       <Header />
+      <HeroContent
+        title="Welcome to Lux Mundi"
+        subtitle="Discover Amazing Places Around the World"
+      />
       <LuxMundiHero />
       <ExploreSection>
         <h2>Explore</h2>
@@ -60,8 +66,13 @@ function HomePage() {
         </CardsContainer>
       </ExploreSection>
       <Footer />
-    </div>
+    </HomeWrapper>
   );
 }
+
+const HomeWrapper = styled.div`
+  background-color: #1e1e1e;
+  min-height: 100vh;
+`;
 
 export default HomePage;

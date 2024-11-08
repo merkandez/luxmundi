@@ -2,7 +2,7 @@ import styled from "styled-components";
 
 // Explore Section
 const ExploreSection = styled.section`
-  background-color: #2c2c2c;
+  background-color: #1e1e1e;
   color: #ffffff;
   padding: 40px 24px;
   text-align: center;
