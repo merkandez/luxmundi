@@ -6,7 +6,6 @@ import { createPost } from '../services/postService';
 const CreatePost = () => {
     const navigate = useNavigate();
     const [title, setTitle] = useState('');
-    const [description, setDescription] = useState('');
     const [content, setContent] = useState('');
     const [attachments, setAttachments] = useState([]);
 
@@ -15,7 +14,6 @@ const CreatePost = () => {
 
         const formData = new FormData();
         formData.append('title', title);
-        formData.append('description', description);
         formData.append('content', content);
         // Si tienes archivos adjuntos, los agregas aquí
         attachments.forEach((file, index) => {
@@ -50,14 +48,7 @@ const CreatePost = () => {
                     required
                 />
             </div>
-            <div style={styles.inputContainer}>
-                <textarea
-                    style={styles.textarea}
-                    value={description}
-                    onChange={(e) => setDescription(e.target.value)}
-                    placeholder="Descripción del post"
-                />
-            </div>
+            
             <div style={styles.inputContainer}>
                 <textarea
                     style={styles.textarea}
