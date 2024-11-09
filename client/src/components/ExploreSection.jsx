@@ -15,7 +15,7 @@ const ExploreSection = ({ cards = [] }) => {
   return (
     <Section>
       <SectionHeader>
-        <Title>Explore</Title>
+        <Title>Destinos</Title>
         <Subtitle>Discover amazing destinations</Subtitle>
       </SectionHeader>
 

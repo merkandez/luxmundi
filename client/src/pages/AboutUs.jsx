@@ -99,21 +99,35 @@ function AboutUs() {
 }
 
 const AboutWrapper = styled.div`
-  padding: 4rem 2rem;
+  padding: 4rem 1rem;
   background-color: #0a0a0a;
   min-height: 100vh;
+
+  @media (max-width: 768px) {
+    padding: 2rem 1rem;
+  }
 `;
 
 const AboutHeader = styled.div`
   text-align: center;
   max-width: 800px;
-  margin: 0 auto 4rem;
+  margin: 0 auto 3rem;
+  padding: 0 1rem;
+
+  @media (max-width: 768px) {
+    margin: 0 auto 2rem;
+  }
 `;
 
 const Title = styled.h1`
   font-size: 3rem;
   margin-bottom: 1.5rem;
   color: #fff;
+
+  @media (max-width: 768px) {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+  }
 `;
 
 const Description = styled.p`
@@ -124,10 +138,16 @@ const Description = styled.p`
 
 const TeamGrid = styled.div`
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  gap: 2rem;
-  max-width: 1440px;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 1.5rem;
+  max-width: 1200px;
   margin: 0 auto;
+  padding: 0 1rem;
+
+  @media (max-width: 768px) {
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1rem;
+  }
 `;
 
 const TeamCard = styled.div`
@@ -136,6 +156,8 @@ const TeamCard = styled.div`
   overflow: hidden;
   border: 1px solid #222;
   transition: all 0.3s ease;
+  max-width: 300px;
+  margin: 0 auto;
 
   &:hover {
     transform: translateY(-5px);
@@ -146,8 +168,11 @@ const TeamCard = styled.div`
 
 const ImageWrapper = styled.div`
   width: 100%;
-  height: 300px;
-  overflow: hidden;
+  height: 240px;
+
+  @media (max-width: 768px) {
+    height: 200px;
+  }
 `;
 
 const MemberImage = styled.img`

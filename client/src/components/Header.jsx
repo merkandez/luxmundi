@@ -1,13 +1,18 @@
 import styled from "styled-components";
-import { Camera, Search, X, Menu, User, LogOut } from "lucide-react";
+import { Camera, Search, X, Menu } from "lucide-react";
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import PropTypes from "prop-types";
+import ProfileSettings from "./ProfileSettings";
 
 const HeaderContainer = styled.header`
   background-color: #0a0a0a;
   color: #fff;
   border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  position: fixed;
+  width: 100%;
+  top: 0;
+  z-index: 1000;
   transition: border-color 0.3s ease;
 
   &:hover {
@@ -23,6 +28,11 @@ const Wrapper = styled.div`
   align-items: center;
   height: 5rem;
   position: relative;
+
+  @media (max-width: 768px) {
+    padding: 0 1rem;
+    justify-content: space-between;
+  }
 `;
 
 const LogoSection = styled(Link)`
@@ -30,6 +40,7 @@ const LogoSection = styled(Link)`
   align-items: center;
   gap: 0.8rem;
   transition: transform 0.3s ease;
+  z-index: 20;
 
   &:hover {
     transform: translateY(-1px);
@@ -39,6 +50,10 @@ const LogoSection = styled(Link)`
     font-size: 1.4rem;
     font-weight: 700;
     letter-spacing: 1px;
+
+    @media (max-width: 480px) {
+      font-size: 1.2rem;
+    }
   }
 `;
 
@@ -84,6 +99,10 @@ const SearchSection = styled.div`
   align-items: center;
   margin-left: auto;
   position: relative;
+
+  @media (max-width: 768px) {
+    margin-left: 0;
+  }
 `;
 
 const SearchBar = styled.div`
@@ -143,13 +162,14 @@ const SearchButton = styled.button`
 
 const SearchInput = styled.input`
   width: 100%;
-  padding: 4px;
+  padding: 8px;
   border: none;
-  color: #444;
+  background: transparent;
+  color: #fff;
   font-size: 0.9rem;
 
   &::placeholder {
-    color: #999;
+    color: #666;
   }
 
   &:focus {
@@ -163,71 +183,46 @@ const AuthButtons = styled.div`
   gap: 1rem;
   margin-left: 2rem;
 
-  @media (min-width: 640px) {
+  @media (min-width: 768px) {
     display: flex;
   }
 
   .login,
   .register {
     padding: 0.6rem 1.8rem;
-    border-radius: 2px;
+    border-radius: 10px;
     cursor: pointer;
-    min-width: 120px;
+    min-width: 100px;
     font-size: 0.9rem;
     font-weight: 500;
     letter-spacing: 0.5px;
     transition: all 0.2s ease;
+
+    @media (max-width: 1024px) {
+      padding: 0.5rem 1.2rem;
+      min-width: 90px;
+    }
   }
 
   .login {
-    border: 1px solid #fff;
+    background-color: #1a1a1a;
     color: #fff;
-    background-color: transparent;
+    border: 1px solid #333;
 
     &:hover {
-      background-color: rgba(255, 255, 255, 0.1);
+      background-color: #222;
+      border-color: #444;
     }
   }
 
   .register {
     background-color: #fff;
     color: #000;
-    border: 1px solid #fff;
+    border: none;
 
     &:hover {
-      background-color: rgba(255, 255, 255, 0.9);
+      background-color: #f0f0f0;
     }
-  }
-`;
-
-const ProfileSection = styled.div`
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-  cursor: pointer;
-  margin-left: 2rem;
-  position: relative;
-`;
-
-const Avatar = styled.div`
-  width: 36px;
-  height: 36px;
-  border-radius: 50%;
-  background-color: #222;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: all 0.2s ease;
-  border: 1px solid #333;
-
-  &:hover {
-    background-color: #333;
-    transform: translateY(-1px);
-  }
-
-  @media (max-width: 768px) {
-    width: 32px;
-    height: 32px;
   }
 `;
 
@@ -239,7 +234,7 @@ const MobileMenuButton = styled.button`
   border: none;
   color: #fff;
   cursor: pointer;
-  padding: 0;
+  padding: 8px;
   transition: all 0.2s ease;
 
   @media (min-width: 768px) {
@@ -248,21 +243,21 @@ const MobileMenuButton = styled.button`
 `;
 
 const MobileMenu = styled.div`
-  display: none;
   position: fixed;
-  right: 0;
   top: 5rem;
   left: 0;
+  right: 0;
   background-color: #0a0a0a;
   border-top: 1px solid #333;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  z-index: 1000;
   padding: 1rem 0;
-  transition: transform 0.3s ease;
   transform: translateY(${({ isOpen }) => (isOpen ? "0" : "-100%")});
+  opacity: ${({ isOpen }) => (isOpen ? "1" : "0")};
+  visibility: ${({ isOpen }) => (isOpen ? "visible" : "hidden")};
+  transition: all 0.3s ease;
+  z-index: 999;
 
-  @media (max-width: 767px) {
-    display: block;
+  @media (min-width: 768px) {
+    display: none;
   }
 `;
 
@@ -285,46 +280,9 @@ const MobileNavLink = styled(Link)`
   }
 `;
 
-const UserMenu = styled.div`
-  position: absolute;
-  top: 100%;
-  right: 0;
-  background: #111111;
-  border: 1px solid #222;
-  border-radius: 4px;
-  padding: 0.5rem;
-  min-width: 200px;
-  display: ${({ isOpen }) => (isOpen ? "block" : "none")};
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-  z-index: 1000;
-`;
-
-const UserMenuItem = styled.button`
-  width: 100%;
-  padding: 0.8rem 1rem;
-  display: flex;
-  align-items: center;
-  gap: 0.8rem;
-  background: none;
-  border: none;
-  color: #fff;
-  font-size: 0.9rem;
-  cursor: pointer;
-  transition: all 0.2s ease;
-
-  &:hover {
-    background: #222;
-  }
-
-  svg {
-    opacity: 0.7;
-  }
-`;
-
 const Header = ({ isLoggedIn }) => {
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
   const navigate = useNavigate();
 
   const navLinks = [
@@ -335,13 +293,7 @@ const Header = ({ isLoggedIn }) => {
 
   const handleLogout = () => {
     // Add your logout logic here
-    setIsUserMenuOpen(false);
     navigate("/");
-  };
-
-  const handleProfileClick = () => {
-    setIsUserMenuOpen(false);
-    navigate("/profile");
   };
 
   return (
@@ -380,21 +332,7 @@ const Header = ({ isLoggedIn }) => {
         </SearchSection>
 
         {isLoggedIn ? (
-          <ProfileSection>
-            <Avatar onClick={() => setIsUserMenuOpen(!isUserMenuOpen)}>
-              <User size={20} color="#fff" />
-            </Avatar>
-            <UserMenu isOpen={isUserMenuOpen}>
-              <UserMenuItem onClick={handleProfileClick}>
-                <User size={18} />
-                Profile
-              </UserMenuItem>
-              <UserMenuItem onClick={handleLogout}>
-                <LogOut size={18} />
-                Logout
-              </UserMenuItem>
-            </UserMenu>
-          </ProfileSection>
+          <ProfileSettings username="John Doe" onLogout={handleLogout} />
         ) : (
           <AuthButtons>
             <Link to="/login">
@@ -419,12 +357,17 @@ const Header = ({ isLoggedIn }) => {
               {link.name}
             </MobileNavLink>
           ))}
-          {isLoggedIn && (
+          {isLoggedIn ? (
             <>
               <MobileNavLink to="/profile">Profile</MobileNavLink>
               <MobileNavLink as="button" onClick={handleLogout}>
                 Logout
               </MobileNavLink>
+            </>
+          ) : (
+            <>
+              <MobileNavLink to="/login">Log in</MobileNavLink>
+              <MobileNavLink to="/register">Register</MobileNavLink>
             </>
           )}
         </MobileMenu>
