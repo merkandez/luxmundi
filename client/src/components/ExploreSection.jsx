@@ -72,6 +72,7 @@ ExploreSection.propTypes = {
 const Section = styled.section`
   padding: 60px 0;
   background-color: #111111;
+  margin-bottom: 0;
 `;
 
 const SectionHeader = styled.div`
@@ -98,8 +99,15 @@ const CardGrid = styled.div`
   margin: 0 auto;
   padding: 0 24px;
 
-  @media (min-width: 1200px) {
-    grid-template-columns: repeat(4, 1fr);
+  @media (max-width: 768px) {
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: 16px;
+    padding: 0 16px;
+  }
+
+  @media (max-width: 480px) {
+    grid-template-columns: 1fr;
+    padding: 0 12px;
   }
 `;
 

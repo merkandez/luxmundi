@@ -74,6 +74,8 @@ function HomePage() {
 const HomeWrapper = styled.div`
   background-color: #0a0a0a;
   min-height: 100vh;
+  display: flex;
+  flex-direction: column;
 `;
 
 export default HomePage;

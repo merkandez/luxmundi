@@ -95,7 +95,7 @@ const FooterWrapper = styled.footer`
   background-color: #0f0e0e;
   color: #ffffff;
   padding: 60px 0 20px;
-  margin-top: 80px;
+  margin-top: 0;
 `;
 
 const FooterContent = styled.div`
@@ -143,10 +143,16 @@ const SubscribeForm = styled.form`
     background-color: #ffffff;
     color: #000000;
     cursor: pointer;
-    transition: all 0.2s ease;
+    transition: all 0.3s ease;
 
     &:hover {
       background-color: #f0f0f0;
+      transform: translateY(-2px);
+    }
+
+    &:focus {
+      outline: none;
+      box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.3);
     }
   }
 `;
@@ -168,10 +174,22 @@ const Copyright = styled.p`
 
 const SocialIcon = styled.a`
   color: #ffffff;
-  transition: color 0.2s ease;
+  transition: all 0.3s ease;
+  padding: 8px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 
   &:hover {
-    color: #cccccc;
+    color: #ffffff;
+    background-color: rgba(255, 255, 255, 0.1);
+    transform: translateY(-2px);
+  }
+
+  &:focus {
+    outline: none;
+    box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.3);
   }
 `;
 
@@ -257,8 +275,32 @@ const SocialMediaIcons = styled.div`
 const FooterLink = styled(Link)`
   color: #cccccc;
   text-decoration: none;
+  position: relative;
+  transition: color 0.3s ease;
+  padding: 2px 0;
+
+  &:after {
+    content: "";
+    position: absolute;
+    width: 0;
+    height: 2px;
+    bottom: 0;
+    left: 0;
+    background-color: #ffffff;
+    transition: width 0.3s ease;
+  }
 
   &:hover {
     color: #ffffff;
+
+    &:after {
+      width: 100%;
+    }
+  }
+
+  &:focus {
+    outline: none;
+    box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.3);
+    border-radius: 2px;
   }
 `;

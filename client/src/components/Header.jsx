@@ -8,16 +8,10 @@ import ProfileSettings from "./ProfileSettings";
 const HeaderContainer = styled.header`
   background-color: #0a0a0a;
   color: #fff;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
   position: fixed;
   width: 100%;
   top: 0;
   z-index: 1000;
-  transition: border-color 0.3s ease;
-
-  &:hover {
-    border-color: rgba(255, 255, 255, 0.2);
-  }
 `;
 
 const Wrapper = styled.div`
@@ -26,12 +20,12 @@ const Wrapper = styled.div`
   padding: 0 2rem;
   display: flex;
   align-items: center;
+  justify-content: space-between;
   height: 5rem;
   position: relative;
 
   @media (max-width: 768px) {
     padding: 0 1rem;
-    justify-content: space-between;
   }
 `;
 
@@ -41,6 +35,7 @@ const LogoSection = styled(Link)`
   gap: 0.8rem;
   transition: transform 0.3s ease;
   z-index: 20;
+  margin-right: 2rem;
 
   &:hover {
     transform: translateY(-1px);
@@ -58,12 +53,13 @@ const LogoSection = styled(Link)`
 `;
 
 const Nav = styled.nav`
-  display: none;
-  margin-left: 4rem;
+  display: flex;
+  justify-content: center;
+  flex: 1;
+  margin: 0 2rem;
 
-  @media (min-width: 768px) {
-    display: flex;
-    gap: 3rem;
+  @media (max-width: 768px) {
+    display: none;
   }
 `;
 
@@ -97,11 +93,10 @@ const NavLink = styled(Link)`
 const SearchSection = styled.div`
   display: flex;
   align-items: center;
-  margin-left: auto;
   position: relative;
 
   @media (max-width: 768px) {
-    margin-left: 0;
+    margin-right: 1rem;
   }
 `;
 
@@ -121,11 +116,18 @@ const SearchBar = styled.div`
   opacity: 0;
   overflow: hidden;
   transition: all 0.3s ease;
+  z-index: 1001;
 
   &.active {
     width: 300px;
     opacity: 1;
     margin-right: 1rem;
+  }
+
+  @media (max-width: 1024px) {
+    &.active {
+      width: 200px;
+    }
   }
 
   @media (max-width: 768px) {
@@ -136,7 +138,6 @@ const SearchBar = styled.div`
     transform: none;
     width: 100%;
     border-radius: 0;
-    z-index: 1000;
 
     &.active {
       width: 100%;
@@ -181,7 +182,6 @@ const AuthButtons = styled.div`
   display: none;
   align-items: center;
   gap: 1rem;
-  margin-left: 2rem;
 
   @media (min-width: 768px) {
     display: flex;
@@ -226,8 +226,14 @@ const AuthButtons = styled.div`
   }
 `;
 
-const MobileMenuButton = styled.button`
+const RightSection = styled.div`
   display: flex;
+  align-items: center;
+  gap: 1.5rem;
+`;
+
+const MobileMenuButton = styled.button`
+  display: none;
   align-items: center;
   justify-content: center;
   background: none;
@@ -237,8 +243,8 @@ const MobileMenuButton = styled.button`
   padding: 8px;
   transition: all 0.2s ease;
 
-  @media (min-width: 768px) {
-    display: none;
+  @media (max-width: 768px) {
+    display: flex;
   }
 `;
 
@@ -312,65 +318,67 @@ const Header = ({ isLoggedIn }) => {
           ))}
         </Nav>
 
-        <SearchSection>
-          <SearchBar className={isSearchOpen ? "active" : ""}>
-            <SearchInput
-              type="text"
-              placeholder="Search..."
-              autoFocus={isSearchOpen}
-            />
-            <X
-              size={16}
-              color="#666"
-              onClick={() => setIsSearchOpen(false)}
-              style={{ cursor: "pointer" }}
-            />
-          </SearchBar>
-          <SearchButton onClick={() => setIsSearchOpen(true)}>
-            <Search size={20} />
-          </SearchButton>
-        </SearchSection>
+        <RightSection>
+          <SearchSection>
+            <SearchBar className={isSearchOpen ? "active" : ""}>
+              <SearchInput
+                type="text"
+                placeholder="Search..."
+                autoFocus={isSearchOpen}
+              />
+              <X
+                size={16}
+                color="#666"
+                onClick={() => setIsSearchOpen(false)}
+                style={{ cursor: "pointer" }}
+              />
+            </SearchBar>
+            <SearchButton onClick={() => setIsSearchOpen(true)}>
+              <Search size={20} />
+            </SearchButton>
+          </SearchSection>
 
-        {isLoggedIn ? (
-          <ProfileSettings username="John Doe" onLogout={handleLogout} />
-        ) : (
-          <AuthButtons>
-            <Link to="/login">
-              <button className="login">Log in</button>
-            </Link>
-            <Link to="/register">
-              <button className="register">Register</button>
-            </Link>
-          </AuthButtons>
-        )}
-
-        <MobileMenuButton
-          onClick={() => setIsMenuOpen(!isMenuOpen)}
-          aria-label={isMenuOpen ? "Close menu" : "Open menu"}
-        >
-          {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
-        </MobileMenuButton>
-
-        <MobileMenu isOpen={isMenuOpen}>
-          {navLinks.map((link) => (
-            <MobileNavLink key={link.name} to={link.href}>
-              {link.name}
-            </MobileNavLink>
-          ))}
           {isLoggedIn ? (
-            <>
-              <MobileNavLink to="/profile">Profile</MobileNavLink>
-              <MobileNavLink as="button" onClick={handleLogout}>
-                Logout
-              </MobileNavLink>
-            </>
+            <ProfileSettings username="John Doe" onLogout={handleLogout} />
           ) : (
-            <>
-              <MobileNavLink to="/login">Log in</MobileNavLink>
-              <MobileNavLink to="/register">Register</MobileNavLink>
-            </>
+            <AuthButtons>
+              <Link to="/login">
+                <button className="login">Log in</button>
+              </Link>
+              <Link to="/register">
+                <button className="register">Register</button>
+              </Link>
+            </AuthButtons>
           )}
-        </MobileMenu>
+
+          <MobileMenuButton
+            onClick={() => setIsMenuOpen(!isMenuOpen)}
+            aria-label={isMenuOpen ? "Close menu" : "Open menu"}
+          >
+            {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
+          </MobileMenuButton>
+
+          <MobileMenu isOpen={isMenuOpen}>
+            {navLinks.map((link) => (
+              <MobileNavLink key={link.name} to={link.href}>
+                {link.name}
+              </MobileNavLink>
+            ))}
+            {isLoggedIn ? (
+              <>
+                <MobileNavLink to="/profile">Profile</MobileNavLink>
+                <MobileNavLink as="button" onClick={handleLogout}>
+                  Logout
+                </MobileNavLink>
+              </>
+            ) : (
+              <>
+                <MobileNavLink to="/login">Log in</MobileNavLink>
+                <MobileNavLink to="/register">Register</MobileNavLink>
+              </>
+            )}
+          </MobileMenu>
+        </RightSection>
       </Wrapper>
     </HeaderContainer>
   );
