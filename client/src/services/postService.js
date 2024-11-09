@@ -37,6 +37,18 @@ export const updatePost = async (postId, postData) => {
   return response.data;
 };
 
+// Función para actualizar los likes de un post específico
+export const updatePostLikes = async (postId, likes) => {
+  const response = await axios.patch(
+    `${API_URL}/${postId}/likes`,
+    { likes },
+    {
+      headers: { Authorization: `Bearer ${localStorage.getItem('token')}` },
+    }
+  );
+  return response.data;
+};
+
 //Funcion para eliminar un post
 export const deletePost = async (postId) => {
   const response = await axios.delete(`${API_URL}/${postId}`, {
