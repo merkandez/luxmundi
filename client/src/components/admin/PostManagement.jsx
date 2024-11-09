@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 
 const PostManagement = ({ posts, selectedPost, onSelectPost, onUpdatePost, onDeletePost, onCreatePost }) => {
@@ -6,7 +6,7 @@ const PostManagement = ({ posts, selectedPost, onSelectPost, onUpdatePost, onDel
   const [newPostData, setNewPostData] = useState({ title: '', content: '', imageUrl: '' });
   const [searchTerm, setSearchTerm] = useState('');
 
-  React.useEffect(() => {
+  useEffect(() => {
     setEditData(selectedPost || {});
   }, [selectedPost]);
 

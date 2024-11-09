@@ -6,6 +6,7 @@ import {
   createPost,
   deletePost,
 } from '../services/postService';
+import  { registerUser } from '../services/authService';
 import UserManagement from '../components/admin/UserManagement';
 import PostManagement from '../components/admin/PostManagement';
 import styled from 'styled-components';
@@ -62,6 +63,18 @@ const AdminPage = () => {
     setPosts([...posts, newPost]);
   };
 
+  const handleUserCreate = async (newUserData) => {
+    try {
+      const newUser = await registerUser(newUserData);
+      if (newUser) {
+        setUsers([...users, newUser]);
+      }
+    } catch (error) {
+      console.error('Error al registrar usuario:', error);
+      throw error;
+    }
+  };
+
   const [activeComponent, setActiveComponent] = useState('UserManagement');
 
   return (
@@ -88,15 +101,10 @@ const AdminPage = () => {
           onSelectUser={setSelectedUser}
           onUpdateUser={handleUserUpdate}
           onDeleteUser={handleUserDelete}
+          onCreateUser={handleUserCreate}
         />
       </Section>}
-
-
-      
-      
     </Container>
-
-    
   );
 };
 
