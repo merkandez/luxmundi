@@ -72,11 +72,11 @@ const HeroSection = styled.section`
   min-height: 90vh;
   display: flex;
   align-items: center;
-  padding: 4rem 2rem;
+  padding: 8rem 2rem 4rem;
   overflow: hidden;
 
   @media (max-width: 991px) {
-    padding: 2rem 1rem;
+    padding: 6rem 1rem 2rem;
     min-height: auto;
   }
 `;

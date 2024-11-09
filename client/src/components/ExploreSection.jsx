@@ -71,7 +71,7 @@ ExploreSection.propTypes = {
 
 const Section = styled.section`
   padding: 60px 0;
-  background-color: #1e1e1e;
+  background-color: #111111;
 `;
 
 const SectionHeader = styled.div`
