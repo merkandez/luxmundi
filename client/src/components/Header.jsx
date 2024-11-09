@@ -1,7 +1,8 @@
 import styled from "styled-components";
-import { Camera, Search, X, Menu } from "lucide-react";
+import { Camera, Search, X, Menu, User } from "lucide-react";
 import { useState } from "react";
 import { Link } from "react-router-dom";
+import PropTypes from "prop-types";
 
 const HeaderContainer = styled.header`
   background-color: #000;
@@ -42,7 +43,6 @@ const Nav = styled.nav`
 const NavLink = styled(Link)`
   color: #fff;
   text-decoration: none;
-  transition: transform 0.3s ease;
   font-size: 0.9rem;
 
   &:hover {
@@ -61,7 +61,6 @@ const SearchBar = styled.div`
   display: flex;
   align-items: center;
   gap: 8px;
-  background-color: transparent;
   border: 1px solid #666;
   border-radius: 4px;
   padding: 4px 8px;
@@ -75,7 +74,6 @@ const SearchBar = styled.div`
 const SearchInput = styled.input`
   width: 100%;
   padding: 4px;
-  background-color: transparent;
   border: none;
   color: #fff;
   font-size: 0.9rem;
@@ -87,16 +85,6 @@ const SearchInput = styled.input`
   &:focus {
     outline: none;
   }
-`;
-
-const SearchButton = styled.button`
-  background: none;
-  border: none;
-  padding: 0;
-  color: #fff;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
 `;
 
 const AuthButtons = styled.div`
@@ -113,6 +101,7 @@ const AuthButtons = styled.div`
     color: #fff;
     border: none;
     cursor: pointer;
+
     &:hover {
       color: #ccc;
     }
@@ -123,10 +112,25 @@ const AuthButtons = styled.div`
     color: #000;
     padding: 0.5rem 1rem;
     border-radius: 4px;
+
     &:hover {
       background-color: #e0e0e0;
     }
   }
+`;
+
+const ProfileSection = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  cursor: pointer;
+`;
+
+const Avatar = styled.div`
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background-color: #29c9a9;
 `;
 
 const MobileMenuButton = styled.button`
@@ -166,7 +170,6 @@ const MobileNavLink = styled(Link)`
   padding: 0.8rem 1.5rem;
   color: #fff;
   text-decoration: none;
-  transition: background-color 0.2s ease;
   font-size: 0.9rem;
 
   &:hover {
@@ -191,6 +194,7 @@ const MobileAuthButtons = styled.div`
   .login {
     background: transparent;
     color: #fff;
+
     &:hover {
       background: #333;
     }
@@ -199,46 +203,21 @@ const MobileAuthButtons = styled.div`
   .register {
     background: #fff;
     color: #000;
+
     &:hover {
       background: #e0e0e0;
     }
   }
 `;
 
-const MobileMenuHeader = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 1rem 1.5rem;
-  border-bottom: 1px solid #333;
-  color: #fff;
-  font-weight: 500;
-`;
-
-const CloseButton = styled.button`
-  background: none;
-  border: none;
-  padding: 4px;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: #fff;
-  transition: opacity 0.2s ease;
-
-  &:hover {
-    opacity: 0.8;
-  }
-`;
-
-const Header = () => {
+const Header = ({ isLoggedIn }) => {
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const navLinks = [
-    { name: "Nosotros", href: "#" },
-    { name: "Destinos", href: "#" },
-    { name: "Contacto", href: "#" },
+    { name: "Home", href: "/" },
+    { name: "About", href: "/about" },
+    { name: "Register", href: "/register" },
   ];
 
   return (
@@ -259,70 +238,70 @@ const Header = () => {
           ))}
         </Nav>
 
-        {/* Search and Auth Section */}
+        {/* Search Section */}
         <SearchSection>
           {isSearchOpen ? (
             <SearchBar>
-              <SearchButton onClick={() => setIsSearchOpen(false)}>
-                <Search size={18} color="#fff" />
-              </SearchButton>
               <SearchInput type="text" placeholder="Search..." autoFocus />
-              <SearchButton onClick={() => setIsSearchOpen(false)}>
+              <button onClick={() => setIsSearchOpen(false)}>
                 <X size={18} color="#fff" />
-              </SearchButton>
+              </button>
             </SearchBar>
           ) : (
-            <SearchButton onClick={() => setIsSearchOpen(true)}>
+            <button onClick={() => setIsSearchOpen(true)}>
               <Search size={20} color="#fff" />
-            </SearchButton>
+            </button>
           )}
         </SearchSection>
 
-        {/* Auth Buttons */}
-        <AuthButtons>
-          <button>Log in</button>
-          <button className="register">Register</button>
-        </AuthButtons>
+        {/* Auth/Profile Section */}
+        {isLoggedIn ? (
+          <ProfileSection>
+            <User size={24} color="#fff" />
+            <Avatar />
+          </ProfileSection>
+        ) : (
+          <AuthButtons>
+            <button>Log in</button>
+            <button className="register">Register</button>
+          </AuthButtons>
+        )}
 
         {/* Mobile Menu Button */}
         <MobileMenuButton
           onClick={() => setIsMenuOpen(!isMenuOpen)}
           aria-label={isMenuOpen ? "Close menu" : "Open menu"}
         >
-          {isMenuOpen ? (
-            <X size={24} color="#fff" strokeWidth={2} />
-          ) : (
-            <Menu size={24} color="#fff" strokeWidth={2} />
-          )}
+          {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
         </MobileMenuButton>
 
         <MobileMenu isOpen={isMenuOpen}>
-          <MobileMenuHeader>
-            <span>Menu</span>
-            <CloseButton
-              onClick={() => setIsMenuOpen(false)}
-              aria-label="Close menu"
-            >
-              <X size={20} color="#fff" strokeWidth={2} />
-            </CloseButton>
-          </MobileMenuHeader>
-          <MobileNavLink key="nosotros" to="#">
-            Nosotros
-          </MobileNavLink>
-          <MobileNavLink key="destinos" to="#">
-            Destinos
-          </MobileNavLink>
-          <MobileNavLink key="contacto" to="#">
-            Contacto
-          </MobileNavLink>
+          {navLinks.map((link) => (
+            <MobileNavLink key={link.name} to={link.href}>
+              {link.name}
+            </MobileNavLink>
+          ))}
           <MobileAuthButtons>
-            <button className="login">Log in</button>
-            <button className="register">Register</button>
+            {isLoggedIn ? (
+              <ProfileSection>
+                <User size={24} color="#fff" />
+                <Avatar />
+              </ProfileSection>
+            ) : (
+              <>
+                <button className="login">Log in</button>
+                <button className="register">Register</button>
+              </>
+            )}
           </MobileAuthButtons>
         </MobileMenu>
       </Wrapper>
     </HeaderContainer>
   );
+};
+
+Header.propTypes = {
+  isLoggedIn: PropTypes.bool.isRequired,
 };
 
 export default Header;

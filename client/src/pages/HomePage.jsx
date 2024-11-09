@@ -1,7 +1,5 @@
 import styled from "styled-components";
-import Header from "../components/Header";
 import LuxMundiHero from "../components/LuxMundiHero";
-import Footer from "../components/Footer";
 import ExploreSection from "../components/ExploreSection";
 import CardsContainer from "../components/CardContainer";
 import Card from "../components/Card";
@@ -46,7 +44,6 @@ const cardData = [
 function HomePage() {
   return (
     <HomeWrapper>
-      <Header />
       <HeroContent
         title="Welcome to Lux Mundi"
         subtitle="Discover Amazing Places Around the World"
@@ -65,7 +62,6 @@ function HomePage() {
           ))}
         </CardsContainer>
       </ExploreSection>
-      <Footer />
     </HomeWrapper>
   );
 }

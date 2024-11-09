@@ -1,15 +1,20 @@
 import { Outlet } from "react-router-dom";
-/* import Nav from './Nav';
-import Footer from './Footer'; */
+import Header from "../components/Header";
+import Footer from "../components/Footer";
+import { useAuth } from "../context/AuthContext";
 
-const Layout = () => {
+function Layout() {
+  const { isLoggedIn } = useAuth();
+
   return (
     <>
-      {/* <Nav /> */}
-      <Outlet />
-      {/* <Footer /> */}
+      <Header isLoggedIn={isLoggedIn} />
+      <main>
+        <Outlet />
+      </main>
+      <Footer />
     </>
   );
-};
+}
 
 export default Layout;
