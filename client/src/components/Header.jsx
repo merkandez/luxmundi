@@ -3,7 +3,8 @@ import { Camera, Search, X, Menu } from "lucide-react";
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import PropTypes from "prop-types";
-import ProfileSettings from "./ProfileSettings";
+import LoginModal from "./LoginModal";
+import ContactModal from "./ContactModal";
 
 const HeaderContainer = styled.header`
   background-color: #0a0a0a;
@@ -64,12 +65,12 @@ const Nav = styled.nav`
 `;
 
 const NavLink = styled(Link)`
-  color: #fff;
+  color: ${({ isActive }) =>
+    isActive ? "#ffffff" : "rgba(255, 255, 255, 0.7)"};
   text-decoration: none;
   font-size: 1.1rem;
   padding: 0.6rem 1rem;
-  border-radius: 2px;
-  font-weight: 500;
+  font-weight: ${({ isActive }) => (isActive ? "600" : "400")};
   transition: all 0.2s ease;
   position: relative;
 
@@ -82,11 +83,15 @@ const NavLink = styled(Link)`
     left: 50%;
     background-color: #fff;
     transition: all 0.3s ease;
+    transform: translateX(-50%);
   }
 
-  &:hover:after {
-    width: 100%;
-    left: 0;
+  &:hover {
+    color: #ffffff;
+
+    &:after {
+      width: 100%;
+    }
   }
 `;
 
@@ -101,10 +106,7 @@ const SearchSection = styled.div`
 `;
 
 const SearchBar = styled.div`
-  position: absolute;
-  right: 100%;
-  top: 50%;
-  transform: translateY(-50%);
+  position: relative;
   display: flex;
   align-items: center;
   gap: 8px;
@@ -116,12 +118,10 @@ const SearchBar = styled.div`
   opacity: 0;
   overflow: hidden;
   transition: all 0.3s ease;
-  z-index: 1001;
 
   &.active {
     width: 300px;
     opacity: 1;
-    margin-right: 1rem;
   }
 
   @media (max-width: 1024px) {
@@ -131,17 +131,10 @@ const SearchBar = styled.div`
   }
 
   @media (max-width: 768px) {
-    position: fixed;
-    top: 5rem;
-    left: 0;
-    right: 0;
-    transform: none;
     width: 100%;
-    border-radius: 0;
 
     &.active {
       width: 100%;
-      margin-right: 0;
     }
   }
 `;
@@ -267,11 +260,13 @@ const MobileMenu = styled.div`
   }
 `;
 
-const MobileNavLink = styled(Link)`
+const MobileNavLink = styled(({ onClick, ...props }) =>
+  onClick ? <button onClick={onClick} {...props} /> : <Link {...props} />
+)`
   display: flex;
   align-items: center;
   padding: 1rem 2rem;
-  color: #fff;
+  color: rgba(255, 255, 255, 0.7);
   text-decoration: none;
   font-size: 1rem;
   background: none;
@@ -279,22 +274,59 @@ const MobileNavLink = styled(Link)`
   width: 100%;
   text-align: left;
   cursor: pointer;
-  transition: background-color 0.2s ease;
+  transition: all 0.2s ease;
 
   &:hover {
-    background-color: #1a1a1a;
+    color: #ffffff;
+    background-color: rgba(255, 255, 255, 0.05);
+  }
+`;
+
+const NavButton = styled.button`
+  color: ${({ isActive }) =>
+    isActive ? "#ffffff" : "rgba(255, 255, 255, 0.7)"};
+  text-decoration: none;
+  font-size: 1.1rem;
+  padding: 0.6rem 1rem;
+  font-weight: ${({ isActive }) => (isActive ? "600" : "400")};
+  transition: all 0.2s ease;
+  position: relative;
+  background: none;
+  border: none;
+  cursor: pointer;
+
+  &:after {
+    content: "";
+    position: absolute;
+    width: 0;
+    height: 1px;
+    bottom: 0;
+    left: 50%;
+    background-color: #fff;
+    transition: all 0.3s ease;
+    transform: translateX(-50%);
+  }
+
+  &:hover {
+    color: #ffffff;
+
+    &:after {
+      width: 100%;
+    }
   }
 `;
 
 const Header = ({ isLoggedIn }) => {
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
+  const [isContactModalOpen, setIsContactModalOpen] = useState(false);
   const navigate = useNavigate();
 
   const navLinks = [
     { name: "Nosotros", href: "/about" },
     { name: "Destinos", href: "/destinations" },
-    { name: "Contacto", href: "/contact" },
+    { name: "Contacto", onClick: () => setIsContactModalOpen(true) },
   ];
 
   const handleLogout = () => {
@@ -311,11 +343,17 @@ const Header = ({ isLoggedIn }) => {
         </LogoSection>
 
         <Nav>
-          {navLinks.map((link) => (
-            <NavLink key={link.name} to={link.href}>
-              {link.name}
-            </NavLink>
-          ))}
+          {navLinks.map((link) =>
+            link.onClick ? (
+              <NavButton key={link.name} onClick={link.onClick}>
+                {link.name}
+              </NavButton>
+            ) : (
+              <NavLink key={link.name} to={link.href}>
+                {link.name}
+              </NavLink>
+            )
+          )}
         </Nav>
 
         <RightSection>
@@ -326,30 +364,39 @@ const Header = ({ isLoggedIn }) => {
                 placeholder="Search..."
                 autoFocus={isSearchOpen}
               />
-              <X
-                size={16}
-                color="#666"
-                onClick={() => setIsSearchOpen(false)}
-                style={{ cursor: "pointer" }}
-              />
             </SearchBar>
-            <SearchButton onClick={() => setIsSearchOpen(true)}>
+            <SearchButton onClick={() => setIsSearchOpen(!isSearchOpen)}>
               <Search size={20} />
             </SearchButton>
           </SearchSection>
 
-          {isLoggedIn ? (
-            <ProfileSettings username="John Doe" onLogout={handleLogout} />
-          ) : (
+          {!isLoggedIn && (
             <AuthButtons>
-              <Link to="/login">
-                <button className="login">Log in</button>
-              </Link>
+              <button
+                className="login"
+                onClick={() => setIsLoginModalOpen(true)}
+              >
+                Log in
+              </button>
               <Link to="/register">
                 <button className="register">Register</button>
               </Link>
             </AuthButtons>
           )}
+
+          <LoginModal
+            isOpen={isLoginModalOpen}
+            onClose={() => setIsLoginModalOpen(false)}
+            onSubmit={(data) => {
+              console.log("Login data:", data);
+              // Add login logic here
+            }}
+          />
+
+          <ContactModal
+            isOpen={isContactModalOpen}
+            onClose={() => setIsContactModalOpen(false)}
+          />
 
           <MobileMenuButton
             onClick={() => setIsMenuOpen(!isMenuOpen)}
@@ -360,7 +407,12 @@ const Header = ({ isLoggedIn }) => {
 
           <MobileMenu isOpen={isMenuOpen}>
             {navLinks.map((link) => (
-              <MobileNavLink key={link.name} to={link.href}>
+              <MobileNavLink
+                key={link.name}
+                to={link.href}
+                onClick={link.onClick}
+                as={link.onClick ? "button" : Link}
+              >
                 {link.name}
               </MobileNavLink>
             ))}
@@ -373,7 +425,12 @@ const Header = ({ isLoggedIn }) => {
               </>
             ) : (
               <>
-                <MobileNavLink to="/login">Log in</MobileNavLink>
+                <MobileNavLink
+                  as="button"
+                  onClick={() => setIsLoginModalOpen(true)}
+                >
+                  Log in
+                </MobileNavLink>
                 <MobileNavLink to="/register">Register</MobileNavLink>
               </>
             )}
