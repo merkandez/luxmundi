@@ -1,44 +1,46 @@
 import styled from "styled-components";
 import SocialButton from "../components/SocialButton";
-import SliderDot from "../components/SliderDot";
+import { Link } from "react-router-dom";
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Navigation, Pagination, Autoplay } from "swiper/modules";
+import "swiper/css";
+import "swiper/css/pagination";
+import { Camera } from "lucide-react";
+import { theme } from "../styles/theme";
+import { Button } from "../styles/components";
 
 const socialButtons = [
   {
     icon: "https://cdn.builder.io/api/v1/image/assets/4a6b075cba4d439db44d5a2134fb5890/a86aac696dbf1b3069ef825e1b42fd84c2ed563a2107c05440d6ac47931b1cbb?apiKey=4a6b075cba4d439db44d5a2134fb5890&",
-    text: "Facebook",
+    text: "Continue with Facebook",
   },
   {
     icon: "https://cdn.builder.io/api/v1/image/assets/4a6b075cba4d439db44d5a2134fb5890/dd40f00dc6db3c0364106f8aa8f7a7ccce9226f67ec57e59b892dba3a52f6da7?apiKey=4a6b075cba4d439db44d5a2134fb5890&",
-    text: "Apple",
+    text: "Continue with Apple",
   },
   {
     icon: "https://cdn.builder.io/api/v1/image/assets/4a6b075cba4d439db44d5a2134fb5890/582ae3bba05c84d1bd07d50c1deb2c9f18f000a037f291245497f928ee54dfd9?apiKey=4a6b075cba4d439db44d5a2134fb5890&",
-    text: "Google",
-  },
-  {
-    icon: "https://cdn.builder.io/api/v1/image/assets/4a6b075cba4d439db44d5a2134fb5890/5d6c0619ab336d21ae9a53e309379cfa751fa2981b48ec84cd19fb4c6ca8fb7f?apiKey=4a6b075cba4d439db44d5a2134fb5890&",
-    text: "Use Email",
+    text: "Continue with Google",
   },
 ];
 
 function RegisterPage() {
   return (
-    <SignUpContainer>
+    <PageContainer>
       <LeftSection>
         <ContentWrapper>
           <LogoContainer>
-            <Logo
-              loading="lazy"
-              src="https://cdn.builder.io/api/v1/image/assets/4a6b075cba4d439db44d5a2134fb5890/4f650745a1c10c9c636af551ac9e9d5e9c8248ccd131718f5fb4a0b26b05b1bc?apiKey=4a6b075cba4d439db44d5a2134fb5890&"
-              alt="Company Logo"
-            />
+            <Logo to="/">
+              <Camera size={32} color="#fff" />
+              <LogoText>LUX MUNDI</LogoText>
+            </Logo>
           </LogoContainer>
+
           <SignUpContent>
-            <SignUpHeader>
-              <Title>Registrese</Title>
-              <SupportingText>Haga parte de nuestra comunidad!</SupportingText>
-            </SignUpHeader>
-            <ButtonGroup>
+            <Title>Create Account</Title>
+            <Description>Join our photography community</Description>
+
+            <SocialButtonsContainer>
               {socialButtons.map((button, index) => (
                 <SocialButton
                   key={index}
@@ -46,202 +48,230 @@ function RegisterPage() {
                   text={button.text}
                 />
               ))}
-              <LoginPrompt>
-                Already have an account <span className="gray-text">?</span>{" "}
-                <span className="dark-text">Log In</span>
-              </LoginPrompt>
-            </ButtonGroup>
+            </SocialButtonsContainer>
+
+            <Divider>
+              <DividerLine />
+              <DividerText>or</DividerText>
+              <DividerLine />
+            </Divider>
+
+            <EmailButton>Continue with Email</EmailButton>
+
+            <LoginPrompt>
+              Already have an account? <LoginLink to="/login">Log in</LoginLink>
+            </LoginPrompt>
           </SignUpContent>
         </ContentWrapper>
-        <Footer />
       </LeftSection>
+
       <RightSection>
-        <ArtworkContainer>
-          <Artwork />
-          <SliderDotsContainer>
-            {[...Array(4)].map((_, index) => (
-              <SliderDot key={index} active={index === 0} />
-            ))}
-          </SliderDotsContainer>
-        </ArtworkContainer>
+        <SliderWrapper>
+          <Swiper
+            modules={[Navigation, Pagination, Autoplay]}
+            pagination={{
+              clickable: true,
+              bulletActiveClass: "swiper-pagination-bullet-active",
+              bulletClass: "swiper-pagination-bullet",
+            }}
+            autoplay={{
+              delay: 4000,
+              disableOnInteraction: false,
+            }}
+            loop={true}
+            speed={800}
+          >
+            <SwiperSlide>
+              <SlideImage
+                src="https://source.unsplash.com/random/1200x800/?photography,camera"
+                alt="Photography"
+              />
+            </SwiperSlide>
+            <SwiperSlide>
+              <SlideImage
+                src="https://source.unsplash.com/random/1200x800/?landscape,nature"
+                alt="Landscape"
+              />
+            </SwiperSlide>
+            <SwiperSlide>
+              <SlideImage
+                src="https://source.unsplash.com/random/1200x800/?portrait,people"
+                alt="Portrait"
+              />
+            </SwiperSlide>
+          </Swiper>
+          <Overlay />
+        </SliderWrapper>
       </RightSection>
-    </SignUpContainer>
+    </PageContainer>
   );
 }
 
-const SignUpContainer = styled.main`
-  background: var(--Base-White, #fff);
-  box-shadow: 0 20px 32px -4px rgba(0, 0, 0, 0.1),
-    0 8px 8px -4px rgba(16, 24, 40, 0.03);
+const PageContainer = styled.div`
   display: flex;
-  width: 1200px;
-  justify-content: flex-start;
-  flex-wrap: wrap;
+  min-height: 100vh;
+  background-color: #0a0a0a;
+
+  @media (max-width: 991px) {
+    flex-direction: column;
+  }
 `;
 
 const LeftSection = styled.section`
-  background-color: #2c2c2c;
-  display: flex;
-  min-width: 240px;
-  flex-direction: column;
-  justify-content: flex-start;
   flex: 1;
-  flex-basis: 0%;
-  @media (max-width: 991px) {
-    max-width: 100%;
+  display: flex;
+  flex-direction: column;
+  padding: 2rem;
+  background-color: #0a0a0a;
+
+  @media (max-width: 768px) {
+    padding: 1.5rem;
   }
 `;
 
 const ContentWrapper = styled.div`
-  display: flex;
+  max-width: 400px;
+  margin: 0 auto;
   width: 100%;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  flex: 1;
-  padding: 0 32px;
-  @media (max-width: 991px) {
-    max-width: 100%;
-    padding: 0 20px;
-  }
 `;
 
 const LogoContainer = styled.div`
-  display: flex;
-  width: 360px;
-  max-width: 100%;
-  flex-direction: column;
-  justify-content: flex-start;
+  margin-bottom: 3rem;
 `;
 
-const Logo = styled.img`
-  aspect-ratio: 1.59;
-  object-fit: contain;
-  object-position: center;
-  width: 51px;
+const Logo = styled(Link)`
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  color: #fff;
+`;
+
+const LogoText = styled.span`
+  font-size: 1.4rem;
+  font-weight: 700;
+  letter-spacing: 1px;
 `;
 
 const SignUpContent = styled.div`
-  display: flex;
-  margin-top: 88px;
-  width: 100%;
-  flex-direction: column;
-  justify-content: flex-start;
-  @media (max-width: 991px) {
-    margin-top: 40px;
-  }
-`;
-
-const SignUpHeader = styled.header`
-  display: flex;
-  width: 100%;
-  flex-direction: column;
-  color: var(--White, #fff);
-  justify-content: flex-start;
+  text-align: center;
 `;
 
 const Title = styled.h1`
-  letter-spacing: -0.96px;
-  font: var(--sds-typography-title-page-font-weight)
-    var(--sds-typography-title-page-size-base) / 1.2
-    var(--sds-typography-title-page-font-family);
-  @media (max-width: 991px) {
-    font-size: 40px;
+  font-size: 2.5rem;
+  color: #fff;
+  margin-bottom: 1rem;
+
+  @media (max-width: 768px) {
+    font-size: 2rem;
   }
 `;
 
-const SupportingText = styled.p`
-  margin-top: 20px;
-  font: 500 20px Manrope, sans-serif;
+const Description = styled.p`
+  color: #999;
+  margin-bottom: 2rem;
+  font-size: 1.1rem;
 `;
 
-const ButtonGroup = styled.div`
+const SocialButtonsContainer = styled.div`
   display: flex;
-  margin-top: 44px;
-  width: 100%;
   flex-direction: column;
-  color: var(--Gray-Cool-800, #1d2939);
-  justify-content: flex-start;
-  font: 700 18px Manrope, sans-serif;
-  @media (max-width: 991px) {
-    margin-top: 40px;
+  gap: 1rem;
+  margin: 2rem 0;
+  animation: fadeIn 0.5s ease-out;
+`;
+
+const Divider = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin: 1.5rem 0;
+`;
+
+const DividerLine = styled.div`
+  flex: 1;
+  height: 1px;
+  background-color: #333;
+`;
+
+const DividerText = styled.span`
+  color: #666;
+  font-size: 0.9rem;
+`;
+
+const EmailButton = styled(Button)`
+  width: 100%;
+  margin-top: 1rem;
+  background: ${theme.colors.primary};
+
+  &:hover {
+    background: ${theme.colors.primaryHover};
   }
 `;
 
 const LoginPrompt = styled.p`
-  align-self: stretch;
-  flex: 1;
-  margin-top: 12px;
-  width: 100%;
-  padding-top: 24px;
-  gap: 10px;
-  font-size: 16px;
-  color: var(--Gray-true-800, #292929);
-  font-weight: 600;
-
-  .gray-text {
-    color: rgba(115, 115, 115, 1);
-  }
-
-  .dark-text {
-    color: rgba(41, 41, 41, 1);
-  }
+  margin-top: 2rem;
+  color: #999;
+  font-size: 0.9rem;
 `;
 
-const Footer = styled.footer`
-  display: flex;
-  min-height: 96px;
-  width: 100%;
-  @media (max-width: 991px) {
-    max-width: 100%;
+const LoginLink = styled(Link)`
+  color: #fff;
+  text-decoration: none;
+  font-weight: 500;
+  margin-left: 0.5rem;
+
+  &:hover {
+    text-decoration: underline;
   }
 `;
 
 const RightSection = styled.section`
-  display: flex;
-  min-width: 240px;
-  flex-direction: column;
-  overflow: hidden;
-  justify-content: center;
-  width: 653px;
-  padding: 211px 0;
+  flex: 1;
+  position: relative;
+  min-height: 100vh;
+
   @media (max-width: 991px) {
-    max-width: 100%;
-    padding: 100px 0;
+    min-height: 50vh;
   }
 `;
 
-const ArtworkContainer = styled.div`
-  display: flex;
+const SliderWrapper = styled.div`
+  position: absolute;
+  inset: 0;
+
+  .swiper {
+    width: 100%;
+    height: 100%;
+  }
+
+  .swiper-pagination-bullet {
+    background: ${theme.colors.text.tertiary};
+    opacity: 0.5;
+    transition: ${theme.animation.transition};
+  }
+
+  .swiper-pagination-bullet-active {
+    background: ${theme.colors.primary};
+    opacity: 1;
+    width: 24px;
+  }
+`;
+
+const SlideImage = styled.img`
   width: 100%;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  padding: 0 32px;
-  @media (max-width: 991px) {
-    max-width: 100%;
-    padding: 0 20px;
-  }
+  height: 100%;
+  object-fit: cover;
 `;
 
-const Artwork = styled.div`
-  border-radius: 20px;
-  background-color: rgba(255, 255, 255, 0.2);
-  display: flex;
-  min-height: 384px;
-  width: 512px;
-  max-width: 100%;
-`;
-
-const SliderDotsContainer = styled.div`
-  display: flex;
-  margin-top: 64px;
-  align-items: center;
-  gap: 20px;
-  justify-content: center;
-  @media (max-width: 991px) {
-    margin-top: 40px;
-  }
+const Overlay = styled.div`
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to right,
+    rgba(10, 10, 10, 0.8),
+    rgba(10, 10, 10, 0.4)
+  );
+  z-index: 1;
 `;
 
 export default RegisterPage;

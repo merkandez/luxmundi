@@ -1,11 +1,9 @@
 import styled from "styled-components";
 import { Mail, Phone, MapPin } from "lucide-react";
-import CloseButton from "../components/CloseButton";
 
 const ContactPage = () => {
   return (
-    <ContactWrapper>
-      <CloseButton />
+    <div>
       <ContactContent>
         <ContactInfo>
           <Title>Get in Touch</Title>
@@ -45,19 +43,9 @@ const ContactPage = () => {
           <SubmitButton type="submit">Send Message</SubmitButton>
         </ContactForm>
       </ContactContent>
-    </ContactWrapper>
+    </div>
   );
 };
-
-const ContactWrapper = styled.div`
-  min-height: 100vh;
-  background-color: #0a0a0a;
-  padding: 4rem 1rem;
-
-  @media (max-width: 768px) {
-    padding: 2rem 1rem;
-  }
-`;
 
 const ContactContent = styled.div`
   max-width: 1200px;
