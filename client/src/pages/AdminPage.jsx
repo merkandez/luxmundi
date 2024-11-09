@@ -18,14 +18,14 @@ const AdminPage = () => {
   const [selectedUser, setSelectedUser] = useState(null);
   const [selectedPost, setSelectedPost] = useState(null);
 
+  const loadUsers = async () => {
+    console.log('Cargando usuarios');
+    const data = await fetchUsers();
+    setUsers(data);
+    console.log('Usuarios cargados:', data);
+  };
   useEffect(() => {
     console.log('AdminPage montado');
-    const loadUsers = async () => {
-      console.log('Cargando usuarios');
-      const data = await fetchUsers();
-      setUsers(data);
-      console.log('Usuarios cargados:', data);
-    };
 
     const loadPosts = async () => {
       console.log('Cargando posts');
@@ -78,48 +78,69 @@ const AdminPage = () => {
   const [activeComponent, setActiveComponent] = useState('UserManagement');
 
   return (
-    <Container>
+    <AdminWrapper>
       <NavbarAdmin setActiveComponent={setActiveComponent} />
-      {/* Renderizado condicional basado en el estado */}
-      {activeComponent === 'home' && <div>Contenido de inicio</div>}
-      {activeComponent === 'PostManagement' && <Section>
-        <PostManagement
-          posts={posts}
-          selectedPost={selectedPost}
-          onSelectPost={setSelectedPost}
-          onUpdatePost={handlePostUpdate}
-          onDeletePost={handlePostDelete}
-          onCreatePost={handlePostCreate}
-        />
-        <h2>Gestión de Publicaciones</h2>
-      </Section>}
-      {activeComponent === 'UserManagement' && <Section>
-        <h2>Gestión de Usuarios</h2>
-        <UserManagement
-          users={users}
-          selectedUser={selectedUser}
-          onSelectUser={setSelectedUser}
-          onUpdateUser={handleUserUpdate}
-          onDeleteUser={handleUserDelete}
-          onCreateUser={handleUserCreate}
-        />
-      </Section>}
-    </Container>
+      <ContentWrapper>
+        {activeComponent === 'home' && <div>Contenido de inicio</div>}
+        {activeComponent === 'PostManagement' && <Section>
+          <PostManagement
+            posts={posts}
+            selectedPost={selectedPost}
+            onSelectPost={setSelectedPost}
+            onUpdatePost={handlePostUpdate}
+            onDeletePost={handlePostDelete}
+            onCreatePost={handlePostCreate}
+          />
+          <h2>Gestión de Publicaciones</h2>
+        </Section>}
+        {activeComponent === 'UserManagement' && <Section>
+          <h2>Gestión de Usuarios</h2>
+          <UserManagement
+            users={users}
+            reloadUsers={loadUsers}
+            selectedUser={selectedUser}
+            onSelectUser={setSelectedUser}
+            onUpdateUser={handleUserUpdate}
+            onDeleteUser={handleUserDelete}
+            onCreateUser={handleUserCreate}
+          />
+        </Section>}
+      </ContentWrapper>
+    </AdminWrapper>
   );
 };
 
-export default AdminPage;
-
-const Container = styled.div`
+const AdminWrapper = styled.div`
+  background-color: #1e1e1e;
+  min-height: 100vh;
   display: flex;
-  flex-direction: row;
-  gap: 2rem;
-  width: 100%;
+  flex-direction: column;
+
+  @media (min-width: 768px) {
+    flex-direction: row;
+  }
+`;
+
+const ContentWrapper = styled.div`
+  flex: 1;
 `;
 
 const Section = styled.section`
-  padding: 1rem;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  width: 100%;
+  background-color: #2a2a2a;
+  border-radius: 8px;
+  margin-bottom: 2rem;
+  color: white;
+
+  h2 {
+    margin-bottom: 1.5rem;
+    font-size: 1.8rem;
+  }
+
+  p {
+    @media (max-width: 768px) {
+      display: none;
+    }
+  }
 `;
+
+export default AdminPage; 

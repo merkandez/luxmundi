@@ -51,9 +51,17 @@ const NavbarAdmin = ({setActiveComponent}) => {
 export default NavbarAdmin
 
 const Aside = styled.div`
-height: 100vh;
-width: 30%;
-background-color: #333;
+    z-index: 100;
+    width: 30%;
+    background-color: #333;
+    
+    @media (max-width: 768px) {
+        width: 100%;
+        height: auto;
+        position: fixed;
+        bottom: 0;
+        z-index: 100;
+    }
 `
 const List = styled.ul`
     list-style:none;
@@ -63,6 +71,12 @@ const List = styled.ul`
     color: white;
     aling-items: center;
     justify-content: center;
+
+    @media (max-width: 768px) {
+        flex-direction: row;
+        padding: 1rem;
+        justify-content: space-around;
+    }
 `
 
 const Item = styled.li`
@@ -83,7 +97,6 @@ const Item = styled.li`
         margin-left: -1rem;
         margin-right: -1rem;
         padding-left: 1rem;
-        
     }
 
     &:hover{
@@ -92,12 +105,35 @@ const Item = styled.li`
         margin-left: -1rem;
         padding-left: 1rem;
         transition: 0.5s;
+    }
+
+    @media (max-width: 768px) {
+        flex-direction: column;
+        margin: 0;
+        padding: 0.5rem;
         
+        &.active {
+            margin: 0;
+            padding: 0.5rem;
+        }
+        
+        &:hover {
+            margin: 0;
+            padding: 0.5rem;
+        }
     }
 `
 const Image = styled.img`
-    
+    @media (max-width: 768px) {
+        width: 24px;
+        height: 24px;
+    }
 `
 const Text = styled.p`
     display: flex;
+    
+    @media (max-width: 768px) {
+        font-size: 0.8rem;
+        margin: 0;
+    }
 `

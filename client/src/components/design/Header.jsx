@@ -1,7 +1,7 @@
-// src/components/design/Header.jsx
 import React from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
+import { Camera } from "lucide-react";
 
 const Header = ({
   isAuthenticated,
@@ -11,76 +11,112 @@ const Header = ({
   openRegisterModal,
 }) => (
   <HeaderContainer>
-    <NavSection>
-      <StyledLink to='/'>Home</StyledLink>
-      <StyledLink to='/aboutus'>About Us</StyledLink>
+    <Wrapper>
+      <LogoSection>
+        <Camera size={24} />
+        <span>LUX MUNDI</span>
+      </LogoSection>
+
+      <Nav>
+        <NavLink to='/'>Home</NavLink>
+        <NavLink to='/aboutus'>About Us</NavLink>
+        {isAuthenticated ? (
+          <>
+            <NavLink to='/profile'>Profile</NavLink>
+            {role === 'admin' && <NavLink to='/admin'>Admin Area</NavLink>}
+          </>
+        ) : null}
+      </Nav>
+
       {isAuthenticated ? (
-        <>
-          <StyledLink to='/profile'>Profile</StyledLink>
-          {role === 'admin' && <StyledLink to='/admin'>Admin Area</StyledLink>}
-          <LogoutButton onClick={logout}>Logout</LogoutButton>
-        </>
+        <AuthButtons>
+          <button onClick={logout}>Logout</button>
+        </AuthButtons>
       ) : (
-        <AuthButtonsContainer>
-          <Button onClick={openLoginModal}>Login</Button>
-          <Button onClick={openRegisterModal}>Register</Button>
-        </AuthButtonsContainer>
+        <AuthButtons>
+          <button onClick={openLoginModal}>Log in</button>
+          <button className="register" onClick={openRegisterModal}>Register</button>
+        </AuthButtons>
       )}
-    </NavSection>
+    </Wrapper>
   </HeaderContainer>
 );
 
 export default Header;
 
-// Estilos para los componentes
-const HeaderContainer = styled.nav`
-  background-color: #333;
-  padding: 1rem;
-  color: white;
-  display: flex;
-  align-items: center;
+const HeaderContainer = styled.header`
+  background-color: #000;
+  color: #fff;
 `;
 
-const NavSection = styled.div`
+const Wrapper = styled.div`
+  margin: 0 auto;
+  padding: 0 1rem;
   display: flex;
-  gap: 1rem;
-  width: 100%;
   align-items: center;
+  justify-content: space-between;
+  height: 4rem;
+  border-bottom: 2px solid #444;
 `;
 
-const StyledLink = styled(Link)`
-  color: white;
+const LogoSection = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+
+  span {
+    font-size: 1rem;
+    font-weight: bold;
+  }
+`;
+
+const Nav = styled.nav`
+  display: flex;
+  gap: 2rem;
+
+  @media (max-width: 768px) {
+    display: none;
+  }
+`;
+
+const NavLink = styled(Link)`
+  color: #fff;
   text-decoration: none;
+  transition: transform 0.3s ease;
+  font-size: 0.9rem;
+
   &:hover {
-    text-decoration: underline;
+    color: #29c9a9;
+    transform: scale(1.2);
   }
 `;
 
-const AuthButtonsContainer = styled.div`
-  margin-left: auto;
+const AuthButtons = styled.div`
   display: flex;
+  align-items: center;
   gap: 1rem;
-`;
 
-const Button = styled.button`
-  background-color: #007bff; // Color del botón
-  color: white;
-  border: none;
-  border-radius: 5px;
-  padding: 0.5rem 1rem;
-  cursor: pointer;
-  font-weight: bold;
-  &:hover {
-    background-color: #0056b3; // Color al pasar el cursor
+  @media (max-width: 640px) {
+    display: none;
   }
-`;
 
-const LogoutButton = styled.button`
-  background: transparent;
-  color: white;
-  border: none;
-  cursor: pointer;
-  &:hover {
-    text-decoration: underline;
+  button {
+    background-color: transparent;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+    &:hover {
+      color: #ccc;
+    }
+  }
+
+  .register {
+    background-color: #fff;
+    color: #000;
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
+    &:hover {
+      background-color: #e0e0e0;
+    }
   }
 `;
