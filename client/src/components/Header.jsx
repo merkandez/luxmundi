@@ -9,13 +9,14 @@ const HeaderContainer = styled.header`
 `;
 
 const Wrapper = styled.div`
-  max-width: 1120px;
+  max-width: 1440px;
   margin: 0 auto;
   padding: 0 1rem;
   display: flex;
   align-items: center;
   justify-content: space-between;
   height: 4rem;
+  border-bottom: 2px solid #444;
 `;
 
 const LogoSection = styled.div`
@@ -45,7 +46,7 @@ const NavLink = styled(Link)`
   font-size: 0.9rem;
 
   &:hover {
-    color: #ccc;
+    color: #29c9a9;
     transform: scale(1.2);
   }
 `;

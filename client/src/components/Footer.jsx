@@ -58,7 +58,7 @@ export default function Footer() {
 
 const FooterWrapper = styled.footer`
   background-color: #1e1e1e;
-  border-top: 1px solid #444;
+  border-top: 2px solid #444;
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
@@ -79,9 +79,9 @@ const LogoSection = styled.div`
 `;
 
 const CameraIcon = styled.div`
-  background-image: url("/path-to-logo-image.png"); // Replace with actual path
   width: 24px;
   height: 24px;
+  color: #fff;
   background-size: contain;
 `;
 
