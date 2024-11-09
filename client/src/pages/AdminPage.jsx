@@ -6,9 +6,11 @@ import {
   createPost,
   deletePost,
 } from '../services/postService';
+import  { registerUser } from '../services/authService';
 import UserManagement from '../components/admin/UserManagement';
 import PostManagement from '../components/admin/PostManagement';
 import styled from 'styled-components';
+import NavbarAdmin from '../components/admin/navbarAdmin';
 
 const AdminPage = () => {
   const [users, setUsers] = useState([]);
@@ -16,16 +18,22 @@ const AdminPage = () => {
   const [selectedUser, setSelectedUser] = useState(null);
   const [selectedPost, setSelectedPost] = useState(null);
 
+  const loadUsers = async () => {
+    console.log('Cargando usuarios');
+    const data = await fetchUsers();
+    setUsers(data);
+    console.log('Usuarios cargados:', data);
+  };
   useEffect(() => {
-    // Cargar usuarios y publicaciones al montar el componente
-    const loadUsers = async () => {
-      const data = await fetchUsers();
-      setUsers(data);
-    };
+    console.log('AdminPage montado');
+
     const loadPosts = async () => {
+      console.log('Cargando posts');
       const data = await fetchPosts();
       setPosts(data);
+      console.log('Posts cargados:', data);
     };
+
     loadUsers();
     loadPosts();
   }, []);
@@ -55,43 +63,84 @@ const AdminPage = () => {
     setPosts([...posts, newPost]);
   };
 
+  const handleUserCreate = async (newUserData) => {
+    try {
+      const newUser = await registerUser(newUserData);
+      if (newUser) {
+        setUsers([...users, newUser]);
+      }
+    } catch (error) {
+      console.error('Error al registrar usuario:', error);
+      throw error;
+    }
+  };
+
+  const [activeComponent, setActiveComponent] = useState('UserManagement');
+
   return (
-    <Container>
-      <Section>
-        <h2>Gestión de Usuarios</h2>
-        <UserManagement
+    <AdminWrapper>
+      <NavbarAdmin setActiveComponent={setActiveComponent} />
+      <ContentWrapper>
+        {activeComponent === 'home' && <div>Contenido de inicio</div>}
+        {activeComponent === 'PostManagement' && <Section>
+          <PostManagement
+            posts={posts}
+            selectedPost={selectedPost}
+            onSelectPost={setSelectedPost}
+            onUpdatePost={handlePostUpdate}
+            onDeletePost={handlePostDelete}
+            onCreatePost={handlePostCreate}
+          />
+          <h2>Gestión de Publicaciones</h2>
+        </Section>}
+        {activeComponent === 'UserManagement' && <Section>
+          <h2>Gestión de Usuarios</h2>
+          <UserManagement
             users={users}
+            reloadUsers={loadUsers}
             selectedUser={selectedUser}
             onSelectUser={setSelectedUser}
             onUpdateUser={handleUserUpdate}
             onDeleteUser={handleUserDelete}
-        />
-      </Section>
-      <Section>
-        <h2>Gestión de Publicaciones</h2>
-        <PostManagement
-           posts={posts}
-           selectedPost={selectedPost}
-           onSelectPost={setSelectedPost}
-           onUpdatePost={handlePostUpdate}
-           onDeletePost={handlePostDelete}
-           onCreatePost={handlePostCreate}
-        />
-      </Section>
-    </Container>
+            onCreateUser={handleUserCreate}
+          />
+        </Section>}
+      </ContentWrapper>
+    </AdminWrapper>
   );
 };
 
-export default AdminPage;
-
-const Container = styled.div`
+const AdminWrapper = styled.div`
+  background-color: #1e1e1e;
+  min-height: 100vh;
   display: flex;
   flex-direction: column;
-  gap: 2rem;
+
+  @media (min-width: 768px) {
+    flex-direction: row;
+  }
+`;
+
+const ContentWrapper = styled.div`
+  flex: 1;
 `;
 
 const Section = styled.section`
-  padding: 1rem;
-  border: 1px solid #ccc;
-  border-radius: 5px;
+  background-color: #2a2a2a;
+  border-radius: 8px;
+  margin-bottom: 2rem;
+  color: white;
+
+  h2 {
+    margin-bottom: 1.5rem;
+    font-size: 1.8rem;
+  }
+
+  p {
+    @media (max-width: 768px) {
+      display: none;
+    }
+  }
 `;
+
+export default AdminPage; 

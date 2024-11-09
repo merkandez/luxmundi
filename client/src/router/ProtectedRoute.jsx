@@ -1,18 +1,22 @@
-import { Navigate, Outlet } from 'react-router-dom';
+import { Navigate } from 'react-router-dom';
 import useAuth from '../hooks/useAuth';
 
-const ProtectedRoute = ({ requiredRole }) => {
+const ProtectedRoute = ({ requiredRole, children }) => {
   const { isAuthenticated, role } = useAuth();
 
+  console.log("Authenticated:", isAuthenticated); // Verifica si el usuario está autenticado
+  console.log("User role:", role); // Verifica el rol del usuario
+
   if (!isAuthenticated) {
-    return <Navigate to="/" />; // Redirige a Home, donde se abrirá el modal
+    return <Navigate to="/" replace />; // Redirige a Home, donde se abrirá el modal
   }
 
   if (requiredRole && role !== requiredRole) {
-    return <Navigate to="/no-access" />;
+    return <Navigate to="/no-access" replace />;
   }
 
-  return <Outlet />;
+  // Renderiza el contenido protegido (AdminPage u otro) si se cumplen las condiciones
+  return children;
 };
 
 export default ProtectedRoute;

@@ -1,12 +1,12 @@
 import axios from 'axios';
 
 // Ruta base de la API para admin
-const API_URL = `${import.meta.env.VITE_API_URL}/admin`;
+const API_URL = `${import.meta.env.VITE_API_URL}/users`;
 
 // Función para cargar los usuarios
 export const fetchUsers = async () => {
   try {
-    const response = await axios.get(`${API_URL}/users`, {
+    const response = await axios.get(API_URL, {
       headers: { Authorization: `Bearer ${localStorage.getItem('token')}` },
     });
     return response.data;
@@ -18,7 +18,7 @@ export const fetchUsers = async () => {
 // Obtener usuario por ID
 export const fetchUserById = async (userId) => {
   try {
-    const response = await axios.get(`${API_URL}/users/${userId}`, {
+    const response = await axios.get(`${API_URL}/${userId}`, {
       headers: { Authorization: `Bearer ${localStorage.getItem('token')}` },
     });
     return response.data;
@@ -31,13 +31,9 @@ export const fetchUserById = async (userId) => {
 // Función para actualizar los datos del usuario (incluyendo rol si es admin)
 export const updateUser = async (userId, updateData) => {
   try {
-    const response = await axios.put(
-      `${API_URL}/users/${userId}`,
-      updateData,
-      {
-        headers: { Authorization: `Bearer ${localStorage.getItem('token')}` },
-      }
-    );
+    const response = await axios.put(`${API_URL}/${userId}`, updateData, {
+      headers: { Authorization: `Bearer ${localStorage.getItem('token')}` },
+    });
     return response.data;
   } catch (error) {
     console.error('Error al actualizar el usuario:', error);
@@ -48,7 +44,7 @@ export const updateUser = async (userId, updateData) => {
 // Función para eliminar un usuario
 export const deleteUser = async (userId) => {
   try {
-    const response = await axios.delete(`${API_URL}/users/${userId}`, {
+    const response = await axios.delete(`${API_URL}/${userId}`, {
       headers: { Authorization: `Bearer ${localStorage.getItem('token')}` },
     });
     return response.data;

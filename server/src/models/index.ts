@@ -1,7 +1,7 @@
 import User from './userModel';
-import Post from './postModel';
+import PostModel from './postModel';
 
-User.hasMany(Post, { foreignKey: 'userId', as: 'posts' });
-Post.belongsTo(User, { foreignKey: 'userId', as: 'user' });
+User.hasMany(PostModel, { foreignKey: 'userId', as: 'posts' });
+PostModel.belongsTo(User, { foreignKey: 'userId', as: 'user' });
 
-export { User, Post };
+export { User, PostModel };

@@ -1,16 +1,18 @@
 import React from 'react';
 import { useForm } from 'react-hook-form';
+import { registerUser } from '../../services/authService';
 
 const RegisterForm = ({ onClose }) => {
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm();
+  const { register, handleSubmit, formState: { errors } } = useForm();
 
-  const onSubmit = (data) => {
-    console.log(data); // Aquí se enviarán los datos al backend
-    onClose(); // Cierra el modal después del registro exitoso
+  const onSubmit = async (data) => {
+    try {
+      await registerUser(data);
+      alert('Registro exitoso');
+      onClose(); // Cierra el modal después de registrarse
+    } catch (error) {
+      alert('Error en el registro');
+    }
   };
 
   return (
@@ -28,7 +30,7 @@ const RegisterForm = ({ onClose }) => {
         <div>
           <label>Correo electrónico:</label>
           <input
-            type='email'
+            type="email"
             {...register('email', { required: 'Este campo es obligatorio' })}
           />
           {errors.email && <p>{errors.email.message}</p>}
@@ -37,13 +39,13 @@ const RegisterForm = ({ onClose }) => {
         <div>
           <label>Contraseña:</label>
           <input
-            type='password'
+            type="password"
             {...register('password', { required: 'Este campo es obligatorio' })}
           />
           {errors.password && <p>{errors.password.message}</p>}
         </div>
 
-        <button type='submit'>Registrarse</button>
+        <button type="submit">Registrarse</button>
       </form>
     </div>
   );
