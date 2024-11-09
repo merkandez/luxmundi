@@ -95,8 +95,8 @@ const SearchBar = styled.div`
   align-items: center;
   gap: 8px;
   border: 1px solid #333;
-  border-radius: 2px;
-  padding: 6px 12px;
+  border-radius: 4px;
+  padding: 8px 12px;
   background-color: #111;
   width: 0;
   opacity: 0;
@@ -104,9 +104,25 @@ const SearchBar = styled.div`
   transition: all 0.3s ease;
 
   &.active {
-    width: 200px;
+    width: 300px;
     opacity: 1;
     margin-right: 1rem;
+  }
+
+  @media (max-width: 768px) {
+    position: fixed;
+    top: 5rem;
+    left: 0;
+    right: 0;
+    transform: none;
+    width: 100%;
+    border-radius: 0;
+    z-index: 1000;
+
+    &.active {
+      width: 100%;
+      margin-right: 0;
+    }
   }
 `;
 
@@ -233,34 +249,39 @@ const MobileMenuButton = styled.button`
 
 const MobileMenu = styled.div`
   display: none;
-  position: absolute;
+  position: fixed;
   right: 0;
-  top: 4rem;
-  background-color: #1e1e1e;
-  min-width: 200px;
+  top: 5rem;
+  left: 0;
+  background-color: #0a0a0a;
   border-top: 1px solid #333;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   z-index: 1000;
+  padding: 1rem 0;
+  transition: transform 0.3s ease;
+  transform: translateY(${({ isOpen }) => (isOpen ? "0" : "-100%")});
 
   @media (max-width: 767px) {
-    display: ${({ isOpen }) => (isOpen ? "block" : "none")};
+    display: block;
   }
 `;
 
 const MobileNavLink = styled(Link)`
-  display: block;
-  padding: 0.8rem 1.5rem;
+  display: flex;
+  align-items: center;
+  padding: 1rem 2rem;
   color: #fff;
   text-decoration: none;
-  font-size: 0.9rem;
+  font-size: 1rem;
   background: none;
   border: none;
   width: 100%;
   text-align: left;
   cursor: pointer;
+  transition: background-color 0.2s ease;
 
   &:hover {
-    background-color: #333;
+    background-color: #1a1a1a;
   }
 `;
 
