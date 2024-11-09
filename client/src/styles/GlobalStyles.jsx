@@ -1,72 +1,51 @@
 // src/styles/GlobalStyles.jsx
-import { createGlobalStyle } from 'styled-components';
+import { createGlobalStyle } from "styled-components";
 
 const GlobalStyles = createGlobalStyle`
-  /* Reset CSS */
+  @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&display=swap');
+
   * {
-    box-sizing: border-box;
     margin: 0;
     padding: 0;
+    box-sizing: border-box;
   }
 
-  /* Estilos generales para el body */
   body {
-    font-family: Arial, sans-serif;
-    background-color: #f4f4f9;
-    color: #333;
-    line-height: 1.6;
+    background-color: #0A0A0A;
+    color: #ffffff;
+    font-family: 'DM Sans', sans-serif;
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    min-height: 100vh;
   }
 
-  /* Estilos de encabezado */
-  h1, h2, h3, h4, h5, h6 {
-    color: #222;
-    margin-bottom: 0.5em;
+  #root {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
   }
 
-  /* Estilos de párrafo */
-  p {
-    margin-bottom: 1em;
+  main {
+    flex: 1;
+    background-color: #0A0A0A;
   }
 
-  /* Estilos de enlace */
-  a {
-    color: #007bff;
-    text-decoration: none;
-
-    &:hover {
-      text-decoration: underline;
-    }
-  }
-
-  /* Estilos de botones */
   button {
-    font-family: inherit;
-    padding: 0.5em 1em;
-    border: none;
-    cursor: pointer;
-    background-color: #007bff;
-    color: white;
-    border-radius: 4px;
-    transition: background-color 0.3s ease;
-
-    &:hover {
-      background-color: #0056b3;
-    }
+    font-family: 'DM Sans', sans-serif;
   }
 
-  /* Estilos de formularios */
-  input, select, textarea {
-    font-family: inherit;
-    padding: 0.5em;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    width: 100%;
-    margin-bottom: 1em;
+  input, textarea {
+    font-family: 'DM Sans', sans-serif;
+  }
 
-    &:focus {
-      border-color: #007bff;
-      outline: none;
-    }
+  ::selection {
+    background-color: rgba(255, 255, 255, 0.1);
+  }
+
+  a {
+    text-decoration: none;
+    color: inherit;
   }
 `;
 

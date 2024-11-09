@@ -6,6 +6,9 @@ import AdminPage from '../pages/AdminPage';
 import NoAccessPage from '../pages/NoAccessPage';
 import AboutPage from '../pages/AboutPage';
 import ProtectedRoute from './ProtectedRoute';
+import NotFound from "../pages/NotFound";
+import ContactForm from "../components/ContactForm";
+
 
 export const router = createBrowserRouter([
   {
@@ -14,6 +17,16 @@ export const router = createBrowserRouter([
     children: [
       { index: true, element: <HomePage /> },
       { path: 'aboutus', element: <AboutPage /> },
+      {
+        path: "contact",
+        element: <ContactForm />,
+      },
+      
+      
+      {
+        path: "*",
+        element: <NotFound />,
+      },
 
       // Rutas protegidas
       {
