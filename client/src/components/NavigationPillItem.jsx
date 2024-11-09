@@ -18,13 +18,13 @@ const Pill = styled.div.withConfig({
   shouldForwardProp: (prop) => prop !== "isActive",
 })`
   padding: 8px 16px;
-  background-color: ${({ isActive }) => (isActive ? "#444" : "transparent")};
+  background-color: ${({ isActive }) => (isActive ? "#29c9a9" : "transparent")};
   color: #ffffff;
-  border-radius: 8px;
+  border-radius: 16px;
   font-weight: ${({ isActive }) => (isActive ? "600" : "400")};
   cursor: pointer;
   &:hover {
-    background-color: #444;
+    background-color: #29c9a9;
   }
 `;
 

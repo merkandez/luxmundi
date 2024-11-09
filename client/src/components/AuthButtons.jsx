@@ -1,46 +1,41 @@
 import styled from "styled-components";
 
 const AuthWrapper = styled.div`
-  align-self: stretch;
   display: flex;
   align-items: center;
-  gap: 12px;
-  justify-content: flex-start;
-  width: 178px;
-  margin: auto 0;
-  font: var(--sds-typography-body-font-weight-regular)
-    var(--sds-typography-body-size-medium) / 1
-    var(--sds-typography-body-font-family);
+  gap: 1.2rem;
+  justify-content: center;
 `;
 
 const Button = styled.button`
-  align-self: stretch;
-  border-radius: 8px;
-  gap: 8px;
-  overflow: hidden;
-  flex: 1;
-  margin: auto 0;
-  padding: 8px;
+  border-radius: 2px;
+  padding: 0.6rem 1.8rem;
   cursor: pointer;
-  border: 1px solid #949494;
   font-family: inherit;
-  font-size: inherit;
+  font-size: 0.9rem;
+  font-weight: 500;
+  min-width: 120px;
+  letter-spacing: 0.5px;
+  transition: all 0.2s ease;
 `;
 
 const LoginButton = styled(Button)`
-  background-color: #303030;
+  background-color: transparent;
   color: #ffffff;
-  border-color: #949494;
+  border: 1px solid #ffffff;
+
+  &:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+  }
 `;
 
 const RegisterButton = styled(Button)`
-  background-color: #f5f5f5;
-  color: var(--sds-color-text-brand-on-brand);
-  border-color: #f5f5f5;
-  white-space: nowrap;
+  background-color: #ffffff;
+  color: #000000;
+  border: 1px solid #ffffff;
 
-  @media (max-width: 991px) {
-    white-space: initial;
+  &:hover {
+    background-color: rgba(255, 255, 255, 0.9);
   }
 `;
 

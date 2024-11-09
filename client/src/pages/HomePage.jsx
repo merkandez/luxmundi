@@ -1,12 +1,6 @@
 import styled from "styled-components";
 import LuxMundiHero from "../components/LuxMundiHero";
 import ExploreSection from "../components/ExploreSection";
-import CardsContainer from "../components/CardContainer";
-import Card from "../components/Card";
-import HeroContent from "../components/HeroContent";
-
-//cambiar el json por la base de datos
-//description cambiar por contenido de hasta 10 palabras.
 
 const cardData = [
   {
@@ -39,35 +33,46 @@ const cardData = [
     description:
       "Enjoy a performance at this architectural masterpiece in Australia.",
   },
+  // Adding more cards to test pagination
+  {
+    title: "Santorini",
+    description:
+      "Experience the stunning white architecture and Mediterranean views.",
+  },
+  {
+    title: "Mount Fuji",
+    description:
+      "Climb Japan's highest peak and witness breathtaking sunrises.",
+  },
+  {
+    title: "Venice",
+    description: "Navigate the romantic canals of this unique Italian city.",
+  },
+  {
+    title: "Petra",
+    description: "Explore the ancient rose-colored city carved into rock.",
+  },
+  {
+    title: "Taj Mahal",
+    description: "Visit this magnificent monument of eternal love in India.",
+  },
+  {
+    title: "Great Barrier Reef",
+    description: "Dive into the world's largest coral reef system.",
+  },
 ];
 
 function HomePage() {
   return (
     <HomeWrapper>
-      <HeroContent
-        title="Welcome to Lux Mundi"
-        subtitle="Discover Amazing Places Around the World"
-      />
       <LuxMundiHero />
-      <ExploreSection>
-        <h2>Explore</h2>
-        <p>Ultimos posts</p>
-        <CardsContainer>
-          {cardData.map((card, index) => (
-            <Card
-              key={index}
-              title={card.title}
-              description={card.description}
-            />
-          ))}
-        </CardsContainer>
-      </ExploreSection>
+      <ExploreSection cards={cardData} />
     </HomeWrapper>
   );
 }
 
 const HomeWrapper = styled.div`
-  background-color: #1e1e1e;
+  background-color: #0a0a0a;
   min-height: 100vh;
 `;
 

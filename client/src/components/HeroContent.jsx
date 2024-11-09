@@ -20,16 +20,13 @@ const ContentWrapper = styled.div`
   flex-direction: column;
   align-items: center;
   text-align: center;
-  background-color: #1e1e1e;
-  width: 100%;
-  padding: 40px 0;
 `;
 
 const Title = styled.h1`
   font-size: 2.5rem;
   font-weight: 700;
   color: #ffffff;
-  margin: 0;
+  margin: 60px 0 24px;
 
   @media (max-width: 768px) {
     font-size: 2rem;

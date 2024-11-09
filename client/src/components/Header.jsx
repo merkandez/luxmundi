@@ -1,73 +1,127 @@
 import styled from "styled-components";
-import { Camera, Search, X, Menu, User } from "lucide-react";
+import { Camera, Search, X, Menu, User, LogOut } from "lucide-react";
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import PropTypes from "prop-types";
 
 const HeaderContainer = styled.header`
-  background-color: #000;
+  background-color: #0a0a0a;
   color: #fff;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  transition: border-color 0.3s ease;
+
+  &:hover {
+    border-color: rgba(255, 255, 255, 0.2);
+  }
 `;
 
 const Wrapper = styled.div`
   max-width: 1440px;
   margin: 0 auto;
-  padding: 0 1rem;
+  padding: 0 2rem;
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  height: 4rem;
-  border-bottom: 2px solid #444;
+  height: 5rem;
+  position: relative;
 `;
 
-const LogoSection = styled.div`
+const LogoSection = styled(Link)`
   display: flex;
   align-items: center;
-  gap: 0.5rem;
+  gap: 0.8rem;
+  transition: transform 0.3s ease;
+
+  &:hover {
+    transform: translateY(-1px);
+  }
 
   span {
-    font-size: 1rem;
-    font-weight: bold;
+    font-size: 1.4rem;
+    font-weight: 700;
+    letter-spacing: 1px;
   }
 `;
 
 const Nav = styled.nav`
   display: none;
+  margin-left: 4rem;
 
   @media (min-width: 768px) {
     display: flex;
-    gap: 2rem;
+    gap: 3rem;
   }
 `;
 
 const NavLink = styled(Link)`
   color: #fff;
   text-decoration: none;
-  font-size: 0.9rem;
+  font-size: 1.1rem;
+  padding: 0.6rem 1rem;
+  border-radius: 2px;
+  font-weight: 500;
+  transition: all 0.2s ease;
+  position: relative;
 
-  &:hover {
-    color: #29c9a9;
-    transform: scale(1.2);
+  &:after {
+    content: "";
+    position: absolute;
+    width: 0;
+    height: 1px;
+    bottom: 0;
+    left: 50%;
+    background-color: #fff;
+    transition: all 0.3s ease;
+  }
+
+  &:hover:after {
+    width: 100%;
+    left: 0;
   }
 `;
 
 const SearchSection = styled.div`
-  position: relative;
   display: flex;
   align-items: center;
+  margin-left: auto;
+  position: relative;
 `;
 
 const SearchBar = styled.div`
+  position: absolute;
+  right: 100%;
+  top: 50%;
+  transform: translateY(-50%);
   display: flex;
   align-items: center;
   gap: 8px;
-  border: 1px solid #666;
-  border-radius: 4px;
-  padding: 4px 8px;
-  width: 200px;
+  border: 1px solid #333;
+  border-radius: 2px;
+  padding: 6px 12px;
+  background-color: #111;
+  width: 0;
+  opacity: 0;
+  overflow: hidden;
+  transition: all 0.3s ease;
 
-  @media (max-width: 768px) {
-    width: 160px;
+  &.active {
+    width: 200px;
+    opacity: 1;
+    margin-right: 1rem;
+  }
+`;
+
+const SearchButton = styled.button`
+  background: none;
+  border: none;
+  color: #fff;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  padding: 8px;
+  transition: transform 0.2s ease;
+
+  &:hover {
+    transform: scale(1.1);
   }
 `;
 
@@ -75,7 +129,7 @@ const SearchInput = styled.input`
   width: 100%;
   padding: 4px;
   border: none;
-  color: #fff;
+  color: #444;
   font-size: 0.9rem;
 
   &::placeholder {
@@ -91,30 +145,41 @@ const AuthButtons = styled.div`
   display: none;
   align-items: center;
   gap: 1rem;
+  margin-left: 2rem;
 
   @media (min-width: 640px) {
     display: flex;
   }
 
-  button {
-    background-color: transparent;
-    color: #fff;
-    border: none;
+  .login,
+  .register {
+    padding: 0.6rem 1.8rem;
+    border-radius: 2px;
     cursor: pointer;
+    min-width: 120px;
+    font-size: 0.9rem;
+    font-weight: 500;
+    letter-spacing: 0.5px;
+    transition: all 0.2s ease;
+  }
+
+  .login {
+    border: 1px solid #fff;
+    color: #fff;
+    background-color: transparent;
 
     &:hover {
-      color: #ccc;
+      background-color: rgba(255, 255, 255, 0.1);
     }
   }
 
   .register {
     background-color: #fff;
     color: #000;
-    padding: 0.5rem 1rem;
-    border-radius: 4px;
+    border: 1px solid #fff;
 
     &:hover {
-      background-color: #e0e0e0;
+      background-color: rgba(255, 255, 255, 0.9);
     }
   }
 `;
@@ -124,13 +189,30 @@ const ProfileSection = styled.div`
   align-items: center;
   gap: 1rem;
   cursor: pointer;
+  margin-left: 2rem;
+  position: relative;
 `;
 
 const Avatar = styled.div`
-  width: 32px;
-  height: 32px;
+  width: 36px;
+  height: 36px;
   border-radius: 50%;
-  background-color: #29c9a9;
+  background-color: #222;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+  border: 1px solid #333;
+
+  &:hover {
+    background-color: #333;
+    transform: translateY(-1px);
+  }
+
+  @media (max-width: 768px) {
+    width: 32px;
+    height: 32px;
+  }
 `;
 
 const MobileMenuButton = styled.button`
@@ -171,65 +253,84 @@ const MobileNavLink = styled(Link)`
   color: #fff;
   text-decoration: none;
   font-size: 0.9rem;
+  background: none;
+  border: none;
+  width: 100%;
+  text-align: left;
+  cursor: pointer;
 
   &:hover {
     background-color: #333;
   }
 `;
 
-const MobileAuthButtons = styled.div`
-  padding: 0.8rem 1.5rem;
-  border-top: 1px solid #333;
+const UserMenu = styled.div`
+  position: absolute;
+  top: 100%;
+  right: 0;
+  background: #111111;
+  border: 1px solid #222;
+  border-radius: 4px;
+  padding: 0.5rem;
+  min-width: 200px;
+  display: ${({ isOpen }) => (isOpen ? "block" : "none")};
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  z-index: 1000;
+`;
 
-  button {
-    width: 100%;
-    padding: 0.5rem;
-    margin: 0.5rem 0;
-    border: none;
-    border-radius: 4px;
-    font-size: 0.9rem;
-    cursor: pointer;
+const UserMenuItem = styled.button`
+  width: 100%;
+  padding: 0.8rem 1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  background: none;
+  border: none;
+  color: #fff;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+
+  &:hover {
+    background: #222;
   }
 
-  .login {
-    background: transparent;
-    color: #fff;
-
-    &:hover {
-      background: #333;
-    }
-  }
-
-  .register {
-    background: #fff;
-    color: #000;
-
-    &:hover {
-      background: #e0e0e0;
-    }
+  svg {
+    opacity: 0.7;
   }
 `;
 
 const Header = ({ isLoggedIn }) => {
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
+  const navigate = useNavigate();
 
   const navLinks = [
-    { name: "Home", href: "/" },
-    { name: "About", href: "/about" },
-    { name: "Register", href: "/register" },
+    { name: "Nosotros", href: "/about" },
+    { name: "Destinos", href: "/destinations" },
+    { name: "Contacto", href: "/contact" },
   ];
+
+  const handleLogout = () => {
+    // Add your logout logic here
+    setIsUserMenuOpen(false);
+    navigate("/");
+  };
+
+  const handleProfileClick = () => {
+    setIsUserMenuOpen(false);
+    navigate("/profile");
+  };
 
   return (
     <HeaderContainer>
       <Wrapper>
-        {/* Logo Section */}
-        <LogoSection>
-          <Camera size={24} />
+        <LogoSection to="/">
+          <Camera size={32} />
           <span>LUX MUNDI</span>
         </LogoSection>
 
-        {/* Desktop Navigation */}
         <Nav>
           {navLinks.map((link) => (
             <NavLink key={link.name} to={link.href}>
@@ -238,36 +339,52 @@ const Header = ({ isLoggedIn }) => {
           ))}
         </Nav>
 
-        {/* Search Section */}
         <SearchSection>
-          {isSearchOpen ? (
-            <SearchBar>
-              <SearchInput type="text" placeholder="Search..." autoFocus />
-              <button onClick={() => setIsSearchOpen(false)}>
-                <X size={18} color="#fff" />
-              </button>
-            </SearchBar>
-          ) : (
-            <button onClick={() => setIsSearchOpen(true)}>
-              <Search size={20} color="#fff" />
-            </button>
-          )}
+          <SearchBar className={isSearchOpen ? "active" : ""}>
+            <SearchInput
+              type="text"
+              placeholder="Search..."
+              autoFocus={isSearchOpen}
+            />
+            <X
+              size={16}
+              color="#666"
+              onClick={() => setIsSearchOpen(false)}
+              style={{ cursor: "pointer" }}
+            />
+          </SearchBar>
+          <SearchButton onClick={() => setIsSearchOpen(true)}>
+            <Search size={20} />
+          </SearchButton>
         </SearchSection>
 
-        {/* Auth/Profile Section */}
         {isLoggedIn ? (
           <ProfileSection>
-            <User size={24} color="#fff" />
-            <Avatar />
+            <Avatar onClick={() => setIsUserMenuOpen(!isUserMenuOpen)}>
+              <User size={20} color="#fff" />
+            </Avatar>
+            <UserMenu isOpen={isUserMenuOpen}>
+              <UserMenuItem onClick={handleProfileClick}>
+                <User size={18} />
+                Profile
+              </UserMenuItem>
+              <UserMenuItem onClick={handleLogout}>
+                <LogOut size={18} />
+                Logout
+              </UserMenuItem>
+            </UserMenu>
           </ProfileSection>
         ) : (
           <AuthButtons>
-            <button>Log in</button>
-            <button className="register">Register</button>
+            <Link to="/login">
+              <button className="login">Log in</button>
+            </Link>
+            <Link to="/register">
+              <button className="register">Register</button>
+            </Link>
           </AuthButtons>
         )}
 
-        {/* Mobile Menu Button */}
         <MobileMenuButton
           onClick={() => setIsMenuOpen(!isMenuOpen)}
           aria-label={isMenuOpen ? "Close menu" : "Open menu"}
@@ -281,19 +398,14 @@ const Header = ({ isLoggedIn }) => {
               {link.name}
             </MobileNavLink>
           ))}
-          <MobileAuthButtons>
-            {isLoggedIn ? (
-              <ProfileSection>
-                <User size={24} color="#fff" />
-                <Avatar />
-              </ProfileSection>
-            ) : (
-              <>
-                <button className="login">Log in</button>
-                <button className="register">Register</button>
-              </>
-            )}
-          </MobileAuthButtons>
+          {isLoggedIn && (
+            <>
+              <MobileNavLink to="/profile">Profile</MobileNavLink>
+              <MobileNavLink as="button" onClick={handleLogout}>
+                Logout
+              </MobileNavLink>
+            </>
+          )}
         </MobileMenu>
       </Wrapper>
     </HeaderContainer>

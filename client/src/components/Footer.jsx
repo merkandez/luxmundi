@@ -1,12 +1,13 @@
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 import { FaInstagram, FaTwitter, FaYoutube, FaLinkedin } from "react-icons/fa";
+import { BsCameraFill } from "react-icons/bs";
 
 export default function Footer() {
   return (
     <FooterWrapper>
       <LogoSection>
-        <CameraIcon size={24} />
+        <BsCameraFill size={24} color="#ffffff" />
         <LogoText>LUX MUNDI</LogoText>
       </LogoSection>
       <FooterColumn>
@@ -49,7 +50,7 @@ export default function Footer() {
         <p>Suscribate a nuestra newsletter!</p>
         <form>
           <input type="email" placeholder="you@example.com" />
-          <button type="submit">Submit</button>
+          <button type="submit">Enviar</button>
         </form>
       </SubscribeColumn>
     </FooterWrapper>
@@ -57,37 +58,44 @@ export default function Footer() {
 }
 
 const FooterWrapper = styled.footer`
-  background-color: #1e1e1e;
-  border-top: 2px solid #444;
+  background-color: #0f0e0e;
+  border: 1px solid rgba(255, 255, 255, 0.1);
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
-  padding: 32px 24px;
+  padding: 60px 60px;
+  margin: 80px 60px;
   color: #ffffff;
+  border-radius: 2px;
+  box-shadow: 1 4px 24px rgba(0, 0, 0, 0.2);
+  transition: border-color 0.3s ease;
+
+  &:hover {
+    border-color: rgba(255, 255, 255, 0.2);
+  }
 
   @media (max-width: 768px) {
     flex-direction: column;
     align-items: center;
+    padding: 40px 24px;
+    margin: 40px 20px;
   }
 `;
 
 const LogoSection = styled.div`
   display: flex;
   align-items: center;
-  gap: 0.5rem;
-  margin-bottom: 24px;
-`;
-
-const CameraIcon = styled.div`
-  width: 24px;
-  height: 24px;
-  color: #fff;
-  background-size: contain;
+  gap: 1rem;
+  margin-bottom: 42px;
+  padding: 24px 24px;
 `;
 
 const LogoText = styled.span`
-  font-size: 1rem;
+  font-size: 1.2rem;
   font-weight: bold;
+  padding-top: 4px;
+  color: #ffffff;
+  margin: 4px;
 `;
 
 const FooterColumn = styled.div`
@@ -97,7 +105,7 @@ const FooterColumn = styled.div`
 
   h3 {
     font-size: 1rem;
-    margin-bottom: 12px;
+    margin-bottom: 8px;
   }
 
   ul {
@@ -107,7 +115,7 @@ const FooterColumn = styled.div`
     li {
       font-size: 0.9rem;
       color: #cccccc;
-      margin-bottom: 8px;
+      margin-bottom: 4px;
     }
   }
 `;
@@ -142,6 +150,7 @@ const SubscribeColumn = styled.div`
       background-color: #444;
       color: #ffffff;
       cursor: pointer;
+      margin-left: 8px;
     }
   }
 `;

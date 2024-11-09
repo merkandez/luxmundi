@@ -1,24 +1,42 @@
 // src/router/AppRouter.jsx
 import { createBrowserRouter } from "react-router-dom";
-import Layout from "../layout/Layout.jsx";
-import HomePage from "../pages/HomePage.jsx";
-import RegisterPage from "../pages/RegisterPage.jsx";
-import AboutUs from "../pages/AboutUs.jsx";
-import NotFound from "../pages/NotFound.jsx";
-import LoginPage from "../pages/LoginPage.jsx";
-import ContactForm from "../components/ContactForm.jsx";
+import Layout from "../layout/Layout";
+import HomePage from "../pages/HomePage";
+import AboutUs from "../pages/AboutUs";
+import ContactForm from "../components/ContactForm";
+import RegisterPage from "../pages/RegisterPage";
+import NotFound from "../pages/NotFound";
+import LoginPage from "../pages/LoginPage";
 
-export const router = createBrowserRouter([
+const router = createBrowserRouter([
   {
     path: "/",
-    element: <Layout />, // Common layout for all routes
-    errorElement: <NotFound />, // Error page for undefined routes
+    element: <Layout />,
     children: [
-      { index: true, element: <HomePage /> }, // Root route
-      { path: "register", element: <RegisterPage /> }, // Register route
-      { path: "about", element: <AboutUs /> }, // About Us route
-      { path: "login", element: <LoginPage /> }, // Add login route
-      { path: "contact", element: <ContactForm /> }, // Add contact route
+      {
+        index: true,
+        element: <HomePage />,
+      },
+      {
+        path: "about",
+        element: <AboutUs />,
+      },
+      {
+        path: "contact",
+        element: <ContactForm />,
+      },
+      {
+        path: "register",
+        element: <RegisterPage />,
+      },
+      {
+        path: "login",
+        element: <LoginPage />,
+      },
+      {
+        path: "*",
+        element: <NotFound />,
+      },
     ],
   },
 ]);
