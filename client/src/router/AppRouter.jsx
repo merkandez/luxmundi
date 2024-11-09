@@ -5,8 +5,8 @@ import HomePage from '../pages/HomePage';
 import CreatePost from '../pages/CreatePost'; 
 import EditPost from '../pages/EditPost';
 import AdminPage from '../pages/AdminPage';
-import NoAccessPage from '../pages/NoAccessPage';
 import AboutPage from '../pages/AboutPage';
+import NotFoundPage from '../pages/NotFoundPage';
 import ProtectedRoute from './ProtectedRoute';
 
 export const router = createBrowserRouter([
@@ -28,7 +28,7 @@ export const router = createBrowserRouter([
           </ProtectedRoute>
         ),
       },
-      { path: 'no-access', element: <NoAccessPage /> },
+      { path: '*', element: <NotFoundPage /> }, // Ruta para la página 404
     ],
   },
 ]);
