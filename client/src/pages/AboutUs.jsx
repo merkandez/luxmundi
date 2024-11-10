@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import { FaGithub, FaLinkedin, FaTwitter } from "react-icons/fa";
+import { theme } from "../styles/theme";
 
 const teamMembers = [
   {
@@ -99,79 +100,136 @@ function AboutUs() {
 }
 
 const AboutWrapper = styled.div`
-  padding: 4rem 1rem;
+  padding: 8rem 1rem 6rem;
   background-color: #0a0a0a;
   min-height: 100vh;
+  margin-top: 5rem;
 
   @media (max-width: 768px) {
-    padding: 2rem 1rem;
+    padding: 7rem 1rem 4rem;
   }
 `;
 
 const AboutHeader = styled.div`
   text-align: center;
   max-width: 800px;
-  margin: 0 auto 3rem;
+  margin: 0 auto 5rem;
   padding: 0 1rem;
 
   @media (max-width: 768px) {
-    margin: 0 auto 2rem;
+    margin: 2rem auto 3rem;
   }
 `;
 
 const Title = styled.h1`
-  font-size: 3rem;
-  margin-bottom: 1.5rem;
+  font-size: 3.5rem;
+  margin-bottom: 2rem;
   color: #fff;
+  background: linear-gradient(120deg, ${theme.colors.primary}, #4adebb);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  letter-spacing: -0.02em;
 
   @media (max-width: 768px) {
+    font-size: 2.5rem;
+    margin-bottom: 1.5rem;
+  }
+
+  @media (max-width: 480px) {
     font-size: 2rem;
     margin-bottom: 1rem;
   }
 `;
 
 const Description = styled.p`
-  font-size: 1.2rem;
+  font-size: 1.3rem;
   color: #999;
   line-height: 1.6;
+  max-width: 600px;
+  margin: 0 auto;
+
+  @media (max-width: 768px) {
+    font-size: 1.1rem;
+    padding: 0 1rem;
+  }
 `;
 
 const TeamGrid = styled.div`
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-  gap: 1.5rem;
-  max-width: 1200px;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 2rem;
+  max-width: 1400px;
   margin: 0 auto;
-  padding: 0 1rem;
+  padding: 0 2rem;
 
-  @media (max-width: 768px) {
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 1rem;
+  @media (max-width: 1400px) {
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1.5rem;
+  }
+
+  @media (max-width: 1200px) {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+    padding: 0 1.5rem;
+  }
+
+  @media (max-width: 900px) {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.25rem;
+    padding: 0 1rem;
+  }
+
+  @media (max-width: 600px) {
+    grid-template-columns: repeat(1, 1fr);
+    max-width: 400px;
+    gap: 2rem;
   }
 `;
 
 const TeamCard = styled.div`
   background: #111111;
-  border-radius: 4px;
+  border-radius: 12px;
   overflow: hidden;
   border: 1px solid #222;
   transition: all 0.3s ease;
-  max-width: 300px;
+  height: 100%;
+  max-width: 260px;
   margin: 0 auto;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 
   &:hover {
     transform: translateY(-5px);
-    border-color: #333;
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+    border-color: ${theme.colors.primary};
+    box-shadow: 0 10px 20px rgba(41, 201, 169, 0.1);
+  }
+
+  @media (max-width: 600px) {
+    max-width: 100%;
   }
 `;
 
 const ImageWrapper = styled.div`
   width: 100%;
-  height: 240px;
+  height: 200px;
+  position: relative;
+  overflow: hidden;
+
+  &:after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(
+      to bottom,
+      rgba(0, 0, 0, 0) 0%,
+      rgba(0, 0, 0, 0.3) 100%
+    );
+  }
 
   @media (max-width: 768px) {
-    height: 200px;
+    height: 180px;
   }
 `;
 
@@ -188,41 +246,59 @@ const MemberImage = styled.img`
 
 const CardContent = styled.div`
   padding: 1.5rem;
+  background: linear-gradient(
+    to bottom,
+    rgba(17, 17, 17, 0.95),
+    rgba(17, 17, 17, 1)
+  );
 `;
 
 const MemberName = styled.h3`
-  font-size: 1.4rem;
+  font-size: 1.2rem;
   margin-bottom: 0.5rem;
   color: #fff;
+  font-weight: 600;
 `;
 
 const MemberRole = styled.p`
-  font-size: 1rem;
-  color: #666;
+  font-size: 0.9rem;
+  color: ${theme.colors.primary};
   margin-bottom: 1rem;
   font-weight: 500;
+  letter-spacing: 0.5px;
 `;
 
 const MemberBio = styled.p`
   font-size: 0.9rem;
   color: #999;
-  line-height: 1.6;
+  line-height: 1.5;
   margin-bottom: 1.5rem;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  height: 4em;
 `;
 
 const SocialLinks = styled.div`
   display: flex;
   gap: 1rem;
+  justify-content: center;
+  padding-top: 0.5rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
 `;
 
 const SocialIcon = styled.a`
   color: #666;
-  font-size: 1.2rem;
+  font-size: 1.1rem;
   transition: all 0.3s ease;
+  padding: 0.5rem;
+  border-radius: 50%;
 
   &:hover {
-    color: #fff;
+    color: ${theme.colors.primary};
     transform: translateY(-2px);
+    background: rgba(41, 201, 169, 0.1);
   }
 `;
 

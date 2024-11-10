@@ -3,13 +3,17 @@ import { createBrowserRouter } from "react-router-dom";
 import Layout from "../layout/Layout";
 import HomePage from "../pages/HomePage";
 import AboutUs from "../pages/AboutUs";
-import RegisterPage from "../pages/RegisterPage";
 import NotFound from "../pages/NotFound";
+import { AuthProvider } from "../context/AuthContext";
 
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <Layout />,
+    element: (
+      <AuthProvider>
+        <Layout />
+      </AuthProvider>
+    ),
     children: [
       {
         index: true,
@@ -18,10 +22,6 @@ const router = createBrowserRouter([
       {
         path: "about",
         element: <AboutUs />,
-      },
-      {
-        path: "register",
-        element: <RegisterPage />,
       },
       {
         path: "*",

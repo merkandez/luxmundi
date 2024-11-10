@@ -5,6 +5,7 @@ import { Link, useNavigate } from "react-router-dom";
 import PropTypes from "prop-types";
 import LoginModal from "./LoginModal";
 import ContactModal from "./ContactModal";
+import RegisterModal from "./RegisterModal";
 
 const HeaderContainer = styled.header`
   background-color: #0a0a0a;
@@ -321,6 +322,7 @@ const Header = ({ isLoggedIn }) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
   const [isContactModalOpen, setIsContactModalOpen] = useState(false);
+  const [isRegisterModalOpen, setIsRegisterModalOpen] = useState(false);
   const navigate = useNavigate();
 
   const navLinks = [
@@ -332,6 +334,12 @@ const Header = ({ isLoggedIn }) => {
   const handleLogout = () => {
     // Add your logout logic here
     navigate("/");
+  };
+
+  const handleRegister = (data) => {
+    console.log("Register data:", data);
+    // Add register logic here
+    setIsRegisterModalOpen(false);
   };
 
   return (
@@ -378,9 +386,12 @@ const Header = ({ isLoggedIn }) => {
               >
                 Log in
               </button>
-              <Link to="/register">
-                <button className="register">Register</button>
-              </Link>
+              <button
+                className="register"
+                onClick={() => setIsRegisterModalOpen(true)}
+              >
+                Register
+              </button>
             </AuthButtons>
           )}
 
@@ -396,6 +407,12 @@ const Header = ({ isLoggedIn }) => {
           <ContactModal
             isOpen={isContactModalOpen}
             onClose={() => setIsContactModalOpen(false)}
+          />
+
+          <RegisterModal
+            isOpen={isRegisterModalOpen}
+            onClose={() => setIsRegisterModalOpen(false)}
+            onSubmit={handleRegister}
           />
 
           <MobileMenuButton
@@ -431,7 +448,12 @@ const Header = ({ isLoggedIn }) => {
                 >
                   Log in
                 </MobileNavLink>
-                <MobileNavLink to="/register">Register</MobileNavLink>
+                <MobileNavLink
+                  as="button"
+                  onClick={() => setIsRegisterModalOpen(true)}
+                >
+                  Register
+                </MobileNavLink>
               </>
             )}
           </MobileMenu>

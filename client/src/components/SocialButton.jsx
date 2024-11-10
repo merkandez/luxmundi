@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import PropTypes from "prop-types";
+import { theme } from "../styles/theme";
 
 function SocialButton({ icon, text }) {
   return (
@@ -16,38 +17,52 @@ SocialButton.propTypes = {
 };
 
 const StyledButton = styled.button`
-  justify-content: center;
-  align-items: center;
-  border-radius: 40px;
-  border: var(--sds-size-stroke-border) solid var(--Gray-true-300, #d6d6d6);
-  background-color: #fff;
   display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
   width: 100%;
-  text-align: center;
-  padding: 14px;
-  margin-top: 12px;
-  &:first-child {
-    margin-top: 0;
+  padding: 0.75rem 1rem;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 8px;
+  color: ${theme.colors.text.primary};
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: ${theme.animation.transition};
+
+  &:hover {
+    background: rgba(255, 255, 255, 0.1);
+    transform: translateY(-1px);
   }
-  @media (max-width: 991px) {
-    padding-right: 20px;
-    white-space: normal;
+
+  &:active {
+    transform: translateY(0);
+  }
+
+  @media (max-width: 480px) {
+    padding: 0.6rem 0.75rem;
+    font-size: 0.85rem;
+    gap: 0.5rem;
   }
 `;
 
 const ButtonIcon = styled.img`
-  aspect-ratio: 1;
+  width: 20px;
+  height: 20px;
   object-fit: contain;
-  object-position: center;
-  width: 24px;
-  align-self: stretch;
-  margin: auto 0;
+
+  @media (max-width: 480px) {
+    width: 18px;
+    height: 18px;
+  }
 `;
 
 const ButtonText = styled.span`
-  align-self: stretch;
+  font-weight: 500;
+  color: ${theme.colors.text.primary};
   flex: 1;
-  margin: auto 0 auto 10px;
+  text-align: center;
 `;
 
 export default SocialButton;
