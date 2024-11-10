@@ -63,10 +63,10 @@ function AboutUs() {
   return (
     <AboutWrapper>
       <AboutHeader>
-        <Title>Our Team</Title>
+        <Title>Nuestro Equipo</Title>
         <Description>
-          Meet the passionate individuals behind Lux Mundi who make your
-          photography journey exceptional.
+          Conoce a las personas apasionadas detrás de Lux Mundi que hacen de tu
+          viaje fotográfico excepcional.
         </Description>
       </AboutHeader>
       <TeamGrid>

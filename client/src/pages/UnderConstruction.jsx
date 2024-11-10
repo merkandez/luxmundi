@@ -9,12 +9,12 @@ const UnderConstruction = () => {
     <Container>
       <Content>
         <Construction size={64} />
-        <Title>Page Under Construction</Title>
+        <Title>Página en construcción</Title>
         <Description>
-          We&apos;re working hard to bring you something amazing. Please check
-          back later.
+          Estamos trabajando duro para traerte algo increíble. Por favor, vuelve
+          más tarde.
         </Description>
-        <BackButton onClick={() => navigate(-1)}>Go Back</BackButton>
+        <BackButton onClick={() => navigate(-1)}>Volver</BackButton>
       </Content>
     </Container>
   );
