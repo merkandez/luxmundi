@@ -2,19 +2,24 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
-// Estilos con styled-components
-const MainContainer = styled.div`
+// Estilos para los contenedores generales
+const MainWrapper = styled.div`
   display: flex;
-  align-items: center;
-  justify-content: flex-end;
-  flex-wrap: nowrap;
-  gap: 64px;
-  position: relative;
-  width: 600px;
-  height: 100%;
-  margin: 0 auto;
-  padding: 96px 0;
-  background: #1e1e1e;
+  justify-content: space-between;
+  gap: 32px;
+  padding: 32px;
+`;
+
+// Estilos para la primera sección (lado izquierdo)
+const LeftContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  width: 50%;
+  background-color: #1e1e1e;
+  padding: 48px;
+  border-radius: 10px;
 `;
 
 const Group = styled.div`
@@ -92,23 +97,40 @@ const GoHomeLink = styled(Link)`
   }
 `;
 
+// Estilos para la segunda sección (lado derecho)
+const RightContainer = styled.div`
+  width: 50%;
+  position: relative;
+  height: 960px;
+  background: url(../client/src/assets/ImgNotFound/4b3e7afdcd152603f2ad1adeb1e0580e.jpeg)
+    no-repeat center;
+  background-size: cover;
+  overflow: hidden;
+  border-radius: 10px;
+`;
+
 export default function NotFoundPage() {
   return (
-    <MainContainer>
-      <Group>
-        <Box>
-          <Section>
-            <Text>Oh oh, no encontramos la página...</Text>
-            <Text2>
-              Lo sentimos, la página que estás buscando no existe o ha sido movida.
-            </Text2>
-            <Section2>
-              <GoHomeLink to="/">Volver a Home</GoHomeLink>
-            </Section2>
-          </Section>
-        </Box>
-      </Group>
-    </MainContainer>
+    <MainWrapper>
+      {/* Lado izquierdo */}
+      <LeftContainer>
+        <Group>
+          <Box>
+            <Section>
+              <Text>Oh oh, no encontramos la página...</Text>
+              <Text2>
+                Lo sentimos, la página que estás buscando no existe o ha sido movida.
+              </Text2>
+              <Section2>
+                <GoHomeLink to="/">Volver a Home</GoHomeLink>
+              </Section2>
+            </Section>
+          </Box>
+        </Group>
+      </LeftContainer>
+
+      {/* Lado derecho */}
+      <RightContainer />
+    </MainWrapper>
   );
 }
-
