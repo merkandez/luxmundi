@@ -34,7 +34,7 @@ export default function Footer() {
             <h3>Explore</h3>
             <ul>
               <li>
-                <FooterLink to="/destinations">Destinos</FooterLink>
+                <FooterLink to="/#explore">Destinos</FooterLink>
               </li>
               <li>
                 <FooterLink to="/under-construction">Lo más visto</FooterLink>

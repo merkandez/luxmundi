@@ -1,5 +1,6 @@
 import styled from "styled-components";
-import { Camera, Search, X, Menu } from "lucide-react";
+import { Search, X, Menu } from "lucide-react";
+import { BsCameraFill } from "react-icons/bs";
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import PropTypes from "prop-types";
@@ -36,44 +37,25 @@ const LogoSection = styled(Link)`
   display: flex;
   align-items: center;
   gap: 0.8rem;
-  transition: all 0.2s ease;
+  transition: transform 0.3s ease;
   z-index: 20;
   margin-right: 2rem;
   color: #fff;
+  padding: 4px;
 
   &:hover {
     transform: translateY(-1px);
-    color: ${({ theme }) => theme.colors.primary};
-
-    svg {
-      color: ${({ theme }) => theme.colors.primary};
-    }
   }
 
   span {
-    font-size: 1.4rem;
-    font-weight: 700;
-    letter-spacing: 1px;
-    transition: color 0.2s ease;
+    font-size: 1.2rem;
+    font-weight: bold;
+    padding-top: 4px;
+    color: #ffffff;
+    margin: 4px;
 
-    @media (max-width: 768px) {
+    @media (max-width: 480px) {
       font-size: 1.1rem;
-    }
-
-    @media (max-width: 480px) {
-      font-size: 1rem;
-    }
-  }
-
-  svg {
-    @media (max-width: 768px) {
-      width: 28px;
-      height: 28px;
-    }
-
-    @media (max-width: 480px) {
-      width: 24px;
-      height: 24px;
     }
   }
 `;
@@ -381,7 +363,7 @@ const Header = ({ isLoggedIn }) => {
 
   const navLinks = [
     { name: "Nosotros", href: "/about" },
-    { name: "Explore", href: "/destinations" },
+    { name: "Destinos", href: "/#explore" },
     { name: "Contacto", onClick: () => setIsContactModalOpen(true) },
   ];
 
@@ -400,7 +382,7 @@ const Header = ({ isLoggedIn }) => {
     <HeaderContainer>
       <Wrapper>
         <LogoSection to="/">
-          <Camera size={32} />
+          <BsCameraFill size={24} color="#ffffff" />
           <span>LUX MUNDI</span>
         </LogoSection>
 

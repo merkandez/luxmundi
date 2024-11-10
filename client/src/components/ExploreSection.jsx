@@ -13,9 +13,9 @@ const ExploreSection = ({ cards = [] }) => {
   const currentCards = cards.slice(indexOfFirstCard, indexOfLastCard);
 
   return (
-    <Section>
+    <Section id="explore">
       <SectionHeader>
-        <Title>Destinos</Title>
+        <Title>Explore!</Title>
         <Subtitle>Discover amazing destinations</Subtitle>
       </SectionHeader>
 

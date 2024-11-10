@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import LuxMundiHero from "../components/LuxMundiHero";
 import ExploreSection from "../components/ExploreSection";
+import PopularDestinations from "../components/PopularDestinations";
 import { useNavigate } from "react-router-dom";
 
 const cardData = [
@@ -75,6 +76,7 @@ function HomePage() {
   return (
     <HomeWrapper>
       <LuxMundiHero />
+      <PopularDestinations />
       <ExploreSection cards={cardData} onCardClick={handleCardClick} />
     </HomeWrapper>
   );
