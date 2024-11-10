@@ -1,4 +1,3 @@
-/* eslint-disable react/prop-types */
 // src/context/AuthContext.jsx
 import { createContext, useState, useContext } from "react";
 import PropTypes from "prop-types";
