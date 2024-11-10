@@ -48,7 +48,7 @@ const PopularDestinations = () => {
 };
 
 const Container = styled.section`
-  padding: 4rem 1rem;
+  padding: 4rem 20px;
   background-color: #0a0a0a;
   overflow: hidden;
 `;
@@ -58,18 +58,28 @@ const Title = styled.h2`
   color: #fff;
   font-size: 2.5rem;
   margin-bottom: 3rem;
+  max-width: 800px;
+  margin: 0 auto 3rem;
 
-  @media (max-width: 768px) {
+  @media (max-width: 991px) {
     font-size: 2rem;
     margin-bottom: 2rem;
+  }
+
+  @media (max-width: 480px) {
+    font-size: 1.75rem;
   }
 `;
 
 const MapContainer = styled.div`
   position: relative;
-  max-width: 1200px;
+  max-width: 1440px;
   margin: 0 auto;
-  padding: 2rem;
+  padding: 2rem 0;
+
+  @media (max-width: 991px) {
+    padding: 1rem 0;
+  }
 `;
 
 const StyledWorldMap = styled.img`
@@ -132,10 +142,14 @@ const SpotTooltip = styled.div`
 
 const TooltipImage = styled.img`
   width: 100%;
-  height: 120px;
+  height: 150px;
   object-fit: cover;
-  border-radius: 4px;
-  margin-bottom: 0.5rem;
+  border-radius: 8px;
+  margin-bottom: 0.75rem;
+
+  @media (max-width: 480px) {
+    height: 120px;
+  }
 `;
 
 const TooltipContent = styled.div`
