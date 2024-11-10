@@ -27,7 +27,7 @@ const RegisterModal = ({ isOpen, onClose, onSubmit }) => {
             animate={{ scale: 1, opacity: 1 }}
             exit={{ scale: 0.95, opacity: 0 }}
           >
-            <CloseButton onClick={onClose}>
+            <CloseButton onClick={onClose} aria-label="Close">
               <X size={20} />
             </CloseButton>
 
@@ -104,110 +104,106 @@ const ModalContainer = styled(motion.div)`
   backdrop-filter: blur(16px);
   border: 1px solid rgba(255, 255, 255, 0.1);
   border-radius: 16px;
-  padding: 2.5rem 2rem;
-  width: 90%;
-  max-width: 380px;
+  padding: 2rem;
+  width: 100%;
+  max-width: 420px;
   position: relative;
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+  max-height: 90vh;
+  overflow-y: auto;
 
   @media (max-width: 768px) {
-    padding: 2rem 1.5rem;
-    width: 95%;
+    padding: 1.5rem;
+    max-width: 90%;
   }
 
   @media (max-width: 480px) {
-    padding: 1.5rem 1rem;
-    width: 100%;
+    padding: 1.25rem;
+    max-width: 95%;
   }
 `;
 
 const CloseButton = styled.button`
-  // ... same as LoginModal
+  position: absolute;
+  top: 1.25rem;
+  right: 1.25rem;
+  background: none;
+  border: none;
+  color: rgba(255, 255, 255, 0.6);
+  cursor: pointer;
+  padding: 0.5rem;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+
+  &:hover {
+    color: #fff;
+    background: rgba(255, 255, 255, 0.1);
+  }
 `;
 
 const Form = styled.form`
-  // ... same as LoginModal
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
 `;
 
-const Title = styled.h1`
-  font-size: 1.75rem;
+const Title = styled.h2`
+  font-size: 1.8rem;
+  color: #fff;
   margin-bottom: 0.5rem;
   text-align: center;
-
-  @media (max-width: 480px) {
-    font-size: 1.5rem;
-  }
 `;
 
 const Description = styled.p`
-  color: rgba(255, 255, 255, 0.7);
+  color: rgba(255, 255, 255, 0.6);
   text-align: center;
-  margin-bottom: 1.75rem;
   font-size: 0.95rem;
-
-  @media (max-width: 480px) {
-    font-size: 0.9rem;
-    margin-bottom: 1.5rem;
-  }
+  margin-bottom: 0.5rem;
 `;
 
 const InputGroup = styled.div`
-  margin-bottom: 1.25rem;
+  text-align: left;
 `;
 
 const Label = styled.label`
   display: block;
+  color: rgba(255, 255, 255, 0.8);
   margin-bottom: 0.4rem;
-  color: rgba(255, 255, 255, 0.9);
   font-size: 0.9rem;
 `;
 
 const Input = styled.input`
   width: 100%;
-  padding: 0.7rem 0.75rem;
-  background: rgba(255, 255, 255, 0.1);
-  border: 1px solid rgba(255, 255, 255, 0.2);
+  padding: 0.75rem;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
   border-radius: 8px;
-  color: white;
-  font-size: 0.95rem;
-
-  @media (max-width: 480px) {
-    padding: 0.6rem 0.75rem;
-    font-size: 0.9rem;
-  }
+  color: #fff;
+  transition: all 0.2s ease;
 
   &:focus {
+    border-color: #fff;
     outline: none;
-    border-color: rgba(255, 255, 255, 0.5);
-    box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.1);
   }
 `;
 
 const SubmitButton = styled.button`
   width: 100%;
-  padding: 0.7rem;
-  background: white;
-  color: black;
+  padding: 0.75rem;
+  background: #fff;
+  color: #000;
   border: none;
   border-radius: 8px;
-  font-weight: 600;
-  font-size: 0.95rem;
+  font-weight: 500;
   cursor: pointer;
-  margin-bottom: 1.25rem;
   transition: all 0.2s ease;
 
-  @media (max-width: 480px) {
-    padding: 0.6rem;
-    font-size: 0.9rem;
-  }
-
   &:hover {
-    background: rgba(255, 255, 255, 0.9);
+    background: #f0f0f0;
     transform: translateY(-1px);
-  }
-
-  &:active {
-    transform: translateY(0);
   }
 `;
 
@@ -215,35 +211,40 @@ const Divider = styled.div`
   display: flex;
   align-items: center;
   gap: 1rem;
-  margin: 1.5rem 0;
+  margin: 0.5rem 0;
 `;
 
 const DividerLine = styled.div`
   flex: 1;
   height: 1px;
-  background: rgba(255, 255, 255, 0.2);
+  background: rgba(255, 255, 255, 0.1);
 `;
 
 const DividerText = styled.span`
-  color: rgba(255, 255, 255, 0.7);
+  color: rgba(255, 255, 255, 0.6);
   font-size: 0.9rem;
 `;
 
 const SocialButtonsContainer = styled.div`
   display: flex;
-  flex-direction: column;
   gap: 0.75rem;
-  margin-bottom: 1.25rem;
 `;
 
 const LoginPrompt = styled.p`
   text-align: center;
-  color: rgba(255, 255, 255, 0.7);
+  color: rgba(255, 255, 255, 0.6);
+  font-size: 0.9rem;
+  margin-top: 0.5rem;
 `;
 
-const LoginLink = styled.span`
-  color: white;
+const LoginLink = styled.button`
+  background: none;
+  border: none;
+  color: #fff;
+  font-weight: 500;
   cursor: pointer;
+  padding: 0;
+  font-size: 0.9rem;
 
   &:hover {
     text-decoration: underline;

@@ -1,6 +1,5 @@
 import styled from "styled-components";
 import { FaGithub, FaLinkedin, FaTwitter } from "react-icons/fa";
-import { theme } from "../styles/theme";
 
 const teamMembers = [
   {
@@ -124,10 +123,7 @@ const AboutHeader = styled.div`
 const Title = styled.h1`
   font-size: 3.5rem;
   margin-bottom: 2rem;
-  color: #fff;
-  background: linear-gradient(120deg, ${theme.colors.primary}, #4adebb);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
+  color: rgba(255, 255, 255, 0.85);
   letter-spacing: -0.02em;
 
   @media (max-width: 768px) {
@@ -143,14 +139,15 @@ const Title = styled.h1`
 
 const Description = styled.p`
   font-size: 1.3rem;
-  color: #999;
+  color: rgba(255, 255, 255, 0.7);
   line-height: 1.6;
   max-width: 600px;
-  margin: 0 auto;
+  margin: 0 auto 3rem;
 
   @media (max-width: 768px) {
     font-size: 1.1rem;
     padding: 0 1rem;
+    margin-bottom: 2rem;
   }
 `;
 
@@ -199,8 +196,8 @@ const TeamCard = styled.div`
 
   &:hover {
     transform: translateY(-5px);
-    border-color: ${theme.colors.primary};
-    box-shadow: 0 10px 20px rgba(41, 201, 169, 0.1);
+    border-color: rgba(255, 255, 255, 0.3);
+    box-shadow: 0 10px 20px rgba(255, 255, 255, 0.05);
   }
 
   @media (max-width: 600px) {
@@ -262,7 +259,7 @@ const MemberName = styled.h3`
 
 const MemberRole = styled.p`
   font-size: 0.9rem;
-  color: ${theme.colors.primary};
+  color: rgba(255, 255, 255, 0.85);
   margin-bottom: 1rem;
   font-weight: 500;
   letter-spacing: 0.5px;
@@ -296,9 +293,9 @@ const SocialIcon = styled.a`
   border-radius: 50%;
 
   &:hover {
-    color: ${theme.colors.primary};
+    color: rgba(255, 255, 255, 0.85);
     transform: translateY(-2px);
-    background: rgba(41, 201, 169, 0.1);
+    background: rgba(255, 255, 255, 0.1);
   }
 `;
 

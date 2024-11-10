@@ -35,18 +35,25 @@ const LogoSection = styled(Link)`
   display: flex;
   align-items: center;
   gap: 0.8rem;
-  transition: transform 0.3s ease;
+  transition: all 0.3s ease;
   z-index: 20;
   margin-right: 2rem;
+  color: #fff;
 
   &:hover {
     transform: translateY(-1px);
+    color: ${({ theme }) => theme.colors.primary};
+
+    svg {
+      color: ${({ theme }) => theme.colors.primary};
+    }
   }
 
   span {
     font-size: 1.4rem;
     font-weight: 700;
     letter-spacing: 1px;
+    transition: color 0.3s ease;
 
     @media (max-width: 480px) {
       font-size: 1.2rem;

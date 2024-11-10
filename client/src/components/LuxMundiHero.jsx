@@ -86,7 +86,7 @@ const ContentWrapper = styled.div`
   flex-direction: row-reverse;
   width: 100%;
   max-width: 1440px;
-  margin: 0 auto;
+  margin: 24px 0 auto;
   gap: 4rem;
   align-items: center;
 
