@@ -5,6 +5,7 @@ import HomePage from "../pages/HomePage";
 import AboutUs from "../pages/AboutUs";
 import NotFound from "../pages/NotFound";
 import { AuthProvider } from "../context/AuthContext";
+import UnderConstruction from "../pages/UnderConstruction";
 
 const router = createBrowserRouter([
   {
@@ -22,6 +23,10 @@ const router = createBrowserRouter([
       {
         path: "about",
         element: <AboutUs />,
+      },
+      {
+        path: "under-construction",
+        element: <UnderConstruction />,
       },
       {
         path: "*",

@@ -381,7 +381,7 @@ const Header = ({ isLoggedIn }) => {
 
   const navLinks = [
     { name: "Nosotros", href: "/about" },
-    { name: "Destinos", href: "/destinations" },
+    { name: "Explore", href: "/destinations" },
     { name: "Contacto", onClick: () => setIsContactModalOpen(true) },
   ];
 

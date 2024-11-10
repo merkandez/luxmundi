@@ -2,8 +2,11 @@ import styled from "styled-components";
 import { Link } from "react-router-dom";
 import { FaInstagram, FaTwitter, FaYoutube, FaLinkedin } from "react-icons/fa";
 import { BsCameraFill } from "react-icons/bs";
+import { useState } from "react";
+import ContactModal from "./ContactModal";
 
 export default function Footer() {
+  const [isContactModalOpen, setIsContactModalOpen] = useState(false);
   const currentYear = new Date().getFullYear();
 
   return (
@@ -19,10 +22,10 @@ export default function Footer() {
             <h3>Sobre Nosotros</h3>
             <ul>
               <li>
-                <FooterLink to="/quien-somos">Quien somos</FooterLink>
+                <FooterLink to="/about">Quien somos</FooterLink>
               </li>
               <li>
-                <FooterLink to="/nuestra-vision">Nuestra Visión</FooterLink>
+                <FooterLink to="/under-construction">Nuestra Visión</FooterLink>
               </li>
             </ul>
           </FooterColumn>
@@ -31,13 +34,13 @@ export default function Footer() {
             <h3>Explore</h3>
             <ul>
               <li>
-                <FooterLink to="/destinos">Destinos</FooterLink>
+                <FooterLink to="/destinations">Destinos</FooterLink>
               </li>
               <li>
-                <FooterLink to="/lo-mas-visto">Lo más visto</FooterLink>
+                <FooterLink to="/under-construction">Lo más visto</FooterLink>
               </li>
               <li>
-                <FooterLink to="/galeria">Galería</FooterLink>
+                <FooterLink to="/under-construction">Galería</FooterLink>
               </li>
             </ul>
           </FooterColumn>
@@ -46,15 +49,17 @@ export default function Footer() {
             <h3>Recursos</h3>
             <ul>
               <li>
-                <FooterLink to="/cursos-fotografia">
+                <FooterLink to="/under-construction">
                   Cursos Fotografía
                 </FooterLink>
               </li>
               <li>
-                <FooterLink to="/contacto">Contacto</FooterLink>
+                <FooterLink onClick={() => setIsContactModalOpen(true)}>
+                  Contacto
+                </FooterLink>
               </li>
               <li>
-                <FooterLink to="/soporte">Soporte</FooterLink>
+                <FooterLink to="/under-construction">Soporte</FooterLink>
               </li>
             </ul>
           </FooterColumn>
@@ -87,6 +92,11 @@ export default function Footer() {
           <Copyright>© {currentYear} Lux Mundi. All rights reserved.</Copyright>
         </FooterBottom>
       </FooterContent>
+
+      <ContactModal
+        isOpen={isContactModalOpen}
+        onClose={() => setIsContactModalOpen(false)}
+      />
     </FooterWrapper>
   );
 }

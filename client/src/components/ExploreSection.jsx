@@ -118,50 +118,79 @@ const Pagination = styled.div`
   align-items: center;
   justify-content: center;
   gap: 16px;
-  margin-top: 48px;
+  margin: 48px auto;
+  padding: 24px;
+  background: rgba(255, 255, 255, 0.03);
+  border-radius: 12px;
+  backdrop-filter: blur(8px);
+  max-width: 600px;
+
+  @media (max-width: 768px) {
+    flex-direction: column;
+    gap: 12px;
+    padding: 16px;
+    margin: 32px 16px;
+  }
 `;
 
 const PaginationButton = styled.button`
   background: transparent;
-  border: 1px solid #29c9a9;
-  color: #29c9a9;
-  padding: 8px 16px;
-  border-radius: 4px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: #fff;
+  padding: 8px 24px;
+  border-radius: 6px;
   cursor: pointer;
   transition: all 0.2s ease;
+  font-weight: 500;
 
   &:hover:not(:disabled) {
-    background: #29c9a9;
-    color: #000;
+    background: rgba(255, 255, 255, 0.1);
+    border-color: rgba(255, 255, 255, 0.3);
+    transform: translateY(-1px);
   }
 
   &:disabled {
     opacity: 0.5;
     cursor: not-allowed;
   }
+
+  @media (max-width: 768px) {
+    width: 100%;
+  }
 `;
 
 const PageNumbers = styled.div`
   display: flex;
   gap: 8px;
+
+  @media (max-width: 768px) {
+    width: 100%;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
 `;
 
 const PageNumber = styled.button`
-  width: 32px;
-  height: 32px;
+  width: 36px;
+  height: 36px;
   display: flex;
   align-items: center;
   justify-content: center;
-  border-radius: 4px;
-  border: none;
-  background: ${(props) => (props.active ? "#29c9a9" : "transparent")};
-  color: ${(props) => (props.active ? "#000" : "#fff")};
+  border-radius: 6px;
+  border: 1px solid
+    ${(props) =>
+      props.active ? "rgba(255, 255, 255, 0.3)" : "rgba(255, 255, 255, 0.1)"};
+  background: ${(props) =>
+    props.active ? "rgba(255, 255, 255, 0.1)" : "transparent"};
+  color: #fff;
   cursor: pointer;
   transition: all 0.2s ease;
+  font-weight: ${(props) => (props.active ? "600" : "400")};
 
   &:hover:not(:disabled) {
-    background: ${(props) =>
-      props.active ? "#29c9a9" : "rgba(41, 201, 169, 0.1)"};
+    background: rgba(255, 255, 255, 0.1);
+    border-color: rgba(255, 255, 255, 0.3);
+    transform: translateY(-1px);
   }
 `;
 
