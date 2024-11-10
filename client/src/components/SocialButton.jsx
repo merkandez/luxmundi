@@ -1,5 +1,5 @@
-import styled from "styled-components";
-import PropTypes from "prop-types";
+import styled from 'styled-components';
+import PropTypes from 'prop-types';
 
 function SocialButton({ icon, text, onClick }) {
   return (
@@ -26,7 +26,7 @@ const StyledButton = styled.button`
   width: 100%;
   text-align: center;
   padding: 14px;
-  margin-top: 12px;
+
   &:first-child {
     margin-top: 0;
   }

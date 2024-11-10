@@ -1,98 +1,120 @@
-import React, { useState, useContext } from 'react';
-import { AuthContext } from '../../context/AuthContext';
+import React, { useContext } from 'react';
+import { useForm } from 'react-hook-form';
 import styled from 'styled-components';
+import { AuthContext } from '../../context/AuthContext';
+import SocialButton from '../SocialButton';
+const socialButtons = [
+  {
+    icon: 'https://cdn.builder.io/api/v1/image/assets/4a6b075cba4d439db44d5a2134fb5890/dd40f00dc6db3c0364106f8aa8f7a7ccce9226f67ec57e59b892dba3a52f6da7?apiKey=4a6b075cba4d439db44d5a2134fb5890&',
+    text: 'Apple',
+  },
+  {
+    icon: 'https://cdn.builder.io/api/v1/image/assets/4a6b075cba4d439db44d5a2134fb5890/582ae3bba05c84d1bd07d50c1deb2c9f18f000a037f291245497f928ee54dfd9?apiKey=4a6b075cba4d439db44d5a2134fb5890&',
+    text: 'Google',
+  },
+];
 
-const LoginForm = ({ onClose }) => {
-  const { login } = useContext(AuthContext); // Accedemos al login del contexto
-  const [formData, setFormData] = useState({
-    email: '',
-    password: '',
-  });
+const LoginForm = ({ onClose, onSwitchToRegister }) => {
+  const { login } = useContext(AuthContext);
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
 
-  const handleChange = (e) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value,
-    });
-  };
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
+  const onSubmit = async (data) => {
     try {
-      await login(formData); // Usamos el login del contexto
+      await login(data);
       alert('Inicio de sesión exitoso');
-      onClose(); // Cierra el modal después de iniciar sesión
+      onClose();
     } catch (error) {
       alert('Error en el inicio de sesión');
     }
   };
 
   return (
-    <LoginContainer>
-      <StyledLoginForm onSubmit={handleSubmit}>
-        <Title>Iniciar Sesión</Title>
+    <FormContainer>
+      <StyledForm onSubmit={handleSubmit(onSubmit)}>
+        <CloseButton onClick={onClose}>✕</CloseButton>
+        <Title>Welcome Back</Title>
         <FormGroup>
           <Label>Email</Label>
           <Input
-            type="email"
-            name="email"
-            value={formData.email}
-            onChange={handleChange}
-            placeholder="Enter your email"
-            required
+            type='email'
+            {...register('email', { required: 'Este campo es obligatorio' })}
+            placeholder='Enter your email'
           />
+          {errors.email && <ErrorMessage>{errors.email.message}</ErrorMessage>}
         </FormGroup>
+
         <FormGroup>
-          <Label>Contraseña</Label>
+          <Label>Password</Label>
           <Input
-            type="password"
-            name="password"
-            value={formData.password}
-            onChange={handleChange}
-            placeholder="Enter your password"
-            required
+            type='password'
+            {...register('password', { required: 'Este campo es obligatorio' })}
+            placeholder='Enter your password'
           />
+          {errors.password && (
+            <ErrorMessage>{errors.password.message}</ErrorMessage>
+          )}
         </FormGroup>
-        <RememberMeRow>
-          <CheckboxGroup>
-            <Checkbox type="checkbox" id="remember" />
-            <CheckboxLabel htmlFor="remember">Remember me</CheckboxLabel>
-          </CheckboxGroup>
-          <ForgotPassword>Forgot password?</ForgotPassword>
-        </RememberMeRow>
-        <LoginButton type="submit">Login</LoginButton>
+
+        <LoginButton type='submit'>Sign In</LoginButton>
+        <SocialButtonsContainer>
+          {socialButtons.map((button, index) => (
+            <SocialButton key={index} icon={button.icon} text={button.text} />
+          ))}
+        </SocialButtonsContainer>
+
         <SignUpText>
-          ¿No tienes cuenta? <SignUpLink>Regístrate</SignUpLink>
+          ¿No tienes una cuenta?{' '}
+          <SignUpLink onClick={onSwitchToRegister}>Regístrate</SignUpLink>
         </SignUpText>
-      </StyledLoginForm>
-    </LoginContainer>
+      </StyledForm>
+    </FormContainer>
   );
 };
 
-// Componentes estilizados
-const LoginContainer = styled.div`
+export default LoginForm;
+
+// Estilos
+const FormContainer = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  min-height: 100vh;
-  background-color: #1e1e1e;
   padding: 20px;
+  background: rgba(26, 26, 26, 1);
+  border-radius: 8px;
 `;
 
-const StyledLoginForm = styled.form`
-  background-color: #2d2d2d;
+const StyledForm = styled.form`
+  background-color: transparent;
   padding: 40px;
   border-radius: 10px;
   width: 100%;
   max-width: 400px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  position: relative;
+`;
+const CloseButton = styled.button`
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: transparent;
+  border: none;
+  color: #ffffff;
+  font-size: 20px;
+  cursor: pointer;
+
+  &:hover {
+    color: #ccc;
+  }
 `;
 
-const Title = styled.h1`
-  color: #ffffff;
+const Title = styled.h2`
+  font-size: 1.8rem;
+  color: #29c9a9;
   text-align: center;
-  margin-bottom: 30px;
-  font-size: 24px;
+  margin-bottom: 20px;
 `;
 
 const FormGroup = styled.div`
@@ -103,7 +125,6 @@ const Label = styled.label`
   display: block;
   color: #ffffff;
   margin-bottom: 8px;
-  font-size: 14px;
 `;
 
 const Input = styled.input`
@@ -113,48 +134,10 @@ const Input = styled.input`
   border-radius: 5px;
   background-color: #3d3d3d;
   color: #ffffff;
-  font-size: 14px;
 
   &:focus {
-    outline: none;
     border-color: #29c9a9;
-  }
-
-  &::placeholder {
-    color: #888888;
-  }
-`;
-export default LoginForm;
-
-const RememberMeRow = styled.div`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 20px;
-`;
-
-const CheckboxGroup = styled.div`
-  display: flex;
-  align-items: center;
-`;
-
-const Checkbox = styled.input`
-  margin-right: 8px;
-`;
-
-const CheckboxLabel = styled.label`
-  color: #ffffff;
-  font-size: 14px;
-`;
-
-const ForgotPassword = styled.a`
-  color: #29c9a9;
-  font-size: 14px;
-  text-decoration: none;
-  cursor: pointer;
-
-  &:hover {
-    text-decoration: underline;
+    outline: none;
   }
 `;
 
@@ -162,13 +145,10 @@ const LoginButton = styled.button`
   width: 100%;
   padding: 12px;
   background-color: #29c9a9;
-  color: #ffffff;
+  color: #000;
   border: none;
   border-radius: 5px;
-  font-size: 16px;
-  font-weight: 600;
   cursor: pointer;
-  transition: background-color 0.2s;
 
   &:hover {
     background-color: #24b598;
@@ -179,17 +159,24 @@ const SignUpText = styled.p`
   text-align: center;
   color: #ffffff;
   margin-top: 20px;
-  font-size: 14px;
 `;
 
 const SignUpLink = styled.span`
   color: #29c9a9;
   cursor: pointer;
-  text-decoration: none;
 
   &:hover {
     text-decoration: underline;
   }
 `;
 
-
+const ErrorMessage = styled.span`
+  color: #ff4d4f;
+  font-size: 12px;
+`;
+const SocialButtonsContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 20px;
+`;

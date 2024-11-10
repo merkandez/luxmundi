@@ -60,7 +60,7 @@ const MainContainer = styled.div`
 const Content = styled.main`
   flex: 1;
   padding: 2rem;
-  background-color: #f4f4f9;
+  
 `;
 
 const Overlay = styled.div`

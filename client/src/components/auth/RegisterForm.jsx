@@ -3,13 +3,9 @@ import { useForm } from 'react-hook-form';
 import { registerUser } from '../../services/authService';
 import styled from 'styled-components';
 import SocialButton from '../SocialButton';
-
+import LoginForm from './LoginForm';
 
 const socialButtons = [
-  {
-    icon: 'https://cdn.builder.io/api/v1/image/assets/4a6b075cba4d439db44d5a2134fb5890/a86aac696dbf1b3069ef825e1b42fd84c2ed563a2107c05440d6ac47931b1cbb?apiKey=4a6b075cba4d439db44d5a2134fb5890&',
-    text: 'Facebook',
-  },
   {
     icon: 'https://cdn.builder.io/api/v1/image/assets/4a6b075cba4d439db44d5a2134fb5890/dd40f00dc6db3c0364106f8aa8f7a7ccce9226f67ec57e59b892dba3a52f6da7?apiKey=4a6b075cba4d439db44d5a2134fb5890&',
     text: 'Apple',
@@ -20,8 +16,8 @@ const socialButtons = [
   },
 ];
 
-const RegisterForm = ({ onClose, onSwitchToLogin }) => {
-  const [showForm, setShowForm] = useState(false);
+const RegisterForm = ({ onClose }) => {
+  const [showLoginForm, setShowLoginForm] = useState(false);
   const {
     register,
     handleSubmit,
@@ -46,25 +42,13 @@ const RegisterForm = ({ onClose, onSwitchToLogin }) => {
   };
 
   return (
-    <FormContainer>
-      {!showForm ? (
-        <SocialContainer>
-          <CloseButton onClick={onClose}>✕</CloseButton>
-          <Title>Regístrate</Title>
-          {socialButtons.map((button, index) => (
-            <SocialButton key={index} icon={button.icon} text={button.text} />
-          ))}
-          {/* Botón "Use Email" que activa el formulario */}
-          <SocialButton
-            icon='https://cdn.builder.io/api/v1/image/assets/4a6b075cba4d439db44d5a2134fb5890/5d6c0619ab336d21ae9a53e309379cfa751fa2981b48ec84cd19fb4c6ca8fb7f?apiKey=4a6b075cba4d439db44d5a2134fb5890&'
-            text='Usar mi cuenta de correo'
-            onClick={() => setShowForm(true)}
-          />
-          <SignUpText>
-            ¿Ya tienes una cuenta?{' '}
-            <SignUpLink onClick={onSwitchToLogin}>Inicia sesión</SignUpLink>
-          </SignUpText>
-        </SocialContainer>
+    <>
+      {showLoginForm ? (
+        <LoginForm
+          onSubmit={(data) => console.log('Login data:', data)}
+          onSwitchToRegister={() => setShowLoginForm(false)}
+          onClose={onClose}
+        />
       ) : (
         <StyledForm onSubmit={handleSubmit(onSubmit)}>
           <CloseButton onClick={onClose}>✕</CloseButton>
@@ -109,6 +93,8 @@ const RegisterForm = ({ onClose, onSwitchToLogin }) => {
               type='password'
               {...register('confirmPassword', {
                 required: 'Este campo es obligatorio',
+                validate: (value) =>
+                  value === password || 'Las contraseñas no coinciden',
               })}
               placeholder='Repite tu contraseña'
             />
@@ -117,31 +103,34 @@ const RegisterForm = ({ onClose, onSwitchToLogin }) => {
             )}
           </FormGroup>
           <SubmitButton type='submit'>Registrarse</SubmitButton>
-          <SignUpText>
+          <SocialButtonsContainer>
+            {socialButtons.map((button, index) => (
+              <SocialButton key={index} icon={button.icon} text={button.text} />
+            ))}
+          </SocialButtonsContainer>
+          <SwitchText>
             ¿Ya tienes una cuenta?{' '}
-            <SignUpLink onClick={onSwitchToLogin}>Inicia sesión</SignUpLink>
-          </SignUpText>
+            <SwitchLink onClick={() => setShowLoginForm(true)}>
+              Inicia sesión
+            </SwitchLink>
+          </SwitchText>
         </StyledForm>
       )}
-    </FormContainer>
+    </>
   );
 };
 
 export default RegisterForm;
 
 // Estilos
-
-const FormContainer = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  background-color: rgba(0, 0, 0, 0.5);
-  z-index: 1000;
+const StyledForm = styled.form`
+  background-color: rgba(26, 26, 26, 1);
+  padding: 40px;
+  border-radius: 8px;
+  width: 90%;
+  max-width: 400px;
+  position: relative;
+  color: #ffffff;
 `;
 
 const CloseButton = styled.button`
@@ -159,31 +148,8 @@ const CloseButton = styled.button`
   }
 `;
 
-const SocialContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  background-color: #2d2d2d;
-  padding: 40px;
-  border-radius: 8px;
-  width: 90%;
-  max-width: 400px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  position: relative;
-`;
-
-const StyledForm = styled.form`
-  background-color: #2d2d2d;
-  padding: 40px;
-  border-radius: 8px;
-  width: 90%;
-  max-width: 400px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  position: relative;
-`;
-
 const Title = styled.h2`
-  color: #ffffff;
+  color: #29c9a9; /* Verde */
   text-align: center;
   margin-bottom: 20px;
 `;
@@ -235,31 +201,14 @@ const SubmitButton = styled.button`
   }
 `;
 
-const UseEmailButton = styled.button`
-  width: 100%;
-  padding: 12px;
-  margin-top: 10px;
-  background-color: #555;
-  color: #ffffff;
-  border: none;
-  border-radius: 5px;
-  font-size: 16px;
-  cursor: pointer;
-  transition: background-color 0.2s;
-
-  &:hover {
-    background-color: #666;
-  }
-`;
-
-const SignUpText = styled.p`
+const SwitchText = styled.p`
   text-align: center;
   color: #ffffff;
   margin-top: 20px;
   font-size: 14px;
 `;
 
-const SignUpLink = styled.span`
+const SwitchLink = styled.span`
   color: #29c9a9;
   cursor: pointer;
   text-decoration: none;
@@ -273,4 +222,11 @@ const ErrorText = styled.p`
   color: #ff4d4f;
   font-size: 12px;
   margin-top: 5px;
+`;
+
+const SocialButtonsContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 20px;
 `;
