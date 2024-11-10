@@ -23,7 +23,7 @@ const PopularDestinations = () => {
 
   return (
     <Container>
-      <Title>Popular This Week</Title>
+      <Title>Los Destinos Más Populares de Este Mes</Title>
       <MapContainer>
         <StyledWorldMap as="img" src={WorldMap} />
         {popularPosts.map((post) => (
