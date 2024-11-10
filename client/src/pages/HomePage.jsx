@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import LuxMundiHero from "../components/LuxMundiHero";
 import ExploreSection from "../components/ExploreSection";
+import { useNavigate } from "react-router-dom";
 
 const cardData = [
   {
@@ -63,10 +64,18 @@ const cardData = [
 ];
 
 function HomePage() {
+  const navigate = useNavigate();
+
+  const handleCardClick = (destination) => {
+    // Convert title to URL-friendly format
+    const formattedDestination = destination.toLowerCase().replace(/\s+/g, "-");
+    navigate(`/destination/${formattedDestination}`);
+  };
+
   return (
     <HomeWrapper>
       <LuxMundiHero />
-      <ExploreSection cards={cardData} />
+      <ExploreSection cards={cardData} onCardClick={handleCardClick} />
     </HomeWrapper>
   );
 }

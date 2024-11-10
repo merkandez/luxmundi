@@ -182,7 +182,7 @@ const SocialIcon = styled.a`
   justify-content: center;
 
   &:hover {
-    color: #ffffff;
+    color: ${({ theme }) => theme.colors.primary};
     background-color: rgba(255, 255, 255, 0.1);
     transform: translateY(-2px);
   }
@@ -258,8 +258,8 @@ const SubscribeColumn = styled.div`
       padding: 8px;
       border-radius: 0 4px 4px 0;
       border: 1px solid #444;
-      background-color: #444;
-      color: #ffffff;
+      background-color: #ffffff;
+      color: #444;
       cursor: pointer;
       margin-left: 8px;
     }

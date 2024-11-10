@@ -28,6 +28,7 @@ const Wrapper = styled.div`
 
   @media (max-width: 768px) {
     padding: 0 1rem;
+    height: 4rem;
   }
 `;
 
@@ -35,7 +36,7 @@ const LogoSection = styled(Link)`
   display: flex;
   align-items: center;
   gap: 0.8rem;
-  transition: all 0.3s ease;
+  transition: all 0.2s ease;
   z-index: 20;
   margin-right: 2rem;
   color: #fff;
@@ -53,10 +54,26 @@ const LogoSection = styled(Link)`
     font-size: 1.4rem;
     font-weight: 700;
     letter-spacing: 1px;
-    transition: color 0.3s ease;
+    transition: color 0.2s ease;
+
+    @media (max-width: 768px) {
+      font-size: 1.1rem;
+    }
 
     @media (max-width: 480px) {
-      font-size: 1.2rem;
+      font-size: 1rem;
+    }
+  }
+
+  svg {
+    @media (max-width: 768px) {
+      width: 28px;
+      height: 28px;
+    }
+
+    @media (max-width: 480px) {
+      width: 24px;
+      height: 24px;
     }
   }
 `;
@@ -160,6 +177,15 @@ const SearchButton = styled.button`
   &:hover {
     transform: scale(1.1);
   }
+
+  @media (max-width: 768px) {
+    padding: 6px;
+
+    svg {
+      width: 18px;
+      height: 18px;
+    }
+  }
 `;
 
 const SearchInput = styled.input`
@@ -246,12 +272,24 @@ const MobileMenuButton = styled.button`
 
   @media (max-width: 768px) {
     display: flex;
+
+    svg {
+      width: 22px;
+      height: 22px;
+    }
+  }
+
+  @media (max-width: 480px) {
+    svg {
+      width: 20px;
+      height: 20px;
+    }
   }
 `;
 
 const MobileMenu = styled.div`
   position: fixed;
-  top: 5rem;
+  top: 4rem;
   left: 0;
   right: 0;
   background-color: #0a0a0a;
@@ -265,6 +303,10 @@ const MobileMenu = styled.div`
 
   @media (min-width: 768px) {
     display: none;
+  }
+
+  @media (max-width: 768px) {
+    padding: 0.5rem 0;
   }
 `;
 
@@ -287,6 +329,11 @@ const MobileNavLink = styled(({ onClick, ...props }) =>
   &:hover {
     color: #ffffff;
     background-color: rgba(255, 255, 255, 0.05);
+  }
+
+  @media (max-width: 768px) {
+    padding: 0.8rem 1.5rem;
+    font-size: 0.9rem;
   }
 `;
 
