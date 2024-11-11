@@ -69,33 +69,56 @@ const Header = ({
 
 export default Header;
 
-// Estilos para los componentes
-const HeaderContainer = styled.nav`
-  background-color: #333;
-  padding: 1rem;
-  color: white;
-  display: flex;
-  align-items: center;
+const HeaderContainer = styled.header`
+  background-color: #000;
+  color: #fff;
 `;
 
-const NavSection = styled.div`
+const Wrapper = styled.div`
+  margin: 0 auto;
+  padding: 0 1rem;
   display: flex;
-  gap: 1rem;
-  width: 100%;
   align-items: center;
+  justify-content: space-between;
+  height: 4rem;
+  border-bottom: 2px solid #444;
 `;
 
-const StyledLink = styled(Link)`
-  color: white;
-  text-decoration: none;
-  &:hover {
-    text-decoration: underline;
+const LogoSection = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+
+  span {
+    font-size: 1rem;
+    font-weight: bold;
   }
 `;
 
-const AuthButtonsContainer = styled.div`
-  margin-left: auto;
+const Nav = styled.nav`
   display: flex;
+  gap: 2rem;
+
+  @media (max-width: 768px) {
+    display: none;
+  }
+`;
+
+const NavLink = styled(Link)`
+  color: #fff;
+  text-decoration: none;
+  transition: transform 0.3s ease;
+  font-size: 0.9rem;
+
+  &:hover {
+    color: #29c9a9;
+    transform: scale(1.2);
+  }
+`;
+
+const AuthButtons = styled.div`
+  display: flex;
+  align-items: center;
   gap: 1rem;
 `;
 
