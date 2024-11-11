@@ -3,10 +3,10 @@ import { FaGithub, FaLinkedin, FaTwitter } from "react-icons/fa";
 
 const teamMembers = [
   {
-    name: "John Doe",
+    name: "Jenny Trello",
     role: "Lead Photographer",
     image: "https://source.unsplash.com/random/400x400/?portrait,1",
-    bio: "Professional photographer with 10 years of experience in landscape and travel photography.",
+    bio: "Desde Perú, ha recorrido su país y muchos otros, buscando capturar la esencia de cada lugar que visita. Su amor por la fotografía le permite contar historias visuales que capturan la cultura, las tradiciones y la naturaleza de los rincones más remotos del planeta. Para ella, cada viaje es una oportunidad para crear imágenes que transmitan la belleza de lo inesperado.",
     social: {
       twitter: "#",
       linkedin: "#",
@@ -14,10 +14,10 @@ const teamMembers = [
     },
   },
   {
-    name: "Jane Smith",
+    name: "Juliana Amorim",
     role: "Creative Director",
     image: "https://source.unsplash.com/random/400x400/?portrait,2",
-    bio: "Award-winning creative director specializing in visual storytelling and brand identity.",
+    bio: "De Brasil, ve los viajes como una forma de conectar con la naturaleza y las culturas indígenas. Su amor por la fotografía de paisajes y fauna le permite mostrar la biodiversidad de su país natal y el resto del mundo. Juliana está convencida de que los viajes nos enseñan a respetar y cuidar el medio ambiente, y busca transmitir este mensaje a través de sus imágenes.",
     social: {
       twitter: "#",
       linkedin: "#",
@@ -25,10 +25,10 @@ const teamMembers = [
     },
   },
   {
-    name: "Mike Johnson",
+    name: "César Mercado",
     role: "Travel Guide",
     image: "https://source.unsplash.com/random/400x400/?portrait,3",
-    bio: "Experienced travel guide with extensive knowledge of global destinations and cultures.",
+    bio: "Desde España, tiene una profunda admiración por la arquitectura y la historia de los lugares que visita. Su cámara es su herramienta para inmortalizar tanto las maravillas antiguas como las modernas, reflejando la evolución del paisaje humano. La fotografía es su forma de contar cómo los viajes transforman y enriquecen nuestras vidas.",
     social: {
       twitter: "#",
       linkedin: "#",
@@ -36,10 +36,10 @@ const teamMembers = [
     },
   },
   {
-    name: "Sarah Williams",
+    name: "Mónica Serna",
     role: "Content Writer",
     image: "https://source.unsplash.com/random/400x400/?portrait,4",
-    bio: "Professional writer passionate about travel, photography, and storytelling.",
+    bio: "De Paraguay, es una viajera incansable que cree que cada lugar tiene una historia que contar. Su pasión por la fotografía de retratos y paisajes urbanos la lleva a capturar la esencia de las ciudades y la gente que las habita. Mónica busca reflejar la diversidad cultural y humana de los destinos que explora, mostrando la riqueza que se encuentra en cada rincón del mundo.",
     social: {
       twitter: "#",
       linkedin: "#",
@@ -47,10 +47,10 @@ const teamMembers = [
     },
   },
   {
-    name: "David Brown",
+    name: "Jhon Smith",
     role: "Photography Instructor",
     image: "https://source.unsplash.com/random/400x400/?portrait,5",
-    bio: "Photography educator with expertise in teaching both technical and artistic aspects.",
+    bio: "De Colombia, tiene un enfoque único al capturar la vida cotidiana y los momentos espontáneos de las personas. Su pasión por los viajes lo ha llevado a explorar diferentes partes de América Latina y más allá, y en cada destino, busca encontrar la conexión humana en su máxima expresión. A través de sus fotos, Jhon invita a otros a ver el mundo desde una perspectiva más auténtica y cercana..",
     social: {
       twitter: "#",
       linkedin: "#",
