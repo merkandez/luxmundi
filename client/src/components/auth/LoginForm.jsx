@@ -89,7 +89,7 @@ const FormContainer = styled.div`
 
 const StyledForm = styled.form`
   background-color: transparent;
-  padding: 40px;
+  padding: 20px;
   border-radius: 10px;
   width: 100%;
   max-width: 400px;
