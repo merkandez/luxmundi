@@ -57,9 +57,9 @@ const Header = ({ isAuthenticated, role, logout, avatarUrl }) => {
         </LogoSection>
 
         <Nav>
-          <NavLink to="/about">About Us</NavLink>
-          <NavButton onClick={() => setShowContactModal(true)}>Contact</NavButton>
-          {role === 'admin' && <NavLink to="/admin">Admin Area</NavLink>}
+          <NavLink to="/about">Nosotros</NavLink>
+          <NavButton onClick={() => setShowContactModal(true)}>Contacto</NavButton>
+          {role === 'admin' && <NavLink to="/admin">Admin Área</NavLink>}
         </Nav>
 
         <RightSection>
