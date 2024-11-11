@@ -1,8 +1,8 @@
 // src/layout/Layout.jsx
 import React, { useState } from 'react';
 import { Outlet } from 'react-router-dom';
-import Header from '../components/design/Header';
-import Footer from '../components/design/Footer';
+import Header from '../components/Header';
+import Footer from '../components/Footer';
 import useAuth from '../hooks/useAuth';
 import styled from 'styled-components';
 import ModalForm from '../components/auth/ModalForm';
@@ -59,7 +59,8 @@ const MainContainer = styled.div`
 
 const Content = styled.main`
   flex: 1;
-  background-color: #f4f4f9;
+  padding: 2rem;
+  
 `;
 
 const Overlay = styled.div`

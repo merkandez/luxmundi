@@ -1,93 +1,194 @@
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 import { FaInstagram, FaTwitter, FaYoutube, FaLinkedin } from "react-icons/fa";
+import { BsCameraFill } from "react-icons/bs";
 
 export default function Footer() {
+  const currentYear = new Date().getFullYear();
+
   return (
     <FooterWrapper>
-      <LogoSection>
-        <CameraIcon size={24} />
-        <LogoText>LUX MUNDI</LogoText>
-      </LogoSection>
-      <FooterColumn>
-        <h3>Sobre Nosotros</h3>
-        <ul>
-          <li>
-            <FooterLink to="/quien-somos">Quien somos</FooterLink>
-          </li>
-        </ul>
-      </FooterColumn>
-      <FooterColumn>
-        <h3>Explore</h3>
-        <ul>
-          <li>
-            <FooterLink to="/destinos">Destinos</FooterLink>
-          </li>
-          <li>
-            <FooterLink to="/lo-mas-visto">Lo más visto</FooterLink>
-          </li>
-        </ul>
-      </FooterColumn>
-      <FooterColumn>
-        <h3>Recursos</h3>
-        <ul>
-          <li>
-            <FooterLink to="/cursos-fotografia">Cursos Fotografía</FooterLink>
-          </li>
-          <li>
-            <FooterLink to="/contacto">Contacto</FooterLink>
-          </li>
-        </ul>
-      </FooterColumn>
-      <SocialMediaIcons>
-        <FaTwitter size={24} />
-        <FaInstagram size={24} />
-        <FaYoutube size={24} />
-        <FaLinkedin size={24} />
-      </SocialMediaIcons>
-      <SubscribeColumn>
-        <p>Suscribate a nuestra newsletter!</p>
-        <form>
-          <input type="email" placeholder="you@example.com" />
-          <button type="submit">Submit</button>
-        </form>
-      </SubscribeColumn>
+      <FooterContent>
+        <LogoSection>
+          <BsCameraFill size={24} color="#ffffff" />
+          <LogoText>LUX MUNDI</LogoText>
+        </LogoSection>
+
+        <FooterColumns>
+          <FooterColumn>
+            <h3>Sobre Nosotros</h3>
+            <ul>
+              <li>
+                <FooterLink to="/quien-somos">Quien somos</FooterLink>
+              </li>
+              <li>
+                <FooterLink to="/nuestra-vision">Nuestra Visión</FooterLink>
+              </li>
+            </ul>
+          </FooterColumn>
+
+          <FooterColumn>
+            <h3>Explore</h3>
+            <ul>
+              <li>
+                <FooterLink to="/destinos">Destinos</FooterLink>
+              </li>
+              <li>
+                <FooterLink to="/lo-mas-visto">Lo más visto</FooterLink>
+              </li>
+              <li>
+                <FooterLink to="/galeria">Galería</FooterLink>
+              </li>
+            </ul>
+          </FooterColumn>
+
+          <FooterColumn>
+            <h3>Recursos</h3>
+            <ul>
+              <li>
+                <FooterLink to="/cursos-fotografia">
+                  Cursos Fotografía
+                </FooterLink>
+              </li>
+              <li>
+                <FooterLink to="/contacto">Contacto</FooterLink>
+              </li>
+              <li>
+                <FooterLink to="/soporte">Soporte</FooterLink>
+              </li>
+            </ul>
+          </FooterColumn>
+
+          <SubscribeColumn>
+            <h3>Newsletter</h3>
+            <p>Suscríbase para recibir las últimas actualizaciones</p>
+            <SubscribeForm>
+              <input type="email" placeholder="you@example.com" />
+              <button type="submit">Enviar</button>
+            </SubscribeForm>
+          </SubscribeColumn>
+        </FooterColumns>
+
+        <FooterBottom>
+          <SocialMediaIcons>
+            <SocialIcon href="#">
+              <FaTwitter size={20} />
+            </SocialIcon>
+            <SocialIcon href="#">
+              <FaInstagram size={20} />
+            </SocialIcon>
+            <SocialIcon href="#">
+              <FaYoutube size={20} />
+            </SocialIcon>
+            <SocialIcon href="#">
+              <FaLinkedin size={20} />
+            </SocialIcon>
+          </SocialMediaIcons>
+          <Copyright>© {currentYear} Lux Mundi. All rights reserved.</Copyright>
+        </FooterBottom>
+      </FooterContent>
     </FooterWrapper>
   );
 }
 
 const FooterWrapper = styled.footer`
-  background-color: #1e1e1e;
-  border-top: 2px solid #444;
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
-  padding: 32px 24px;
+  background-color: #0f0e0e;
   color: #ffffff;
+  padding: 60px 0 20px;
+  margin-top: 80px;
+`;
+
+const FooterContent = styled.div`
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 24px;
+`;
+
+const FooterColumns = styled.div`
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 40px;
+  margin: 40px 0;
 
   @media (max-width: 768px) {
-    flex-direction: column;
-    align-items: center;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 24px;
+  }
+`;
+
+const SubscribeForm = styled.form`
+  display: flex;
+  gap: 8px;
+  margin-top: 16px;
+
+  input {
+    flex: 1;
+    padding: 12px;
+    border-radius: 4px;
+    border: 1px solid #333;
+    background-color: #1a1a1a;
+    color: #ffffff;
+    min-width: 200px;
+
+    &:focus {
+      outline: none;
+      border-color: #444;
+    }
+  }
+
+  button {
+    padding: 12px 24px;
+    border-radius: 4px;
+    border: none;
+    background-color: #ffffff;
+    color: #000000;
+    cursor: pointer;
+    transition: all 0.2s ease;
+
+    &:hover {
+      background-color: #f0f0f0;
+    }
+  }
+`;
+
+const FooterBottom = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 24px;
+  padding-top: 40px;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+`;
+
+const Copyright = styled.p`
+  color: #888;
+  font-size: 0.9rem;
+  text-align: center;
+`;
+
+const SocialIcon = styled.a`
+  color: #ffffff;
+  transition: color 0.2s ease;
+
+  &:hover {
+    color: #cccccc;
   }
 `;
 
 const LogoSection = styled.div`
   display: flex;
   align-items: center;
-  gap: 0.5rem;
-  margin-bottom: 24px;
-`;
-
-const CameraIcon = styled.div`
-  width: 24px;
-  height: 24px;
-  color: #fff;
-  background-size: contain;
+  gap: 1rem;
+  margin-bottom: 42px;
+  padding: 24px 24px;
 `;
 
 const LogoText = styled.span`
-  font-size: 1rem;
+  font-size: 1.2rem;
   font-weight: bold;
+  padding-top: 4px;
+  color: #ffffff;
+  margin: 4px;
 `;
 
 const FooterColumn = styled.div`
@@ -97,7 +198,7 @@ const FooterColumn = styled.div`
 
   h3 {
     font-size: 1rem;
-    margin-bottom: 12px;
+    margin-bottom: 8px;
   }
 
   ul {
@@ -107,7 +208,7 @@ const FooterColumn = styled.div`
     li {
       font-size: 0.9rem;
       color: #cccccc;
-      margin-bottom: 8px;
+      margin-bottom: 4px;
     }
   }
 `;
@@ -142,15 +243,15 @@ const SubscribeColumn = styled.div`
       background-color: #444;
       color: #ffffff;
       cursor: pointer;
+      margin-left: 8px;
     }
   }
 `;
 
 const SocialMediaIcons = styled.div`
   display: flex;
-  gap: 16px;
+  gap: 24px;
   align-items: center;
-  margin-top: 16px;
 `;
 
 const FooterLink = styled(Link)`

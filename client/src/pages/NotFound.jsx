@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import CloseButton from "../components/CloseButton";
 
 const Container = styled.div`
   display: flex;
@@ -105,6 +106,7 @@ const MobileOverlay = styled.div`
 const NotFoundPage = () => {
   return (
     <Container>
+      <CloseButton />
       {/* Left content section */}
       <LeftSection>
         <ContentWrapper>
