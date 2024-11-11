@@ -16,7 +16,7 @@ export const router = createBrowserRouter([
     element: <Layout />, // El Layout gestionará el modal de autenticación
     children: [
       { index: true, element: <HomePage /> },
-      { path: 'aboutus', element: <AboutPage /> },
+      { path: 'about', element: <AboutPage /> },
       {
         path: "contact",
         element: <ContactForm />,

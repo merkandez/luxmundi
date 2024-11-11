@@ -1,23 +1,20 @@
 import styled from "styled-components";
-import { Camera, Search, X, Menu } from "lucide-react";
+import { Search, X, Menu } from "lucide-react";
+import { BsCameraFill } from "react-icons/bs";
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import PropTypes from "prop-types";
-import ProfileSettings from "./ProfileSettings";
+import LoginModal from "./LoginModal";
+import ContactModal from "./ContactModal";
+import RegisterModal from "./RegisterModal";
 
 const HeaderContainer = styled.header`
   background-color: #0a0a0a;
   color: #fff;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
   position: fixed;
   width: 100%;
   top: 0;
   z-index: 1000;
-  transition: border-color 0.3s ease;
-
-  &:hover {
-    border-color: rgba(255, 255, 255, 0.2);
-  }
 `;
 
 const Wrapper = styled.div`
@@ -26,12 +23,13 @@ const Wrapper = styled.div`
   padding: 0 2rem;
   display: flex;
   align-items: center;
+  justify-content: space-between;
   height: 5rem;
   position: relative;
 
   @media (max-width: 768px) {
     padding: 0 1rem;
-    justify-content: space-between;
+    height: 4rem;
   }
 `;
 
@@ -41,39 +39,45 @@ const LogoSection = styled(Link)`
   gap: 0.8rem;
   transition: transform 0.3s ease;
   z-index: 20;
+  margin-right: 2rem;
+  color: #fff;
+  padding: 4px;
 
   &:hover {
     transform: translateY(-1px);
   }
 
   span {
-    font-size: 1.4rem;
-    font-weight: 700;
-    letter-spacing: 1px;
+    font-size: 1.2rem;
+    font-weight: bold;
+    padding-top: 4px;
+    color: #ffffff;
+    margin: 4px;
 
     @media (max-width: 480px) {
-      font-size: 1.2rem;
+      font-size: 1.1rem;
     }
   }
 `;
 
 const Nav = styled.nav`
-  display: none;
-  margin-left: 4rem;
+  display: flex;
+  justify-content: center;
+  flex: 1;
+  margin: 0 2rem;
 
-  @media (min-width: 768px) {
-    display: flex;
-    gap: 3rem;
+  @media (max-width: 768px) {
+    display: none;
   }
 `;
 
 const NavLink = styled(Link)`
-  color: #fff;
+  color: ${({ isActive }) =>
+    isActive ? "#ffffff" : "rgba(255, 255, 255, 0.7)"};
   text-decoration: none;
   font-size: 1.1rem;
   padding: 0.6rem 1rem;
-  border-radius: 2px;
-  font-weight: 500;
+  font-weight: ${({ isActive }) => (isActive ? "600" : "400")};
   transition: all 0.2s ease;
   position: relative;
 
@@ -86,30 +90,30 @@ const NavLink = styled(Link)`
     left: 50%;
     background-color: #fff;
     transition: all 0.3s ease;
+    transform: translateX(-50%);
   }
 
-  &:hover:after {
-    width: 100%;
-    left: 0;
+  &:hover {
+    color: #ffffff;
+
+    &:after {
+      width: 100%;
+    }
   }
 `;
 
 const SearchSection = styled.div`
   display: flex;
   align-items: center;
-  margin-left: auto;
   position: relative;
 
   @media (max-width: 768px) {
-    margin-left: 0;
+    margin-right: 1rem;
   }
 `;
 
 const SearchBar = styled.div`
-  position: absolute;
-  right: 100%;
-  top: 50%;
-  transform: translateY(-50%);
+  position: relative;
   display: flex;
   align-items: center;
   gap: 8px;
@@ -125,22 +129,19 @@ const SearchBar = styled.div`
   &.active {
     width: 300px;
     opacity: 1;
-    margin-right: 1rem;
+  }
+
+  @media (max-width: 1024px) {
+    &.active {
+      width: 200px;
+    }
   }
 
   @media (max-width: 768px) {
-    position: fixed;
-    top: 5rem;
-    left: 0;
-    right: 0;
-    transform: none;
     width: 100%;
-    border-radius: 0;
-    z-index: 1000;
 
     &.active {
       width: 100%;
-      margin-right: 0;
     }
   }
 `;
@@ -157,6 +158,15 @@ const SearchButton = styled.button`
 
   &:hover {
     transform: scale(1.1);
+  }
+
+  @media (max-width: 768px) {
+    padding: 6px;
+
+    svg {
+      width: 18px;
+      height: 18px;
+    }
   }
 `;
 
@@ -181,7 +191,6 @@ const AuthButtons = styled.div`
   display: none;
   align-items: center;
   gap: 1rem;
-  margin-left: 2rem;
 
   @media (min-width: 768px) {
     display: flex;
@@ -226,8 +235,14 @@ const AuthButtons = styled.div`
   }
 `;
 
-const MobileMenuButton = styled.button`
+const RightSection = styled.div`
   display: flex;
+  align-items: center;
+  gap: 1.5rem;
+`;
+
+const MobileMenuButton = styled.button`
+  display: none;
   align-items: center;
   justify-content: center;
   background: none;
@@ -237,14 +252,26 @@ const MobileMenuButton = styled.button`
   padding: 8px;
   transition: all 0.2s ease;
 
-  @media (min-width: 768px) {
-    display: none;
+  @media (max-width: 768px) {
+    display: flex;
+
+    svg {
+      width: 22px;
+      height: 22px;
+    }
+  }
+
+  @media (max-width: 480px) {
+    svg {
+      width: 20px;
+      height: 20px;
+    }
   }
 `;
 
 const MobileMenu = styled.div`
   position: fixed;
-  top: 5rem;
+  top: 4rem;
   left: 0;
   right: 0;
   background-color: #0a0a0a;
@@ -259,13 +286,19 @@ const MobileMenu = styled.div`
   @media (min-width: 768px) {
     display: none;
   }
+
+  @media (max-width: 768px) {
+    padding: 0.5rem 0;
+  }
 `;
 
-const MobileNavLink = styled(Link)`
+const MobileNavLink = styled(({ onClick, ...props }) =>
+  onClick ? <button onClick={onClick} {...props} /> : <Link {...props} />
+)`
   display: flex;
   align-items: center;
   padding: 1rem 2rem;
-  color: #fff;
+  color: rgba(255, 255, 255, 0.7);
   text-decoration: none;
   font-size: 1rem;
   background: none;
@@ -273,22 +306,65 @@ const MobileNavLink = styled(Link)`
   width: 100%;
   text-align: left;
   cursor: pointer;
-  transition: background-color 0.2s ease;
+  transition: all 0.2s ease;
 
   &:hover {
-    background-color: #1a1a1a;
+    color: #ffffff;
+    background-color: rgba(255, 255, 255, 0.05);
+  }
+
+  @media (max-width: 768px) {
+    padding: 0.8rem 1.5rem;
+    font-size: 0.9rem;
+  }
+`;
+
+const NavButton = styled.button`
+  color: ${({ isActive }) =>
+    isActive ? "#ffffff" : "rgba(255, 255, 255, 0.7)"};
+  text-decoration: none;
+  font-size: 1.1rem;
+  padding: 0.6rem 1rem;
+  font-weight: ${({ isActive }) => (isActive ? "600" : "400")};
+  transition: all 0.2s ease;
+  position: relative;
+  background: none;
+  border: none;
+  cursor: pointer;
+
+  &:after {
+    content: "";
+    position: absolute;
+    width: 0;
+    height: 1px;
+    bottom: 0;
+    left: 50%;
+    background-color: #fff;
+    transition: all 0.3s ease;
+    transform: translateX(-50%);
+  }
+
+  &:hover {
+    color: #ffffff;
+
+    &:after {
+      width: 100%;
+    }
   }
 `;
 
 const Header = ({ isLoggedIn }) => {
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
+  const [isContactModalOpen, setIsContactModalOpen] = useState(false);
+  const [isRegisterModalOpen, setIsRegisterModalOpen] = useState(false);
   const navigate = useNavigate();
 
   const navLinks = [
     { name: "Nosotros", href: "/about" },
-    { name: "Destinos", href: "/destinations" },
-    { name: "Contacto", href: "/contact" },
+    { name: "Destinos", href: "/#explore" },
+    { name: "Contacto", onClick: () => setIsContactModalOpen(true) },
   ];
 
   const handleLogout = () => {
@@ -296,81 +372,128 @@ const Header = ({ isLoggedIn }) => {
     navigate("/");
   };
 
+  const handleRegister = (data) => {
+    console.log("Register data:", data);
+    // Add register logic here
+    setIsRegisterModalOpen(false);
+  };
+
   return (
     <HeaderContainer>
       <Wrapper>
         <LogoSection to="/">
-          <Camera size={32} />
+          <BsCameraFill size={24} color="#ffffff" />
           <span>LUX MUNDI</span>
         </LogoSection>
 
         <Nav>
-          {navLinks.map((link) => (
-            <NavLink key={link.name} to={link.href}>
-              {link.name}
-            </NavLink>
-          ))}
+          {navLinks.map((link) =>
+            link.onClick ? (
+              <NavButton key={link.name} onClick={link.onClick}>
+                {link.name}
+              </NavButton>
+            ) : (
+              <NavLink key={link.name} to={link.href}>
+                {link.name}
+              </NavLink>
+            )
+          )}
         </Nav>
 
-        <SearchSection>
-          <SearchBar className={isSearchOpen ? "active" : ""}>
-            <SearchInput
-              type="text"
-              placeholder="Search..."
-              autoFocus={isSearchOpen}
-            />
-            <X
-              size={16}
-              color="#666"
-              onClick={() => setIsSearchOpen(false)}
-              style={{ cursor: "pointer" }}
-            />
-          </SearchBar>
-          <SearchButton onClick={() => setIsSearchOpen(true)}>
-            <Search size={20} />
-          </SearchButton>
-        </SearchSection>
+        <RightSection>
+          <SearchSection>
+            <SearchBar className={isSearchOpen ? "active" : ""}>
+              <SearchInput
+                type="text"
+                placeholder="Search..."
+                autoFocus={isSearchOpen}
+              />
+            </SearchBar>
+            <SearchButton onClick={() => setIsSearchOpen(!isSearchOpen)}>
+              <Search size={20} />
+            </SearchButton>
+          </SearchSection>
 
-        {isLoggedIn ? (
-          <ProfileSettings username="John Doe" onLogout={handleLogout} />
-        ) : (
-          <AuthButtons>
-            <Link to="/login">
-              <button className="login">Log in</button>
-            </Link>
-            <Link to="/register">
-              <button className="register">Register</button>
-            </Link>
-          </AuthButtons>
-        )}
-
-        <MobileMenuButton
-          onClick={() => setIsMenuOpen(!isMenuOpen)}
-          aria-label={isMenuOpen ? "Close menu" : "Open menu"}
-        >
-          {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
-        </MobileMenuButton>
-
-        <MobileMenu isOpen={isMenuOpen}>
-          {navLinks.map((link) => (
-            <MobileNavLink key={link.name} to={link.href}>
-              {link.name}
-            </MobileNavLink>
-          ))}
-          {isLoggedIn ? (
-            <>
-              <MobileNavLink to="/profile">Profile</MobileNavLink>
-              <MobileNavLink as="button" onClick={handleLogout}>
-                Logout
-              </MobileNavLink>
-            </>
-          ) : (
-            <>
-              <MobileNavLink to="/login">Log in</MobileNavLink>
-              <MobileNavLink to="/register">Register</MobileNavLink>
-            </>
+          {!isLoggedIn && (
+            <AuthButtons>
+              <button
+                className="login"
+                onClick={() => setIsLoginModalOpen(true)}
+              >
+                Log in
+              </button>
+              <button
+                className="register"
+                onClick={() => setIsRegisterModalOpen(true)}
+              >
+                Register
+              </button>
+            </AuthButtons>
           )}
-        </MobileMenu>
+
+          <LoginModal
+            isOpen={isLoginModalOpen}
+            onClose={() => setIsLoginModalOpen(false)}
+            onSubmit={(data) => {
+              console.log("Login data:", data);
+              // Add login logic here
+            }}
+          />
+
+          <ContactModal
+            isOpen={isContactModalOpen}
+            onClose={() => setIsContactModalOpen(false)}
+          />
+
+          <RegisterModal
+            isOpen={isRegisterModalOpen}
+            onClose={() => setIsRegisterModalOpen(false)}
+            onSubmit={handleRegister}
+          />
+
+          <MobileMenuButton
+            onClick={() => setIsMenuOpen(!isMenuOpen)}
+            aria-label={isMenuOpen ? "Close menu" : "Open menu"}
+          >
+            {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
+          </MobileMenuButton>
+
+          <MobileMenu isOpen={isMenuOpen}>
+            {navLinks.map((link) => (
+              <MobileNavLink
+                key={link.name}
+                to={link.href}
+                onClick={link.onClick}
+                as={link.onClick ? "button" : Link}
+              >
+                {link.name}
+              </MobileNavLink>
+            ))}
+            {isLoggedIn ? (
+              <>
+                <MobileNavLink to="/profile">Profile</MobileNavLink>
+                <MobileNavLink as="button" onClick={handleLogout}>
+                  Logout
+                </MobileNavLink>
+              </>
+            ) : (
+              <>
+                <MobileNavLink
+                  as="button"
+                  onClick={() => setIsLoginModalOpen(true)}
+                >
+                  Log in
+                </MobileNavLink>
+                <MobileNavLink
+                  as="button"
+                  onClick={() => setIsRegisterModalOpen(true)}
+                >
+                  Register
+                </MobileNavLink>
+              </>
+            )}
+          </MobileMenu>
+        </RightSection>
       </Wrapper>
     </HeaderContainer>
   );

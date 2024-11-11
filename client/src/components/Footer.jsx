@@ -2,8 +2,12 @@ import styled from "styled-components";
 import { Link } from "react-router-dom";
 import { FaInstagram, FaTwitter, FaYoutube, FaLinkedin } from "react-icons/fa";
 import { BsCameraFill } from "react-icons/bs";
+import { useState } from "react";
+import ContactModal from "./ContactModal";
+
 
 export default function Footer() {
+  const [isContactModalOpen, setIsContactModalOpen] = useState(false);
   const currentYear = new Date().getFullYear();
 
   return (
@@ -19,10 +23,10 @@ export default function Footer() {
             <h3>Sobre Nosotros</h3>
             <ul>
               <li>
-                <FooterLink to="/quien-somos">Quien somos</FooterLink>
+                <FooterLink to="/about">Quien somos</FooterLink>
               </li>
               <li>
-                <FooterLink to="/nuestra-vision">Nuestra Visión</FooterLink>
+                <FooterLink to="/under-construction">Nuestra Visión</FooterLink>
               </li>
             </ul>
           </FooterColumn>
@@ -31,13 +35,13 @@ export default function Footer() {
             <h3>Explore</h3>
             <ul>
               <li>
-                <FooterLink to="/destinos">Destinos</FooterLink>
+                <FooterLink to="/#explore">Destinos</FooterLink>
               </li>
               <li>
-                <FooterLink to="/lo-mas-visto">Lo más visto</FooterLink>
+                <FooterLink to="/under-construction">Lo más visto</FooterLink>
               </li>
               <li>
-                <FooterLink to="/galeria">Galería</FooterLink>
+                <FooterLink to="/under-construction">Galería</FooterLink>
               </li>
             </ul>
           </FooterColumn>
@@ -46,15 +50,17 @@ export default function Footer() {
             <h3>Recursos</h3>
             <ul>
               <li>
-                <FooterLink to="/cursos-fotografia">
+                <FooterLink to="/under-construction">
                   Cursos Fotografía
                 </FooterLink>
               </li>
               <li>
-                <FooterLink to="/contacto">Contacto</FooterLink>
+                <FooterLink onClick={() => setIsContactModalOpen(true)}>
+                  Contacto
+                </FooterLink>
               </li>
               <li>
-                <FooterLink to="/soporte">Soporte</FooterLink>
+                <FooterLink to="/under-construction">Soporte</FooterLink>
               </li>
             </ul>
           </FooterColumn>
@@ -87,6 +93,11 @@ export default function Footer() {
           <Copyright>© {currentYear} Lux Mundi. All rights reserved.</Copyright>
         </FooterBottom>
       </FooterContent>
+
+      <ContactModal
+        isOpen={isContactModalOpen}
+        onClose={() => setIsContactModalOpen(false)}
+      />
     </FooterWrapper>
   );
 }
@@ -95,7 +106,7 @@ const FooterWrapper = styled.footer`
   background-color: #0f0e0e;
   color: #ffffff;
   padding: 60px 0 20px;
-  margin-top: 80px;
+  margin-top: 0;
 `;
 
 const FooterContent = styled.div`
@@ -143,10 +154,16 @@ const SubscribeForm = styled.form`
     background-color: #ffffff;
     color: #000000;
     cursor: pointer;
-    transition: all 0.2s ease;
+    transition: all 0.3s ease;
 
     &:hover {
       background-color: #f0f0f0;
+      transform: translateY(-2px);
+    }
+
+    &:focus {
+      outline: none;
+      box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.3);
     }
   }
 `;
@@ -168,10 +185,22 @@ const Copyright = styled.p`
 
 const SocialIcon = styled.a`
   color: #ffffff;
-  transition: color 0.2s ease;
+  transition: all 0.3s ease;
+  padding: 8px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 
   &:hover {
-    color: #cccccc;
+    color: ${({ theme }) => theme.colors.primary};
+    background-color: rgba(255, 255, 255, 0.1);
+    transform: translateY(-2px);
+  }
+
+  &:focus {
+    outline: none;
+    box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.3);
   }
 `;
 
@@ -240,8 +269,8 @@ const SubscribeColumn = styled.div`
       padding: 8px;
       border-radius: 0 4px 4px 0;
       border: 1px solid #444;
-      background-color: #444;
-      color: #ffffff;
+      background-color: #ffffff;
+      color: #444;
       cursor: pointer;
       margin-left: 8px;
     }
@@ -257,8 +286,32 @@ const SocialMediaIcons = styled.div`
 const FooterLink = styled(Link)`
   color: #cccccc;
   text-decoration: none;
+  position: relative;
+  transition: color 0.3s ease;
+  padding: 2px 0;
+
+  &:after {
+    content: "";
+    position: absolute;
+    width: 0;
+    height: 2px;
+    bottom: 0;
+    left: 0;
+    background-color: #ffffff;
+    transition: width 0.3s ease;
+  }
 
   &:hover {
     color: #ffffff;
+
+    &:after {
+      width: 100%;
+    }
+  }
+
+  &:focus {
+    outline: none;
+    box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.3);
+    border-radius: 2px;
   }
 `;
