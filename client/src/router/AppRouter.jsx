@@ -6,9 +6,7 @@ import AdminPage from '../pages/AdminPage';
 import NoAccessPage from '../pages/NoAccessPage';
 import AboutPage from '../pages/AboutPage';
 import ProtectedRoute from './ProtectedRoute';
-import NotFound from "../pages/NotFound";
-import ContactForm from "../components/ContactForm";
-
+import NotFound from '../pages/NotFound';
 
 export const router = createBrowserRouter([
   {
@@ -17,14 +15,9 @@ export const router = createBrowserRouter([
     children: [
       { index: true, element: <HomePage /> },
       { path: 'about', element: <AboutPage /> },
+
       {
-        path: "contact",
-        element: <ContactForm />,
-      },
-      
-      
-      {
-        path: "*",
+        path: '*',
         element: <NotFound />,
       },
 
@@ -32,7 +25,7 @@ export const router = createBrowserRouter([
       {
         path: 'admin',
         element: (
-          <ProtectedRoute requiredRole="admin">
+          <ProtectedRoute requiredRole='admin'>
             <AdminPage />
           </ProtectedRoute>
         ),

@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import styled from 'styled-components';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate, useLocation } from 'react-router-dom'; // Importaciones necesarias
 import AvatarIcon from './AvatarIcon';
 import LoginForm from '../auth/LoginForm';
 import RegisterForm from '../auth/RegisterForm';
@@ -17,6 +17,8 @@ const Header = ({ isAuthenticated, role, logout, avatarUrl }) => {
   const [showRegisterForm, setShowRegisterForm] = useState(false);
   const [showContactModal, setShowContactModal] = useState(false);
   const menuRef = useRef(null);
+  const navigate = useNavigate();
+  const location = useLocation();
 
   const toggleMenu = () => setMenuVisible((prev) => !prev);
 
@@ -48,10 +50,28 @@ const Header = ({ isAuthenticated, role, logout, avatarUrl }) => {
     setShowRegisterForm(false);
   };
 
+  const scrollToDestinos = () => {
+    if (location.pathname !== '/') {
+      navigate('/');
+    }
+    setTimeout(() => {
+      document.getElementById('explore-section')?.scrollIntoView({ behavior: 'smooth' });
+    }, 100);
+  };
+
+  // Lógica para desplazarse al inicio al hacer clic en el logo
+  const handleLogoClick = () => {
+    if (location.pathname === '/') {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    } else {
+      navigate('/');
+    }
+  };
+
   return (
     <HeaderContainer>
       <Wrapper>
-        <LogoSection to="/">
+        <LogoSection onClick={handleLogoClick}>
           <BsCameraFill size={24} color={theme.colors.primary} />
           <span>LUX MUNDI</span>
         </LogoSection>
@@ -59,7 +79,8 @@ const Header = ({ isAuthenticated, role, logout, avatarUrl }) => {
         <Nav>
           <NavLink to="/about">Nosotros</NavLink>
           <NavButton onClick={() => setShowContactModal(true)}>Contacto</NavButton>
-          {role === 'admin' && <NavLink to="/admin">Admin Área</NavLink>}
+          <NavButton onClick={scrollToDestinos}>Destinos</NavButton> {/* Enlace a Destinos */}
+          {role === 'admin' && <NavLink to="/admin">Admin. Area</NavLink>}
         </Nav>
 
         <RightSection>
@@ -112,7 +133,6 @@ const Header = ({ isAuthenticated, role, logout, avatarUrl }) => {
 };
 
 export default Header;
-
 // Estilos
 const HeaderContainer = styled.header`
   background-color: ${theme.colors.background};
