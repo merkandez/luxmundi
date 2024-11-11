@@ -36,7 +36,7 @@ const LoginForm = ({ onClose, onSwitchToRegister }) => {
     <FormContainer>
       <StyledForm onSubmit={handleSubmit(onSubmit)}>
         <CloseButton onClick={onClose}>✕</CloseButton>
-        <Title>Welcome Back</Title>
+        <Title>Inicia Sesión</Title>
         <FormGroup>
           <Label>Email</Label>
           <Input

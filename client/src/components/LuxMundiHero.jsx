@@ -10,11 +10,14 @@ function LuxMundiHero() {
     <HeroSection>
       <ContentWrapper>
         <TextContent>
-          <Overline>Travel & Photography</Overline>
-          <Title>Capture the world through our lens</Title>
+          <Overline>Viajes & Fotografía</Overline>
+          <Title>Explorando el mundo a través de cinco miradas únicas</Title>
           <Description>
-            Discover breathtaking destinations and master the art of photography
-            with our curated experiences and expert guidance.
+            Bienvenidos a nuestro rincón digital donde cinco fotógrafos viajeros
+            compartimos nuestras aventuras, técnicas y perspectivas únicas.
+            Desde las calles bulliciosas de Asia hasta los paisajes vírgenes de
+            Sudamérica, cada historia se cuenta a través de cinco lentes
+            diferentes.
           </Description>
           <ButtonWrapper>
             <ButtonGroup
@@ -31,8 +34,6 @@ function LuxMundiHero() {
             modules={[Navigation, Pagination, Autoplay]}
             pagination={{
               clickable: true,
-              bulletActiveClass: "swiper-pagination-bullet-active",
-              bulletClass: "swiper-pagination-bullet",
             }}
             autoplay={{
               delay: 4000,
@@ -69,14 +70,14 @@ function LuxMundiHero() {
 const HeroSection = styled.section`
   background-color: #111111;
   width: 100%;
-  min-height: 90vh;
+  min-height: 85vh;
   display: flex;
   align-items: center;
-  padding: 8rem 2rem 4rem;
+  padding: 7rem 20px 4rem;
   overflow: hidden;
 
   @media (max-width: 991px) {
-    padding: 6rem 1rem 2rem;
+    padding: 6rem 20px 3rem;
     min-height: auto;
   }
 `;
@@ -91,22 +92,21 @@ const ContentWrapper = styled.div`
   align-items: center;
 
   @media (max-width: 991px) {
-    flex-direction: column-reverse;
+    flex-direction: column;
     gap: 2rem;
   }
 `;
 
 const TextContent = styled.div`
   flex: 1;
-  max-width: 40%;
-  padding: 0 2rem;
-  margin-right: auto;
+  max-width: 45%;
+  padding-right: 2rem;
 
   @media (max-width: 991px) {
-    max-width: 100%;
+    max-width: 600px;
     text-align: center;
-    padding: 2rem 1rem;
-    margin-right: 0;
+    padding: 0;
+    margin: 0 auto;
   }
 `;
 
@@ -122,18 +122,18 @@ const Overline = styled.span`
 
 const Title = styled.h1`
   font-family: "DM Sans", sans-serif;
-  font-size: 3.5rem;
+  font-size: 3rem;
   font-weight: 700;
   color: #ffffff;
   line-height: 1.2;
   margin-bottom: 1.5rem;
 
-  @media (max-width: 1200px) {
-    font-size: 2.8rem;
+  @media (max-width: 991px) {
+    font-size: 2.5rem;
   }
 
-  @media (max-width: 991px) {
-    font-size: 2.4rem;
+  @media (max-width: 480px) {
+    font-size: 2rem;
   }
 `;
 
@@ -151,37 +151,37 @@ const ButtonWrapper = styled.div`
 
 const SliderWrapper = styled.div`
   flex: 1;
-  max-width: 60%;
-  height: 70vh;
+  max-width: 55%;
+  height: 600px;
 
   .swiper {
     width: 100%;
     height: 100%;
-    border-radius: 4px;
+    border-radius: 12px;
   }
 
   .swiper-pagination-bullet {
-    background: #666666;
-    opacity: 0.5;
     width: 8px;
     height: 8px;
+    background: rgba(255, 255, 255, 0.5);
+    opacity: 0.5;
     transition: all 0.3s ease;
   }
 
   .swiper-pagination-bullet-active {
-    background: #ffffff;
-    opacity: 1;
     width: 24px;
+    background: #ffffff;
     border-radius: 4px;
+    opacity: 1;
   }
 
   @media (max-width: 991px) {
     max-width: 100%;
-    height: 50vh;
+    height: 400px;
   }
 
   @media (max-width: 480px) {
-    height: 40vh;
+    height: 300px;
   }
 `;
 
@@ -189,6 +189,7 @@ const Image = styled.img`
   width: 100%;
   height: 100%;
   object-fit: cover;
+  object-position: center;
 `;
 
 export default LuxMundiHero;

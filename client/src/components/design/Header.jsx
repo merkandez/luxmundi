@@ -31,89 +31,85 @@ const Header = ({
 
   return (
     <HeaderContainer>
-      <NavSection>
-        <StyledLink to="/">Home</StyledLink>
-        <StyledLink to="/aboutus">About Us</StyledLink>
-        
-        {isAuthenticated ? (
-          <>
-            {role === 'admin' && <StyledLink to="/admin">Admin Area</StyledLink>}
+      <Wrapper>
+        <LogoSection>
+          <StyledLink to="/">Home</StyledLink>
+          <StyledLink to="/aboutus">About Us</StyledLink>
+        </LogoSection>
 
-            <ProfileContainer>
-              {/* Si avatarUrl está disponible, mostramos la imagen; de lo contrario, mostramos el AvatarIcon */}
-              {avatarUrl ? (
-                <AvatarImage onClick={toggleMenu} src={avatarUrl} alt="Avatar" />
-              ) : (
-                <AvatarIconWrapper onClick={toggleMenu}>
-                  <AvatarIcon />
-                </AvatarIconWrapper>
-              )}
-              {menuVisible && (
-                <ProfileMenu ref={menuRef}>
-                  <StyledLink to="/profile">Edit Profile</StyledLink>
-                  <LogoutButton onClick={logout}>Logout</LogoutButton>
-                </ProfileMenu>
-              )}
-            </ProfileContainer>
-          </>
-        ) : (
-          <AuthButtonsContainer>
-            <Button onClick={openLoginModal}>Login</Button>
-            <Button onClick={openRegisterModal}>Register</Button>
-          </AuthButtonsContainer>
-        )}
-      </NavSection>
+        <Nav>
+          {isAuthenticated ? (
+            <>
+              {role === 'admin' && <StyledLink to="/admin">Admin Area</StyledLink>}
+
+              <ProfileContainer>
+                {avatarUrl ? (
+                  <AvatarImage onClick={toggleMenu} src={avatarUrl} alt="Avatar" />
+                ) : (
+                  <AvatarIconWrapper onClick={toggleMenu}>
+                    <AvatarIcon />
+                  </AvatarIconWrapper>
+                )}
+                {menuVisible && (
+                  <ProfileMenu ref={menuRef}>
+                    <StyledLink to="/profile">Edit Profile</StyledLink>
+                    <LogoutButton onClick={logout}>Logout</LogoutButton>
+                  </ProfileMenu>
+                )}
+              </ProfileContainer>
+            </>
+          ) : (
+            <AuthButtons>
+              <Button onClick={openLoginModal}>Login</Button>
+              <Button onClick={openRegisterModal}>Register</Button>
+            </AuthButtons>
+          )}
+        </Nav>
+      </Wrapper>
     </HeaderContainer>
   );
 };
 
 export default Header;
 
+// Estilos
 const HeaderContainer = styled.header`
   background-color: #000;
   color: #fff;
+  padding: 0 1rem;
+  border-bottom: 2px solid #444;
 `;
 
 const Wrapper = styled.div`
+  max-width: 1200px;
   margin: 0 auto;
-  padding: 0 1rem;
   display: flex;
   align-items: center;
   justify-content: space-between;
   height: 4rem;
-  border-bottom: 2px solid #444;
 `;
 
 const LogoSection = styled.div`
   display: flex;
   align-items: center;
-  gap: 0.5rem;
+  gap: 2rem;
+`;
 
-  span {
-    font-size: 1rem;
-    font-weight: bold;
+const StyledLink = styled(Link)`
+  color: #fff;
+  text-decoration: none;
+  font-size: 1rem;
+  font-weight: bold;
+
+  &:hover {
+    color: #29c9a9;
   }
 `;
 
 const Nav = styled.nav`
   display: flex;
-  gap: 2rem;
-
-  @media (max-width: 768px) {
-    display: none;
-  }
-`;
-
-const NavLink = styled(Link)`
-  color: #fff;
-  text-decoration: none;
-  transition: transform 0.3s ease;
-  font-size: 0.9rem;
-
-  &:hover {
-    color: #29c9a9;
-    transform: scale(1.2);
-  }
+  align-items: center;
+  gap: 1rem;
 `;
 
 const AuthButtons = styled.div`
@@ -130,18 +126,9 @@ const Button = styled.button`
   padding: 0.5rem 1rem;
   cursor: pointer;
   font-weight: bold;
+
   &:hover {
     background-color: #0056b3;
-  }
-`;
-
-const LogoutButton = styled.button`
-  background: transparent;
-  color: white;
-  border: none;
-  cursor: pointer;
-  &:hover {
-    text-decoration: underline;
   }
 `;
 
@@ -192,5 +179,17 @@ const ProfileMenu = styled.div`
     &:hover {
       background-color: #555;
     }
+  }
+`;
+
+const LogoutButton = styled.button`
+  background: transparent;
+  color: white;
+  border: none;
+  cursor: pointer;
+  text-align: left;
+
+  &:hover {
+    text-decoration: underline;
   }
 `;
