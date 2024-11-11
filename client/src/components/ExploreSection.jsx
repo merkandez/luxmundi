@@ -10,70 +10,70 @@ const ExploreSection = () => {
     {
       title: "Machu Picchu",
       description:
-        "Discover the ancient Incan city nestled in the Andes Mountains.",
+        "Embárcate en un viaje a la antigua ciudad inca, ubicada en lo alto de las montañas de los Andes, y maravíllate con sus impresionantes ruinas y vistas.",
       image: "https://source.unsplash.com/random/800x600/?machu-picchu",
     },
     {
       title: "Santorini",
       description:
-        "Experience the stunning white architecture and blue domes of Greece.",
+        "Disfruta de las famosas puestas de sol y las icónicas casas blancas de esta isla griega, rodeada de aguas cristalinas y paisajes de ensueño.",
       image: "https://source.unsplash.com/random/800x600/?santorini",
     },
     {
       title: "Taj Mahal",
       description:
-        "Visit this magnificent monument of eternal love in Agra, India.",
+        "Descubre el símbolo del amor eterno en Agra, India. El Taj Mahal, con su majestuosa arquitectura de mármol blanco y sus jardines, es una de las Siete Maravillas del Mundo Moderno.",
       image: "https://source.unsplash.com/random/800x600/?taj-mahal",
     },
     {
       title: "Paris",
       description:
-        "Explore the romantic streets and iconic landmarks of the City of Light.",
+        "La Ciudad de la Luz te espera con la icónica Torre Eiffel, museos de clase mundial y encantadoras calles. Vive el romance y la cultura en cada rincón de París.",
       image: "https://source.unsplash.com/random/800x600/?paris",
     },
     {
-      title: "Tokyo",
+      title: "Kyoto",
       description:
-        "Immerse yourself in the vibrant blend of tradition and technology.",
+        "Explora la cultura japonesa a través de sus templos antiguos, jardines de cerezos y rituales tradicionales en la encantadora ciudad de Kioto.",
       image: "https://source.unsplash.com/random/800x600/?tokyo",
     },
     {
-      title: "Venice",
+      title: "Roma",
       description:
-        "Navigate through the romantic canals of this historic Italian city.",
+        "Revive la historia de la antigua Roma explorando el Coliseo, el Foro Romano y los rincones más emblemáticos de esta ciudad eterna.",
       image: "https://source.unsplash.com/random/800x600/?venice",
     },
     {
-      title: "Grand Canyon",
-      description: "Marvel at one of nature's most spectacular creations.",
+      title: "Gran Cañón",
+      description: "Admira la inmensidad del Gran Cañón en Arizona, una maravilla natural esculpida por el río Colorado y uno de los paisajes más impresionantes del mundo.",
       image: "https://source.unsplash.com/random/800x600/?grand-canyon",
     },
     {
       title: "Petra",
       description:
-        "Explore the ancient rose-red city carved into desert cliffs.",
+        "Admira la ciudad tallada en roca de Petra, un tesoro arqueológico en Jordania, y explora sus túneles secretos y estructuras monumentales.",
       image: "https://source.unsplash.com/random/800x600/?petra-jordan",
     },
     {
-      title: "Great Wall",
-      description: "Walk along this incredible feat of ancient engineering.",
+      title: "Gran Muralla China",
+      description: "Recorre kilómetros de historia en la Gran Muralla China, una construcción milenaria que serpentea a través de montañas y paisajes impresionantes.",
       image: "https://source.unsplash.com/random/800x600/?great-wall-china",
     },
     {
       title: "Bali",
       description:
-        "Experience the perfect blend of beaches, culture and serenity.",
+        "Explora Bali, la Isla de los Dioses, donde encontrarás templos ancestrales, playas paradisíacas y una cultura vibrante en cada rincón.",
       image: "https://source.unsplash.com/random/800x600/?bali",
     },
     {
-      title: "Iceland",
-      description: "Witness the dramatic landscapes of fire and ice.",
+      title: "Islandia",
+      description: "Aventúrate en los paisajes surrealistas de Islandia, con cascadas, glaciares, géiseres y auroras boreales que crean un escenario de otro mundo.",
       image: "https://source.unsplash.com/random/800x600/?iceland",
     },
     {
-      title: "Maldives",
+      title: "Maldivas",
       description:
-        "Relax in paradise with crystal clear waters and white beaches.",
+        "Sumérgete en la serenidad de las Maldivas, donde playas de arena blanca y aguas cristalinas crean el destino perfecto para unas vacaciones de ensueño.",
       image: "https://source.unsplash.com/random/800x600/?maldives",
     },
   ];
