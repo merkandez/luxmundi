@@ -1,6 +1,8 @@
 // client/src/components/NavigationMenu.jsx
 import NavigationPillItem from "./NavigationPillItem";
 import styled from "styled-components";
+import ContactModal from "./ContactModal";
+import { useState } from "react";
 
 const NavWrapper = styled.nav`
   display: flex;
@@ -20,25 +22,37 @@ const NavWrapper = styled.nav`
   }
 `;
 
-const navigationItems = [
-  { label: "Nosotros", href: "/quien-somos", isActive: false },
-  { label: "Destinos", href: "/destinos", isActive: false },
-  { label: "Contacto", href: "/contacto", isActive: false },
-];
+const NavigationMenu = () => {
+  const [isContactModalOpen, setIsContactModalOpen] = useState(false);
 
-function NavigationMenu() {
+  const navigationItems = [
+    { label: "Nosotros", href: "/about", isActive: false },
+    { label: "Destinos", href: "/destinations", isActive: false },
+    {
+      label: "Contacto",
+      onClick: () => setIsContactModalOpen(true),
+      isActive: false,
+    },
+  ];
+
   return (
     <NavWrapper>
       {navigationItems.map((item) => (
         <NavigationPillItem
           key={item.label}
           label={item.label}
-          href={item.href}
+          href={item.onClick ? undefined : item.href}
+          onClick={item.onClick}
           isActive={item.isActive}
         />
       ))}
+
+      <ContactModal
+        isOpen={isContactModalOpen}
+        onClose={() => setIsContactModalOpen(false)}
+      />
     </NavWrapper>
   );
-}
+};
 
 export default NavigationMenu;
