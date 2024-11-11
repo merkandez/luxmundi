@@ -8,25 +8,26 @@ import AboutPage from '../pages/AboutPage';
 import ProtectedRoute from './ProtectedRoute';
 import NotFound from "../pages/NotFound";
 import ContactForm from "../components/ContactForm";
+import { AuthProvider } from "../context/AuthContext";
+import UnderConstruction from "../pages/UnderConstruction";
+
 
 
 export const router = createBrowserRouter([
   {
     path: '/',
-    element: <Layout />, // El Layout gestionará el modal de autenticación
+    element: (
+      <AuthProvider>
+        <Layout />, // El Layout gestionará el modal de autenticación
+      </AuthProvider>
+    ),
+
     children: [
       { index: true, element: <HomePage /> },
       { path: 'about', element: <AboutPage /> },
-      {
-        path: "contact",
-        element: <ContactForm />,
-      },
-      
-      
-      {
-        path: "*",
-        element: <NotFound />,
-      },
+      { path: "contact", element: <ContactForm />},
+      { path: "under-construction", element: <UnderConstruction />},
+      { path: "*", element: <NotFound />},
 
       // Rutas protegidas
       {
