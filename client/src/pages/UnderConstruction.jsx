@@ -21,13 +21,13 @@ const UnderConstruction = () => {
 };
 
 const Container = styled.div`
-  min-height: 100vh;
+  min-height: 60vh;
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 2rem;
+  padding: 1rem;
   background: #0a0a0a;
-  margin-top: 5rem;
+  margin-top: 1rem;
 `;
 
 const Content = styled.div`

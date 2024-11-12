@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { User, Settings, LogOut, Camera } from "lucide-react";
+import { User, Settings, LogOut } from "lucide-react";
 import { Link } from "react-router-dom";
 
 const ProfileSettings = () => {
@@ -9,7 +9,6 @@ const ProfileSettings = () => {
 
   const menuItems = [
     { icon: <User size={16} />, label: "Mi Perfil", link: "/profile" },
-    { icon: <Camera size={16} />, label: "Mis Fotos", link: "/my-photos" },
     { icon: <Settings size={16} />, label: "Ajustes", link: "/settings" },
   ];
 
@@ -59,7 +58,7 @@ const ProfileSettings = () => {
 
               <LogoutButton onClick={() => console.log("Logout")}>
                 <LogOut size={16} />
-                <span>Cerrar Sesión</span>
+                <span>Logout</span>
               </LogoutButton>
             </MenuWrapper>
           </>
@@ -208,7 +207,7 @@ const LogoutButton = styled.button`
   align-items: center;
   gap: 0.75rem;
   padding: 0.75rem 1rem;
-  color: #ff4d4d;
+  color: #fff;
   background: transparent;
   border: none;
   cursor: pointer;
@@ -220,7 +219,8 @@ const LogoutButton = styled.button`
   }
 
   &:hover {
-    background: rgba(255, 77, 77, 0.1);
+    background: rgba(255, 255, 255, 0.15);
+    color: #fff;
   }
 `;
 

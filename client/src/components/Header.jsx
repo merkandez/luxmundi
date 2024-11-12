@@ -7,6 +7,7 @@ import PropTypes from "prop-types";
 import LoginModal from "./LoginModal";
 import ContactModal from "./ContactModal";
 import RegisterModal from "./RegisterModal";
+import ProfileSettings from "./ProfileSettings";
 
 const HeaderContainer = styled.header`
   background-color: #0a0a0a;
@@ -37,14 +38,36 @@ const LogoSection = styled(Link)`
   display: flex;
   align-items: center;
   gap: 0.8rem;
-  transition: transform 0.3s ease;
+  transition: all 0.3s ease;
   z-index: 20;
   margin-right: 2rem;
   color: #fff;
   padding: 4px;
 
   &:hover {
-    transform: translateY(-1px);
+    transform: scale(1.05);
+
+    svg,
+    span {
+      color: #29c9a9;
+    }
+  }
+
+  svg {
+    transition: all 0.3s ease;
+    width: 24px;
+    height: 24px;
+    color: #29c9a9;
+
+    @media (max-width: 768px) {
+      width: 20px;
+      height: 20px;
+    }
+
+    @media (max-width: 480px) {
+      width: 18px;
+      height: 18px;
+    }
   }
 
   span {
@@ -53,9 +76,14 @@ const LogoSection = styled(Link)`
     padding-top: 4px;
     color: #ffffff;
     margin: 4px;
+    transition: all 0.3s ease;
+
+    @media (max-width: 768px) {
+      font-size: 1rem;
+    }
 
     @media (max-width: 480px) {
-      font-size: 1.1rem;
+      font-size: 0.9rem;
     }
   }
 `;
@@ -88,13 +116,13 @@ const NavLink = styled(Link)`
     height: 1px;
     bottom: 0;
     left: 50%;
-    background-color: #fff;
+    background-color: #29c9a9;
     transition: all 0.3s ease;
     transform: translateX(-50%);
   }
 
   &:hover {
-    color: #ffffff;
+    color: #29c9a9;
 
     &:after {
       width: 100%;
@@ -339,13 +367,13 @@ const NavButton = styled.button`
     height: 1px;
     bottom: 0;
     left: 50%;
-    background-color: #fff;
+    background-color: #29c9a9;
     transition: all 0.3s ease;
     transform: translateX(-50%);
   }
 
   &:hover {
-    color: #ffffff;
+    color: #29c9a9;
 
     &:after {
       width: 100%;
@@ -414,7 +442,9 @@ const Header = ({ isLoggedIn }) => {
             </SearchButton>
           </SearchSection>
 
-          {!isLoggedIn && (
+          {isLoggedIn ? (
+            <ProfileSettings />
+          ) : (
             <AuthButtons>
               <button
                 className="login"

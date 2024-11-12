@@ -26,13 +26,13 @@ const IconWrapper = styled.div`
   background: ${(props) =>
     props.variant === "delete"
       ? "rgba(255, 76, 76, 0.1)"
-      : "rgba(76, 255, 128, 0.1)"};
+      : "rgba(168, 85, 247, 0.1)"};
 `;
 
 const Icon = styled.div`
   width: 1.5rem;
   height: 1.5rem;
-  color: ${(props) => (props.variant === "delete" ? "#FF4C4C" : "#4CFF80")};
+  color: ${(props) => (props.variant === "delete" ? "#FF4C4C" : "#A855F7")};
 `;
 
 const Title = styled.h2`
@@ -88,10 +88,10 @@ const Button = styled.button`
   ${(props) =>
     props.variant === "confirm" &&
     `
-    background: #4CFF80;
+    background: #A855F7;
     color: white;
     &:hover {
-      background: #3CBF60;
+      background: #7C3AED;
     }
   `}
 `;
