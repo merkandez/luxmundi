@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
+import { uploadImage } from '../../services/postService';
 
 const PostManagement = ({ posts, selectedPost, onSelectPost, onUpdatePost, onDeletePost, onCreatePost }) => {
   const [editData, setEditData] = useState(selectedPost || {});
@@ -17,6 +18,26 @@ const PostManagement = ({ posts, selectedPost, onSelectPost, onUpdatePost, onDel
 
   const handleUpdate = () => {
     onUpdatePost(selectedPost.id, editData);
+  };
+
+  const handleImageUpload = async (e) => {
+    const file = e.target.files[0];
+    try {
+      const imageData = await uploadImage(file);
+      setNewPostData({ ...newPostData, imageUrl: imageData.url });
+    } catch (error) {
+      console.error('Error al subir la imagen:', error);
+    }
+  };
+
+  const handleEditImageUpload = async (e) => {
+    const file = e.target.files[0];
+    try {
+      const imageData = await uploadImage(file);
+      setEditData({ ...editData, imageUrl: imageData.url });
+    } catch (error) {
+      console.error('Error al subir la imagen:', error);
+    }
   };
 
   const handleCreatePost = () => {
@@ -75,6 +96,12 @@ const PostManagement = ({ posts, selectedPost, onSelectPost, onUpdatePost, onDel
             onChange={handleInputChange}
             placeholder="Contenido"
           />
+          <input
+            type="file"
+            accept="image/*"
+            onChange={handleEditImageUpload}
+          />
+          {editData.imageUrl && <img src={editData.imageUrl} alt="Preview" style={{ width: '200px' }} />}
           <button onClick={handleUpdate}>Guardar cambios</button>
         </div>
       )}
@@ -95,12 +122,11 @@ const PostManagement = ({ posts, selectedPost, onSelectPost, onUpdatePost, onDel
           placeholder="Contenido"
         />
         <input
-          type="text"
-          name="imageUrl"
-          value={newPostData.imageUrl}
-          onChange={(e) => setNewPostData({ ...newPostData, imageUrl: e.target.value })}
-          placeholder="URL de la imagen"
+          type="file"
+          accept="image/*"
+          onChange={handleImageUpload}
         />
+        {newPostData.imageUrl && <img src={newPostData.imageUrl} alt="Preview" style={{ width: '200px' }} />}
         <button onClick={handleCreatePost}>Crear Publicación</button>
       </div>
     </HomeWrapper>
