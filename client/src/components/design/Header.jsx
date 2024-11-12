@@ -1,14 +1,23 @@
 import React, { useState, useRef, useEffect } from "react";
 import styled from "styled-components";
 import { Link, useNavigate, useLocation } from "react-router-dom";
-import AvatarIcon from "./AvatarIcon";
 import LoginForm from "../auth/LoginForm";
 import RegisterForm from "../auth/RegisterForm";
 import ModalForm from "../auth/ModalForm";
 import { Button } from "../../styles/components";
 import { theme } from "../../styles/theme";
 import { BsCameraFill } from "react-icons/bs";
-import { Search, X, Menu } from "lucide-react";
+import {
+  Search,
+  X,
+  Menu,
+  User,
+  Settings,
+  LogOut,
+  Info,
+  Map,
+  Mail,
+} from "lucide-react";
 import ContactModal from "../ContactModal";
 
 const Header = ({ isAuthenticated, role, logout, avatarUrl }) => {
@@ -22,7 +31,9 @@ const Header = ({ isAuthenticated, role, logout, avatarUrl }) => {
   const navigate = useNavigate();
   const location = useLocation();
 
-  const toggleMenu = () => setMenuVisible((prev) => !prev);
+  const toggleMenu = () => {
+    setMenuVisible((prev) => !prev);
+  };
 
   const handleClickOutside = (event) => {
     if (menuRef.current && !menuRef.current.contains(event.target)) {
@@ -31,11 +42,14 @@ const Header = ({ isAuthenticated, role, logout, avatarUrl }) => {
   };
 
   useEffect(() => {
-    document.addEventListener("mousedown", handleClickOutside);
+    if (menuVisible) {
+      document.addEventListener("mousedown", handleClickOutside);
+    }
+
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
-  }, []);
+  }, [menuVisible]);
 
   const openLoginForm = () => {
     setShowLoginForm(true);
@@ -118,7 +132,7 @@ const Header = ({ isAuthenticated, role, logout, avatarUrl }) => {
           </SearchSection>
 
           {isAuthenticated ? (
-            <ProfileContainer>
+            <ProfileContainer className="desktop-only">
               {avatarUrl ? (
                 <AvatarImage
                   onClick={toggleMenu}
@@ -127,16 +141,31 @@ const Header = ({ isAuthenticated, role, logout, avatarUrl }) => {
                 />
               ) : (
                 <AvatarIconWrapper onClick={toggleMenu}>
-                  <AvatarIcon />
+                  <User size={20} />
                 </AvatarIconWrapper>
               )}
               {menuVisible && (
                 <ProfileMenu ref={menuRef}>
-                  <NavLink to="/profile">Edit Profile</NavLink>
+                  <MenuLink to="/profile" onClick={toggleMenu}>
+                    <User size={18} />
+                    Mi Perfil
+                  </MenuLink>
                   {role === "admin" && (
-                    <NavLink to="/admin">Admin Area</NavLink>
+                    <MenuLink to="/admin" onClick={toggleMenu}>
+                      <Settings size={18} />
+                      Panel Admin
+                    </MenuLink>
                   )}
-                  <LogoutButton onClick={logout}>Logout</LogoutButton>
+                  <MenuDivider />
+                  <LogoutButton
+                    onClick={() => {
+                      logout();
+                      toggleMenu();
+                    }}
+                  >
+                    <LogOut size={18} />
+                    Cerrar Sesión
+                  </LogoutButton>
                 </ProfileMenu>
               )}
             </ProfileContainer>
@@ -158,16 +187,45 @@ const Header = ({ isAuthenticated, role, logout, avatarUrl }) => {
 
         <MobileMenu isOpen={isMenuOpen}>
           <MobileMenuWrapper>
-            <MobileNavLink to="/about">Nosotros</MobileNavLink>
+            <MobileNavLink to="/about">
+              <Info size={16} />
+              Nosotros
+            </MobileNavLink>
+            <MobileNavLink as="button" onClick={scrollToDestinos}>
+              <Map size={16} />
+              Destinos
+            </MobileNavLink>
             <MobileNavLink
               as="button"
               onClick={() => setShowContactModal(true)}
             >
+              <Mail size={16} />
               Contacto
             </MobileNavLink>
-            <MobileNavLink as="button" onClick={scrollToDestinos}>
-              Destinos
-            </MobileNavLink>
+            {isAuthenticated && (
+              <>
+                <MenuDivider />
+                <MobileNavLink to="/profile">
+                  <User size={16} />
+                  Mi Perfil
+                </MobileNavLink>
+                {role === "admin" && (
+                  <MobileNavLink to="/admin">
+                    <Settings size={16} />
+                    Panel Admin
+                  </MobileNavLink>
+                )}
+                <LogoutButton
+                  onClick={() => {
+                    logout();
+                    setIsMenuOpen(false);
+                  }}
+                >
+                  <LogOut size={16} />
+                  Cerrar Sesión
+                </LogoutButton>
+              </>
+            )}
           </MobileMenuWrapper>
         </MobileMenu>
       </Wrapper>
@@ -204,7 +262,7 @@ const HeaderContainer = styled.header`
   top: 0;
   z-index: 1000;
   padding: 0 1rem;
-  border-bottom: 2px solid ${theme.colors.border};
+  border-bottom: 1px solid ${theme.colors.border};
 `;
 
 const Wrapper = styled.div`
@@ -271,13 +329,15 @@ const Nav = styled.nav`
 const NavLink = styled(Link)`
   color: ${theme.colors.text.primary};
   text-decoration: none;
-  font-size: 0.9rem;
+  font-size: 0.85rem;
+  font-weight: 500;
   padding: 0.6rem 1rem;
   transition: ${theme.animation.transition};
   position: relative;
   background: none;
   border: none;
   cursor: pointer;
+  letter-spacing: 0.3px;
 
   &::after {
     content: "";
@@ -297,14 +357,15 @@ const NavLink = styled(Link)`
 
   &:hover {
     color: ${theme.colors.primary};
+    opacity: 0.9;
   }
 
   @media (min-width: ${theme.breakpoints.tablet}) {
-    font-size: 1rem;
+    font-size: 0.9rem;
   }
 
   @media (min-width: ${theme.breakpoints.desktop}) {
-    font-size: 1.1rem;
+    font-size: 0.95rem;
   }
 `;
 
@@ -331,17 +392,17 @@ const SearchBar = styled.div`
   border-radius: 20px;
   background-color: ${theme.colors.background};
   overflow: hidden;
-  width: ${({ isOpen }) => (isOpen ? "160px" : "0")};
+  width: ${({ isOpen }) => (isOpen ? "140px" : "0")};
   opacity: ${({ isOpen }) => (isOpen ? "1" : "0")};
-  transition: all 0.3s ease;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   margin-right: 0.5rem;
 
   @media (min-width: ${theme.breakpoints.tablet}) {
-    width: ${({ isOpen }) => (isOpen ? "200px" : "0")};
+    width: ${({ isOpen }) => (isOpen ? "180px" : "0")};
   }
 
   @media (min-width: ${theme.breakpoints.desktop}) {
-    width: ${({ isOpen }) => (isOpen ? "250px" : "0")};
+    width: ${({ isOpen }) => (isOpen ? "220px" : "0")};
   }
 `;
 
@@ -377,7 +438,16 @@ const SearchToggle = styled(SearchButton)`
   transition: ${theme.animation.transition};
 
   &:hover {
-    background-color: ${theme.colors.primaryHover};
+    background-color: ${theme.colors.background};
+  }
+
+  svg {
+    color: ${theme.colors.background};
+    transition: ${theme.animation.transition};
+  }
+
+  &:hover svg {
+    color: ${theme.colors.primary};
   }
 `;
 
@@ -388,6 +458,12 @@ const AuthButtons = styled.div`
 
 const ProfileContainer = styled.div`
   position: relative;
+
+  &.desktop-only {
+    @media (max-width: ${theme.breakpoints.tablet}) {
+      display: none;
+    }
+  }
 `;
 
 const AvatarImage = styled.img`
@@ -395,6 +471,7 @@ const AvatarImage = styled.img`
   height: 32px;
   border-radius: 50%;
   cursor: pointer;
+  object-fit: cover;
 `;
 
 const AvatarIconWrapper = styled.div`
@@ -404,26 +481,113 @@ const AvatarIconWrapper = styled.div`
   align-items: center;
   justify-content: center;
   cursor: pointer;
+  transition: ${theme.animation.transition};
+  background-color: ${theme.colors.primary};
+  border-radius: 50%;
+
+  &:hover {
+    background-color: ${theme.colors.background};
+  }
+
+  svg {
+    color: ${theme.colors.background};
+    transition: ${theme.animation.transition};
+  }
+
+  &:hover svg {
+    color: ${theme.colors.primary};
+  }
 `;
 
 const ProfileMenu = styled.div`
   position: absolute;
-  top: 100%;
+  top: calc(100% + 0.5rem);
   right: 0;
   background-color: ${theme.colors.background};
-  border-radius: 5px;
+  border-radius: 8px;
   display: flex;
   flex-direction: column;
-  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  min-width: 200px;
+  border: 1px solid ${theme.colors.border};
   padding: 0.5rem;
+  z-index: 1000;
+
+  @media (max-width: ${theme.breakpoints.tablet}) {
+    min-width: 180px;
+  }
 `;
 
-const LogoutButton = styled(Button)`
-  background: transparent;
+const MenuLink = styled(NavLink)`
   color: ${theme.colors.text.primary};
-  padding: 0.5rem;
-  text-align: left;
+  padding: 0.8rem 1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  border-radius: 6px;
+  transition: all 0.2s ease;
+  font-size: 0.9rem;
+  text-decoration: none;
+
+  &:hover {
+    background-color: ${theme.colors.primaryLight};
+    color: ${theme.colors.primary};
+  }
+
+  svg {
+    width: 18px;
+    height: 18px;
+  }
+`;
+
+const MenuDivider = styled.div`
+  height: 1px;
+  background-color: ${theme.colors.border};
+  margin: 0.5rem 0;
+  opacity: 0.2;
+`;
+
+const LogoutButton = styled.button`
+  width: 100%;
+  color: ${theme.colors.danger};
+  padding: 0.8rem 1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  border-radius: 6px;
+  transition: all 0.2s ease;
+  font-size: 0.9rem;
+  font-weight: 500;
+  background: none;
   border: none;
+  cursor: pointer;
+  letter-spacing: 0.3px;
+  text-align: left;
+
+  &:hover {
+    background-color: ${theme.colors.dangerLight};
+    color: ${theme.colors.danger};
+    opacity: 0.9;
+  }
+
+  &:active {
+    transform: scale(0.98);
+  }
+
+  svg {
+    width: 16px;
+    height: 16px;
+    color: inherit;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    color: #ff6b6b;
+
+    &:hover {
+      background-color: rgba(255, 107, 107, 0.1);
+      color: #ff8787;
+    }
+  }
 `;
 
 const MobileMenuButton = styled.button`
@@ -442,36 +606,38 @@ const MobileMenu = styled.div`
   position: fixed;
   top: 5rem;
   right: 0;
-  width: 60%;
-  max-width: 300px;
+  width: 75%;
+  max-width: 240px;
+  height: auto;
   background-color: ${theme.colors.background};
   border-left: 1px solid ${theme.colors.border};
-  padding: 1rem;
   transform: ${({ isOpen }) => (isOpen ? "translateX(0)" : "translateX(100%)")};
-  transition: transform 0.3s ease;
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   z-index: 999;
-
-  @media (min-width: 768px) {
-    display: none;
-  }
+  overflow-y: auto;
+  box-shadow: -2px 0 8px rgba(0, 0, 0, 0.1);
+  border-radius: 12px 0 0 12px;
 `;
 
 const MobileMenuWrapper = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 1rem;
+  padding: 0.8rem;
+  gap: 0.3rem;
 `;
 
-const MobileNavLink = styled(NavLink)`
-  text-align: right;
-  padding: 1rem;
-  font-size: 1rem;
-
-  &::after {
-    bottom: -2px;
-  }
+const MobileNavLink = styled(MenuLink)`
+  font-size: 0.9rem;
+  padding: 0.8rem;
+  justify-content: flex-start;
+  color: ${theme.colors.text.primary};
 
   &:hover {
-    background-color: transparent;
+    background-color: ${theme.colors.primaryLight};
+  }
+
+  svg {
+    width: 16px;
+    height: 16px;
   }
 `;
