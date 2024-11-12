@@ -1,10 +1,10 @@
 import styled from "styled-components";
 import React, { useEffect, useState } from "react";
-//import { getPosts } from "../services/api"; // Importa la función de API
+import { getPosts } from "../services/api"; // Importa la función de API
 import Card from "./Card"; // Importa el componente Card para mostrar cada post
 import CardsContainer from "./CardContainer";
 import Pagination from "./Pagination"; //Llamar solo a pagination
-import {getAllPosts} from "..Controllers/postController"
+//import {getAllPosts} from "..Controllers/postController"
 
 const ExploreSection = () => {
   // Crea un estado para guardar los posts obtenidos
@@ -16,7 +16,7 @@ const ExploreSection = () => {
   // Este hook se ejecuta. carga los posts cuando el componente se muestra
     const fetchPosts = async () => {
       try {
-        const data = await getAllPosts(); // Llama a la API para obtener los posts
+        const data = await getPosts(`VITE_API_URL`); // Llama a la API para obtener los posts
         setPosts(data); // Guarda los posts en el estado original
         setFilteredPosts(data); //Inicialmente, los post filtrados son todos
       } catch (error) {
