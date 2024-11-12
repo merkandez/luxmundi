@@ -87,37 +87,34 @@ const Header = ({ isAuthenticated, role, logout, avatarUrl }) => {
   return (
     <HeaderContainer>
       <Wrapper>
-        <LogoSection>
+        <LogoSection onClick={handleLogoClick}>
           <LogoIcon>
-            <BsCameraFill size={24} />
+            <BsCameraFill size={20} />
           </LogoIcon>
           <LogoText>LUX MUNDI</LogoText>
         </LogoSection>
 
         <Nav>
           <NavLink to="/about">Nosotros</NavLink>
-          <NavLink as="button" onClick={() => setShowContactModal(true)}>
-            Contacto
-          </NavLink>
           <NavLink as="button" onClick={scrollToDestinos}>
             Destinos
+          </NavLink>
+          <NavLink as="button" onClick={() => setShowContactModal(true)}>
+            Contacto
           </NavLink>
         </Nav>
 
         <RightSection>
           <SearchSection>
-            <SearchBar className={isSearchOpen ? "active" : ""}>
-              <SearchInput placeholder="Search..." autoFocus={isSearchOpen} />
-              <X
-                size={16}
-                color="#666"
-                onClick={() => setIsSearchOpen(false)}
-                style={{ cursor: "pointer" }}
-              />
+            <SearchBar isOpen={isSearchOpen}>
+              <SearchInput placeholder="Buscar..." autoFocus={isSearchOpen} />
+              <SearchButton onClick={() => setIsSearchOpen(false)}>
+                <X size={14} />
+              </SearchButton>
             </SearchBar>
-            <SearchButton onClick={() => setIsSearchOpen(!isSearchOpen)}>
+            <SearchToggle onClick={() => setIsSearchOpen(!isSearchOpen)}>
               <Search size={20} />
-            </SearchButton>
+            </SearchToggle>
           </SearchSection>
 
           {isAuthenticated ? (
@@ -223,7 +220,7 @@ const Wrapper = styled.div`
 const LogoSection = styled.div`
   display: flex;
   align-items: center;
-  gap: 0.8rem;
+  gap: 0.5rem;
   color: ${theme.colors.text.primary};
   cursor: pointer;
   transition: ${theme.animation.transition};
@@ -245,7 +242,7 @@ const LogoIcon = styled.div`
 `;
 
 const LogoText = styled.span`
-  font-size: 1.2rem;
+  font-size: 1rem;
   font-weight: bold;
   transition: ${theme.animation.transition};
 
@@ -254,11 +251,11 @@ const LogoText = styled.span`
   }
 
   @media (min-width: ${theme.breakpoints.tablet}) {
-    font-size: 1.4rem;
+    font-size: 1.2rem;
   }
 
   @media (min-width: ${theme.breakpoints.desktop}) {
-    font-size: 1.6rem;
+    font-size: 1.4rem;
   }
 `;
 
@@ -314,40 +311,47 @@ const NavLink = styled(Link)`
 const RightSection = styled.div`
   display: flex;
   align-items: center;
-  gap: 1.5rem;
+  gap: 0.8rem;
+  margin-left: 1rem;
 `;
 
 const SearchSection = styled.div`
   display: flex;
   align-items: center;
   position: relative;
+  margin-right: 0.5rem;
 `;
 
 const SearchBar = styled.div`
-  position: relative;
+  position: absolute;
+  right: 100%;
   display: flex;
   align-items: center;
-  border: 1px solid ${theme.colors.border};
-  border-radius: 4px;
-  padding: 0.5rem;
+  border: 1px solid ${theme.colors.primary};
+  border-radius: 20px;
   background-color: ${theme.colors.background};
-  width: ${({ isOpen }) => (isOpen ? "200px" : "0")};
+  overflow: hidden;
+  width: ${({ isOpen }) => (isOpen ? "160px" : "0")};
   opacity: ${({ isOpen }) => (isOpen ? "1" : "0")};
   transition: all 0.3s ease;
-  overflow: hidden;
+  margin-right: 0.5rem;
 
-  &.active {
-    width: 200px;
-    opacity: 1;
+  @media (min-width: ${theme.breakpoints.tablet}) {
+    width: ${({ isOpen }) => (isOpen ? "200px" : "0")};
+  }
+
+  @media (min-width: ${theme.breakpoints.desktop}) {
+    width: ${({ isOpen }) => (isOpen ? "250px" : "0")};
   }
 `;
 
 const SearchInput = styled.input`
   width: 100%;
-  padding: 0.5rem;
+  padding: 0.4rem 0.8rem;
   border: none;
   color: ${theme.colors.text.primary};
   background-color: transparent;
+  font-size: 0.9rem;
 
   &:focus {
     outline: none;
@@ -359,6 +363,22 @@ const SearchButton = styled.button`
   border: none;
   color: ${theme.colors.text.primary};
   cursor: pointer;
+  padding: 0.4rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;
+
+const SearchToggle = styled(SearchButton)`
+  background-color: ${theme.colors.primary};
+  border-radius: 50%;
+  width: 32px;
+  height: 32px;
+  transition: ${theme.animation.transition};
+
+  &:hover {
+    background-color: ${theme.colors.primaryHover};
+  }
 `;
 
 const AuthButtons = styled.div`
@@ -371,15 +391,15 @@ const ProfileContainer = styled.div`
 `;
 
 const AvatarImage = styled.img`
-  width: 40px;
-  height: 40px;
+  width: 32px;
+  height: 32px;
   border-radius: 50%;
   cursor: pointer;
 `;
 
 const AvatarIconWrapper = styled.div`
-  width: 40px;
-  height: 40px;
+  width: 32px;
+  height: 32px;
   display: flex;
   align-items: center;
   justify-content: center;
