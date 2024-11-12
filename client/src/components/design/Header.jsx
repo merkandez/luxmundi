@@ -1,15 +1,15 @@
-import React, { useState, useRef, useEffect } from 'react';
-import styled from 'styled-components';
-import { Link, useNavigate, useLocation } from 'react-router-dom';
-import AvatarIcon from './AvatarIcon';
-import LoginForm from '../auth/LoginForm';
-import RegisterForm from '../auth/RegisterForm';
-import ModalForm from '../auth/ModalForm';
-import { Button } from '../../styles/components';
-import { theme } from '../../styles/theme';
-import { BsCameraFill } from 'react-icons/bs';
-import { Search, X, Menu } from 'lucide-react';
-import ContactModal from '../ContactModal';
+import React, { useState, useRef, useEffect } from "react";
+import styled from "styled-components";
+import { Link, useNavigate, useLocation } from "react-router-dom";
+import AvatarIcon from "./AvatarIcon";
+import LoginForm from "../auth/LoginForm";
+import RegisterForm from "../auth/RegisterForm";
+import ModalForm from "../auth/ModalForm";
+import { Button } from "../../styles/components";
+import { theme } from "../../styles/theme";
+import { BsCameraFill } from "react-icons/bs";
+import { Search, X, Menu } from "lucide-react";
+import ContactModal from "../ContactModal";
 
 const Header = ({ isAuthenticated, role, logout, avatarUrl }) => {
   const [menuVisible, setMenuVisible] = useState(false);
@@ -31,9 +31,9 @@ const Header = ({ isAuthenticated, role, logout, avatarUrl }) => {
   };
 
   useEffect(() => {
-    document.addEventListener('mousedown', handleClickOutside);
+    document.addEventListener("mousedown", handleClickOutside);
     return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
+      document.removeEventListener("mousedown", handleClickOutside);
     };
   }, []);
 
@@ -53,21 +53,21 @@ const Header = ({ isAuthenticated, role, logout, avatarUrl }) => {
   };
 
   const scrollToDestinos = () => {
-    if (location.pathname !== '/') {
-      navigate('/');
+    if (location.pathname !== "/") {
+      navigate("/");
     }
     setTimeout(() => {
       document
-        .getElementById('explore-section')
-        ?.scrollIntoView({ behavior: 'smooth' });
+        .getElementById("explore-section")
+        ?.scrollIntoView({ behavior: "smooth" });
     }, 100);
   };
 
   const handleLogoClick = () => {
-    if (location.pathname === '/') {
-      window.scrollTo({ top: 0, behavior: 'smooth' });
+    if (location.pathname === "/") {
+      window.scrollTo({ top: 0, behavior: "smooth" });
     } else {
-      navigate('/');
+      navigate("/");
     }
   };
 
@@ -78,37 +78,41 @@ const Header = ({ isAuthenticated, role, logout, avatarUrl }) => {
       }
     };
 
-    window.addEventListener('resize', handleResize);
+    window.addEventListener("resize", handleResize);
     return () => {
-      window.removeEventListener('resize', handleResize);
+      window.removeEventListener("resize", handleResize);
     };
   }, [isMenuOpen]);
 
   return (
     <HeaderContainer>
       <Wrapper>
-        <LogoSection onClick={handleLogoClick}>
-          <BsCameraFill size={24} color={theme.colors.primary} />
-          <span>LUX MUNDI</span>
+        <LogoSection>
+          <LogoIcon>
+            <BsCameraFill size={24} />
+          </LogoIcon>
+          <LogoText>LUX MUNDI</LogoText>
         </LogoSection>
 
         <Nav>
-          <NavLink to='/about'>Nosotros</NavLink>
-          <NavButton onClick={() => setShowContactModal(true)}>
+          <NavLink to="/about">Nosotros</NavLink>
+          <NavLink as="button" onClick={() => setShowContactModal(true)}>
             Contacto
-          </NavButton>
-          <NavButton onClick={scrollToDestinos}>Destinos</NavButton>
+          </NavLink>
+          <NavLink as="button" onClick={scrollToDestinos}>
+            Destinos
+          </NavLink>
         </Nav>
 
         <RightSection>
           <SearchSection>
-            <SearchBar className={isSearchOpen ? 'active' : ''}>
-              <SearchInput placeholder='Search...' autoFocus={isSearchOpen} />
+            <SearchBar className={isSearchOpen ? "active" : ""}>
+              <SearchInput placeholder="Search..." autoFocus={isSearchOpen} />
               <X
                 size={16}
-                color='#666'
+                color="#666"
                 onClick={() => setIsSearchOpen(false)}
-                style={{ cursor: 'pointer' }}
+                style={{ cursor: "pointer" }}
               />
             </SearchBar>
             <SearchButton onClick={() => setIsSearchOpen(!isSearchOpen)}>
@@ -122,7 +126,7 @@ const Header = ({ isAuthenticated, role, logout, avatarUrl }) => {
                 <AvatarImage
                   onClick={toggleMenu}
                   src={avatarUrl}
-                  alt='Avatar'
+                  alt="Avatar"
                 />
               ) : (
                 <AvatarIconWrapper onClick={toggleMenu}>
@@ -131,9 +135,9 @@ const Header = ({ isAuthenticated, role, logout, avatarUrl }) => {
               )}
               {menuVisible && (
                 <ProfileMenu ref={menuRef}>
-                  <NavLink to='/profile'>Edit Profile</NavLink>
-                  {role === 'admin' && (
-                    <NavLink to='/admin'>Admin Area</NavLink>
+                  <NavLink to="/profile">Edit Profile</NavLink>
+                  {role === "admin" && (
+                    <NavLink to="/admin">Admin Area</NavLink>
                   )}
                   <LogoutButton onClick={logout}>Logout</LogoutButton>
                 </ProfileMenu>
@@ -141,10 +145,10 @@ const Header = ({ isAuthenticated, role, logout, avatarUrl }) => {
             </ProfileContainer>
           ) : (
             <AuthButtons>
-              <Button variant='primary' onClick={openLoginForm}>
+              <Button variant="primary" onClick={openLoginForm}>
                 Login
               </Button>
-              <Button variant='secondary' onClick={openRegisterForm}>
+              <Button variant="secondary" onClick={openRegisterForm}>
                 Register
               </Button>
             </AuthButtons>
@@ -157,14 +161,14 @@ const Header = ({ isAuthenticated, role, logout, avatarUrl }) => {
 
         <MobileMenu isOpen={isMenuOpen}>
           <MobileMenuWrapper>
-            <MobileNavLink to='/about'>Nosotros</MobileNavLink>
+            <MobileNavLink to="/about">Nosotros</MobileNavLink>
             <MobileNavLink
-              as='button'
+              as="button"
               onClick={() => setShowContactModal(true)}
             >
               Contacto
             </MobileNavLink>
-            <MobileNavLink as='button' onClick={scrollToDestinos}>
+            <MobileNavLink as="button" onClick={scrollToDestinos}>
               Destinos
             </MobileNavLink>
           </MobileMenuWrapper>
@@ -222,13 +226,47 @@ const LogoSection = styled.div`
   gap: 0.8rem;
   color: ${theme.colors.text.primary};
   cursor: pointer;
+  transition: ${theme.animation.transition};
+
+  &:hover {
+    color: ${theme.colors.primary};
+    transform: scale(1.05);
+  }
+`;
+
+const LogoIcon = styled.div`
+  display: flex;
+  align-items: center;
+  transition: ${theme.animation.transition};
+
+  ${LogoSection}:hover & {
+    color: ${theme.colors.primary};
+  }
+`;
+
+const LogoText = styled.span`
+  font-size: 1.2rem;
+  font-weight: bold;
+  transition: ${theme.animation.transition};
+
+  ${LogoSection}:hover & {
+    color: ${theme.colors.primary};
+  }
+
+  @media (min-width: ${theme.breakpoints.tablet}) {
+    font-size: 1.4rem;
+  }
+
+  @media (min-width: ${theme.breakpoints.desktop}) {
+    font-size: 1.6rem;
+  }
 `;
 
 const Nav = styled.nav`
   display: flex;
   gap: 1.5rem;
 
-  @media (max-width: 768px) {
+  @media (max-width: ${theme.breakpoints.tablet}) {
     display: none;
   }
 `;
@@ -236,25 +274,40 @@ const Nav = styled.nav`
 const NavLink = styled(Link)`
   color: ${theme.colors.text.primary};
   text-decoration: none;
-  font-size: 1rem;
+  font-size: 0.9rem;
   padding: 0.6rem 1rem;
   transition: ${theme.animation.transition};
-
-  &:hover {
-    color: ${theme.colors.primaryHover};
-  }
-`;
-
-const NavButton = styled.button`
-  color: ${theme.colors.text.primary};
+  position: relative;
   background: none;
   border: none;
-  padding: 0.6rem 1rem;
   cursor: pointer;
-  transition: ${theme.animation.transition};
+
+  &::after {
+    content: "";
+    position: absolute;
+    width: 0;
+    height: 2px;
+    bottom: 0;
+    left: 50%;
+    background-color: ${theme.colors.primary};
+    transition: all 0.3s ease-in-out;
+  }
+
+  &:hover::after {
+    width: 100%;
+    left: 0;
+  }
 
   &:hover {
-    color: ${theme.colors.primaryHover};
+    color: ${theme.colors.primary};
+  }
+
+  @media (min-width: ${theme.breakpoints.tablet}) {
+    font-size: 1rem;
+  }
+
+  @media (min-width: ${theme.breakpoints.desktop}) {
+    font-size: 1.1rem;
   }
 `;
 
@@ -278,8 +331,8 @@ const SearchBar = styled.div`
   border-radius: 4px;
   padding: 0.5rem;
   background-color: ${theme.colors.background};
-  width: ${({ isOpen }) => (isOpen ? '200px' : '0')};
-  opacity: ${({ isOpen }) => (isOpen ? '1' : '0')};
+  width: ${({ isOpen }) => (isOpen ? "200px" : "0")};
+  opacity: ${({ isOpen }) => (isOpen ? "1" : "0")};
   transition: all 0.3s ease;
   overflow: hidden;
 
@@ -374,7 +427,7 @@ const MobileMenu = styled.div`
   background-color: ${theme.colors.background};
   border-left: 1px solid ${theme.colors.border};
   padding: 1rem;
-  transform: ${({ isOpen }) => (isOpen ? 'translateX(0)' : 'translateX(100%)')};
+  transform: ${({ isOpen }) => (isOpen ? "translateX(0)" : "translateX(100%)")};
   transition: transform 0.3s ease;
   z-index: 999;
 
@@ -389,17 +442,16 @@ const MobileMenuWrapper = styled.div`
   gap: 1rem;
 `;
 
-const MobileNavLink = styled(Link)`
-  color: ${theme.colors.text.primary};
-  text-decoration: none;
-  display: block;
+const MobileNavLink = styled(NavLink)`
+  text-align: right;
   padding: 1rem;
   font-size: 1rem;
-  text-align: right;
-  background-color: ${theme.colors.background};
-  border: none;
+
+  &::after {
+    bottom: -2px;
+  }
+
   &:hover {
-    background-color: ${theme.colors.primaryLight};
-    color: ${theme.colors.text.primary};
+    background-color: transparent;
   }
 `;
