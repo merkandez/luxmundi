@@ -63,7 +63,7 @@ function AboutUs() {
   return (
     <AboutWrapper>
       <AboutHeader>
-        <Title>Our Team</Title>
+        <Title>Nuestro Equipo</Title>
         <Description>
         En Lux Mundi, nuestro equipo está formado por cinco personas con una profunda pasión por los viajes y la fotografía, que nos une en la misión de compartir el mundo a través de nuestros ojos y cámaras. 
         </Description>
