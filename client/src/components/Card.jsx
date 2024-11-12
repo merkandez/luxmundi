@@ -1,19 +1,31 @@
+import React from 'react';
 import styled from "styled-components";
 import PropTypes from "prop-types";
+import { useNavigate } from 'react-router-dom';
 
-const Card = ({ title, description }) => (
-  <CardWrapper>
+const Card = ({ id, title, content }) => {
+  const navigate = useNavigate();
+  
+  //NOS LLEVA A LA PÁG. DE ARTICLEPAGE
+  const handleClick = () => {
+    navigate(`/articlePage/${id}`);
+  };
+
+  return (
+  <CardWrapper onClick= {handleClick}>
     <CardImage />
     <CardContent>
       <h3>{title}</h3>
-      <p>{description}</p>
+      <p>{content}</p>
     </CardContent>
   </CardWrapper>
 );
+}
 
 Card.propTypes = {
+  id: PropTypes.string.isRequired,   // Aseguramos que 'id' sea un string requerido
   title: PropTypes.string.isRequired,
-  description: PropTypes.string.isRequired,
+  content: PropTypes.string.isRequired,
 };
 
 const CardWrapper = styled.div`

@@ -1,158 +1,113 @@
 import styled from "styled-components";
-import Card from "./Card";
-import { useState } from "react";
-import PropTypes from "prop-types";
+import React, { useEffect, useState } from "react";
+import { getPosts } from "../services/api"; // Importa la función de API
+import Card from "./Card"; // Importa el componente Card para mostrar cada post
+import CardsContainer from "./CardContainer"
+import Pagination from "./Pagination"; //Llamar solo a pagination
 
-const ExploreSection = ({ cards = [] }) => {
-  const [currentPage, setCurrentPage] = useState(1);
-  const cardsPerPage = 12;
-  const totalPages = Math.max(1, Math.ceil(cards.length / cardsPerPage));
+const ExploreSection = () => {
+  // Crea un estado para guardar los posts obtenidos
+  const [posts, setPosts] = useState([]); // Post originales
+  const [filteredPosts, setFilteredPosts] = useState([]); //post filtrados
+  const [searchQuery, setSearchQuery] = useState(''); // Estado para el texto de búsqueda
 
-  const indexOfLastCard = currentPage * cardsPerPage;
-  const indexOfFirstCard = indexOfLastCard - cardsPerPage;
-  const currentCards = cards.slice(indexOfFirstCard, indexOfLastCard);
+  useEffect(() => {
+  // Este hook se ejecuta. carga los posts cuando el componente se muestra
+    const fetchPosts = async () => {
+      try {
+        const data = await getPosts(); // Llama a la API para obtener los posts
+        setPosts(data); // Guarda los posts en el estado original
+        setFilteredPosts(data); //Inicialmente, los post filtrados son todos
+      } catch (error) {
+        console.error("Error fetching posts:", error);
+      }
+    };
+
+    fetchPosts(); // Llama a la función para cargar los posts
+  }, []); // [] asegura que solo se ejecute una vez al cargar
+
+  //Maneja el cambio en el campo de búsqueda
+  const handleSearch =(e) => {
+    const query = e.target.value.toLowerCase();
+    setSearchQuery(query);//actualiza el estado del texto de búsqueda
+
+    //Filtra los posts basándose en el Título  o c
+    const filtered = posts.filter(post =>
+      post.title.toLowerCase().includes(query) ||
+      post.content.toLowerCase().includes(query)
+
+    );
+    setFilteredPosts(filtered); //Actualiza el estado de los posts filtrados
+  }
 
   return (
-    <Section>
-      <SectionHeader>
-        <Title>Destinos</Title>
-        <Subtitle>Discover amazing destinations</Subtitle>
-      </SectionHeader>
+    <SectionWrapper>
+      <h2>Explore Posts</h2>
+      <p>Descubre nuestras últimas publicaciones.</p>
 
-      <CardGrid>
-        {currentCards.map((card, index) => (
-          <Card key={index} {...card} />
+     {/* DESDE AQUI Campo de búsquedad */}
+      <input 
+         type="text"
+         placeholder="Buscar las publicaciones..."
+         value={searchQuery}
+         onChange={handleSearch}  
+     />
+           
+
+      <CardsContainer>
+        {/* Mapea cada post y lo muestra en un componente Card */}
+        {filteredPosts.map((post) => (
+          <Card 
+          key={post.id} 
+          title={post.title} 
+          content={post.content} />
         ))}
-      </CardGrid>
-
-      {totalPages > 1 && (
-        <Pagination>
-          <PaginationButton
-            onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
-            disabled={currentPage === 1}
-          >
-            Previous
-          </PaginationButton>
-
-          <PageNumbers>
-            {[...Array(totalPages)].map((_, index) => (
-              <PageNumber
-                key={index}
-                active={currentPage === index + 1}
-                onClick={() => setCurrentPage(index + 1)}
-              >
-                {index + 1}
-              </PageNumber>
-            ))}
-          </PageNumbers>
-
-          <PaginationButton
-            onClick={() =>
-              setCurrentPage((prev) => Math.min(prev + 1, totalPages))
-            }
-            disabled={currentPage === totalPages}
-          >
-            Next
-          </PaginationButton>
-        </Pagination>
-      )}
-    </Section>
+      </CardsContainer>
+      <Pagination /> {/* Llamar solo a Pagination */}
+    </SectionWrapper>
   );
 };
 
-ExploreSection.propTypes = {
-  cards: PropTypes.arrayOf(
-    PropTypes.shape({
-      title: PropTypes.string.isRequired,
-      description: PropTypes.string.isRequired,
-    })
-  ).isRequired,
-};
 
-const Section = styled.section`
-  padding: 60px 0;
-  background-color: #111111;
-`;
 
-const SectionHeader = styled.div`
+// Estilos para la sección
+const SectionWrapper = styled.section`
+  background-color: #2c2c2c;
+  color: #ffffff;
+  padding: 64px 64px 146px;
   text-align: center;
-  margin-bottom: 48px;
-`;
 
-const Title = styled.h2`
-  font-size: 2.5rem;
-  color: #fff;
-  margin-bottom: 16px;
-`;
-
-const Subtitle = styled.p`
-  color: #999;
-  font-size: 1.1rem;
-`;
-
-const CardGrid = styled.div`
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-  gap: 24px;
-  max-width: 1440px;
-  margin: 0 auto;
-  padding: 0 24px;
-
-  @media (min-width: 1200px) {
-    grid-template-columns: repeat(4, 1fr);
-  }
-`;
-
-const Pagination = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 16px;
-  margin-top: 48px;
-`;
-
-const PaginationButton = styled.button`
-  background: transparent;
-  border: 1px solid #29c9a9;
-  color: #29c9a9;
-  padding: 8px 16px;
-  border-radius: 4px;
-  cursor: pointer;
-  transition: all 0.2s ease;
-
-  &:hover:not(:disabled) {
-    background: #29c9a9;
-    color: #000;
+  h2 {
+    font-size: 2rem;
+    font-weight: 600;
+    margin-bottom: 8px;
   }
 
-  &:disabled {
-    opacity: 0.5;
-    cursor: not-allowed;
+  p {
+    font-size: 1rem;
+    color: #aaaaaa;
+    margin-bottom: 24px;
   }
-`;
 
-const PageNumbers = styled.div`
-  display: flex;
-  gap: 8px;
-`;
-
-const PageNumber = styled.button`
-  width: 32px;
-  height: 32px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: 4px;
-  border: none;
-  background: ${(props) => (props.active ? "#29c9a9" : "transparent")};
-  color: ${(props) => (props.active ? "#000" : "#fff")};
-  cursor: pointer;
-  transition: all 0.2s ease;
-
-  &:hover:not(:disabled) {
-    background: ${(props) =>
-      props.active ? "#29c9a9" : "rgba(41, 201, 169, 0.1)"};
+  /* Estilos para el campo de búsqueda */
+  input {
+    padding: 10px;
+    width: 80%;
+    max-width: 400px;
+    margin-bottom: 20px;
+    border: none;
+    border-radius: 5px;
   }
+
+
+  @media (max-width: 768px) { 
+  padding: 20px 12px; 
+  h2 { font-size: 1.5rem; 
+  } 
+  p { 
+  font-size: 0.9rem; 
+  } 
+  
 `;
 
 export default ExploreSection;

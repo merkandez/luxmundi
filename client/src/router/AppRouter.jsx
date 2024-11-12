@@ -8,6 +8,7 @@ import AboutPage from '../pages/AboutPage';
 import ProtectedRoute from './ProtectedRoute';
 import NotFound from "../pages/NotFound";
 import ContactForm from "../components/ContactForm";
+import ArticlePage from "../pages/ArticlePage";
 
 
 export const router = createBrowserRouter([
@@ -16,13 +17,11 @@ export const router = createBrowserRouter([
     element: <Layout />, // El Layout gestionará el modal de autenticación
     children: [
       { index: true, element: <HomePage /> },
-      { path: 'aboutus', element: <AboutPage /> },
-      {
-        path: "contact",
-        element: <ContactForm />,
-      },
+      { path: 'about', element: <AboutPage /> },
+      { path: "contact", element: <ContactForm />},
+      { path: 'articlePage', element: <ArticlePage/> },
       
-      
+    
       {
         path: "*",
         element: <NotFound />,
