@@ -5,16 +5,18 @@ import AvatarIcon from './AvatarIcon';
 import LoginForm from '../auth/LoginForm';
 import RegisterForm from '../auth/RegisterForm';
 import ModalForm from '../auth/ModalForm';
+import EditProfileCard from '../EditProfileCard';  
 import { Button } from '../../styles/components';
 import { theme } from '../../styles/theme';
 import { BsCameraFill } from 'react-icons/bs';
 import { Search, X, Menu } from 'lucide-react';
 import ContactModal from '../ContactModal';
 
-const Header = ({ isAuthenticated, role, logout, avatarUrl }) => {
+const Header = ({ isAuthenticated, role, logout, avatarUrl, userData }) => {
   const [menuVisible, setMenuVisible] = useState(false);
   const [showLoginForm, setShowLoginForm] = useState(false);
   const [showRegisterForm, setShowRegisterForm] = useState(false);
+  const [showEditProfile, setShowEditProfile] = useState(false); // Estado para el modal de edición
   const [showContactModal, setShowContactModal] = useState(false);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -50,6 +52,7 @@ const Header = ({ isAuthenticated, role, logout, avatarUrl }) => {
   const closeForms = () => {
     setShowLoginForm(false);
     setShowRegisterForm(false);
+    setShowEditProfile(false);  // Cierra el modal de edición
   };
 
   const scrollToDestinos = () => {
@@ -57,9 +60,7 @@ const Header = ({ isAuthenticated, role, logout, avatarUrl }) => {
       navigate('/');
     }
     setTimeout(() => {
-      document
-        .getElementById('explore-section')
-        ?.scrollIntoView({ behavior: 'smooth' });
+      document.getElementById('explore-section')?.scrollIntoView({ behavior: 'smooth' });
     }, 100);
   };
 
@@ -71,6 +72,7 @@ const Header = ({ isAuthenticated, role, logout, avatarUrl }) => {
     }
   };
 
+  // Cierra el menú móvil si el ancho de la ventana cambia a tamaño de escritorio
   useEffect(() => {
     const handleResize = () => {
       if (window.innerWidth > 768 && isMenuOpen) {
@@ -93,20 +95,18 @@ const Header = ({ isAuthenticated, role, logout, avatarUrl }) => {
         </LogoSection>
 
         <Nav>
-          <NavLink to='/about'>Nosotros</NavLink>
-          <NavButton onClick={() => setShowContactModal(true)}>
-            Contacto
-          </NavButton>
+          <NavLink to="/about">Nosotros</NavLink>
+          <NavButton onClick={() => setShowContactModal(true)}>Contacto</NavButton>
           <NavButton onClick={scrollToDestinos}>Destinos</NavButton>
         </Nav>
 
         <RightSection>
           <SearchSection>
             <SearchBar className={isSearchOpen ? 'active' : ''}>
-              <SearchInput placeholder='Search...' autoFocus={isSearchOpen} />
+              <SearchInput placeholder="Search..." autoFocus={isSearchOpen} />
               <X
                 size={16}
-                color='#666'
+                color="#666"
                 onClick={() => setIsSearchOpen(false)}
                 style={{ cursor: 'pointer' }}
               />
@@ -119,11 +119,7 @@ const Header = ({ isAuthenticated, role, logout, avatarUrl }) => {
           {isAuthenticated ? (
             <ProfileContainer>
               {avatarUrl ? (
-                <AvatarImage
-                  onClick={toggleMenu}
-                  src={avatarUrl}
-                  alt='Avatar'
-                />
+                <AvatarImage onClick={toggleMenu} src={avatarUrl} alt="Avatar" />
               ) : (
                 <AvatarIconWrapper onClick={toggleMenu}>
                   <AvatarIcon />
@@ -131,22 +127,18 @@ const Header = ({ isAuthenticated, role, logout, avatarUrl }) => {
               )}
               {menuVisible && (
                 <ProfileMenu ref={menuRef}>
-                  <NavLink to='/profile'>Edit Profile</NavLink>
-                  {role === 'admin' && (
-                    <NavLink to='/admin'>Admin Area</NavLink>
-                  )}
+                  <NavButton as="button" onClick={() => setShowEditProfile(true)}>
+                    Edit Profile
+                  </NavButton>
+                  {role === 'admin' && <NavLink to="/admin">Admin Area</NavLink>}
                   <LogoutButton onClick={logout}>Logout</LogoutButton>
                 </ProfileMenu>
               )}
             </ProfileContainer>
           ) : (
             <AuthButtons>
-              <Button variant='primary' onClick={openLoginForm}>
-                Login
-              </Button>
-              <Button variant='secondary' onClick={openRegisterForm}>
-                Register
-              </Button>
+              <Button variant="primary" onClick={openLoginForm}>Login</Button>
+              <Button variant="secondary" onClick={openRegisterForm}>Register</Button>
             </AuthButtons>
           )}
 
@@ -156,27 +148,15 @@ const Header = ({ isAuthenticated, role, logout, avatarUrl }) => {
         </RightSection>
 
         <MobileMenu isOpen={isMenuOpen}>
-          <MobileMenuWrapper>
-            <MobileNavLink to='/about'>Nosotros</MobileNavLink>
-            <MobileNavLink
-              as='button'
-              onClick={() => setShowContactModal(true)}
-            >
-              Contacto
-            </MobileNavLink>
-            <MobileNavLink as='button' onClick={scrollToDestinos}>
-              Destinos
-            </MobileNavLink>
-          </MobileMenuWrapper>
+          <MobileNavLink to="/about">Nosotros</MobileNavLink>
+          <MobileNavLink as="button" onClick={() => setShowContactModal(true)}>Contacto</MobileNavLink>
+          <MobileNavLink as="button" onClick={scrollToDestinos}>Destinos</MobileNavLink>
         </MobileMenu>
       </Wrapper>
 
       {showLoginForm && (
         <ModalForm onClose={closeForms}>
-          <LoginForm
-            onClose={closeForms}
-            onSwitchToRegister={openRegisterForm}
-          />
+          <LoginForm onClose={closeForms} onSwitchToRegister={openRegisterForm} />
         </ModalForm>
       )}
       {showRegisterForm && (
@@ -184,10 +164,20 @@ const Header = ({ isAuthenticated, role, logout, avatarUrl }) => {
           <RegisterForm onClose={closeForms} onSwitchToLogin={openLoginForm} />
         </ModalForm>
       )}
-      <ContactModal
-        isOpen={showContactModal}
-        onClose={() => setShowContactModal(false)}
-      />
+      {showEditProfile && (
+        <ModalForm onClose={closeForms}>
+          <EditProfileCard
+            initialData={userData}
+            onSave={(updatedData) => {
+              // Logica de guardado del perfil
+              console.log("Perfil actualizado", updatedData);
+              closeForms();
+            }}
+            onCancel={closeForms}
+          />
+        </ModalForm>
+      )}
+      <ContactModal isOpen={showContactModal} onClose={() => setShowContactModal(false)} />
     </HeaderContainer>
   );
 };

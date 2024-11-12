@@ -1,22 +1,27 @@
-import { useState } from "react";
-import styled from "styled-components";
-import PropTypes from "prop-types";
+import React, { useState } from 'react';
+import styled from 'styled-components';
+import { FiEdit2 } from 'react-icons/fi';
 
-const EditProfileCard = ({ onSave, onCancel, initialData }) => {
+const EditProfileCard = ({ initialData, onSave, onCancel }) => {
   const [formData, setFormData] = useState({
-    username: initialData?.username || "",
-    email: initialData?.email || "",
-    currentPassword: "",
-    newPassword: "",
-    confirmPassword: "",
+    username: initialData?.username || '',
+    email: initialData?.email || '',
+    currentPassword: '',
+    newPassword: '',
+    confirmPassword: '',
+    avatar: initialData?.avatar || null,
   });
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData((prev) => ({
-      ...prev,
-      [name]: value,
-    }));
+    setFormData((prev) => ({ ...prev, [name]: value }));
+  };
+
+  const handleAvatarChange = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      setFormData((prev) => ({ ...prev, avatar: URL.createObjectURL(file) }));
+    }
   };
 
   const handleSubmit = (e) => {
@@ -30,9 +35,19 @@ const EditProfileCard = ({ onSave, onCancel, initialData }) => {
 
   return (
     <CardContainer>
-      <CardHeader>
-        <h2>Edit Profile</h2>
-      </CardHeader>
+      <AvatarContainer>
+        <AvatarPreview src={formData.avatar || '/default-avatar.png'} alt="Avatar" />
+        <EditIcon onClick={() => document.getElementById('avatarInput').click()}>
+          <FiEdit2 size={18} />
+        </EditIcon>
+        <AvatarInput
+          type="file"
+          accept="image/*"
+          id="avatarInput"
+          onChange={handleAvatarChange}
+          style={{ display: 'none' }}
+        />
+      </AvatarContainer>
 
       <Form onSubmit={handleSubmit}>
         <FormGroup>
@@ -61,7 +76,6 @@ const EditProfileCard = ({ onSave, onCancel, initialData }) => {
 
         <PasswordSection>
           <h3>Change Password</h3>
-
           <FormGroup>
             <Label htmlFor="currentPassword">Current Password</Label>
             <Input
@@ -72,7 +86,6 @@ const EditProfileCard = ({ onSave, onCancel, initialData }) => {
               onChange={handleChange}
             />
           </FormGroup>
-
           <FormGroup>
             <Label htmlFor="newPassword">New Password</Label>
             <Input
@@ -83,7 +96,6 @@ const EditProfileCard = ({ onSave, onCancel, initialData }) => {
               onChange={handleChange}
             />
           </FormGroup>
-
           <FormGroup>
             <Label htmlFor="confirmPassword">Confirm New Password</Label>
             <Input
@@ -107,122 +119,124 @@ const EditProfileCard = ({ onSave, onCancel, initialData }) => {
   );
 };
 
+export default EditProfileCard;
+
+// Estilos
 const CardContainer = styled.div`
   background: #1a1a1a;
   border-radius: 12px;
-  padding: 2rem;
-  width: 100%;
-  max-width: 500px;
+  padding: 1.5rem;
+  width: 90%;
+  max-width: 450px;
   margin: 2rem auto;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
   border: 1px solid #333;
+  text-align: center;
 `;
 
-const CardHeader = styled.div`
-  margin-bottom: 2rem;
+const AvatarContainer = styled.div`
+  position: relative;
+  margin-bottom: 1.5rem;
+`;
 
-  h2 {
-    color: #fff;
-    font-size: 1.5rem;
-    font-weight: 600;
-    margin: 0;
+const AvatarPreview = styled.img`
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-bottom: 0.5rem;
+  border: 2px solid #333;
+`;
+
+const EditIcon = styled.div`
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  background-color: #29c9a9;
+  border-radius: 50%;
+  padding: 0.3rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  &:hover {
+    background-color: #20a088;
   }
 `;
+
+const AvatarInput = styled.input``;
 
 const Form = styled.form`
   display: flex;
   flex-direction: column;
-  gap: 1.5rem;
+  gap: 1rem;
 `;
 
 const FormGroup = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
+  text-align: left;
 `;
 
 const Label = styled.label`
   color: #fff;
   font-size: 0.9rem;
-  font-weight: 500;
 `;
 
 const Input = styled.input`
+  width: 100%;
+  padding: 0.75rem;
   background: #2a2a2a;
   border: 1px solid #333;
   border-radius: 6px;
-  padding: 0.75rem 1rem;
   color: #fff;
   font-size: 0.9rem;
-  transition: all 0.2s ease;
+  margin-top: 0.25rem;
 
   &:focus {
-    outline: none;
     border-color: #29c9a9;
-    box-shadow: 0 0 0 2px rgba(41, 201, 169, 0.2);
-  }
-
-  &::placeholder {
-    color: #666;
   }
 `;
 
 const PasswordSection = styled.div`
   border-top: 1px solid #333;
   padding-top: 1.5rem;
-  margin-top: 0.5rem;
-
-  h3 {
-    color: #fff;
-    font-size: 1.1rem;
-    font-weight: 500;
-    margin: 0 0 1.5rem 0;
-  }
+  text-align: left;
 `;
 
 const ButtonGroup = styled.div`
   display: flex;
   gap: 1rem;
-  margin-top: 1rem;
+  margin-top: 1.5rem;
 `;
 
-const Button = styled.button`
+const SaveButton = styled.button`
+  background: #29c9a9;
+  color: #000;
+  border: none;
   padding: 0.75rem 1.5rem;
   border-radius: 6px;
   font-size: 0.9rem;
   font-weight: 500;
   cursor: pointer;
-  transition: all 0.2s ease;
   flex: 1;
-`;
-
-const SaveButton = styled(Button)`
-  background: #29c9a9;
-  color: #000;
-  border: none;
 
   &:hover {
     background: #20a088;
   }
 `;
 
-const CancelButton = styled(Button)`
+const CancelButton = styled.button`
   background: transparent;
   color: #fff;
   border: 1px solid #333;
+  padding: 0.75rem 1.5rem;
+  border-radius: 6px;
+  font-size: 0.9rem;
+  font-weight: 500;
+  cursor: pointer;
+  flex: 1;
 
   &:hover {
     background: rgba(255, 255, 255, 0.1);
   }
 `;
-
-EditProfileCard.propTypes = {
-  onSave: PropTypes.func.isRequired,
-  onCancel: PropTypes.func.isRequired,
-  initialData: PropTypes.shape({
-    username: PropTypes.string,
-    email: PropTypes.string,
-  }),
-};
-
-export default EditProfileCard;
