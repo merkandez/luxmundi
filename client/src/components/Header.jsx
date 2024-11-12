@@ -1,9 +1,9 @@
-import styled from "styled-components";
-import { Camera, Search, X, Menu } from "lucide-react";
-import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
-import PropTypes from "prop-types";
-import ProfileSettings from "./ProfileSettings";
+import styled from 'styled-components';
+import { Camera, Search, X, Menu } from 'lucide-react';
+import { useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import PropTypes from 'prop-types';
+import ProfileSettings from './ProfileSettings';
 
 const HeaderContainer = styled.header`
   background-color: #0a0a0a;
@@ -14,7 +14,6 @@ const HeaderContainer = styled.header`
   top: 0;
   z-index: 1000;
   transition: border-color 0.3s ease;
-
   &:hover {
     border-color: rgba(255, 255, 255, 0.2);
   }
@@ -78,7 +77,7 @@ const NavLink = styled(Link)`
   position: relative;
 
   &:after {
-    content: "";
+    content: '';
     position: absolute;
     width: 0;
     height: 1px;
@@ -250,9 +249,9 @@ const MobileMenu = styled.div`
   background-color: #0a0a0a;
   border-top: 1px solid #333;
   padding: 1rem 0;
-  transform: translateY(${({ isOpen }) => (isOpen ? "0" : "-100%")});
-  opacity: ${({ isOpen }) => (isOpen ? "1" : "0")};
-  visibility: ${({ isOpen }) => (isOpen ? "visible" : "hidden")};
+  transform: translateY(${({ isOpen }) => (isOpen ? '0' : '-100%')});
+  opacity: ${({ isOpen }) => (isOpen ? '1' : '0')};
+  visibility: ${({ isOpen }) => (isOpen ? 'visible' : 'hidden')};
   transition: all 0.3s ease;
   z-index: 999;
 
@@ -286,20 +285,20 @@ const Header = ({ isLoggedIn }) => {
   const navigate = useNavigate();
 
   const navLinks = [
-    { name: "Nosotros", href: "/about" },
-    { name: "Destinos", href: "/destinations" },
-    { name: "Contacto", href: "/contact" },
+    { name: 'Nosotros', href: '/about' },
+    { name: 'Destinos', href: '/destinations' },
+    { name: 'Contacto', href: '/contact' },
   ];
 
   const handleLogout = () => {
     // Add your logout logic here
-    navigate("/");
+    navigate('/');
   };
 
   return (
     <HeaderContainer>
       <Wrapper>
-        <LogoSection to="/">
+        <LogoSection to='/'>
           <Camera size={32} />
           <span>LUX MUNDI</span>
         </LogoSection>
@@ -313,17 +312,17 @@ const Header = ({ isLoggedIn }) => {
         </Nav>
 
         <SearchSection>
-          <SearchBar className={isSearchOpen ? "active" : ""}>
+          <SearchBar className={isSearchOpen ? 'active' : ''}>
             <SearchInput
-              type="text"
-              placeholder="Search..."
+              type='text'
+              placeholder='Search...'
               autoFocus={isSearchOpen}
             />
             <X
               size={16}
-              color="#666"
+              color='#666'
               onClick={() => setIsSearchOpen(false)}
-              style={{ cursor: "pointer" }}
+              style={{ cursor: 'pointer' }}
             />
           </SearchBar>
           <SearchButton onClick={() => setIsSearchOpen(true)}>
@@ -332,21 +331,21 @@ const Header = ({ isLoggedIn }) => {
         </SearchSection>
 
         {isLoggedIn ? (
-          <ProfileSettings username="John Doe" onLogout={handleLogout} />
+          <ProfileSettings username='John Doe' onLogout={handleLogout} />
         ) : (
           <AuthButtons>
-            <Link to="/login">
-              <button className="login">Log in</button>
+            <Link to='/login'>
+              <button className='login'>Log in</button>
             </Link>
-            <Link to="/register">
-              <button className="register">Register</button>
+            <Link to='/register'>
+              <button className='register'>Register</button>
             </Link>
           </AuthButtons>
         )}
 
         <MobileMenuButton
           onClick={() => setIsMenuOpen(!isMenuOpen)}
-          aria-label={isMenuOpen ? "Close menu" : "Open menu"}
+          aria-label={isMenuOpen ? 'Close menu' : 'Open menu'}
         >
           {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
         </MobileMenuButton>
@@ -359,15 +358,15 @@ const Header = ({ isLoggedIn }) => {
           ))}
           {isLoggedIn ? (
             <>
-              <MobileNavLink to="/profile">Profile</MobileNavLink>
-              <MobileNavLink as="button" onClick={handleLogout}>
+              <MobileNavLink to='/profile'>Profile</MobileNavLink>
+              <MobileNavLink as='button' onClick={handleLogout}>
                 Logout
               </MobileNavLink>
             </>
           ) : (
             <>
-              <MobileNavLink to="/login">Log in</MobileNavLink>
-              <MobileNavLink to="/register">Register</MobileNavLink>
+              <MobileNavLink to='/login'>Log in</MobileNavLink>
+              <MobileNavLink to='/register'>Register</MobileNavLink>
             </>
           )}
         </MobileMenu>

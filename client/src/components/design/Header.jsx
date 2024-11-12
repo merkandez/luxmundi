@@ -1,14 +1,14 @@
 import React, { useState, useRef, useEffect } from 'react';
 import styled from 'styled-components';
-import { Link, useNavigate, useLocation } from 'react-router-dom'; // Importaciones necesarias
+import { Link, useNavigate, useLocation } from 'react-router-dom';
 import AvatarIcon from './AvatarIcon';
 import LoginForm from '../auth/LoginForm';
 import RegisterForm from '../auth/RegisterForm';
 import ModalForm from '../auth/ModalForm';
-import { Button} from '../../styles/components';
+import { Button } from '../../styles/components';
 import { theme } from '../../styles/theme';
 import { BsCameraFill } from 'react-icons/bs';
-import { Search } from 'lucide-react';
+import { Search, X, Menu } from 'lucide-react';
 import ContactModal from '../ContactModal';
 
 const Header = ({ isAuthenticated, role, logout, avatarUrl }) => {
@@ -16,6 +16,8 @@ const Header = ({ isAuthenticated, role, logout, avatarUrl }) => {
   const [showLoginForm, setShowLoginForm] = useState(false);
   const [showRegisterForm, setShowRegisterForm] = useState(false);
   const [showContactModal, setShowContactModal] = useState(false);
+  const [isSearchOpen, setIsSearchOpen] = useState(false);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
   const menuRef = useRef(null);
   const navigate = useNavigate();
   const location = useLocation();
@@ -59,7 +61,6 @@ const Header = ({ isAuthenticated, role, logout, avatarUrl }) => {
     }, 100);
   };
 
-  // Lógica para desplazarse al inicio al hacer clic en el logo
   const handleLogoClick = () => {
     if (location.pathname === '/') {
       window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -67,6 +68,19 @@ const Header = ({ isAuthenticated, role, logout, avatarUrl }) => {
       navigate('/');
     }
   };
+
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth > 768 && isMenuOpen) {
+        setIsMenuOpen(false);
+      }
+    };
+
+    window.addEventListener('resize', handleResize);
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, [isMenuOpen]);
 
   return (
     <HeaderContainer>
@@ -79,14 +93,21 @@ const Header = ({ isAuthenticated, role, logout, avatarUrl }) => {
         <Nav>
           <NavLink to="/about">Nosotros</NavLink>
           <NavButton onClick={() => setShowContactModal(true)}>Contacto</NavButton>
-          <NavButton onClick={scrollToDestinos}>Destinos</NavButton> {/* Enlace a Destinos */}
-          {role === 'admin' && <NavLink to="/admin">Admin. Area</NavLink>}
+          <NavButton onClick={scrollToDestinos}>Destinos</NavButton>
         </Nav>
 
         <RightSection>
           <SearchSection>
-            <SearchInput placeholder="Search..." />
-            <SearchButton>
+            <SearchBar className={isSearchOpen ? 'active' : ''}>
+              <SearchInput placeholder="Search..." autoFocus={isSearchOpen} />
+              <X
+                size={16}
+                color="#666"
+                onClick={() => setIsSearchOpen(false)}
+                style={{ cursor: 'pointer' }}
+              />
+            </SearchBar>
+            <SearchButton onClick={() => setIsSearchOpen(!isSearchOpen)}>
               <Search size={20} />
             </SearchButton>
           </SearchSection>
@@ -103,6 +124,7 @@ const Header = ({ isAuthenticated, role, logout, avatarUrl }) => {
               {menuVisible && (
                 <ProfileMenu ref={menuRef}>
                   <NavLink to="/profile">Edit Profile</NavLink>
+                  {role === 'admin' && <NavLink to="/admin">Admin Area</NavLink>}
                   <LogoutButton onClick={logout}>Logout</LogoutButton>
                 </ProfileMenu>
               )}
@@ -113,10 +135,21 @@ const Header = ({ isAuthenticated, role, logout, avatarUrl }) => {
               <Button variant="secondary" onClick={openRegisterForm}>Register</Button>
             </AuthButtons>
           )}
+
+          <MobileMenuButton onClick={() => setIsMenuOpen(!isMenuOpen)}>
+            {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
+          </MobileMenuButton>
         </RightSection>
+
+        <MobileMenu isOpen={isMenuOpen}>
+          <MobileMenuWrapper>
+            <MobileNavLink to="/about">Nosotros</MobileNavLink>
+            <MobileNavLink as="button" onClick={() => setShowContactModal(true)}>Contacto</MobileNavLink>
+            <MobileNavLink as="button" onClick={scrollToDestinos}>Destinos</MobileNavLink>
+          </MobileMenuWrapper>
+        </MobileMenu>
       </Wrapper>
 
-      {/* Modals */}
       {showLoginForm && (
         <ModalForm onClose={closeForms}>
           <LoginForm onClose={closeForms} onSwitchToRegister={openRegisterForm} />
@@ -133,6 +166,7 @@ const Header = ({ isAuthenticated, role, logout, avatarUrl }) => {
 };
 
 export default Header;
+
 // Estilos
 const HeaderContainer = styled.header`
   background-color: ${theme.colors.background};
@@ -155,26 +189,27 @@ const Wrapper = styled.div`
   position: relative;
 `;
 
-const LogoSection = styled(Link)`
+const LogoSection = styled.div`
   display: flex;
   align-items: center;
   gap: 0.8rem;
   color: ${theme.colors.text.primary};
-  text-decoration: none;
-  font-size: 1.5rem;
-  font-weight: bold;
+  cursor: pointer;
 `;
 
 const Nav = styled.nav`
   display: flex;
   gap: 1.5rem;
+
+  @media (max-width: 768px) {
+    display: none;
+  }
 `;
 
 const NavLink = styled(Link)`
   color: ${theme.colors.text.primary};
   text-decoration: none;
   font-size: 1rem;
-  font-weight: 500;
   padding: 0.6rem 1rem;
   transition: ${theme.animation.transition};
 
@@ -187,8 +222,6 @@ const NavButton = styled.button`
   color: ${theme.colors.text.primary};
   background: none;
   border: none;
-  font-size: 1rem;
-  font-weight: 500;
   padding: 0.6rem 1rem;
   cursor: pointer;
   transition: ${theme.animation.transition};
@@ -210,18 +243,34 @@ const SearchSection = styled.div`
   position: relative;
 `;
 
-const SearchInput = styled.input`
-  width: 200px;
-  padding: 0.5rem;
+const SearchBar = styled.div`
+  position: relative;
+  display: flex;
+  align-items: center;
   border: 1px solid ${theme.colors.border};
   border-radius: 4px;
-  color: ${theme.colors.text.primary};
+  padding: 0.5rem;
   background-color: ${theme.colors.background};
-  transition: ${theme.animation.transition};
+  width: ${({ isOpen }) => (isOpen ? '200px' : '0')};
+  opacity: ${({ isOpen }) => (isOpen ? '1' : '0')};
+  transition: all 0.3s ease;
+  overflow: hidden;
+
+  &.active {
+    width: 200px;
+    opacity: 1;
+  }
+`;
+
+const SearchInput = styled.input`
+  width: 100%;
+  padding: 0.5rem;
+  border: none;
+  color: ${theme.colors.text.primary};
+  background-color: transparent;
 
   &:focus {
     outline: none;
-    border-color: ${theme.colors.primary};
   }
 `;
 
@@ -230,9 +279,6 @@ const SearchButton = styled.button`
   border: none;
   color: ${theme.colors.text.primary};
   cursor: pointer;
-  padding: 0.5rem;
-  display: flex;
-  align-items: center;
 `;
 
 const AuthButtons = styled.div`
@@ -241,8 +287,6 @@ const AuthButtons = styled.div`
 `;
 
 const ProfileContainer = styled.div`
-  display: flex;
-  align-items: center;
   position: relative;
 `;
 
@@ -266,13 +310,12 @@ const ProfileMenu = styled.div`
   position: absolute;
   top: 100%;
   right: 0;
-  background-color: ${theme.colors.surface};
+  background-color: ${theme.colors.background};
   border-radius: 5px;
-  padding: 0.5rem;
   display: flex;
   flex-direction: column;
   box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
-  z-index: 10;
+  padding: 0.5rem;
 `;
 
 const LogoutButton = styled(Button)`
@@ -280,4 +323,54 @@ const LogoutButton = styled(Button)`
   color: ${theme.colors.text.primary};
   padding: 0.5rem;
   text-align: left;
+`;
+
+const MobileMenuButton = styled.button`
+  display: none;
+  background: none;
+  border: none;
+  color: ${theme.colors.text.primary};
+  cursor: pointer;
+
+  @media (max-width: 768px) {
+    display: flex;
+  }
+`;
+
+const MobileMenu = styled.div`
+  position: fixed;
+  top: 5rem;
+  right: 0;
+  width: 60%;
+  max-width: 300px;
+  background-color: ${theme.colors.background};
+  border-left: 1px solid ${theme.colors.border};
+  padding: 1rem;
+  transform: ${({ isOpen }) => (isOpen ? 'translateX(0)' : 'translateX(100%)')};
+  transition: transform 0.3s ease;
+  z-index: 999;
+
+  @media (min-width: 768px) {
+    display: none;
+  }
+`;
+
+const MobileMenuWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+`;
+
+const MobileNavLink = styled(Link)`
+  color: ${theme.colors.text.primary};
+  text-decoration: none;
+  display: block;
+  padding: 1rem;
+  font-size: 1rem;
+  text-align: right;
+
+  &:hover {
+    background-color: ${theme.colors.primaryLight};
+    color: ${theme.colors.text.primary};
+  }
 `;
