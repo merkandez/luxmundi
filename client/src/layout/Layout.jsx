@@ -1,7 +1,7 @@
 // src/layout/Layout.jsx
 import React, { useState } from 'react';
 import { Outlet } from 'react-router-dom';
-import Header from '../components/Header';
+import Header from '../components/design/Header';
 import Footer from '../components/Footer';
 import useAuth from '../hooks/useAuth';
 import styled from 'styled-components';
