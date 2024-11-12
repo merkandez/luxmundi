@@ -37,12 +37,21 @@ const Wrapper = styled.div`
 const LogoSection = styled(Link)`
   display: flex;
   align-items: center;
-  gap: 0.8rem;
-  transition: all 0.3s ease;
-  z-index: 20;
-  margin-right: 2rem;
-  color: #fff;
-  padding: 4px;
+  gap: 0.5rem;
+  text-decoration: none;
+  transition: transform 0.3s ease;
+
+  svg {
+    color: #ffffff;
+    transition: all 0.3s ease;
+  }
+
+  span {
+    color: #ffffff;
+    font-weight: 600;
+    font-size: 1.2rem;
+    transition: all 0.3s ease;
+  }
 
   &:hover {
     transform: scale(1.05);
@@ -50,40 +59,6 @@ const LogoSection = styled(Link)`
     svg,
     span {
       color: #29c9a9;
-    }
-  }
-
-  svg {
-    transition: all 0.3s ease;
-    width: 24px;
-    height: 24px;
-    color: #29c9a9;
-
-    @media (max-width: 768px) {
-      width: 20px;
-      height: 20px;
-    }
-
-    @media (max-width: 480px) {
-      width: 18px;
-      height: 18px;
-    }
-  }
-
-  span {
-    font-size: 1.2rem;
-    font-weight: bold;
-    padding-top: 4px;
-    color: #ffffff;
-    margin: 4px;
-    transition: all 0.3s ease;
-
-    @media (max-width: 768px) {
-      font-size: 1rem;
-    }
-
-    @media (max-width: 480px) {
-      font-size: 0.9rem;
     }
   }
 `;
@@ -410,7 +385,7 @@ const Header = ({ isLoggedIn }) => {
     <HeaderContainer>
       <Wrapper>
         <LogoSection to="/">
-          <BsCameraFill size={24} color="#ffffff" />
+          <BsCameraFill size={24} />
           <span>LUX MUNDI</span>
         </LogoSection>
 
