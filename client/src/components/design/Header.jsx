@@ -19,6 +19,7 @@ import {
   Mail,
 } from "lucide-react";
 import ContactModal from "../ContactModal";
+import EditProfileCard from "../EditProfileCard";
 
 const Header = ({ isAuthenticated, role, logout, avatarUrl, userData }) => {
   const [menuVisible, setMenuVisible] = useState(false);
