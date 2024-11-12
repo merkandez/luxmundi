@@ -11,6 +11,7 @@ import UserManagement from "../components/admin/UserManagement";
 import PostManagement from "../components/admin/PostManagement";
 import styled from "styled-components";
 import NavbarAdmin from "../components/admin/navbarAdmin";
+import { theme } from "../styles/theme";
 
 const AdminPage = () => {
   const [users, setUsers] = useState([]);
@@ -81,23 +82,34 @@ const AdminPage = () => {
     <AdminWrapper>
       <NavbarAdmin setActiveComponent={setActiveComponent} />
       <ContentWrapper>
-        {activeComponent === "home" && <div>Contenido de inicio</div>}
+        {activeComponent === "home" && (
+          <WelcomeSection>
+            <h1>Panel de Administración</h1>
+            <p>Bienvenido al área de gestión de LuxMundi</p>
+          </WelcomeSection>
+        )}
         {activeComponent === "PostManagement" && (
           <Section>
-            <PostManagement
-              posts={posts}
-              selectedPost={selectedPost}
-              onSelectPost={setSelectedPost}
-              onUpdatePost={handlePostUpdate}
-              onDeletePost={handlePostDelete}
-              onCreatePost={handlePostCreate}
-            />
-            <h2>Gestión de Publicaciones</h2>
+            <SectionHeader>
+              <h2>Gestión de Publicaciones</h2>
+            </SectionHeader>
+            <PostManagementWrapper>
+              <PostManagement
+                posts={posts}
+                selectedPost={selectedPost}
+                onSelectPost={setSelectedPost}
+                onUpdatePost={handlePostUpdate}
+                onDeletePost={handlePostDelete}
+                onCreatePost={handlePostCreate}
+              />
+            </PostManagementWrapper>
           </Section>
         )}
         {activeComponent === "UserManagement" && (
           <Section>
-            <h2>Gestión de Usuarios</h2>
+            <SectionHeader>
+              <h2>Gestión de Usuarios</h2>
+            </SectionHeader>
             <UserManagement
               users={users}
               reloadUsers={loadUsers}
@@ -115,35 +127,91 @@ const AdminPage = () => {
 };
 
 const AdminWrapper = styled.div`
-  background-color: #1e1e1e;
+  background-color: ${theme.colors.background};
   min-height: 100vh;
   display: flex;
-  flex-direction: column;
+  padding-top: 5rem;
 
-  @media (min-width: 768px) {
-    flex-direction: row;
+  @media (max-width: ${theme.breakpoints.mobile}) {
+    padding-bottom: 5rem; // Add space for mobile navigation
   }
 `;
 
 const ContentWrapper = styled.div`
   flex: 1;
+  padding: 2rem;
+  background-color: ${theme.colors.backgroundAlt};
+  border-radius: 12px;
+  margin: 1rem;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  overflow-x: hidden;
+
+  @media (min-width: ${theme.breakpoints.tablet}) {
+    margin: 2rem;
+  }
+
+  @media (max-width: ${theme.breakpoints.mobile}) {
+    margin: 0.5rem;
+    padding: 1rem;
+  }
 `;
 
-const Section = styled.section`
-  background-color: #2a2a2a;
-  border-radius: 8px;
-  margin-bottom: 2rem;
-  color: white;
+const WelcomeSection = styled.div`
+  text-align: center;
+  padding: 3rem 1rem;
+  color: ${theme.colors.text.primary};
 
-  h2 {
-    margin-bottom: 1.5rem;
-    font-size: 1.8rem;
+  h1 {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+    color: ${theme.colors.primary};
+    font-weight: 600;
   }
 
   p {
-    @media (max-width: 768px) {
-      display: none;
+    font-size: 1.1rem;
+    opacity: 0.8;
+  }
+`;
+
+const Section = styled.section`
+  background-color: ${theme.colors.background};
+  border-radius: 12px;
+  padding: 1.5rem;
+  margin-bottom: 2rem;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  border: 1px solid ${theme.colors.border};
+
+  @media (min-width: ${theme.breakpoints.tablet}) {
+    padding: 2rem;
+  }
+`;
+
+const SectionHeader = styled.div`
+  margin-bottom: 2rem;
+  padding-bottom: 1rem;
+  border-bottom: 2px solid ${theme.colors.primaryLight};
+
+  h2 {
+    color: ${theme.colors.primary};
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin: 0;
+
+    @media (min-width: ${theme.breakpoints.tablet}) {
+      font-size: 1.8rem;
     }
+  }
+`;
+
+const PostManagementWrapper = styled.div`
+  background-color: ${theme.colors.background};
+  border-radius: 8px;
+  padding: 1.5rem;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+
+  @media (max-width: ${theme.breakpoints.tablet}) {
+    padding: 1rem;
   }
 `;
 

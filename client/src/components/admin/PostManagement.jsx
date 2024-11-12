@@ -1,10 +1,21 @@
-import React, { useState, useEffect } from 'react';
-import styled from 'styled-components';
+import React, { useState, useEffect } from "react";
+import styled from "styled-components";
 
-const PostManagement = ({ posts, selectedPost, onSelectPost, onUpdatePost, onDeletePost, onCreatePost }) => {
+const PostManagement = ({
+  posts,
+  selectedPost,
+  onSelectPost,
+  onUpdatePost,
+  onDeletePost,
+  onCreatePost,
+}) => {
   const [editData, setEditData] = useState(selectedPost || {});
-  const [newPostData, setNewPostData] = useState({ title: '', content: '', imageUrl: '' });
-  const [searchTerm, setSearchTerm] = useState('');
+  const [newPostData, setNewPostData] = useState({
+    title: "",
+    content: "",
+    imageUrl: "",
+  });
+  const [searchTerm, setSearchTerm] = useState("");
 
   useEffect(() => {
     setEditData(selectedPost || {});
@@ -21,21 +32,22 @@ const PostManagement = ({ posts, selectedPost, onSelectPost, onUpdatePost, onDel
 
   const handleCreatePost = () => {
     onCreatePost(newPostData);
-    setNewPostData({ title: '', content: '', imageUrl: '' });
+    setNewPostData({ title: "", content: "", imageUrl: "" });
   };
 
-  const filteredPosts = posts.filter(post =>
-    post.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    post.content.toLowerCase().includes(searchTerm.toLowerCase())
+  const filteredPosts = posts.filter(
+    (post) =>
+      post.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      post.content.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
   return (
     <HomeWrapper>
       <TitleSection>
         <h2>Todos los post</h2>
-        <input 
-          type="text" 
-          placeholder='Buscar post' 
+        <input
+          type="text"
+          placeholder="Buscar post"
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
         />
@@ -48,7 +60,12 @@ const PostManagement = ({ posts, selectedPost, onSelectPost, onUpdatePost, onDel
               <Img src={post.imageUrl} alt={post.title} />
               <InfoPost>
                 <h3>{post.title}</h3>
-                <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Voluptatem in earum culpa, maiores voluptates ad minima porro dolorem! Voluptas nostrum quidem commodi quas aliquam sed iusto velit ipsum deleniti. Enim.</p>
+                <p>
+                  Lorem ipsum dolor, sit amet consectetur adipisicing elit.
+                  Voluptatem in earum culpa, maiores voluptates ad minima porro
+                  dolorem! Voluptas nostrum quidem commodi quas aliquam sed
+                  iusto velit ipsum deleniti. Enim.
+                </p>
               </InfoPost>
               <Buttons>
                 <Button onClick={() => onSelectPost(post)}>Editar</Button>
@@ -65,13 +82,13 @@ const PostManagement = ({ posts, selectedPost, onSelectPost, onUpdatePost, onDel
           <input
             type="text"
             name="title"
-            value={editData.title || ''}
+            value={editData.title || ""}
             onChange={handleInputChange}
             placeholder="Título"
           />
           <textarea
             name="content"
-            value={editData.content || ''}
+            value={editData.content || ""}
             onChange={handleInputChange}
             placeholder="Contenido"
           />
@@ -85,20 +102,26 @@ const PostManagement = ({ posts, selectedPost, onSelectPost, onUpdatePost, onDel
           type="text"
           name="title"
           value={newPostData.title}
-          onChange={(e) => setNewPostData({ ...newPostData, title: e.target.value })}
+          onChange={(e) =>
+            setNewPostData({ ...newPostData, title: e.target.value })
+          }
           placeholder="Título"
         />
         <textarea
           name="content"
           value={newPostData.content}
-          onChange={(e) => setNewPostData({ ...newPostData, content: e.target.value })}
+          onChange={(e) =>
+            setNewPostData({ ...newPostData, content: e.target.value })
+          }
           placeholder="Contenido"
         />
         <input
           type="text"
           name="imageUrl"
           value={newPostData.imageUrl}
-          onChange={(e) => setNewPostData({ ...newPostData, imageUrl: e.target.value })}
+          onChange={(e) =>
+            setNewPostData({ ...newPostData, imageUrl: e.target.value })
+          }
           placeholder="URL de la imagen"
         />
         <button onClick={handleCreatePost}>Crear Publicación</button>
