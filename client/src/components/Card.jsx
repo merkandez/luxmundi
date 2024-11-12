@@ -1,23 +1,25 @@
 import React from 'react';
 import styled from "styled-components";
 import PropTypes from "prop-types";
-import { useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 const Card = ({ id, title, content }) => {
-  const navigate = useNavigate();
+  //const navigate = useNavigate();
   
   //NOS LLEVA A LA PÁG. DE ARTICLEPAGE
-  const handleClick = () => {
-    navigate(`/articlePage/${id}`);
-  };
+  //const handleClick = () => {
+    //navigate(`/articlePage/${id}`);
+  //};
 
   return (
-  <CardWrapper onClick= {handleClick}>
+  <CardWrapper  >
+    <Link to={`/ArticlePage/${id}`}>
     <CardImage />
     <CardContent>
       <h3>{title}</h3>
       <p>{content}</p>
     </CardContent>
+    </Link>
   </CardWrapper>
 );
 }

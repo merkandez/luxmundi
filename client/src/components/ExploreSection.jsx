@@ -1,9 +1,10 @@
 import styled from "styled-components";
 import React, { useEffect, useState } from "react";
-import { getPosts } from "../services/api"; // Importa la función de API
+//import { getPosts } from "../services/api"; // Importa la función de API
 import Card from "./Card"; // Importa el componente Card para mostrar cada post
-import CardsContainer from "./CardContainer"
+import CardsContainer from "./CardContainer";
 import Pagination from "./Pagination"; //Llamar solo a pagination
+import {getAllPosts} from "..Controllers/postController"
 
 const ExploreSection = () => {
   // Crea un estado para guardar los posts obtenidos
@@ -15,7 +16,7 @@ const ExploreSection = () => {
   // Este hook se ejecuta. carga los posts cuando el componente se muestra
     const fetchPosts = async () => {
       try {
-        const data = await getPosts(); // Llama a la API para obtener los posts
+        const data = await getAllPosts(); // Llama a la API para obtener los posts
         setPosts(data); // Guarda los posts en el estado original
         setFilteredPosts(data); //Inicialmente, los post filtrados son todos
       } catch (error) {
@@ -31,7 +32,7 @@ const ExploreSection = () => {
     const query = e.target.value.toLowerCase();
     setSearchQuery(query);//actualiza el estado del texto de búsqueda
 
-    //Filtra los posts basándose en el Título  o c
+    //Filtra los posts basándose en el Título  o palabras.
     const filtered = posts.filter(post =>
       post.title.toLowerCase().includes(query) ||
       post.content.toLowerCase().includes(query)
@@ -59,6 +60,7 @@ const ExploreSection = () => {
         {filteredPosts.map((post) => (
           <Card 
           key={post.id} 
+          id={post.id}
           title={post.title} 
           content={post.content} />
         ))}

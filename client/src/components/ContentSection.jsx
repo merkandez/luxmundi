@@ -2,7 +2,19 @@ import React from "react";
 import styled from "styled-components";
 
 const ContentSection = ({ content }) => {
-  const { heading, subheading, text, additionalText } = content;
+
+   // Verificamos si content existe
+   if (!content) {
+    return <StyledContentWrapper>No hay contenido disponible</StyledContentWrapper>;
+  }
+
+  // Usar valores por defecto en la desestructuración
+  const { 
+    heading = '', 
+    subheading = '', 
+    text = '', 
+    additionalText = '' 
+  } = content;
 
   return (
     <StyledContentWrapper>
