@@ -7,17 +7,7 @@ import ModalForm from "../auth/ModalForm";
 import { Button } from "../../styles/components";
 import { theme } from "../../styles/theme";
 import { BsCameraFill } from "react-icons/bs";
-import {
-  Search,
-  X,
-  Menu,
-  User,
-  Settings,
-  LogOut,
-  Info,
-  Map,
-  Mail,
-} from "lucide-react";
+import { Search, X, Menu, User, Settings, LogOut, Info, Map, Mail } from "lucide-react";
 import ContactModal from "../ContactModal";
 import EditProfileCard from "../EditProfileCard";
 
@@ -33,9 +23,7 @@ const Header = ({ isAuthenticated, role, logout, avatarUrl, userData }) => {
   const navigate = useNavigate();
   const location = useLocation();
 
-  const toggleMenu = () => {
-    setMenuVisible((prev) => !prev);
-  };
+  const toggleMenu = () => setMenuVisible((prev) => !prev);
 
   const handleClickOutside = (event) => {
     if (menuRef.current && !menuRef.current.contains(event.target)) {
@@ -47,7 +35,6 @@ const Header = ({ isAuthenticated, role, logout, avatarUrl, userData }) => {
     if (menuVisible) {
       document.addEventListener("mousedown", handleClickOutside);
     }
-
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
@@ -66,7 +53,7 @@ const Header = ({ isAuthenticated, role, logout, avatarUrl, userData }) => {
   const closeForms = () => {
     setShowLoginForm(false);
     setShowRegisterForm(false);
-    setShowEditProfile(false);  // Cierra el modal de edición
+    setShowEditProfile(false); // Cierra el modal de edición
   };
 
   const scrollToDestinos = () => {
@@ -74,9 +61,7 @@ const Header = ({ isAuthenticated, role, logout, avatarUrl, userData }) => {
       navigate("/");
     }
     setTimeout(() => {
-      document
-        .getElementById("explore-section")
-        ?.scrollIntoView({ behavior: "smooth" });
+      document.getElementById("explore-section")?.scrollIntoView({ behavior: "smooth" });
     }, 100);
   };
 
@@ -95,7 +80,6 @@ const Header = ({ isAuthenticated, role, logout, avatarUrl, userData }) => {
         setIsMenuOpen(false);
       }
     };
-
     window.addEventListener("resize", handleResize);
     return () => {
       window.removeEventListener("resize", handleResize);
@@ -138,11 +122,7 @@ const Header = ({ isAuthenticated, role, logout, avatarUrl, userData }) => {
           {isAuthenticated ? (
             <ProfileContainer className="desktop-only">
               {avatarUrl ? (
-                <AvatarImage
-                  onClick={toggleMenu}
-                  src={avatarUrl}
-                  alt="Avatar"
-                />
+                <AvatarImage src={avatarUrl} alt="Avatar" onClick={toggleMenu} />
               ) : (
                 <AvatarIconWrapper onClick={toggleMenu}>
                   <User size={20} />
@@ -150,7 +130,7 @@ const Header = ({ isAuthenticated, role, logout, avatarUrl, userData }) => {
               )}
               {menuVisible && (
                 <ProfileMenu ref={menuRef}>
-                  <MenuLink to="/profile" onClick={toggleMenu}>
+                  <MenuLink as="button" onClick={() => setShowEditProfile(true)}>
                     <User size={18} />
                     Mi Perfil
                   </MenuLink>
@@ -161,12 +141,7 @@ const Header = ({ isAuthenticated, role, logout, avatarUrl, userData }) => {
                     </MenuLink>
                   )}
                   <MenuDivider />
-                  <LogoutButton
-                    onClick={() => {
-                      logout();
-                      toggleMenu();
-                    }}
-                  >
+                  <LogoutButton onClick={() => { logout(); toggleMenu(); }}>
                     <LogOut size={18} />
                     Cerrar Sesión
                   </LogoutButton>
@@ -175,12 +150,8 @@ const Header = ({ isAuthenticated, role, logout, avatarUrl, userData }) => {
             </ProfileContainer>
           ) : (
             <AuthButtons>
-              <Button variant="primary" onClick={openLoginForm}>
-                Login
-              </Button>
-              <Button variant="secondary" onClick={openRegisterForm}>
-                Register
-              </Button>
+              <Button variant="primary" onClick={openLoginForm}>Login</Button>
+              <Button variant="secondary" onClick={openRegisterForm}>Register</Button>
             </AuthButtons>
           )}
 
@@ -199,37 +170,10 @@ const Header = ({ isAuthenticated, role, logout, avatarUrl, userData }) => {
               <Map size={16} />
               Destinos
             </MobileNavLink>
-            <MobileNavLink
-              as="button"
-              onClick={() => setShowContactModal(true)}
-            >
+            <MobileNavLink as="button" onClick={() => setShowContactModal(true)}>
               <Mail size={16} />
               Contacto
             </MobileNavLink>
-            {isAuthenticated && (
-              <>
-                <MenuDivider />
-                <MobileNavLink to="/profile">
-                  <User size={16} />
-                  Mi Perfil
-                </MobileNavLink>
-                {role === "admin" && (
-                  <MobileNavLink to="/admin">
-                    <Settings size={16} />
-                    Panel Admin
-                  </MobileNavLink>
-                )}
-                <LogoutButton
-                  onClick={() => {
-                    logout();
-                    setIsMenuOpen(false);
-                  }}
-                >
-                  <LogOut size={16} />
-                  Cerrar Sesión
-                </LogoutButton>
-              </>
-            )}
           </MobileMenuWrapper>
         </MobileMenu>
       </Wrapper>
@@ -246,15 +190,10 @@ const Header = ({ isAuthenticated, role, logout, avatarUrl, userData }) => {
       )}
       {showEditProfile && (
         <ModalForm onClose={closeForms}>
-          <EditProfileCard
-            initialData={userData}
-            onSave={(updatedData) => {
-              // Logica de guardado del perfil
-              console.log("Perfil actualizado", updatedData);
-              closeForms();
-            }}
-            onCancel={closeForms}
-          />
+          <EditProfileCard initialData={userData} onSave={(updatedData) => {
+            console.log("Perfil actualizado", updatedData);
+            closeForms();
+          }} onCancel={closeForms} />
         </ModalForm>
       )}
       <ContactModal isOpen={showContactModal} onClose={() => setShowContactModal(false)} />
@@ -263,6 +202,8 @@ const Header = ({ isAuthenticated, role, logout, avatarUrl, userData }) => {
 };
 
 export default Header;
+
+
 
 // Estilos
 const HeaderContainer = styled.header`
