@@ -1,4 +1,4 @@
-/* import styled from "styled-components";
+import styled from "styled-components";
 import { X } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 
@@ -42,4 +42,3 @@ const CloseButton = () => {
 };
 
 export default CloseButton;
- */
