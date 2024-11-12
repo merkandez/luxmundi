@@ -127,7 +127,7 @@ const StyledForm = styled.form`
   background-color: rgba(26, 26, 26, 1);
   padding: 40px;
   border-radius: 8px;
-  width: 90%;
+
   max-width: 400px;
   position: relative;
   color: #ffffff;
