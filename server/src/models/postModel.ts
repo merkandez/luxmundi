@@ -39,6 +39,9 @@ PostModel.init(
     likes: {
       type: DataTypes.INTEGER.UNSIGNED,
       defaultValue: 0, // El valor inicial de likes será 0
+      validate: {
+        min: 0, // Aseguramos que no haya likes negativos
+      },
     },
     createdAt: {
       type: DataTypes.DATE,

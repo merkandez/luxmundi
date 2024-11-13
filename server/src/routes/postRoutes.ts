@@ -4,7 +4,8 @@ import {
   getPostById,
   createPost,
   updatePost,
-  deletePost
+  deletePost,
+  toggleLike
 } from '../controllers/postController';
 import { authMiddleware } from '../middlewares/authMiddleware'; // Importamos el middleware autenticación
 import { adminMiddleware } from '../middlewares/adminMiddleware'; // Importamos el middleware de admin
@@ -19,5 +20,8 @@ router.get('/:id', authMiddleware, getPostById);
 router.post('/', authMiddleware, adminMiddleware, createPost);
 router.put('/:id', authMiddleware, adminMiddleware, updatePost);
 router.delete('/:id', authMiddleware, adminMiddleware, deletePost);
+
+// Ruta para manejar el like/unlike de un post
+router.post('/:postId/like', authMiddleware, toggleLike);
 
 export default router;
