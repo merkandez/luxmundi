@@ -65,6 +65,8 @@ const PostManagement = ({
     setShowEditModal(true);
   };
 
+  
+
   const filteredPosts = posts.filter(
     (post) =>
       post.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -86,23 +88,42 @@ const PostManagement = ({
       </TitleSection>
       <StyledButton onClick={() => setShowCreateModal(true)}>Crear Post</StyledButton>
       <ExploreSection>
-        <CardsContainer>
-          {filteredPosts.map((post) => (
-            <Card key={post.id}>
-              <Img src={post.imageUrl} alt={post.title} />
-              <InfoPost>
-                <h3>{post.title}</h3>
-                <p>
-                  {post.content}
-                </p>
-              </InfoPost>
-              <Buttons>
-                <Button onClick={() => handleSelectPost(post)}>Editar</Button>
-                <Button onClick={() => onDeletePost(post.id)}>Eliminar</Button>
-              </Buttons>
-            </Card>
-          ))}
-        </CardsContainer>
+        <TableSection>
+        <h3>Usuarios</h3>
+        {posts.length === 0 ? (
+          <p>No hay usuarios para mostrar</p>
+        ) : (
+          <TableWrapper>
+            <StyledTable>
+              <thead>
+                <tr>
+                  <th width="10%">Imagen</th>
+
+
+
+                  <th width="30%">Nombre</th>
+                  <th width="30%">Email</th>
+                  <th width="30%">Acciones</th>
+                </tr>
+              </thead>
+              <tbody>
+                {filteredPosts.map((post) => (
+                  <tr key={post.id}>
+                    <td data-label="Imagen"><ImagePreview src={post.imageUrl} alt="" /></td>
+                    <td data-label="Nombre">{post.title}</td>
+
+                    <td data-label="Contenido">{post.content.length > 255 ? `${post.content.substring(0, 255)}...` : post.content}</td>
+                    <td data-label="Acciones">
+                      <StyledButton onClick={() => handleSelectPost(post)}>Editar</StyledButton>
+                      <StyledButton >Eliminar</StyledButton>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </StyledTable>
+          </TableWrapper>
+        )}
+      </TableSection>
       </ExploreSection>
 
       {showEditModal && (
@@ -194,6 +215,92 @@ const PostManagement = ({
   );
 };
 
+const TableSection = styled.div`
+  margin-bottom: 30px;
+  width: 100%;
+  
+  h3 {
+    margin-bottom: 15px;
+  }
+
+  @media (max-width: 768px) {
+    padding: 0 10px;
+  }
+`;
+
+const TableWrapper = styled.div`
+  width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+`;
+
+const StyledButton = styled.button`
+  width: 100%;
+  padding: 12px;
+  margin-bottom: 10px;
+  background-color: #29c9a9;
+  color: #000;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+
+  &:hover {
+    background-color: #24b598;
+  }
+`;
+
+const StyledTable = styled.table`
+  width: 100%;
+  border-collapse: collapse;
+  background-color: #2a2a2a;
+  
+  th, td {
+    padding: 12px;
+    text-align: left;
+    border-bottom: 1px solid #333;
+  }
+  
+  th {
+    background-color: #333;
+  }
+  
+  tr:hover {
+    background-color: #383838;
+  }
+
+  @media (max-width: 768px) {
+    thead {
+      display: none;
+    }
+    
+    tbody tr {
+      display: block;
+      margin-bottom: 1rem;
+      border: 1px solid #333;
+    }
+    
+    td {
+      display: block;
+      text-align: right;
+      padding: 12px;
+      position: relative;
+      padding-left: 50%;
+      border-bottom: 1px solid #444;
+    }
+    
+    td:before {
+      content: attr(data-label);
+      position: absolute;
+      left: 12px;
+      font-weight: bold;
+    }
+    
+    td:last-child {
+      border-bottom: none;
+    }
+  }
+`;
+
 const ImagePreview = styled.img`
   width: 100%;
   border-radius: 10px;
@@ -263,20 +370,6 @@ const CloseButton = styled.button`
 
   &:hover {
     color: #ccc;
-  }
-`;
-
-const StyledButton = styled.button`
-  width: 100%;
-  padding: 12px;
-  background-color: #29c9a9;
-  color: #000;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-
-  &:hover {
-    background-color: #24b598;
   }
 `;
 
@@ -441,17 +534,6 @@ const Buttons = styled.div`
   display: flex;
   flex-direction: row;
   width: 100%;
-  justify-content: space-between;
-  position: absolute;
-  bottom: 0;
-  border: none;
-  box-sizing: border-box;
-`;
+  justify-content`
 
-const Button = styled.button`
-  width: 50%;
-  height: 40px;
-  border: none;
-`;
-
-export default PostManagement;
+  export default PostManagement;
