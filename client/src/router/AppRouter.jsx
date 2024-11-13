@@ -7,6 +7,7 @@ import AboutPage from '../pages/AboutPage';
 import NotFoundPage from '../pages/NotFoundPage';
 import ProtectedRoute from './ProtectedRoute';
 import NotFound from '../pages/NotFound';
+import UnderConstruction from '../pages/UnderConstruction';
 
 export const router = createBrowserRouter([
   {
@@ -15,11 +16,8 @@ export const router = createBrowserRouter([
     children: [
       { index: true, element: <HomePage /> },
       { path: 'about', element: <AboutPage /> },
-
-      {
-        path: '*',
-        element: <NotFound />,
-      },
+      { path: "under-construction", element: <UnderConstruction />,},
+      { path: '*', element: <NotFound />,},
 
       // Rutas protegidas
       {
