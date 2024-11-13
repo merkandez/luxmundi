@@ -18,7 +18,8 @@ export const router = createBrowserRouter([
     path: '/',
     element: (
       <AuthProvider>
-        <Layout />, // El Layout gestionará el modal de autenticación
+        <Layout //esto gestiona modal de autenticación 
+        />, 
       </AuthProvider>
     ),
 
