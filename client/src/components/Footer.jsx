@@ -22,7 +22,7 @@ export default function Footer() {
             <h3>Sobre Nosotros</h3>
             <ul>
               <li>
-                <FooterLink to="/about">Quien somos</FooterLink>
+                <FooterLink to="/about">Quiénes somos</FooterLink>
               </li>
               <li>
                 <FooterLink to="/under-construction">Nuestra Visión</FooterLink>

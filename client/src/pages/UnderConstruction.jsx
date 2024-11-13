@@ -14,7 +14,7 @@ const UnderConstruction = () => {
           Estamos trabajando para traerte algo increíble. Por favor, vuelve
           más tarde.
         </Description>
-        <BackButton onClick={() => navigate(-1)}>Volver</BackButton>
+        <BackButton onClick={() => navigate('/')}>Volver</BackButton>
       </Content>
     </Container>
   );

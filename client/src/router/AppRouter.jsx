@@ -7,11 +7,17 @@ import AboutPage from '../pages/AboutPage';
 import NotFoundPage from '../pages/NotFoundPage';
 import ProtectedRoute from './ProtectedRoute';
 import UnderConstruction from '../pages/UnderConstruction';
+import ScrollToTop from '../components/ScrollToTop'; // Importa ScrollToTop
 
 export const router = createBrowserRouter([
   {
     path: '/',
-    element: <Layout />, // El Layout gestionará el modal de autenticación
+    element: (
+      <>
+        <ScrollToTop /> {/* Añade ScrollToTop aquí */}
+        <Layout />
+      </>
+    ), 
     children: [
       { index: true, element: <HomePage /> },
       { path: 'about', element: <AboutPage /> },
