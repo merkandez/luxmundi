@@ -3,14 +3,16 @@ import PostModel from '../models/postModel';
 
 // Controlador para obtener todos los posts (disponible solo para usuarios autenticados)
 export const getAllPosts = async (req: Request, res: Response): Promise<void> => {
+  const { summary } = req.query;
   try {
-    const posts = await PostModel.findAll();
+    const posts = await PostModel.findAll({
+      attributes: summary ? ['id', 'title', 'content', 'imageUrl'] : undefined,
+    });
     res.json(posts);
   } catch (error: any) {
     res.status(500).json({ message: 'Error al obtener posts', error: error.message });
   }
 };
-
 // Controlador para obtener un post por ID (disponible solo para usuarios autenticados)
 export const getPostById = async (req: Request, res: Response): Promise<void> => {
   const { id } = req.params;
