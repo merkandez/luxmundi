@@ -262,9 +262,6 @@ const Header = ({ isAuthenticated, role, logout, avatarUrl, userData }) => {
 
 export default Header;
 
-// Estilos
-// Mantén aquí el código de los estilos sin cambios
-
 
 // Estilos
 const HeaderContainer = styled.header`

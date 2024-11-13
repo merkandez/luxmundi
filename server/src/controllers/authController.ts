@@ -39,7 +39,6 @@ export const registerUser = async (
 };
 
 // Controlador de inicio de sesión
-// Controlador de inicio de sesión
 export const loginUser = async (req: Request, res: Response): Promise<void> => {
   const { email, password } = req.body;
 
