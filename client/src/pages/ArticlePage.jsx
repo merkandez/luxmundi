@@ -3,6 +3,7 @@ import { useParams } from 'react-router-dom';
 import HeroSection from '../components/HeroSection';
 import ImageContentPanel from '../components/ImageContentPanel';
 import ContentSection from '../components/ContentSection';
+import LikeButton from '../components/LikeButton';
 import { fetchPostById } from '../services/postService';
 
 const ArticlePage = () => {
@@ -38,7 +39,8 @@ const ArticlePage = () => {
           additionalText: post.additionalContent || '',
         }}
       />
-    </>
+       <LikeButton initialLikes={post.likes} postId={postId} /> 
+        </>
   );
 };
 

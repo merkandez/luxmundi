@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import styled from "styled-components";
-import { getPostById, updatePostLikes } from "../services/postService"; // Importa los servicios correctos
+import { fetchPostById, updatePostLikes } from "../services/postService"; // Importa los servicios correctos
 
 const LikeButtonWrapper = styled.div`
   display: flex;
@@ -35,7 +35,7 @@ const LikeButton = ({ initialLikes, postId, onLike }) => {
 
     try {
       // Obtiene el post actual
-      const post = await getPostById(postId);
+      const post = await fetchPostById(postId);
       // Actualiza los likes en el post
       const updatedPost = { ...post, likes: updatedLikes };
       await updatePostLikes(postId, updatedPost);

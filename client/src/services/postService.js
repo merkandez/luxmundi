@@ -52,3 +52,12 @@ export const uploadImage = async (imageFile) => {
   });
   return response.data;
 };
+
+/// Función para actualizar los likes en el post
+export const updatePostLikes = async (postId, updatedPost) => {
+  const response = await axios.put(`${API_URL}/${postId}`, updatedPost, {
+    headers: { Authorization: `Bearer ${localStorage.getItem('token')}` },
+  });
+  return response.data;
+};
+
