@@ -3,9 +3,9 @@ import PropTypes from "prop-types";
 
 const CardsContainer = styled.div`
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(230px, 0.75fr));
   gap: 10px;
-  padding: 0 24px;
+  padding: 0 48px;
 `;
 
 const Card = ({ title, description }) => (

@@ -1,3 +1,4 @@
+// client/src/components/NavigationMenu.jsx
 import NavigationPillItem from "./NavigationPillItem";
 import styled from "styled-components";
 
@@ -20,9 +21,9 @@ const NavWrapper = styled.nav`
 `;
 
 const navigationItems = [
-  { label: "Nosotros", isActive: false },
-  { label: "Destinos", isActive: false },
-  { label: "Contacto", isActive: false },
+  { label: "Nosotros", href: "/quien-somos", isActive: false },
+  { label: "Destinos", href: "/destinos", isActive: false },
+  { label: "Contacto", href: "/contacto", isActive: false },
 ];
 
 function NavigationMenu() {
@@ -32,6 +33,7 @@ function NavigationMenu() {
         <NavigationPillItem
           key={item.label}
           label={item.label}
+          href={item.href}
           isActive={item.isActive}
         />
       ))}

@@ -2,7 +2,7 @@
 import React, { useState } from 'react';
 import { Outlet } from 'react-router-dom';
 import Header from '../components/design/Header';
-import Footer from '../components/design/Footer';
+import Footer from '../components/Footer';
 import useAuth from '../hooks/useAuth';
 import styled from 'styled-components';
 import ModalForm from '../components/auth/ModalForm';
@@ -60,7 +60,7 @@ const MainContainer = styled.div`
 const Content = styled.main`
   flex: 1;
   padding: 2rem;
-  background-color: #f4f4f9;
+  
 `;
 
 const Overlay = styled.div`

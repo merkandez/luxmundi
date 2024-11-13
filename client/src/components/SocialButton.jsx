@@ -1,9 +1,9 @@
-import styled from "styled-components";
-import PropTypes from "prop-types";
+import styled from 'styled-components';
+import PropTypes from 'prop-types';
 
-function SocialButton({ icon, text }) {
+function SocialButton({ icon, text, onClick }) {
   return (
-    <StyledButton>
+    <StyledButton onClick={onClick}>
       <ButtonIcon src={icon} alt={text} />
       <ButtonText>{text}</ButtonText>
     </StyledButton>
@@ -13,6 +13,7 @@ function SocialButton({ icon, text }) {
 SocialButton.propTypes = {
   icon: PropTypes.string.isRequired,
   text: PropTypes.string.isRequired,
+  onClick: PropTypes.func, // Permitir onClick como prop opcional
 };
 
 const StyledButton = styled.button`
@@ -25,7 +26,7 @@ const StyledButton = styled.button`
   width: 100%;
   text-align: center;
   padding: 14px;
-  margin-top: 12px;
+
   &:first-child {
     margin-top: 0;
   }

@@ -1,68 +1,82 @@
-// src/pages/HomePage.jsx
-import Header from "../components/Header";
-import LuxMundiHero from "../components/LuxMundiHero";
-import Footer from "../components/Footer";
-import ExploreSection from "../components/ExploreSection";
-import CardsContainer from "../components/CardContainer";
-import Card from "../components/Card";
-
-//cambiar el json por la base de datos
-//description cambiar por contenido de hasta 10 palabras.
+import styled from 'styled-components';
+import LuxMundiHero from '../components/LuxMundiHero';
+import ExploreSection from '../components/ExploreSection';
+import React from 'react';
+import LogoutButton from '../components/LogoutButton';
 
 const cardData = [
   {
-    title: "Machu Pichu",
+    title: 'Machu Pichu',
     description:
-      "Discover the ancient Incan city nestled in the Andes Mountains.",
+      'Discover the ancient Incan city nestled in the Andes Mountains.',
   },
   {
-    title: "Nueva Zelandia",
+    title: 'Nueva Zelandia',
     description:
-      "Explore the stunning landscapes and vibrant culture of New Zealand.",
+      'Explore the stunning landscapes and vibrant culture of New Zealand.',
   },
   {
-    title: "The Great Wall",
+    title: 'The Great Wall',
     description:
       "Experience the grandeur of one of the world's most famous landmarks.",
   },
   {
-    title: "Eiffel Tower",
+    title: 'Eiffel Tower',
     description:
-      "Visit the iconic symbol of Paris and enjoy breathtaking views.",
+      'Visit the iconic symbol of Paris and enjoy breathtaking views.',
   },
   {
-    title: "Grand Canyon",
+    title: 'Grand Canyon',
     description:
-      "Marvel at the immense size and beauty of this natural wonder.",
+      'Marvel at the immense size and beauty of this natural wonder.',
   },
   {
-    title: "Sydney Opera House",
+    title: 'Sydney Opera House',
     description:
-      "Enjoy a performance at this architectural masterpiece in Australia.",
+      'Enjoy a performance at this architectural masterpiece in Australia.',
+  },
+  // Adding more cards to test pagination
+  {
+    title: 'Santorini',
+    description:
+      'Experience the stunning white architecture and Mediterranean views.',
+  },
+  {
+    title: 'Mount Fuji',
+    description:
+      "Climb Japan's highest peak and witness breathtaking sunrises.",
+  },
+  {
+    title: 'Venice',
+    description: 'Navigate the romantic canals of this unique Italian city.',
+  },
+  {
+    title: 'Petra',
+    description: 'Explore the ancient rose-colored city carved into rock.',
+  },
+  {
+    title: 'Taj Mahal',
+    description: 'Visit this magnificent monument of eternal love in India.',
+  },
+  {
+    title: 'Great Barrier Reef',
+    description: "Dive into the world's largest coral reef system.",
   },
 ];
 
 function HomePage() {
   return (
-    <div>
-      <Header />
+    <HomeWrapper>
       <LuxMundiHero />
-      <ExploreSection>
-        <h2>Explore</h2>
-        <p>Ultimos posts</p>
-        <CardsContainer>
-          {cardData.map((card, index) => (
-            <Card
-              key={index}
-              title={card.title}
-              description={card.description}
-            />
-          ))}
-        </CardsContainer>
-      </ExploreSection>
-      <Footer />
-    </div>
+      <LogoutButton />
+      <ExploreSection cards={cardData} />
+    </HomeWrapper>
   );
 }
+
+const HomeWrapper = styled.div`
+  background-color: #0a0a0a;
+  min-height: 100vh;
+`;
 
 export default HomePage;

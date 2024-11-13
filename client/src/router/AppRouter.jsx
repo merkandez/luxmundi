@@ -8,6 +8,7 @@ import AdminPage from '../pages/AdminPage';
 import AboutPage from '../pages/AboutPage';
 import NotFoundPage from '../pages/NotFoundPage';
 import ProtectedRoute from './ProtectedRoute';
+import NotFound from '../pages/NotFound';
 
 export const router = createBrowserRouter([
   {
@@ -15,15 +16,18 @@ export const router = createBrowserRouter([
     element: <Layout />, // El Layout gestionará el modal de autenticación
     children: [
       { index: true, element: <HomePage /> },
-      { path: 'aboutus', element: <AboutPage /> },
-      { path: 'createpost', element: <CreatePost /> }, // Ruta para crear un post
-      { path: 'editpost/:postId', element: <EditPost /> }, // Ruta para editar un post
-      
+      { path: 'about', element: <AboutPage /> },
+
+      {
+        path: '*',
+        element: <NotFound />,
+      },
+
       // Rutas protegidas
       {
         path: 'admin',
         element: (
-          <ProtectedRoute requiredRole="admin">
+          <ProtectedRoute requiredRole='admin'>
             <AdminPage />
           </ProtectedRoute>
         ),

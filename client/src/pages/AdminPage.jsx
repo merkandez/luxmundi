@@ -1,14 +1,17 @@
-import React, { useState, useEffect } from 'react';
-import { fetchUsers, updateUser, deleteUser } from '../services/adminService';
+import React, { useState, useEffect } from "react";
+import { fetchUsers, updateUser, deleteUser } from "../services/adminService";
 import {
   fetchPosts,
   updatePost,
   createPost,
   deletePost,
-} from '../services/postService';
-import UserManagement from '../components/admin/UserManagement';
-import PostManagement from '../components/admin/PostManagement';
-import styled from 'styled-components';
+} from "../services/postService";
+import { registerUser } from "../services/authService";
+import UserManagement from "../components/admin/UserManagement";
+import PostManagement from "../components/admin/PostManagement";
+import styled from "styled-components";
+import NavbarAdmin from "../components/admin/navbarAdmin";
+import { theme } from "../styles/theme";
 
 const AdminPage = () => {
   const [users, setUsers] = useState([]);
@@ -16,16 +19,22 @@ const AdminPage = () => {
   const [selectedUser, setSelectedUser] = useState(null);
   const [selectedPost, setSelectedPost] = useState(null);
 
+  const loadUsers = async () => {
+    console.log("Cargando usuarios");
+    const data = await fetchUsers();
+    setUsers(data);
+    console.log("Usuarios cargados:", data);
+  };
   useEffect(() => {
-    // Cargar usuarios y publicaciones al montar el componente
-    const loadUsers = async () => {
-      const data = await fetchUsers();
-      setUsers(data);
-    };
+    console.log("AdminPage montado");
+
     const loadPosts = async () => {
+      console.log("Cargando posts");
       const data = await fetchPosts();
       setPosts(data);
+      console.log("Posts cargados:", data);
     };
+
     loadUsers();
     loadPosts();
   }, []);
@@ -55,43 +64,155 @@ const AdminPage = () => {
     setPosts([...posts, newPost]);
   };
 
+  const handleUserCreate = async (newUserData) => {
+    try {
+      const newUser = await registerUser(newUserData);
+      if (newUser) {
+        setUsers([...users, newUser]);
+      }
+    } catch (error) {
+      console.error("Error al registrar usuario:", error);
+      throw error;
+    }
+  };
+
+  const [activeComponent, setActiveComponent] = useState("UserManagement");
+
   return (
-    <Container>
-      <Section>
-        <h2>Gestión de Usuarios</h2>
-        <UserManagement
-            users={users}
-            selectedUser={selectedUser}
-            onSelectUser={setSelectedUser}
-            onUpdateUser={handleUserUpdate}
-            onDeleteUser={handleUserDelete}
-        />
-      </Section>
-      <Section>
-        <h2>Gestión de Publicaciones</h2>
-        <PostManagement
-           posts={posts}
-           selectedPost={selectedPost}
-           onSelectPost={setSelectedPost}
-           onUpdatePost={handlePostUpdate}
-           onDeletePost={handlePostDelete}
-           onCreatePost={handlePostCreate}
-        />
-      </Section>
-    </Container>
+    <AdminWrapper>
+      <NavbarAdmin setActiveComponent={setActiveComponent} />
+      <ContentWrapper>
+        {activeComponent === "home" && (
+          <WelcomeSection>
+            <h1>Panel de Administración</h1>
+            <p>Bienvenido al área de gestión de LuxMundi</p>
+          </WelcomeSection>
+        )}
+        {activeComponent === "PostManagement" && (
+          <Section>
+            <SectionHeader>
+              <h2>Gestión de Publicaciones</h2>
+            </SectionHeader>
+            <PostManagementWrapper>
+              <PostManagement
+                posts={posts}
+                selectedPost={selectedPost}
+                onSelectPost={setSelectedPost}
+                onUpdatePost={handlePostUpdate}
+                onDeletePost={handlePostDelete}
+                onCreatePost={handlePostCreate}
+              />
+            </PostManagementWrapper>
+          </Section>
+        )}
+        {activeComponent === "UserManagement" && (
+          <Section>
+            <SectionHeader>
+              <h2>Gestión de Usuarios</h2>
+            </SectionHeader>
+            <UserManagement
+              users={users}
+              reloadUsers={loadUsers}
+              selectedUser={selectedUser}
+              onSelectUser={setSelectedUser}
+              onUpdateUser={handleUserUpdate}
+              onDeleteUser={handleUserDelete}
+              onCreateUser={handleUserCreate}
+            />
+          </Section>
+        )}
+      </ContentWrapper>
+    </AdminWrapper>
   );
 };
 
-export default AdminPage;
-
-const Container = styled.div`
+const AdminWrapper = styled.div`
+  background-color: ${theme.colors.background};
+  min-height: 100vh;
   display: flex;
-  flex-direction: column;
-  gap: 2rem;
+  padding-top: 5rem;
+
+  @media (max-width: ${theme.breakpoints.mobile}) {
+    padding-bottom: 5rem; // Add space for mobile navigation
+  }
+`;
+
+const ContentWrapper = styled.div`
+  flex: 1;
+  padding: 2rem;
+  background-color: ${theme.colors.backgroundAlt};
+  border-radius: 12px;
+  margin: 1rem;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  overflow-x: hidden;
+
+  @media (min-width: ${theme.breakpoints.tablet}) {
+    margin: 2rem;
+  }
+
+  @media (max-width: ${theme.breakpoints.mobile}) {
+    margin: 0.5rem;
+    padding: 1rem;
+  }
+`;
+
+const WelcomeSection = styled.div`
+  text-align: center;
+  padding: 3rem 1rem;
+  color: ${theme.colors.text.primary};
+
+  h1 {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+    color: ${theme.colors.primary};
+    font-weight: 600;
+  }
+
+  p {
+    font-size: 1.1rem;
+    opacity: 0.8;
+  }
 `;
 
 const Section = styled.section`
-  padding: 1rem;
-  border: 1px solid #ccc;
-  border-radius: 5px;
+  background-color: ${theme.colors.background};
+  border-radius: 12px;
+  padding: 1.5rem;
+  margin-bottom: 2rem;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  border: 1px solid ${theme.colors.border};
+
+  @media (min-width: ${theme.breakpoints.tablet}) {
+    padding: 2rem;
+  }
 `;
+
+const SectionHeader = styled.div`
+  margin-bottom: 2rem;
+  padding-bottom: 1rem;
+  border-bottom: 2px solid ${theme.colors.primaryLight};
+
+  h2 {
+    color: ${theme.colors.primary};
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin: 0;
+
+    @media (min-width: ${theme.breakpoints.tablet}) {
+      font-size: 1.8rem;
+    }
+  }
+`;
+
+const PostManagementWrapper = styled.div`
+  background-color: ${theme.colors.background};
+  border-radius: 8px;
+  padding: 1.5rem;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+
+  @media (max-width: ${theme.breakpoints.tablet}) {
+    padding: 1rem;
+  }
+`;
+
+export default AdminPage;

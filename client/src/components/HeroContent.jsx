@@ -26,10 +26,11 @@ const Title = styled.h1`
   font-size: 2.5rem;
   font-weight: 700;
   color: #ffffff;
-  margin: 0;
+  margin: 120px 0 24px;
 
   @media (max-width: 768px) {
     font-size: 2rem;
+    margin: 100px 0 24px;
   }
 `;
 

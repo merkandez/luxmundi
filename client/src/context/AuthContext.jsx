@@ -1,39 +1,60 @@
 import React, { createContext, useState, useEffect } from 'react';
+import { loginUser } from '../services/authService';
 
-// Crear el contexto de autenticación
 export const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const [role, setRole] = useState(null); // Estado para el rol del usuario
+  const [role, setRole] = useState(null);
+  const [userId, setUserId] = useState(null);
+  const [isInitialized, setIsInitialized] = useState(false);
 
   useEffect(() => {
-    // Simulamos la carga del token y rol desde almacenamiento local
-    const storedRole = localStorage.getItem('role');
     const token = localStorage.getItem('token');
+    const storedRole = localStorage.getItem('role');
+    const storedUserId = localStorage.getItem('userId'); 
 
-    if (token) {
+    if (token && storedUserId) {
       setIsAuthenticated(true);
-      setRole(storedRole || 'user'); // Definir rol por defecto
+      setRole(storedRole || 'user');
+      setUserId(storedUserId);
     }
+    console.log("Contexto inicializado con userId:", storedUserId);
+    setIsInitialized(true);
   }, []);
 
-  const login = (userRole) => {
-    localStorage.setItem('token', 'fake-token'); // Token simulado
-    localStorage.setItem('role', userRole); // Guardamos el rol
-    setIsAuthenticated(true);
-    setRole(userRole); // Establece el rol del usuario al iniciar sesión
+  const login = async (credentials) => {
+    try {
+      const data = await loginUser(credentials);
+      const { token, role, userId } = data;
+
+      localStorage.setItem('token', token);
+      localStorage.setItem('role', role);
+      localStorage.setItem('userId', userId);
+
+      setIsAuthenticated(true);
+      setRole(role);
+      setUserId(userId);
+      console.log("Usuario autenticado con userId:", userId);
+      setIsInitialized(true);
+    } catch (error) {
+      console.error('Error en el inicio de sesión:', error);
+      throw error;
+    }
   };
 
   const logout = () => {
     localStorage.removeItem('token');
     localStorage.removeItem('role');
+    localStorage.removeItem('userId');
     setIsAuthenticated(false);
-    setRole(null); // Reinicia el rol a un valor predeterminado
+    setRole(null);
+    setUserId(null);
+    setIsInitialized(true);
   };
 
   return (
-    <AuthContext.Provider value={{ isAuthenticated, role, login, logout }}>
+    <AuthContext.Provider value={{ isAuthenticated, role, userId, login, logout, isInitialized }}>
       {children}
     </AuthContext.Provider>
   );
