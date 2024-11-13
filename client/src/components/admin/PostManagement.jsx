@@ -17,6 +17,8 @@ const PostManagement = ({
     imageUrl: "",
   });
   const [searchTerm, setSearchTerm] = useState("");
+  const [showCreateModal, setShowCreateModal] = useState(false);
+  const [showEditModal, setShowEditModal] = useState(false);
 
   useEffect(() => {
     setEditData(selectedPost || {});
@@ -29,6 +31,7 @@ const PostManagement = ({
 
   const handleUpdate = () => {
     onUpdatePost(selectedPost.id, editData);
+    setShowEditModal(false);
   };
 
   const handleImageUpload = async (e) => {
@@ -54,6 +57,12 @@ const PostManagement = ({
   const handleCreatePost = () => {
     onCreatePost(newPostData);
     setNewPostData({ title: "", content: "", imageUrl: "" });
+    setShowCreateModal(false);
+  };
+
+  const handleSelectPost = (post) => {
+    onSelectPost(post);
+    setShowEditModal(true);
   };
 
   const filteredPosts = posts.filter(
@@ -66,14 +75,16 @@ const PostManagement = ({
     <HomeWrapper>
       <TitleSection>
         <h2>Todos los post</h2>
-        <input
-          type="text"
-          placeholder="Buscar post"
-          value={searchTerm}
-          onChange={(e) => setSearchTerm(e.target.value)}
-        />
+        <div>
+          <input
+            type="text"
+            placeholder="Buscar post"
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+          />
+        </div>
       </TitleSection>
-
+      <StyledButton onClick={() => setShowCreateModal(true)}>Crear Post</StyledButton>
       <ExploreSection>
         <CardsContainer>
           {filteredPosts.map((post) => (
@@ -86,7 +97,7 @@ const PostManagement = ({
                 </p>
               </InfoPost>
               <Buttons>
-                <Button onClick={() => onSelectPost(post)}>Editar</Button>
+                <Button onClick={() => handleSelectPost(post)}>Editar</Button>
                 <Button onClick={() => onDeletePost(post.id)}>Eliminar</Button>
               </Buttons>
             </Card>
@@ -94,67 +105,240 @@ const PostManagement = ({
         </CardsContainer>
       </ExploreSection>
 
-      {selectedPost && (
-        <div>
-          <h3>Editar Publicación</h3>
-          <input
-            type="text"
-            name="title"
-            value={editData.title || ""}
-            onChange={handleInputChange}
-            placeholder="Título"
-          />
-          <textarea
-            name="content"
-            value={editData.content || ""}
-            onChange={handleInputChange}
-            placeholder="Contenido"
-          />
-          <input
-            type="file"
-            accept="image/*"
-            onChange={handleEditImageUpload}
-          />
-          {editData.imageUrl && <img src={editData.imageUrl} alt="Preview" style={{ width: '200px' }} />}
-          <button onClick={handleUpdate}>Guardar cambios</button>
-        </div>
+      {showEditModal && (
+        <Modal>
+          <ModalContent>
+            <CloseButton onClick={() => setShowEditModal(false)}>×</CloseButton>
+            <StyledForm>
+              <Title>Editar Publicación</Title>
+              <FormGroup>
+                {editData.imageUrl && <ImagePreview src={editData.imageUrl} alt="Preview" style={{ width: '100%' }} />}
+                <Label>Título</Label>
+                <Input
+                  type="text"
+                  name="title"
+                  value={editData.title || ""}
+                  onChange={handleInputChange}
+                  placeholder="Título"
+                />
+              </FormGroup>
+              <FormGroup>
+                <Label>Contenido</Label>
+                <Textarea
+                  as="textarea"
+                  name="content"
+                  value={editData.content || ""}
+                  onChange={handleInputChange}
+                  placeholder="Contenido"
+                />
+              </FormGroup>
+              <FormGroup>
+                <Label>Imagen</Label>
+                <Input
+                  type="file"
+                  accept="image/*"
+                  onChange={handleEditImageUpload}
+                />
+              </FormGroup>
+              <StyledButton onClick={handleUpdate}>Guardar cambios</StyledButton>
+            </StyledForm>
+          </ModalContent>
+        </Modal>
       )}
 
-      <div>
-        <h3>Crear Nueva Publicación</h3>
-        <input
-          type="text"
-          name="title"
-          value={newPostData.title}
-          onChange={(e) =>
-            setNewPostData({ ...newPostData, title: e.target.value })
-          }
-          placeholder="Título"
-        />
-        <textarea
-          name="content"
-          value={newPostData.content}
-          onChange={(e) =>
-            setNewPostData({ ...newPostData, content: e.target.value })
-          }
-          placeholder="Contenido"
-        />
-        <input
-          type="file"
-          accept="image/*"
-          onChange={handleImageUpload}
-        />
-        {newPostData.imageUrl && <img src={newPostData.imageUrl} alt="Preview" style={{ width: '200px' }} />}
-        <button onClick={handleCreatePost}>Crear Publicación</button>
-      </div>
+      {showCreateModal && (
+        <Modal>
+          <ModalContent>
+            <CloseButton onClick={() => setShowCreateModal(false)}>×</CloseButton>
+            <StyledForm>
+              <Title>Crear Nueva Publicación</Title>
+              <FormGroup>
+                <Label>Título</Label>
+                <Input
+                  type="text"
+                  name="title"
+                  value={newPostData.title}
+                  onChange={(e) =>
+                    setNewPostData({ ...newPostData, title: e.target.value })
+                  }
+                  placeholder="Título"
+                />
+              </FormGroup>
+                {newPostData.imageUrl && <ImagePreview src={newPostData.imageUrl} alt="Preview"  />}
+              <FormGroup>
+                <Label>Contenido</Label>
+                <Textarea
+                  as="textarea"
+                  name="content"
+                  value={newPostData.content}
+                  onChange={(e) =>
+                    setNewPostData({ ...newPostData, content: e.target.value })
+                  }
+                  placeholder="Contenido"
+                />
+              </FormGroup>
+              <FormGroup>
+                <Label>Imagen</Label>
+                <Input
+                  type="file"
+                  accept="image/*"
+                  onChange={handleImageUpload}
+                />
+              </FormGroup>
+              <StyledButton onClick={handleCreatePost}>Crear Publicación</StyledButton>
+            </StyledForm>
+          </ModalContent>
+        </Modal>
+      )}
     </HomeWrapper>
   );
 };
+
+const ImagePreview = styled.img`
+  width: 100%;
+  border-radius: 10px;
+  margin-bottom: 20px;
+  opacity: 0;
+  animation: fadeIn 1s ease forwards;
+
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+`
+
+const Modal = styled.div`
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+
+  opacity: 0;
+  animation: fadeIn 0.5s ease forwards;
+
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+`;
+
+const ModalContent = styled.div`
+  background-color: rgba(26, 26, 26, 1);
+  padding: 20px;
+  border-radius: 10px;
+  position: relative;
+  width: 90%;
+  max-width: 500px;
+  max-height: 90vh;
+  overflow-y: auto;
+`;
+
+const CloseButton = styled.button`
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: transparent;
+  border: none;
+  color: #ffffff;
+  font-size: 20px;
+  cursor: pointer;
+
+  &:hover {
+    color: #ccc;
+  }
+`;
+
+const StyledButton = styled.button`
+  width: 100%;
+  padding: 12px;
+  background-color: #29c9a9;
+  color: #000;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+
+  &:hover {
+    background-color: #24b598;
+  }
+`;
+
+const StyledForm = styled.div`
+  background-color: transparent;
+  padding: 20px;
+  border-radius: 10px;
+  width: 100%;
+  position: relative;
+`;
+
+const Title = styled.h2`
+  font-size: 1.8rem;
+  color: #29c9a9;
+  text-align: center;
+  margin-bottom: 20px;
+`;
+
+const FormGroup = styled.div`
+  margin-bottom: 20px;
+`;
+
+const Label = styled.label`
+  display: block;
+  color: #ffffff;
+  margin-bottom: 8px;
+`;
+
+const Input = styled.input`
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #3d3d3d;
+  border-radius: 5px;
+  background-color: #3d3d3d;
+  color: #ffffff;
+
+  &:focus {
+    border-color: #29c9a9;
+    outline: none;
+  }
+`;
+
+const Textarea = styled.textarea`
+  width: 100%;
+  padding: 12px;
+  min-height: 150px;
+  border: 1px solid #3d3d3d;
+  border-radius: 5px;
+  background-color: #3d3d3d;
+  color: #ffffff;
+
+  &:focus {
+    border-color: #29c9a9;
+    outline: none;
+  }
+`
 
 const HomeWrapper = styled.div`
   background-color: #1e1e1e;
   min-height: 100vh;
   padding: 30px;
+  width: 100%;
 `;
 
 const TitleSection = styled.div`

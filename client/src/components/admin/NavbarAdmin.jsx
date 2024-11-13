@@ -36,6 +36,7 @@ const NavContainer = styled.nav`
   height: 100vh;
   position: sticky;
   top: 0;
+  z-index: 100;
 
   @media (max-width: ${theme.breakpoints.tablet}) {
     min-width: 200px;

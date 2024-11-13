@@ -130,16 +130,17 @@ const AdminWrapper = styled.div`
   background-color: ${theme.colors.background};
   min-height: 100vh;
   display: flex;
+  width: 100%;
   padding-top: 5rem;
 
   @media (max-width: ${theme.breakpoints.mobile}) {
-    padding-bottom: 5rem; // Add space for mobile navigation
+    
   }
 `;
 
 const ContentWrapper = styled.div`
   flex: 1;
-  padding: 2rem;
+  
   background-color: ${theme.colors.backgroundAlt};
   border-radius: 12px;
   margin: 1rem;
@@ -147,7 +148,7 @@ const ContentWrapper = styled.div`
   overflow-x: hidden;
 
   @media (min-width: ${theme.breakpoints.tablet}) {
-    margin: 2rem;
+    
   }
 
   @media (max-width: ${theme.breakpoints.mobile}) {
@@ -183,7 +184,7 @@ const Section = styled.section`
   border: 1px solid ${theme.colors.border};
 
   @media (min-width: ${theme.breakpoints.tablet}) {
-    padding: 2rem;
+    
   }
 `;
 
