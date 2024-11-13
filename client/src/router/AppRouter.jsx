@@ -6,7 +6,6 @@ import AdminPage from '../pages/AdminPage';
 import AboutPage from '../pages/AboutPage';
 import NotFoundPage from '../pages/NotFoundPage';
 import ProtectedRoute from './ProtectedRoute';
-import NotFound from '../pages/NotFound';
 import UnderConstruction from '../pages/UnderConstruction';
 
 export const router = createBrowserRouter([
@@ -17,7 +16,7 @@ export const router = createBrowserRouter([
       { index: true, element: <HomePage /> },
       { path: 'about', element: <AboutPage /> },
       { path: "under-construction", element: <UnderConstruction />,},
-      { path: '*', element: <NotFound />,},
+      { path: '*', element: <NotFoundPage />,},
 
       // Rutas protegidas
       {

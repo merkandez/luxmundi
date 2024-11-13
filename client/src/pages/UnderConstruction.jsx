@@ -11,7 +11,7 @@ const UnderConstruction = () => {
         <Construction size={64} />
         <Title>Página en construcción</Title>
         <Description>
-          Estamos trabajando duro para traerte algo increíble. Por favor, vuelve
+          Estamos trabajando para traerte algo increíble. Por favor, vuelve
           más tarde.
         </Description>
         <BackButton onClick={() => navigate(-1)}>Volver</BackButton>
