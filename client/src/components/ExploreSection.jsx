@@ -17,7 +17,7 @@ const ExploreSection = ({ cards = [] }) => {
     <Section id="explore-section">
       <SectionHeader >
         <Title>Destinos</Title>
-        <Subtitle>Discover amazing destinations</Subtitle>
+        <Subtitle>Descubre culturas fascinantes, paisajes impresionantes y aventuras que quedarán grabadas en tu memoria</Subtitle>
       </SectionHeader>
 
       <CardGrid>
