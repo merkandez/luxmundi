@@ -12,7 +12,7 @@ import { adminMiddleware } from '../middlewares/adminMiddleware'; // Importamos 
 const router = Router();
 
 // Solo usuarios autenticados pueden ver los posts
-router.get('/', authMiddleware, getAllPosts);
+router.get('/',  getAllPosts);
 router.get('/:id', authMiddleware, getPostById);
 
 // Solo administradores pueden crear, actualizar o eliminar posts
