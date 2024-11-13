@@ -86,8 +86,8 @@ const ExploreSection = () => {
   const currentCards = exploreCards.slice(indexOfFirstCard, indexOfLastCard);
 
   return (
-    <Section id="explore-section">
-      <SectionHeader >
+    <Section id="explore">
+      <SectionHeader>
         <Title>Destinos</Title>
         <Subtitle>Discover amazing destinations</Subtitle>
       </SectionHeader>
@@ -148,7 +148,9 @@ ExploreSection.propTypes = {
 
 const Section = styled.section`
   padding: 60px 20px;
+  padding: 60px 20px;
   background-color: #111111;
+  margin-bottom: 0;
   margin-bottom: 0;
 `;
 
@@ -159,12 +161,23 @@ const SectionHeader = styled.div`
   max-width: 800px;
   margin: 0 auto 48px;
   padding: 0 20px;
+  max-width: 800px;
+  margin: 0 auto 48px;
+  padding: 0 20px;
 `;
 
 const Title = styled.h2`
   font-size: 2.5rem;
   color: #fff;
   margin-bottom: 16px;
+
+  @media (max-width: 991px) {
+    font-size: 2rem;
+  }
+
+  @media (max-width: 480px) {
+    font-size: 1.75rem;
+  }
 
   @media (max-width: 991px) {
     font-size: 2rem;
@@ -184,10 +197,22 @@ const CardGrid = styled.div`
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
   gap: 2rem;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 2rem;
   max-width: 1440px;
   margin: 0 auto;
   padding: 0 20px;
+  padding: 0 20px;
 
+  @media (max-width: 991px) {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem;
+  }
+
+  @media (max-width: 768px) {
+    grid-template-columns: 1fr;
+    max-width: 400px;
+    gap: 1.5rem;
   @media (max-width: 991px) {
     grid-template-columns: repeat(2, 1fr);
     gap: 1.5rem;
@@ -218,6 +243,19 @@ const Pagination = styled.div`
     padding: 16px;
     margin: 32px 16px;
   }
+  margin: 48px auto;
+  padding: 24px;
+  background: rgba(255, 255, 255, 0.03);
+  border-radius: 12px;
+  backdrop-filter: blur(8px);
+  max-width: 600px;
+
+  @media (max-width: 768px) {
+    flex-direction: column;
+    gap: 12px;
+    padding: 16px;
+    margin: 32px 16px;
+  }
 `;
 
 const PaginationButton = styled.button`
@@ -226,11 +264,19 @@ const PaginationButton = styled.button`
   color: #fff;
   padding: 8px 24px;
   border-radius: 6px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: #fff;
+  padding: 8px 24px;
+  border-radius: 6px;
   cursor: pointer;
   transition: all 0.2s ease;
   font-weight: 500;
+  font-weight: 500;
 
   &:hover:not(:disabled) {
+    background: rgba(255, 255, 255, 0.1);
+    border-color: rgba(255, 255, 255, 0.3);
+    transform: translateY(-1px);
     background: rgba(255, 255, 255, 0.1);
     border-color: rgba(255, 255, 255, 0.3);
     transform: translateY(-1px);
@@ -239,6 +285,10 @@ const PaginationButton = styled.button`
   &:disabled {
     opacity: 0.5;
     cursor: not-allowed;
+  }
+
+  @media (max-width: 768px) {
+    width: 100%;
   }
 
   @media (max-width: 768px) {
@@ -255,9 +305,17 @@ const PageNumbers = styled.div`
     justify-content: center;
     flex-wrap: wrap;
   }
+
+  @media (max-width: 768px) {
+    width: 100%;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
 `;
 
 const PageNumber = styled.button`
+  width: 36px;
+  height: 36px;
   width: 36px;
   height: 36px;
   display: flex;
@@ -270,11 +328,22 @@ const PageNumber = styled.button`
   background: ${(props) =>
     props.active ? "rgba(255, 255, 255, 0.1)" : "transparent"};
   color: #fff;
+  border-radius: 6px;
+  border: 1px solid
+    ${(props) =>
+      props.active ? "rgba(255, 255, 255, 0.3)" : "rgba(255, 255, 255, 0.1)"};
+  background: ${(props) =>
+    props.active ? "rgba(255, 255, 255, 0.1)" : "transparent"};
+  color: #fff;
   cursor: pointer;
   transition: all 0.2s ease;
   font-weight: ${(props) => (props.active ? "600" : "400")};
+  font-weight: ${(props) => (props.active ? "600" : "400")};
 
   &:hover:not(:disabled) {
+    background: rgba(255, 255, 255, 0.1);
+    border-color: rgba(255, 255, 255, 0.3);
+    transform: translateY(-1px);
     background: rgba(255, 255, 255, 0.1);
     border-color: rgba(255, 255, 255, 0.3);
     transform: translateY(-1px);
