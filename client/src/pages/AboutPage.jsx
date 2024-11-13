@@ -65,7 +65,8 @@ function AboutUs() {
       <AboutHeader>
         <Title>Nuestro Equipo</Title>
         <Description>
-        En Lux Mundi, nuestro equipo está formado por cinco personas con una profunda pasión por los viajes y la fotografía, que nos une en la misión de compartir el mundo a través de nuestros ojos y cámaras. 
+        En Lux Mundi, somos un equipo de cinco apasionados por los viajes, la fotografía y la aventura, comprometidos a crear una plataforma donde los viajeros puedan explorar el mundo a través de relatos cautivadores, imágenes reales, consejos útiles y experiencias compartidas.
+        ¡Explora, descubre y comparte el mundo con nosotros en Lux Mundi!
         </Description>
       </AboutHeader>
       <TeamGrid>
