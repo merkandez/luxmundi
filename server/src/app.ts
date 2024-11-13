@@ -6,6 +6,7 @@ import postRoutes from './routes/postRoutes'; // Rutas de posts
 import authRoutes from './routes/authRoutes'; // Rutas de autenticación
 import userRoutes from './routes/userRoutes'; // administración de usuarios
 import './models/index'; // Importar los modelos
+import uploadRoutes from './routes/uploadRoutes';
 
 dotenv.config();
 
@@ -18,6 +19,8 @@ app.use(express.json());
 app.use('/api/posts', postRoutes); // Ruta base para las entradas posts del blog
 app.use('/api/auth', authRoutes); // Ruta base para las rutas de autenticación
 app.use('/api/users', userRoutes); // Rutas de administración de usuarios
+app.use('/api/upload', uploadRoutes); // Rutas de carga de imágenes
+
 
 // Conexión a la base de datos
 sequelize

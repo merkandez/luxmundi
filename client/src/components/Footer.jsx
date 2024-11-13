@@ -5,7 +5,6 @@ import { BsCameraFill } from "react-icons/bs";
 import { useState } from "react";
 import ContactModal from "./ContactModal";
 
-
 export default function Footer() {
   const [isContactModalOpen, setIsContactModalOpen] = useState(false);
   const currentYear = new Date().getFullYear();

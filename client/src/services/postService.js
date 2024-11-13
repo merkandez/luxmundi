@@ -31,3 +31,17 @@ export const deletePost = async (postId) => {
   });
   return response.data;
 };
+
+// Función para subir imágenes a Cloudinary
+export const uploadImage = async (imageFile) => {
+  const formData = new FormData();
+  formData.append('image', imageFile);
+
+  const response = await axios.post(`${import.meta.env.VITE_API_URL}/upload/upload`, formData, {
+    headers: {
+      'Content-Type': 'multipart/form-data',
+      Authorization: `Bearer ${localStorage.getItem('token')}`,
+    },
+  });
+  return response.data;
+};

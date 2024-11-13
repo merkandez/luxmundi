@@ -9,6 +9,7 @@ import {
 import  { registerUser } from '../services/authService';
 import UserManagement from '../components/admin/UserManagement';
 import PostManagement from '../components/admin/PostManagement';
+import FormImage from '../components/formImage';
 import styled from 'styled-components';
 import NavbarAdmin from '../components/admin/navbarAdmin';
 
@@ -105,6 +106,10 @@ const AdminPage = () => {
             onCreateUser={handleUserCreate}
           />
         </Section>}
+        {activeComponent === "FormImage" && <Section>
+          <h2>subir imagen</h2>
+          <FormImage />
+          </Section>}
       </ContentWrapper>
     </AdminWrapper>
   );

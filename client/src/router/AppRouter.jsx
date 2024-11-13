@@ -33,7 +33,7 @@ export const router = createBrowserRouter([
       {
         path: 'admin',
         element: (
-          <ProtectedRoute requiredRole="admin">
+          <ProtectedRoute requiredRole='admin'>
             <AdminPage />
           </ProtectedRoute>
         ),

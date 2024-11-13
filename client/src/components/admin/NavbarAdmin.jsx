@@ -14,7 +14,7 @@ const NavbarAdmin = ({setActiveComponent}) => {
             <List>
                 <Item 
                     onClick={()=> {
-                        setActiveComponent("home")
+                        setActiveComponent("FormImage")
                         setSelectedItem("home")
                     }} 
                     className={selectedItem === "home" ? "active" : ""}
