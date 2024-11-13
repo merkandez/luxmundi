@@ -14,15 +14,15 @@ import ArticlePage from "../pages/ArticlePage";
 import ScrollToTop from '../components/ScrollToTop'; 
 
 
-export const router = createBrowserRouter([
-  {
-    path: '/',
-    element: (
-      <>
-        <ScrollToTop /> {/* Añade ScrollToTop aquí */}
-        <Layout />
-      </>
-    ), 
+const router = createBrowserRouter([
+    {
+      path: "/",
+      element: (
+        <AuthProvider>
+          <ScrollToTop />
+          <Layout />
+        </AuthProvider>
+      ),
     
     children: [
       { index: true, element: <HomePage /> },
