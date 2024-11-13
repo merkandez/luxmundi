@@ -7,7 +7,7 @@ import NoAccessPage from '../pages/NoAccessPage';
 import AboutPage from '../pages/AboutPage';
 import ProtectedRoute from './ProtectedRoute';
 import NotFound from '../pages/NotFound';
-
+import ArticlePage from '../pages/ArticlePage';
 export const router = createBrowserRouter([
   {
     path: '/',
@@ -15,6 +15,7 @@ export const router = createBrowserRouter([
     children: [
       { index: true, element: <HomePage /> },
       { path: 'about', element: <AboutPage /> },
+      { path: '/post/:postId', element: <ArticlePage /> },
 
       {
         path: '*',

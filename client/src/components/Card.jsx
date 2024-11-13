@@ -1,91 +1,49 @@
-import styled from "styled-components";
-import PropTypes from "prop-types";
+import React from 'react';
+import styled from 'styled-components';
+import PropTypes from 'prop-types';
 
-const Card = ({ title, description }) => (
-  <CardWrapper>
-    <CardImage />
-    <CardContent>
-      <h3>{title}</h3>
-      <p>{description}</p>
-    </CardContent>
-  </CardWrapper>
+const Card = ({ title, content, imageUrl }) => (
+  <CardContainer>
+    <Image src={imageUrl} alt={title} />
+    <ContentWrapper>
+      <Title>{title}</Title>
+      <Content>{content}</Content>
+    </ContentWrapper>
+  </CardContainer>
 );
 
 Card.propTypes = {
   title: PropTypes.string.isRequired,
-  description: PropTypes.string.isRequired,
+  content: PropTypes.string.isRequired,
+  imageUrl: PropTypes.string.isRequired,
 };
 
-const CardWrapper = styled.div`
-  background-color: #111111;
-  border-radius: 4px;
-  padding: 16px;
-  text-align: left;
-  color: #ffffff;
-  border: 1px solid #222;
-  transition: all 0.3s ease;
-  cursor: pointer;
-  position: relative;
+const CardContainer = styled.div`
+  background-color: #333;
+  border-radius: 8px;
   overflow: hidden;
-
-  &:hover {
-    transform: translateY(-5px);
-    border-color: #333;
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
-
-    &::after {
-      transform: scaleX(1);
-    }
-  }
-
-  &:active {
-    transform: translateY(-2px);
-  }
-
-  &::after {
-    content: "";
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    height: 2px;
-    background: linear-gradient(to right, #ffffff, transparent);
-    transform: scaleX(0);
-    transform-origin: left;
-    transition: transform 0.3s ease;
-  }
+  display: flex;
+  flex-direction: column;
 `;
 
-const CardImage = styled.div`
-  background-color: #222;
+const Image = styled.img`
   width: 100%;
-  height: 200px;
-  border-radius: 2px;
-  margin-bottom: 16px;
-  transition: all 0.3s ease;
-
-  ${CardWrapper}:hover & {
-    transform: scale(1.02);
-  }
+  height: 180px;
+  object-fit: cover;
 `;
 
-const CardContent = styled.div`
-  h3 {
-    font-size: 1.2rem;
-    margin-bottom: 12px;
-    font-weight: 500;
-    transition: color 0.3s ease;
+const ContentWrapper = styled.div`
+  padding: 16px;
+`;
 
-    ${CardWrapper}:hover & {
-      color: #fff;
-    }
-  }
+const Title = styled.h3`
+  margin: 0 0 8px;
+  color: #fff;
+`;
 
-  p {
-    font-size: 0.9rem;
-    color: #999;
-    line-height: 1.5;
-  }
+const Content = styled.p`
+  margin: 0;
+  color: #aaa;
 `;
 
 export default Card;

@@ -1,75 +1,39 @@
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import LuxMundiHero from '../components/LuxMundiHero';
 import ExploreSection from '../components/ExploreSection';
-import React from 'react';
 import LogoutButton from '../components/LogoutButton';
-
-const cardData = [
-  {
-    title: 'Machu Pichu',
-    description:
-      'Discover the ancient Incan city nestled in the Andes Mountains.',
-  },
-  {
-    title: 'Nueva Zelandia',
-    description:
-      'Explore the stunning landscapes and vibrant culture of New Zealand.',
-  },
-  {
-    title: 'The Great Wall',
-    description:
-      "Experience the grandeur of one of the world's most famous landmarks.",
-  },
-  {
-    title: 'Eiffel Tower',
-    description:
-      'Visit the iconic symbol of Paris and enjoy breathtaking views.',
-  },
-  {
-    title: 'Grand Canyon',
-    description:
-      'Marvel at the immense size and beauty of this natural wonder.',
-  },
-  {
-    title: 'Sydney Opera House',
-    description:
-      'Enjoy a performance at this architectural masterpiece in Australia.',
-  },
-  // Adding more cards to test pagination
-  {
-    title: 'Santorini',
-    description:
-      'Experience the stunning white architecture and Mediterranean views.',
-  },
-  {
-    title: 'Mount Fuji',
-    description:
-      "Climb Japan's highest peak and witness breathtaking sunrises.",
-  },
-  {
-    title: 'Venice',
-    description: 'Navigate the romantic canals of this unique Italian city.',
-  },
-  {
-    title: 'Petra',
-    description: 'Explore the ancient rose-colored city carved into rock.',
-  },
-  {
-    title: 'Taj Mahal',
-    description: 'Visit this magnificent monument of eternal love in India.',
-  },
-  {
-    title: 'Great Barrier Reef',
-    description: "Dive into the world's largest coral reef system.",
-  },
-];
+import { fetchPosts } from '../services/postService';
 
 function HomePage() {
+  const [posts, setPosts] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  // Función para cargar los posts desde la base de datos
+  const loadPosts = async () => {
+    try {
+      const fetchedPosts = await fetchPosts(true); // Cambia a false si necesitas todos los detalles
+      setPosts(fetchedPosts);
+    } catch (error) {
+      console.error('Error al cargar los posts:', error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    loadPosts();
+  }, []);
+
   return (
     <HomeWrapper>
       <LuxMundiHero />
       <LogoutButton />
-      <ExploreSection cards={cardData} />
+      {loading ? (
+        <LoadingMessage>Cargando destinos...</LoadingMessage>
+      ) : (
+        <ExploreSection cards={posts} />
+      )}
     </HomeWrapper>
   );
 }
@@ -79,4 +43,66 @@ const HomeWrapper = styled.div`
   min-height: 100vh;
 `;
 
+const LoadingMessage = styled.div`
+  color: #fff;
+  text-align: center;
+  margin-top: 20px;
+  font-size: 1.2rem;
+`;
+
 export default HomePage;
+
+
+//Código reservado para cuando tengamos imágenes y que se muestren solo los post en los que todos los campos esten completos, evitando posibles errores
+/* import React, { useState, useEffect } from 'react';
+import styled from 'styled-components';
+import LuxMundiHero from '../components/LuxMundiHero';
+import ExploreSection from '../components/ExploreSection';
+import LogoutButton from '../components/LogoutButton';
+import { fetchPosts } from '../services/postService';
+
+function HomePage() {
+  const [posts, setPosts] = useState([]);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    const loadPosts = async () => {
+      try {
+        const data = await fetchPosts();
+        const validPosts = data.filter(post => post.title && post.description && post.imageUrl);
+        setPosts(validPosts);
+      } catch (err) {
+        setError('Error al cargar los posts');
+        console.error('Error al cargar los posts:', err);
+      }
+    };
+
+    loadPosts();
+  }, []);
+
+  return (
+    <HomeWrapper>
+      <LuxMundiHero />
+      <LogoutButton />
+      {error ? (
+        <ErrorMessage>{error}</ErrorMessage>
+      ) : (
+        <ExploreSection cards={posts} />
+      )}
+    </HomeWrapper>
+  );
+}
+
+const HomeWrapper = styled.div`
+  background-color: #0a0a0a;
+  min-height: 100vh;
+`;
+
+const ErrorMessage = styled.div`
+  color: red;
+  text-align: center;
+  margin-top: 20px;
+`;
+
+export default HomePage;
+ */
