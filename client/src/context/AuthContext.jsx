@@ -6,30 +6,37 @@ export const AuthContext = createContext();
 export const AuthProvider = ({ children }) => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [role, setRole] = useState(null);
-  const [isInitialized, setIsInitialized] = useState(false); // Agrega isInitialized
+  const [userId, setUserId] = useState(null);
+  const [isInitialized, setIsInitialized] = useState(false);
 
   useEffect(() => {
-    // Cargar token y rol desde localStorage al inicializar el contexto
-    const storedRole = localStorage.getItem('role');
     const token = localStorage.getItem('token');
+    const storedRole = localStorage.getItem('role');
+    const storedUserId = localStorage.getItem('userId'); 
 
-    if (token) {
+    if (token && storedUserId) {
       setIsAuthenticated(true);
       setRole(storedRole || 'user');
+      setUserId(storedUserId);
     }
-    setIsInitialized(true); // Configurar isInitialized como true después de cargar el token y rol
+    console.log("Contexto inicializado con userId:", storedUserId);
+    setIsInitialized(true);
   }, []);
 
   const login = async (credentials) => {
     try {
       const data = await loginUser(credentials);
-      const { token, role } = data;
+      const { token, role, userId } = data;
 
       localStorage.setItem('token', token);
       localStorage.setItem('role', role);
+      localStorage.setItem('userId', userId);
+
       setIsAuthenticated(true);
       setRole(role);
-      setIsInitialized(true); // Aseguramos que isInitialized esté en true después de iniciar sesión
+      setUserId(userId);
+      console.log("Usuario autenticado con userId:", userId);
+      setIsInitialized(true);
     } catch (error) {
       console.error('Error en el inicio de sesión:', error);
       throw error;
@@ -39,13 +46,15 @@ export const AuthProvider = ({ children }) => {
   const logout = () => {
     localStorage.removeItem('token');
     localStorage.removeItem('role');
+    localStorage.removeItem('userId');
     setIsAuthenticated(false);
     setRole(null);
-    setIsInitialized(true); // Resetear isInitialized en caso de logout
+    setUserId(null);
+    setIsInitialized(true);
   };
 
   return (
-    <AuthContext.Provider value={{ isAuthenticated, role, login, logout, isInitialized }}>
+    <AuthContext.Provider value={{ isAuthenticated, role, userId, login, logout, isInitialized }}>
       {children}
     </AuthContext.Provider>
   );

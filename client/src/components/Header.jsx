@@ -7,6 +7,7 @@ import PropTypes from "prop-types";
 import LoginModal from "./LoginModal";
 import ContactModal from "./ContactModal";
 import RegisterModal from "./RegisterModal";
+import ProfileSettings from "./ProfileSettings";
 
 const HeaderContainer = styled.header`
   background-color: #0a0a0a;
@@ -36,26 +37,28 @@ const Wrapper = styled.div`
 const LogoSection = styled(Link)`
   display: flex;
   align-items: center;
-  gap: 0.8rem;
+  gap: 0.5rem;
+  text-decoration: none;
   transition: transform 0.3s ease;
-  z-index: 20;
-  margin-right: 2rem;
-  color: #fff;
-  padding: 4px;
 
-  &:hover {
-    transform: translateY(-1px);
+  svg {
+    color: #ffffff;
+    transition: all 0.3s ease;
   }
 
   span {
-    font-size: 1.2rem;
-    font-weight: bold;
-    padding-top: 4px;
     color: #ffffff;
-    margin: 4px;
+    font-weight: 600;
+    font-size: 1.2rem;
+    transition: all 0.3s ease;
+  }
 
-    @media (max-width: 480px) {
-      font-size: 1.1rem;
+  &:hover {
+    transform: scale(1.05);
+
+    svg,
+    span {
+      color: #29c9a9;
     }
   }
 `;
@@ -88,13 +91,13 @@ const NavLink = styled(Link)`
     height: 1px;
     bottom: 0;
     left: 50%;
-    background-color: #fff;
+    background-color: #29c9a9;
     transition: all 0.3s ease;
     transform: translateX(-50%);
   }
 
   &:hover {
-    color: #ffffff;
+    color: #29c9a9;
 
     &:after {
       width: 100%;
@@ -339,13 +342,13 @@ const NavButton = styled.button`
     height: 1px;
     bottom: 0;
     left: 50%;
-    background-color: #fff;
+    background-color: #29c9a9;
     transition: all 0.3s ease;
     transform: translateX(-50%);
   }
 
   &:hover {
-    color: #ffffff;
+    color: #29c9a9;
 
     &:after {
       width: 100%;
@@ -382,7 +385,7 @@ const Header = ({ isLoggedIn }) => {
     <HeaderContainer>
       <Wrapper>
         <LogoSection to="/">
-          <BsCameraFill size={24} color="#ffffff" />
+          <BsCameraFill size={24} />
           <span>LUX MUNDI</span>
         </LogoSection>
 
@@ -414,7 +417,9 @@ const Header = ({ isLoggedIn }) => {
             </SearchButton>
           </SearchSection>
 
-          {!isLoggedIn && (
+          {isLoggedIn ? (
+            <ProfileSettings />
+          ) : (
             <AuthButtons>
               <button
                 className="login"

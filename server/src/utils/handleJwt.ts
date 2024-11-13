@@ -1,7 +1,7 @@
 import jwt from 'jsonwebtoken';
 
-// Función para firmar el token JWT
 export const tokenSign = (user: any): string => {
+  console.log("Firmando token para el usuario:", { id: user.id, role: user.role });
   const token = jwt.sign(
     { id: user.id, role: user.role },
     process.env.JWT_SECRET!,
@@ -9,6 +9,7 @@ export const tokenSign = (user: any): string => {
   );
   return token;
 };
+
 
 // Función para verificar el token JWT
 export const tokenVerify = (token: string): any => {
