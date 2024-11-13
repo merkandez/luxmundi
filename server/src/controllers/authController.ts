@@ -39,6 +39,7 @@ export const registerUser = async (
 };
 
 // Controlador de inicio de sesión
+// Controlador de inicio de sesión
 export const loginUser = async (req: Request, res: Response): Promise<void> => {
   const { email, password } = req.body;
 
@@ -57,18 +58,19 @@ export const loginUser = async (req: Request, res: Response): Promise<void> => {
 
     const token = tokenSign(user); // Generamos el token JWT
     const role = user.role; // Extraemos el rol del usuario
+    const userId = user.id; // Extraemos el ID del usuario
 
-    res.json({ message: 'Inicio de sesión exitoso', token, role });
+    // Incluimos `userId` en la respuesta
+    res.json({ message: 'Inicio de sesión exitoso', token, role, userId });
   } catch (error) {
     if (error instanceof Error) {
-      res
-        .status(500)
-        .json({ message: 'Error en el servidor', error: error.message });
+      res.status(500).json({ message: 'Error en el servidor', error: error.message });
     } else {
       res.status(500).json({ message: 'Error en el servidor', error });
     }
   }
 };
+
 // Controlador para actualizar datos del usuario (incluyendo rol, si es admin)
 
 export const updateUser = async (

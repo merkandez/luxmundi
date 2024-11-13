@@ -6,20 +6,20 @@ export const AuthContext = createContext();
 export const AuthProvider = ({ children }) => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [role, setRole] = useState(null);
-  const [userId, setUserId] = useState(null); // Agregar userId
+  const [userId, setUserId] = useState(null);
   const [isInitialized, setIsInitialized] = useState(false);
 
   useEffect(() => {
-    // Cargar token, rol y userId desde localStorage al inicializar el contexto
-    const storedRole = localStorage.getItem('role');
     const token = localStorage.getItem('token');
-    const storedUserId = localStorage.getItem('userId'); // Obtener userId
+    const storedRole = localStorage.getItem('role');
+    const storedUserId = localStorage.getItem('userId'); 
 
-    if (token) {
+    if (token && storedUserId) {
       setIsAuthenticated(true);
       setRole(storedRole || 'user');
-      setUserId(storedUserId); // Establecer userId en el contexto
+      setUserId(storedUserId);
     }
+    console.log("Contexto inicializado con userId:", storedUserId);
     setIsInitialized(true);
   }, []);
 
@@ -30,10 +30,12 @@ export const AuthProvider = ({ children }) => {
 
       localStorage.setItem('token', token);
       localStorage.setItem('role', role);
-      localStorage.setItem('userId', userId); // Almacenar userId en localStorage
+      localStorage.setItem('userId', userId);
+
       setIsAuthenticated(true);
       setRole(role);
-      setUserId(userId); // Establecer userId en el contexto
+      setUserId(userId);
+      console.log("Usuario autenticado con userId:", userId);
       setIsInitialized(true);
     } catch (error) {
       console.error('Error en el inicio de sesión:', error);
@@ -44,10 +46,10 @@ export const AuthProvider = ({ children }) => {
   const logout = () => {
     localStorage.removeItem('token');
     localStorage.removeItem('role');
-    localStorage.removeItem('userId'); // Eliminar userId de localStorage
+    localStorage.removeItem('userId');
     setIsAuthenticated(false);
     setRole(null);
-    setUserId(null); // Resetear userId en el contexto
+    setUserId(null);
     setIsInitialized(true);
   };
 
