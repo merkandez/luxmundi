@@ -19,6 +19,8 @@ const PostManagement = ({
   const [searchTerm, setSearchTerm] = useState("");
   const [showCreateModal, setShowCreateModal] = useState(false);
   const [showEditModal, setShowEditModal] = useState(false);
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
+  const [postToDelete, setPostToDelete] = useState(null);
 
   useEffect(() => {
     setEditData(selectedPost || {});
@@ -32,6 +34,22 @@ const PostManagement = ({
   const handleUpdate = () => {
     onUpdatePost(selectedPost.id, editData);
     setShowEditModal(false);
+  };
+
+  const handleDeleteClick = (postId) => {
+    setPostToDelete(postId);
+    setShowDeleteModal(true);
+  };
+
+  const handleConfirmDelete = async () => {
+    await onDeletePost(postToDelete);
+    setShowDeleteModal(false);
+    setPostToDelete(null);
+  };
+
+  const handleCancelDelete = () => {
+    setShowDeleteModal(false);
+    setPostToDelete(null);
   };
 
   const handleImageUpload = async (e) => {
@@ -115,7 +133,7 @@ const PostManagement = ({
                     <td data-label="Contenido">{post.content.length > 255 ? `${post.content.substring(0, 255)}...` : post.content}</td>
                     <td data-label="Acciones">
                       <StyledButton onClick={() => handleSelectPost(post)}>Editar</StyledButton>
-                      <StyledButton >Eliminar</StyledButton>
+                      <StyledButton onClick={() => handleDeleteClick(post.id)}>Eliminar</StyledButton>
                     </td>
                   </tr>
                 ))}
@@ -211,9 +229,33 @@ const PostManagement = ({
           </ModalContent>
         </Modal>
       )}
+
+{showDeleteModal && (
+        <Modal>
+          <ModalContent>
+            <Title>Confirmar Eliminación</Title>
+            <p style={{ color: 'white', textAlign: 'center', marginBottom: '20px' }}>
+              ¿Estás seguro de que deseas eliminar este usuario?
+            </p>
+            <ButtonGroup>
+              <StyledButton onClick={handleConfirmDelete}>Confirmar</StyledButton>
+              <StyledButton onClick={handleCancelDelete} style={{ backgroundColor: '#dc3545' }}>
+                Cancelar
+              </StyledButton>
+            </ButtonGroup>
+          </ModalContent>
+        </Modal>
+      )}
+
     </HomeWrapper>
   );
 };
+
+const ButtonGroup = styled.div`
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+`;
 
 const TableSection = styled.div`
   margin-bottom: 30px;
