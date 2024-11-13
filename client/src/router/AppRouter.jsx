@@ -8,7 +8,7 @@ import AboutPage from '../pages/AboutPage';
 import ProtectedRoute from './ProtectedRoute';
 import NotFound from "../pages/NotFound";
 import ContactForm from "../components/ContactForm";
-import ArticlePage from "../pages/ArticlePage";  //MODIFICA LA "A" por minuscula
+import ArticlePage from "../pages/ArticlePAge";  //MODIFICA LA "A" por minuscula
 
 
 export const router = createBrowserRouter([
@@ -19,8 +19,10 @@ export const router = createBrowserRouter([
       { index: true, element: <HomePage /> },
       { path: 'about', element: <AboutPage /> },
       { path: "contact", element: <ContactForm />},
-      { path: 'articlePage/:id', element: <ArticlePage/> },
+      { path: 'articlePage/:id', element: <ArticlePage/>},
+      { path: "/article/:postId", element: <ArticlePage /> },
       
+    
     
       {
         path: "*",

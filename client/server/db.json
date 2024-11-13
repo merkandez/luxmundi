@@ -3,32 +3,38 @@
       {
         "id": 1,
         "title": "Machu Pichu",
-        "content": "Discover the ancient Incan city nestled in the Andes Mountains..."
+        "content": "Discover the ancient Incan city nestled in the Andes Mountains...",
+        "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/ca/Machu_Picchu%2C_Peru_%282018%29.jpg/400px-Machu_Picchu%2C_Peru_%282018%29.jpg"
       },
       {
         "id": 2,
         "title": "Nueva Zelandia",
-        "content": "Explore the stunning landscapes and vibrant culture of New Zealand.."
+        "content": "Explore the stunning landscapes and vibrant culture of New Zealand..",
+        "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/ca/Machu_Picchu%2C_Peru_%282018%29.jpg/400px-Machu_Picchu%2C_Peru_%282018%29.jpg"
       },
       {
         "id": 3,
         "title": "The Great Wall",
-        "content": "Experience the grandeur of one of the world's most famous landmarks."
+        "content": "Experience the grandeur of one of the world's most famous landmarks.",
+        "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/ca/Machu_Picchu%2C_Peru_%282018%29.jpg/400px-Machu_Picchu%2C_Peru_%282018%29.jpg"
       },
       {
         "id": 4,
         "title": "Machu Pichu",
-        "content": "Discover the ancient Incan city nestled in the Andes Mountains..."
+        "content": "Discover the ancient Incan city nestled in the Andes Mountains...",
+        "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/ca/Machu_Picchu%2C_Peru_%282018%29.jpg/400px-Machu_Picchu%2C_Peru_%282018%29.jpg"
       },
       {
         "id": 5,
         "title": "Nueva Zelandia",
-        "content": "Explore the stunning landscapes and vibrant culture of New Zealand.."
+        "content": "Explore the stunning landscapes and vibrant culture of New Zealand..",
+        "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/ca/Machu_Picchu%2C_Peru_%282018%29.jpg/400px-Machu_Picchu%2C_Peru_%282018%29.jpg"
       },
       {
         "id": 6,
         "title": "The Great Wall",
-        "content": "Experience the grandeur of one of the world's most famous landmarks."
+        "content": "Experience the grandeur of one of the world's most famous landmarks.",
+        "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/ca/Machu_Picchu%2C_Peru_%282018%29.jpg/400px-Machu_Picchu%2C_Peru_%282018%29.jpg"
       }
     ]
   }

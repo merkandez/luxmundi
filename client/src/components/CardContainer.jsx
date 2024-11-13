@@ -8,19 +8,19 @@ const CardsContainer = styled.div`
   padding: 0 48px;
 `;
 
-const Card = ({ title, description }) => (
+const Card = ({ title, content }) => (
   <CardWrapper>
     <CardImage />
     <CardContent>
       <h3>{title}</h3>
-      <p>{description}</p>
+      <p>{content}</p>
     </CardContent>
   </CardWrapper>
 );
 
 Card.propTypes = {
   title: PropTypes.string.isRequired,
-  description: PropTypes.string.isRequired,
+  content: PropTypes.string.isRequired,
 };
 
 const CardWrapper = styled.div`

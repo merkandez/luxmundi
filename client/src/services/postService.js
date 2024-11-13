@@ -24,10 +24,23 @@ export const updatePost = async (postId, postData) => {
   });
   return response.data;
 };
-//Funcion para eliminar un post
+//Funcion para eliminar un post por su ID
 export const deletePost = async (postId) => {
   const response = await axios.delete(`${API_URL}/${postId}`, {
     headers: { Authorization: `Bearer ${localStorage.getItem('token')}` },
   });
+  return response.data;
+};
+
+//POST PRUEBA
+//Función para obtener todos los posts (sin token)
+export const getPosts = async () => {
+  const response = await axios.get(API_URL);
+  return response.data;
+};
+
+//Función para obtener un post específico or su ID (SIN TOKEN)
+export const getPostsId = async (postId) => {
+  const response = await axios.get(`${API_URL}/${postId}`);
   return response.data;
 };

@@ -25,7 +25,7 @@ const Card = ({ id, title, content }) => {
 }
 
 Card.propTypes = {
-  id: PropTypes.string.isRequired,   // Aseguramos que 'id' sea un string requerido
+  id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,// Aseguramos que 'id' sea un string requerido
   title: PropTypes.string.isRequired,
   content: PropTypes.string.isRequired,
 };

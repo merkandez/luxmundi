@@ -3,13 +3,12 @@ import axios from "axios";
 
 export const getPosts = async () => {
   try {
-    const response = await axios.get("http://localhost:8080/api/posts"); //  /posts
+   const response = await axios.get("http://localhost:8080/api/posts"); //  /posts
     return response.data; 
-    
-  } catch (error) {
+      } catch (error) {
     console.error("Error obteniendo los posts:", error);
     throw error;
-  }
+ }
 };
 
 
