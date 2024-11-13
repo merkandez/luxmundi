@@ -11,13 +11,14 @@ function LuxMundiHero() {
       <ContentWrapper>
         <TextContent>
           <Overline>Viajes & Fotografía</Overline>
-          <Title>Explorando el mundo a través de cinco miradas únicas</Title>
+          <Title>Explorando el mundo a través de miradas únicas</Title>
           <Description>
             Bienvenidos a nuestro rincón digital donde cinco fotógrafos viajeros
-            compartimos nuestras aventuras, técnicas y perspectivas únicas.
+            compartimos nuestras aventuras, técnicas e historias visuales.
             Desde las calles bulliciosas de Asia hasta los paisajes vírgenes de
             Sudamérica, cada historia se cuenta a través de cinco lentes
-            diferentes.
+            diferentes. <br />
+            En Lux Mundi no solo encontrarás inspiración para tu próximo viaje, sino también una comunidad global de viajeros que comparten la misma pasión por el descubrimiento y la aventura. 
           </Description>
           <ButtonWrapper>
             <ButtonGroup
