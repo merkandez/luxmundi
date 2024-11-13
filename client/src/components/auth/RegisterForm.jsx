@@ -4,6 +4,7 @@ import { registerUser } from '../../services/authService';
 import styled from 'styled-components';
 import SocialButton from '../SocialButton';
 import LoginForm from './LoginForm';
+import ConfirmationModal from '../ConfirmationModal';
 
 const socialButtons = [
   {
@@ -18,6 +19,12 @@ const socialButtons = [
 
 const RegisterForm = ({ onClose }) => {
   const [showLoginForm, setShowLoginForm] = useState(false);
+  const [modalData, setModalData] = useState({
+    isOpen: false,
+    message: '',
+    showButtons: false,
+  });
+  
   const {
     register,
     handleSubmit,
@@ -26,18 +33,26 @@ const RegisterForm = ({ onClose }) => {
   } = useForm();
   const password = watch('password');
 
+  const openModal = (message, showButtons = false) => {
+    setModalData({ isOpen: true, message, showButtons });
+  };
+
+  const closeModal = () => {
+    setModalData({ ...modalData, isOpen: false });
+  };
+
   const onSubmit = async (data) => {
     if (data.password !== data.confirmPassword) {
-      alert('Las contraseñas no coinciden');
+      openModal('Las contraseñas no coinciden');
       return;
     }
     try {
       await registerUser(data);
-      alert('Registro exitoso');
-      onClose();
+      openModal('Registro exitoso', false);
+      setTimeout(onClose, 2000); // Cierra el modal tras un breve tiempo
     } catch (error) {
       console.error('Error en el registro:', error);
-      alert('Error en el registro');
+      openModal('Error en el registro');
     }
   };
 
@@ -116,6 +131,13 @@ const RegisterForm = ({ onClose }) => {
           </SwitchText>
         </StyledForm>
       )}
+
+      <ConfirmationModal
+        isOpen={modalData.isOpen}
+        onClose={closeModal}
+        message={modalData.message}
+        showButtons={modalData.showButtons}
+      />
     </>
   );
 };
