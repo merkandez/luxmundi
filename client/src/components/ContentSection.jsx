@@ -1,3 +1,4 @@
+// ContentSection.jsx
 import React from "react";
 import styled from "styled-components";
 
@@ -15,70 +16,42 @@ const ContentSection = ({ content }) => {
         <StyledSubheading>{subheading}</StyledSubheading>
       </StyledHeaderWrapper>
       <StyledText>{text}</StyledText>
-      <StyledText>{additionalText}</StyledText>
+      {additionalText && <StyledText>{additionalText}</StyledText>}
     </StyledContentWrapper>
   );
 };
 
 const StyledContentWrapper = styled.div`
-  align-self: stretch;
   display: flex;
-  min-width: 300px;
-  min-height: 351px;
   flex-direction: column;
-  justify-content: flex-start;
-  width: 484px;
-  margin: auto 0;
-
-  @media (max-width: 991px) {
-    max-width: 100%;
-  }
+  align-items: center;
+  padding: 40px;
+  max-width: 800px;
+  margin: 0 auto;
+  text-align: center;
 `;
 
 const StyledHeaderWrapper = styled.header`
-  display: flex;
-  width: 100%;
-  flex-direction: column;
-  white-space: nowrap;
-  line-height: 1.2;
-  justify-content: flex-start;
-
-  @media (max-width: 991px) {
-    max-width: 100%;
-    white-space: initial;
-  }
+  margin-bottom: 16px;
 `;
 
 const StyledHeading = styled.h2`
   color: white;
-  letter-spacing: -0.48px;
-  font-size: 30px;
- 
-  @media (max-width: 991px) {
-    max-width: 100%;
-  }
+  font-size: 2rem;
+  margin: 0;
 `;
 
 const StyledSubheading = styled.h3`
-  color: white;
+  color: #cccccc;
   margin-top: 8px;
-  font-size: 16px;
-  @media (max-width: 991px) {
-    max-width: 100%;
-  }
+  font-size: 1rem;
 `;
 
 const StyledText = styled.p`
-  flex: 1;
-  margin-top: 24px;
-  width: 100%;
   color: white;
-  font-size: 16px;
-  
-
-  @media (max-width: 991px) {
-    max-width: 100%;
-  }
+  font-size: 1rem;
+  line-height: 1.5;
+  margin-top: 16px;
 `;
 
 export default ContentSection;

@@ -1,9 +1,9 @@
-import styled from "styled-components";
-import { Swiper, SwiperSlide } from "swiper/react";
-import { Navigation, Pagination, Autoplay } from "swiper/modules";
-import { ButtonGroup } from "./ButtonGroup";
-import "swiper/css";
-import "swiper/css/pagination";
+import styled from 'styled-components';
+import { Swiper, SwiperSlide } from 'swiper/react';
+import { Navigation, Pagination, Autoplay } from 'swiper/modules';
+import { ButtonGroup } from './ButtonGroup';
+import 'swiper/css';
+import 'swiper/css/pagination';
 
 function LuxMundiHero() {
   return (
@@ -22,8 +22,8 @@ function LuxMundiHero() {
           <ButtonWrapper>
             <ButtonGroup
               buttons={[
-                { text: "Explore Destinations", variant: "outline" },
-                { text: "Start Creating", variant: "solid" },
+                { text: 'Explore Destinations', variant: 'outline' },
+                { text: 'Start Creating', variant: 'solid' },
               ]}
             />
           </ButtonWrapper>
@@ -44,20 +44,20 @@ function LuxMundiHero() {
           >
             <SwiperSlide>
               <Image
-                src="https://source.unsplash.com/random/1200x800/?landscape,travel"
-                alt="Travel Photography"
+                src='../../../server/uploads/1731532746299-freepik-export-20241113210904APok.png'
+                alt='Travel Photography'
               />
             </SwiperSlide>
             <SwiperSlide>
               <Image
-                src="https://source.unsplash.com/random/1200x800/?city,architecture"
-                alt="Urban Photography"
+                src='https://source.unsplash.com/random/1200x800/?city,architecture'
+                alt='Urban Photography'
               />
             </SwiperSlide>
             <SwiperSlide>
               <Image
-                src="https://source.unsplash.com/random/1200x800/?nature,wildlife"
-                alt="Nature Photography"
+                src='https://source.unsplash.com/random/1200x800/?nature,wildlife'
+                alt='Nature Photography'
               />
             </SwiperSlide>
           </Swiper>
@@ -111,7 +111,7 @@ const TextContent = styled.div`
 `;
 
 const Overline = styled.span`
-  font-family: "DM Sans", sans-serif;
+  font-family: 'DM Sans', sans-serif;
   text-transform: uppercase;
   letter-spacing: 2px;
   font-size: 0.9rem;
@@ -121,7 +121,7 @@ const Overline = styled.span`
 `;
 
 const Title = styled.h1`
-  font-family: "DM Sans", sans-serif;
+  font-family: 'DM Sans', sans-serif;
   font-size: 3rem;
   font-weight: 700;
   color: #ffffff;
@@ -138,7 +138,7 @@ const Title = styled.h1`
 `;
 
 const Description = styled.p`
-  font-family: "DM Sans", sans-serif;
+  font-family: 'DM Sans', sans-serif;
   font-size: 1.1rem;
   line-height: 1.6;
   color: #999999;

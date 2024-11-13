@@ -6,27 +6,23 @@ import { Link } from 'react-router-dom';
 import { useSearch } from '../hooks/useSearch';
 
 const ExploreSection = ({ cards = [] }) => {
-  const { searchQuery } = useSearch(); // Usamos searchQuery del contexto
+  const { searchQuery } = useSearch();
   const [currentPage, setCurrentPage] = useState(1);
   const cardsPerPage = 12;
 
-  // Filtramos las cards basadas en searchQuery
   const filteredCards = cards.filter(
     (card) =>
       card.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
       card.content.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
-  const totalPages = Math.max(
-    1,
-    Math.ceil(filteredCards.length / cardsPerPage)
-  );
+  const totalPages = Math.max(1, Math.ceil(filteredCards.length / cardsPerPage));
   const indexOfLastCard = currentPage * cardsPerPage;
   const indexOfFirstCard = indexOfLastCard - cardsPerPage;
   const currentCards = filteredCards.slice(indexOfFirstCard, indexOfLastCard);
 
   return (
-    <Section id='explore-section'>
+    <Section id="explore-section">
       <SectionHeader>
         <Title>Destinos</Title>
         <Subtitle>Descubre destinos increíbles</Subtitle>
@@ -34,11 +30,7 @@ const ExploreSection = ({ cards = [] }) => {
 
       <CardGrid>
         {currentCards.map((card, index) => (
-          <Link
-            to={`/post/${card.id}`}
-            key={index}
-            style={{ textDecoration: 'none' }}
-          >
+          <Link to={`/post/${card.id}`} key={index} style={{ textDecoration: 'none' }}>
             <Card {...card} />
           </Link>
         ))}
@@ -82,10 +74,10 @@ const ExploreSection = ({ cards = [] }) => {
 ExploreSection.propTypes = {
   cards: PropTypes.arrayOf(
     PropTypes.shape({
-      id: PropTypes.number.isRequired, // Asegúrate de que `id` esté definido aquí
+      id: PropTypes.number.isRequired,
       title: PropTypes.string.isRequired,
-      description: PropTypes.string.isRequired,
-      imageUrl: PropTypes.string.isRequired, // Añade imageUrl como propiedad obligatoria
+      content: PropTypes.string.isRequired,
+      imageUrl: PropTypes.string.isRequired,
     })
   ).isRequired,
 };
@@ -99,11 +91,6 @@ const Section = styled.section`
   align-items: center;
   flex-direction: column;
   width: 100%;
-
-  @media (max-width: 545px) and (min-width: 370px) {
-    padding: 40px 0;
-    margin: 0 auto;
-  }
 `;
 
 const SectionHeader = styled.div`
@@ -131,18 +118,9 @@ const CardGrid = styled.div`
   margin: 0 auto;
   padding: 0 16px;
 
-  @media (max-width: 545px) and (min-width: 370px) {
-    grid-template-columns: 1fr; /* Muestra una columna para mejor ajuste */
-    padding: 0 12px; /* Asegura un centrado más ajustado */
-  }
-
   @media (max-width: 768px) {
     grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
     padding: 0 8px;
-  }
-
-  @media (min-width: 1200px) {
-    grid-template-columns: repeat(4, 1fr);
   }
 `;
 
@@ -193,8 +171,7 @@ const PageNumber = styled.button`
   transition: all 0.2s ease;
 
   &:hover:not(:disabled) {
-    background: ${(props) =>
-      props.active ? '#29c9a9' : 'rgba(41, 201, 169, 0.1)'};
+    background: ${(props) => (props.active ? '#29c9a9' : 'rgba(41, 201, 169, 0.1)')};
   }
 `;
 

@@ -28,9 +28,9 @@ const ArticlePage = () => {
 
   return (
     <>
-      <HeroSection title={post.title} subtitle="Detalles del artículo" />
+      <HeroSection title={post.title} />
       <ImageContentPanel imageUrl={post.imageUrl} />
-      <ContentSection 
+      <ContentSection
         content={{
           heading: post.title,
           subheading: post.subtitle || '',
