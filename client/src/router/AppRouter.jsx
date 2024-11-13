@@ -2,8 +2,6 @@ import React from 'react';
 import { createBrowserRouter } from 'react-router-dom';
 import Layout from '../layout/Layout';
 import HomePage from '../pages/HomePage';
-import CreatePost from '../pages/CreatePost'; 
-import EditPost from '../pages/EditPost';
 import AdminPage from '../pages/AdminPage';
 import AboutPage from '../pages/AboutPage';
 import NotFoundPage from '../pages/NotFoundPage';
