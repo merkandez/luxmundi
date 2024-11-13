@@ -5,7 +5,14 @@ const API_URL = `${import.meta.env.VITE_API_URL}/posts`;
 
 //Funcion para cargar los posts
 export const fetchPosts = async () => {
-  const response = await axios.get(API_URL, {
+  const response = await axios.get(`${API_URL}?summary=true`, {
+    headers: { Authorization: `Bearer ${localStorage.getItem('token')}` },
+  });
+  return response.data;
+};
+//Funcion para cargar un post
+export const fetchPostById = async (postId) => {
+  const response = await axios.get(`${API_URL}/${postId}`, {
     headers: { Authorization: `Bearer ${localStorage.getItem('token')}` },
   });
   return response.data;

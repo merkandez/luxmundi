@@ -1,6 +1,8 @@
 import styled from "styled-components";
 import Card from "./Card";
 import { useState } from "react";
+import PropTypes from "prop-types";
+import { Link } from "react-router-dom";
 
 const ExploreSection = () => {
   const [currentPage, setCurrentPage] = useState(1);
@@ -92,12 +94,9 @@ const ExploreSection = () => {
 
       <CardGrid>
         {currentCards.map((card, index) => (
-          <Card
-            key={index}
-            title={card.title}
-            description={card.description}
-            image={card.image}
-          />
+          <Link to={`/post/${card.id}`} key={index} style={{ textDecoration: 'none' }}>
+            <Card {...card} />
+          </Link>
         ))}
       </CardGrid>
 
@@ -136,12 +135,24 @@ const ExploreSection = () => {
   );
 };
 
+ExploreSection.propTypes = {
+  cards: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.number.isRequired,         // Asegúrate de que `id` esté definido aquí
+      title: PropTypes.string.isRequired,
+      description: PropTypes.string.isRequired,
+      imageUrl: PropTypes.string.isRequired,   // Añade imageUrl como propiedad obligatoria
+    })
+  ).isRequired,
+};
+
 const Section = styled.section`
   padding: 60px 20px;
   background-color: #111111;
   margin-bottom: 0;
 `;
 
+// Estilos adicionales (se mantienen igual)
 const SectionHeader = styled.div`
   text-align: center;
   margin-bottom: 48px;
