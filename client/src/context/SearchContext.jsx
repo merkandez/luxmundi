@@ -1,10 +1,10 @@
 // context/SearchContext.js
-import React, { createContext, useState } from "react";
+import React, { createContext, useState } from 'react';
 
 export const SearchContext = createContext();
 
 export const SearchProvider = ({ children }) => {
-  const [searchQuery, setSearchQuery] = useState("");
+  const [searchQuery, setSearchQuery] = useState('');
 
   return (
     <SearchContext.Provider value={{ searchQuery, setSearchQuery }}>

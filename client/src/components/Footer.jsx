@@ -1,9 +1,9 @@
-import styled from "styled-components";
-import { Link } from "react-router-dom";
-import { FaInstagram, FaTwitter, FaYoutube, FaLinkedin } from "react-icons/fa";
-import { BsCameraFill } from "react-icons/bs";
-import { useState } from "react";
-import ContactModal from "./ContactModal";
+import styled from 'styled-components';
+import { Link } from 'react-router-dom';
+import { FaInstagram, FaTwitter, FaYoutube, FaLinkedin } from 'react-icons/fa';
+import { BsCameraFill } from 'react-icons/bs';
+import { useState } from 'react';
+import ContactModal from './ContactModal';
 
 export default function Footer() {
   const [isContactModalOpen, setIsContactModalOpen] = useState(false);
@@ -13,7 +13,7 @@ export default function Footer() {
     <FooterWrapper>
       <FooterContent>
         <LogoSection>
-          <BsCameraFill size={24} color="#ffffff" />
+          <BsCameraFill size={24} color='#ffffff' />
           <LogoText>LUX MUNDI</LogoText>
         </LogoSection>
 
@@ -22,10 +22,10 @@ export default function Footer() {
             <h3>Sobre Nosotros</h3>
             <ul>
               <li>
-                <FooterLink to="/about">Quien somos</FooterLink>
+                <FooterLink to='/about'>Quien somos</FooterLink>
               </li>
               <li>
-                <FooterLink to="/under-construction">Nuestra Visión</FooterLink>
+                <FooterLink to='/under-construction'>Nuestra Visión</FooterLink>
               </li>
             </ul>
           </FooterColumn>
@@ -34,13 +34,13 @@ export default function Footer() {
             <h3>Explore</h3>
             <ul>
               <li>
-                <FooterLink to="/#explore">Destinos</FooterLink>
+                <FooterLink to='/#explore'>Destinos</FooterLink>
               </li>
               <li>
-                <FooterLink to="/under-construction">Lo más visto</FooterLink>
+                <FooterLink to='/under-construction'>Lo más visto</FooterLink>
               </li>
               <li>
-                <FooterLink to="/under-construction">Galería</FooterLink>
+                <FooterLink to='/under-construction'>Galería</FooterLink>
               </li>
             </ul>
           </FooterColumn>
@@ -49,7 +49,7 @@ export default function Footer() {
             <h3>Recursos</h3>
             <ul>
               <li>
-                <FooterLink to="/under-construction">
+                <FooterLink to='/under-construction'>
                   Cursos Fotografía
                 </FooterLink>
               </li>
@@ -59,7 +59,7 @@ export default function Footer() {
                 </FooterLink>
               </li>
               <li>
-                <FooterLink to="/under-construction">Soporte</FooterLink>
+                <FooterLink to='/under-construction'>Soporte</FooterLink>
               </li>
             </ul>
           </FooterColumn>
@@ -68,24 +68,24 @@ export default function Footer() {
             <h3>Newsletter</h3>
             <p>Suscríbase para recibir las últimas actualizaciones</p>
             <SubscribeForm>
-              <input type="email" placeholder="you@example.com" />
-              <button type="submit">Enviar</button>
+              <input type='email' placeholder='you@example.com' />
+              <button type='submit'>Enviar</button>
             </SubscribeForm>
           </SubscribeColumn>
         </FooterColumns>
 
         <FooterBottom>
           <SocialMediaIcons>
-            <SocialIcon href="#">
+            <SocialIcon href='#'>
               <FaTwitter size={20} />
             </SocialIcon>
-            <SocialIcon href="#">
+            <SocialIcon href='#'>
               <FaInstagram size={20} />
             </SocialIcon>
-            <SocialIcon href="#">
+            <SocialIcon href='#'>
               <FaYoutube size={20} />
             </SocialIcon>
-            <SocialIcon href="#">
+            <SocialIcon href='#'>
               <FaLinkedin size={20} />
             </SocialIcon>
           </SocialMediaIcons>
@@ -130,6 +130,7 @@ const SubscribeForm = styled.form`
   display: flex;
   gap: 8px;
   margin-top: 16px;
+  width: 100%; /* Forzar el ancho completo en el contenedor */
 
   input {
     flex: 1;
@@ -138,7 +139,8 @@ const SubscribeForm = styled.form`
     border: 1px solid #333;
     background-color: #1a1a1a;
     color: #ffffff;
-    min-width: 200px;
+    min-width: 0; /* Ajuste para que el input no tenga un ancho mínimo */
+    width: 100%; /* Permite adaptarse al espacio disponible */
 
     &:focus {
       outline: none;
@@ -147,7 +149,7 @@ const SubscribeForm = styled.form`
   }
 
   button {
-    padding: 12px 24px;
+    padding: 12px 16px;
     border-radius: 4px;
     border: none;
     background-color: #ffffff;
@@ -163,6 +165,16 @@ const SubscribeForm = styled.form`
     &:focus {
       outline: none;
       box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.3);
+    }
+  }
+
+  @media (max-width: 545px) {
+    flex-direction: column;
+    align-items: stretch;
+
+    button {
+      width: 100%;
+      padding: 12px;
     }
   }
 `;
@@ -290,7 +302,7 @@ const FooterLink = styled(Link)`
   padding: 2px 0;
 
   &:after {
-    content: "";
+    content: '';
     position: absolute;
     width: 0;
     height: 2px;
