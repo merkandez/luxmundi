@@ -89,23 +89,13 @@ export const toggleLike = async (req: Request, res: Response): Promise<void> => 
       res.status(404).json({ message: 'Post no encontrado' });
       return;
     }
+    // Incrementar el contador de likes
+    post.likes += 1;
 
-    // Suponiendo que `likes` es un contador de likes (número)
-    let updatedLikes = post.likes;
-
-    // Aquí agregarías lógica para verificar si el usuario ya ha dado like
-    // Ejemplo: mantener un registro de usuarios que dieron like (esto puede requerir una tabla intermedia en la base de datos)
-    
-    // Incrementar o decrementar los likes
-    updatedLikes = updatedLikes + 1; // Si deseas agregar un like
-
-    // Actualizar el contador de likes
-    post.likes = updatedLikes;
-
-    // Guardamos el post con el nuevo contador de likes
+    // Guardar los cambios
     await post.save();
-    
-    res.json(post); // Respondemos con el post actualizado
+
+    res.json(post); // Responder con el post actualizado
   } catch (error: any) {
     res.status(500).json({ message: 'Error al actualizar el like', error: error.message });
   }

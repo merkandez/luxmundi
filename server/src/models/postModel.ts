@@ -2,7 +2,7 @@ import { DataTypes, Model } from 'sequelize';
 import sequelize from '../database/connection_db'; // Conexión a la base de datos
 
 class PostModel extends Model {
-  //Post: Es la clase que representa cada entrada del blog. Extiende de Model, que es                                  la clase base de Sequelize.
+  //Post: Es la clase que representa cada entrada del blog. Extiende de Model, que es la clase base de Sequelize.
   public id!: number; // El "!" indica que el campo será obligatorio
   public userId!: number; // Relación con el usuario que crea la entrada
   public title!: string;
