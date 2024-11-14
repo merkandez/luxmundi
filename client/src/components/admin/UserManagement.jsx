@@ -1,14 +1,22 @@
 import React, { useState, useEffect } from 'react';
-import styled from "styled-components";
+import styled from 'styled-components';
 import { uploadImage } from '../../services/postService';
 
-const UserManagement = ({ users, selectedUser,reloadUsers, onSelectUser, onUpdateUser, onDeleteUser, onCreateUser}) => {
+const UserManagement = ({
+  users,
+  selectedUser,
+  reloadUsers,
+  onSelectUser,
+  onUpdateUser,
+  onDeleteUser,
+  onCreateUser,
+}) => {
   const [editData, setEditData] = useState(selectedUser || {});
   const [newUserData, setNewUserData] = useState({
-    username: "",
-    email: "",
-    password: "",
-    avatarUrl: "",
+    username: '',
+    email: '',
+    password: '',
+    avatarUrl: '',
   });
   const [showCreateModal, setShowCreateModal] = useState(false);
   const [showEditModal, setShowEditModal] = useState(false);
@@ -36,7 +44,7 @@ const UserManagement = ({ users, selectedUser,reloadUsers, onSelectUser, onUpdat
   const handleCreateUser = async () => {
     await onCreateUser(newUserData);
     await reloadUsers();
-    setNewUserData({ username: "", email: "", password: "", avatarUrl: "" });
+    setNewUserData({ username: '', email: '', password: '', avatarUrl: '' });
     setShowCreateModal(false);
   };
 
@@ -82,7 +90,9 @@ const UserManagement = ({ users, selectedUser,reloadUsers, onSelectUser, onUpdat
       <FormSection>
         <p>Total de usuarios: {users.length}</p>
         <h3>Gestión de Usuarios</h3>
-        <StyledButton onClick={() => setShowCreateModal(true)}>Crear Nuevo Usuario</StyledButton>
+        <StyledButton onClick={() => setShowCreateModal(true)}>
+          Crear Nuevo Usuario
+        </StyledButton>
       </FormSection>
 
       <TableSection>
@@ -102,11 +112,15 @@ const UserManagement = ({ users, selectedUser,reloadUsers, onSelectUser, onUpdat
               <tbody>
                 {users.map((user) => (
                   <tr key={user.id}>
-                    <td data-label="Nombre">{user.username}</td>
-                    <td data-label="Email">{user.email}</td>
-                    <td data-label="Acciones">
-                      <StyledButton onClick={() => onSelectUser(user)}>Editar</StyledButton>
-                      <StyledButton onClick={() => handleDeleteClick(user.id)}>Eliminar</StyledButton>
+                    <td data-label='Nombre'>{user.username}</td>
+                    <td data-label='Email'>{user.email}</td>
+                    <td data-label='Acciones'>
+                      <StyledButton onClick={() => onSelectUser(user)}>
+                        Editar
+                      </StyledButton>
+                      <DeleteButton onClick={() => handleDeleteClick(user.id)}>
+                        Eliminar
+                      </DeleteButton>
                     </td>
                   </tr>
                 ))}
@@ -123,35 +137,43 @@ const UserManagement = ({ users, selectedUser,reloadUsers, onSelectUser, onUpdat
             <StyledForm>
               <Title>Editar Usuario</Title>
               <FormGroup>
-                {editData.avatarUrl && <ImagePreview src={editData.avatarUrl} alt="Preview" style={{ width: '100%' }} />}
+                {editData.avatarUrl && (
+                  <ImagePreview
+                    src={editData.avatarUrl}
+                    alt='Preview'
+                    style={{ width: '100%' }}
+                  />
+                )}
                 <Label>Nombre de Usuario</Label>
                 <Input
-                  type="text"
-                  name="username"
-                  value={editData.username || ""}
+                  type='text'
+                  name='username'
+                  value={editData.username || ''}
                   onChange={handleInputChange}
-                  placeholder="Nombre de usuario"
+                  placeholder='Nombre de usuario'
                 />
               </FormGroup>
               <FormGroup>
                 <Label>Email</Label>
                 <Input
-                  type="email"
-                  name="email"
-                  value={editData.email || ""}
+                  type='email'
+                  name='email'
+                  value={editData.email || ''}
                   onChange={handleInputChange}
-                  placeholder="Email"
+                  placeholder='Email'
                 />
               </FormGroup>
               <FormGroup>
                 <Label>Imagen de perfil</Label>
                 <Input
-                  type="file"
-                  accept="image/*"
+                  type='file'
+                  accept='image/*'
                   onChange={handleEditImageUpload}
                 />
               </FormGroup>
-              <StyledButton onClick={handleUpdate}>Guardar cambios</StyledButton>
+              <StyledButton onClick={handleUpdate}>
+                Guardar cambios
+              </StyledButton>
             </StyledForm>
           </ModalContent>
         </Modal>
@@ -160,55 +182,61 @@ const UserManagement = ({ users, selectedUser,reloadUsers, onSelectUser, onUpdat
       {showCreateModal && (
         <Modal>
           <ModalContent>
-            <CloseButton onClick={() => setShowCreateModal(false)}>×</CloseButton>
+            <CloseButton onClick={() => setShowCreateModal(false)}>
+              ×
+            </CloseButton>
             <StyledForm>
               <Title>Crear Nuevo Usuario</Title>
               <FormGroup>
-                {newUserData.avatarUrl && <ImagePreview src={newUserData.avatarUrl} alt="Preview" />}
+                {newUserData.avatarUrl && (
+                  <ImagePreview src={newUserData.avatarUrl} alt='Preview' />
+                )}
                 <Label>Nombre de Usuario</Label>
                 <Input
-                  type="text"
-                  name="username"
+                  type='text'
+                  name='username'
                   value={newUserData.username}
                   onChange={(e) =>
                     setNewUserData({ ...newUserData, username: e.target.value })
                   }
-                  placeholder="Nombre de usuario"
+                  placeholder='Nombre de usuario'
                 />
               </FormGroup>
               <FormGroup>
                 <Label>Email</Label>
                 <Input
-                  type="email"
-                  name="email"
+                  type='email'
+                  name='email'
                   value={newUserData.email}
                   onChange={(e) =>
                     setNewUserData({ ...newUserData, email: e.target.value })
                   }
-                  placeholder="Email"
+                  placeholder='Email'
                 />
               </FormGroup>
               <FormGroup>
                 <Label>Contraseña</Label>
                 <Input
-                  type="password"
-                  name="password"
+                  type='password'
+                  name='password'
                   value={newUserData.password}
                   onChange={(e) =>
                     setNewUserData({ ...newUserData, password: e.target.value })
                   }
-                  placeholder="Contraseña"
+                  placeholder='Contraseña'
                 />
               </FormGroup>
               <FormGroup>
                 <Label>Imagen de perfil</Label>
                 <Input
-                  type="file"
-                  accept="image/*"
+                  type='file'
+                  accept='image/*'
                   onChange={handleImageUpload}
                 />
               </FormGroup>
-              <StyledButton onClick={handleCreateUser}>Crear Usuario</StyledButton>
+              <StyledButton onClick={handleCreateUser}>
+                Crear Usuario
+              </StyledButton>
             </StyledForm>
           </ModalContent>
         </Modal>
@@ -218,12 +246,23 @@ const UserManagement = ({ users, selectedUser,reloadUsers, onSelectUser, onUpdat
         <Modal>
           <ModalContent>
             <Title>Confirmar Eliminación</Title>
-            <p style={{ color: 'white', textAlign: 'center', marginBottom: '20px' }}>
+            <p
+              style={{
+                color: 'white',
+                textAlign: 'center',
+                marginBottom: '20px',
+              }}
+            >
               ¿Estás seguro de que deseas eliminar este usuario?
             </p>
             <ButtonGroup>
-              <StyledButton onClick={handleConfirmDelete}>Confirmar</StyledButton>
-              <StyledButton onClick={handleCancelDelete} style={{ backgroundColor: '#dc3545' }}>
+              <StyledButton onClick={handleConfirmDelete}>
+                Confirmar
+              </StyledButton>
+              <StyledButton
+                onClick={handleCancelDelete}
+                style={{ backgroundColor: '#dc3545' }}
+              >
                 Cancelar
               </StyledButton>
             </ButtonGroup>
@@ -253,7 +292,7 @@ const FormSection = styled.div`
   flex-direction: column;
   align-items: center;
   juscontent: center;
-  
+
   h3 {
     margin-bottom: 15px;
   }
@@ -266,7 +305,7 @@ const FormSection = styled.div`
 const TableSection = styled.div`
   margin-bottom: 30px;
   width: 100%;
-  
+
   h3 {
     margin-bottom: 15px;
   }
@@ -297,21 +336,33 @@ const StyledButton = styled.button`
   }
 `;
 
+// Botón de eliminación con color rojo claro
+const DeleteButton = styled(StyledButton)`
+  background-color: #bd3234fd; /* Rojo claro */
+  color: #fff;
+
+  &:hover {
+    background-color: #f55050; /* Más claro al hacer hover */
+  }
+`;
+
+
 const StyledTable = styled.table`
   width: 100%;
   border-collapse: collapse;
   background-color: #2a2a2a;
-  
-  th, td {
+
+  th,
+  td {
     padding: 12px;
     text-align: left;
     border-bottom: 1px solid #333;
   }
-  
+
   th {
     background-color: #333;
   }
-  
+
   tr:hover {
     background-color: #383838;
   }
@@ -320,13 +371,13 @@ const StyledTable = styled.table`
     thead {
       display: none;
     }
-    
+
     tbody tr {
       display: block;
       margin-bottom: 1rem;
       border: 1px solid #333;
     }
-    
+
     td {
       display: block;
       text-align: right;
@@ -335,14 +386,14 @@ const StyledTable = styled.table`
       padding-left: 50%;
       border-bottom: 1px solid #444;
     }
-    
+
     td:before {
       content: attr(data-label);
       position: absolute;
       left: 12px;
       font-weight: bold;
     }
-    
+
     td:last-child {
       border-bottom: none;
     }

@@ -12,11 +12,11 @@ const PostManagement = ({
 }) => {
   const [editData, setEditData] = useState(selectedPost || {});
   const [newPostData, setNewPostData] = useState({
-    title: "",
-    content: "",
-    imageUrl: "",
+    title: '',
+    content: '',
+    imageUrl: '',
   });
-  const [searchTerm, setSearchTerm] = useState("");
+  const [searchTerm, setSearchTerm] = useState('');
   const [showCreateModal, setShowCreateModal] = useState(false);
   const [showEditModal, setShowEditModal] = useState(false);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
@@ -74,7 +74,7 @@ const PostManagement = ({
 
   const handleCreatePost = () => {
     onCreatePost(newPostData);
-    setNewPostData({ title: "", content: "", imageUrl: "" });
+    setNewPostData({ title: '', content: '', imageUrl: '' });
     setShowCreateModal(false);
   };
 
@@ -82,8 +82,6 @@ const PostManagement = ({
     onSelectPost(post);
     setShowEditModal(true);
   };
-
-  
 
   const filteredPosts = posts.filter(
     (post) =>
@@ -97,51 +95,62 @@ const PostManagement = ({
         <h2>Todos los post</h2>
         <div>
           <input
-            type="text"
-            placeholder="Buscar post"
+            type='text'
+            placeholder='Buscar post'
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
           />
         </div>
       </TitleSection>
-      <StyledButton onClick={() => setShowCreateModal(true)}>Crear Post</StyledButton>
+      <StyledButton onClick={() => setShowCreateModal(true)}>
+        Crear Post
+      </StyledButton>
       <ExploreSection>
         <TableSection>
-        <h3>Usuarios</h3>
-        {posts.length === 0 ? (
-          <p>No hay usuarios para mostrar</p>
-        ) : (
-          <TableWrapper>
-            <StyledTable>
-              <thead>
-                <tr>
-                  <th width="10%">Imagen</th>
-
-
-
-                  <th width="30%">Nombre</th>
-                  <th width="30%">Email</th>
-                  <th width="30%">Acciones</th>
-                </tr>
-              </thead>
-              <tbody>
-                {filteredPosts.map((post) => (
-                  <tr key={post.id}>
-                    <td data-label="Imagen"><ImagePreview src={post.imageUrl} alt="" /></td>
-                    <td data-label="Nombre">{post.title}</td>
-
-                    <td data-label="Contenido">{post.content.length > 255 ? `${post.content.substring(0, 255)}...` : post.content}</td>
-                    <td data-label="Acciones">
-                      <StyledButton onClick={() => handleSelectPost(post)}>Editar</StyledButton>
-                      <StyledButton onClick={() => handleDeleteClick(post.id)}>Eliminar</StyledButton>
-                    </td>
+          <h3>Usuarios</h3>
+          {posts.length === 0 ? (
+            <p>No hay usuarios para mostrar</p>
+          ) : (
+            <TableWrapper>
+              <StyledTable>
+                <thead>
+                  <tr>
+                    <th width='10%'>Imagen</th>
+                    <th width='30%'>Nombre</th>
+                    <th width='30%'>Email</th>
+                    <th width='30%'>Acciones</th>
                   </tr>
-                ))}
-              </tbody>
-            </StyledTable>
-          </TableWrapper>
-        )}
-      </TableSection>
+                </thead>
+                <tbody>
+                  {filteredPosts.map((post) => (
+                    <tr key={post.id}>
+                      <td data-label='Imagen'>
+                        <ImagePreview src={post.imageUrl} alt='' />
+                      </td>
+                      <td data-label='Nombre'>{post.title}</td>
+
+                      <td data-label='Contenido'>
+                        {post.content.length > 255
+                          ? `${post.content.substring(0, 255)}...`
+                          : post.content}
+                      </td>
+                      <td data-label='Acciones'>
+                        <StyledButton onClick={() => handleSelectPost(post)}>
+                          Editar
+                        </StyledButton>
+                        <DeleteButton
+                          onClick={() => handleDeleteClick(post.id)}
+                        >
+                          Eliminar
+                        </DeleteButton>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </StyledTable>
+            </TableWrapper>
+          )}
+        </TableSection>
       </ExploreSection>
 
       {showEditModal && (
@@ -151,35 +160,43 @@ const PostManagement = ({
             <StyledForm>
               <Title>Editar Publicación</Title>
               <FormGroup>
-                {editData.imageUrl && <ImagePreview src={editData.imageUrl} alt="Preview" style={{ width: '100%' }} />}
+                {editData.imageUrl && (
+                  <ImagePreview
+                    src={editData.imageUrl}
+                    alt='Preview'
+                    style={{ width: '100%' }}
+                  />
+                )}
                 <Label>Título</Label>
                 <Input
-                  type="text"
-                  name="title"
-                  value={editData.title || ""}
+                  type='text'
+                  name='title'
+                  value={editData.title || ''}
                   onChange={handleInputChange}
-                  placeholder="Título"
+                  placeholder='Título'
                 />
               </FormGroup>
               <FormGroup>
                 <Label>Contenido</Label>
                 <Textarea
-                  as="textarea"
-                  name="content"
-                  value={editData.content || ""}
+                  as='textarea'
+                  name='content'
+                  value={editData.content || ''}
                   onChange={handleInputChange}
-                  placeholder="Contenido"
+                  placeholder='Contenido'
                 />
               </FormGroup>
               <FormGroup>
                 <Label>Imagen</Label>
                 <Input
-                  type="file"
-                  accept="image/*"
+                  type='file'
+                  accept='image/*'
                   onChange={handleEditImageUpload}
                 />
               </FormGroup>
-              <StyledButton onClick={handleUpdate}>Guardar cambios</StyledButton>
+              <StyledButton onClick={handleUpdate}>
+                Guardar cambios
+              </StyledButton>
             </StyledForm>
           </ModalContent>
         </Modal>
@@ -188,65 +205,81 @@ const PostManagement = ({
       {showCreateModal && (
         <Modal>
           <ModalContent>
-            <CloseButton onClick={() => setShowCreateModal(false)}>×</CloseButton>
+            <CloseButton onClick={() => setShowCreateModal(false)}>
+              ×
+            </CloseButton>
             <StyledForm>
               <Title>Crear Nueva Publicación</Title>
               <FormGroup>
                 <Label>Título</Label>
                 <Input
-                  type="text"
-                  name="title"
+                  type='text'
+                  name='title'
                   value={newPostData.title}
                   onChange={(e) =>
                     setNewPostData({ ...newPostData, title: e.target.value })
                   }
-                  placeholder="Título"
+                  placeholder='Título'
                 />
               </FormGroup>
-                {newPostData.imageUrl && <ImagePreview src={newPostData.imageUrl} alt="Preview"  />}
+              {newPostData.imageUrl && (
+                <ImagePreview src={newPostData.imageUrl} alt='Preview' />
+              )}
               <FormGroup>
                 <Label>Contenido</Label>
                 <Textarea
-                  as="textarea"
-                  name="content"
+                  as='textarea'
+                  name='content'
                   value={newPostData.content}
                   onChange={(e) =>
                     setNewPostData({ ...newPostData, content: e.target.value })
                   }
-                  placeholder="Contenido"
+                  placeholder='Contenido'
                 />
               </FormGroup>
               <FormGroup>
                 <Label>Imagen</Label>
                 <Input
-                  type="file"
-                  accept="image/*"
+                  type='file'
+                  accept='image/*'
                   onChange={handleImageUpload}
                 />
               </FormGroup>
-              <StyledButton onClick={handleCreatePost}>Crear Publicación</StyledButton>
+              <StyledButton onClick={handleCreatePost}>
+                Crear Publicación
+              </StyledButton>
             </StyledForm>
           </ModalContent>
         </Modal>
       )}
 
-{showDeleteModal && (
+      {showDeleteModal && (
         <Modal>
           <ModalContent>
             <Title>Confirmar Eliminación</Title>
-            <p style={{ color: 'white', textAlign: 'center', marginBottom: '20px' }}>
+            <p
+              style={{
+                color: 'white',
+                textAlign: 'center',
+                marginBottom: '20px',
+              }}
+            >
               ¿Estás seguro de que deseas eliminar este usuario?
             </p>
             <ButtonGroup>
-              <StyledButton onClick={handleConfirmDelete}>Confirmar</StyledButton>
-              <StyledButton onClick={handleCancelDelete} style={{ backgroundColor: '#dc3545' }}>
+              <StyledButton onClick={handleConfirmDelete}>
+                Confirmar
+              </StyledButton>
+              <StyledButton
+                onClick={handleCancelDelete}
+                style={{ backgroundColor: '#dc3545' }}
+              >
                 Cancelar
               </StyledButton>
             </ButtonGroup>
           </ModalContent>
         </Modal>
       )}
-
     </HomeWrapper>
   );
 };
@@ -260,7 +293,7 @@ const ButtonGroup = styled.div`
 const TableSection = styled.div`
   margin-bottom: 30px;
   width: 100%;
-  
+
   h3 {
     margin-bottom: 15px;
   }
@@ -291,21 +324,32 @@ const StyledButton = styled.button`
   }
 `;
 
+// Botón de eliminación con color rojo claro
+const DeleteButton = styled(StyledButton)`
+  background-color: #bd3234fd; /* Rojo claro */
+  color: #fff;
+
+  &:hover {
+    background-color: #f55050; /* Más claro al hacer hover */
+  }
+`;
+
 const StyledTable = styled.table`
   width: 100%;
   border-collapse: collapse;
   background-color: #2a2a2a;
-  
-  th, td {
+
+  th,
+  td {
     padding: 12px;
     text-align: left;
     border-bottom: 1px solid #333;
   }
-  
+
   th {
     background-color: #333;
   }
-  
+
   tr:hover {
     background-color: #383838;
   }
@@ -314,13 +358,13 @@ const StyledTable = styled.table`
     thead {
       display: none;
     }
-    
+
     tbody tr {
       display: block;
       margin-bottom: 1rem;
       border: 1px solid #333;
     }
-    
+
     td {
       display: block;
       text-align: right;
@@ -329,14 +373,14 @@ const StyledTable = styled.table`
       padding-left: 50%;
       border-bottom: 1px solid #444;
     }
-    
+
     td:before {
       content: attr(data-label);
       position: absolute;
       left: 12px;
       font-weight: bold;
     }
-    
+
     td:last-child {
       border-bottom: none;
     }
@@ -360,7 +404,7 @@ const ImagePreview = styled.img`
       transform: translateY(0);
     }
   }
-`
+`;
 
 const Modal = styled.div`
   position: fixed;
@@ -467,7 +511,7 @@ const Textarea = styled.textarea`
     border-color: #29c9a9;
     outline: none;
   }
-`
+`;
 
 const HomeWrapper = styled.div`
   background-color: #1e1e1e;
@@ -537,45 +581,4 @@ const ExploreSection = styled.section`
   overflow: hidden;
 `;
 
-const CardsContainer = styled.div`
-  display: gird;
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-  gap: 2rem;
-  margin-top: 3rem;
-
-  @media (max-width: 768px) {
-    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-  }
-`;
-
-const Card = styled.div`
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-  height: 350px;
-  border-radius: 10px;
-  border: 1px solid #ccc;
-  position: relative;
-  overflow: hidden;
-  color: black;
-  background-color: white;
-`;
-
-const Img = styled.img`
-  width: 100%;
-  max-height: 150px;
-  object-fit: cover;
-  border-radius: 10px 10px 0 0;
-`;
-
-const InfoPost = styled.div`
-  padding: 0 10px;
-`;
-
-const Buttons = styled.div`
-  display: flex;
-  flex-direction: row;
-  width: 100%;
-  justify-content`
-
-  export default PostManagement;
+export default PostManagement;
