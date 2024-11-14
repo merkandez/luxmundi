@@ -36,7 +36,11 @@ const UserManagement = ({
   };
 
   const handleUpdate = async () => {
-    await onUpdateUser(selectedUser.id, editData);
+    const updateData = { ...editData };
+    if (editData.avatarUrl) {
+      updateData.avatarUrl = editData.avatarUrl; // Asegura que es la URL de la imagen
+    }
+    await onUpdateUser(selectedUser.id, updateData);
     await reloadUsers();
     setShowEditModal(false);
   };
@@ -69,21 +73,24 @@ const UserManagement = ({
     const file = e.target.files[0];
     try {
       const imageData = await uploadImage(file);
+      // Solo guardar la URL, no el objeto completo
       setNewUserData({ ...newUserData, avatarUrl: imageData.url });
     } catch (error) {
       console.error('Error al subir la imagen:', error);
     }
   };
-
+  
   const handleEditImageUpload = async (e) => {
     const file = e.target.files[0];
     try {
       const imageData = await uploadImage(file);
+      // Solo guardar la URL, no el objeto completo
       setEditData({ ...editData, avatarUrl: imageData.url });
     } catch (error) {
       console.error('Error al subir la imagen:', error);
     }
   };
+  
 
   return (
     <ManagementWrapper>

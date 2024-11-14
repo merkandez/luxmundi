@@ -40,6 +40,7 @@ export const deletePost = async (postId) => {
 };
 
 // Función para subir imágenes a Cloudinary
+
 export const uploadImage = async (imageFile) => {
   const formData = new FormData();
   formData.append('image', imageFile);
@@ -54,8 +55,10 @@ export const uploadImage = async (imageFile) => {
       },
     }
   );
-  return response.data;
+
+  return response.data; 
 };
+
 // Función para obtener imagenes aleatorias
 export const fetchRandomImages = async (limit = 5) => {
   try {

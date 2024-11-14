@@ -20,6 +20,7 @@ app.use('/api/posts', postRoutes); // Ruta base para las entradas posts del blog
 app.use('/api/auth', authRoutes); // Ruta base para las rutas de autenticación
 app.use('/api/users', userRoutes); // Rutas de administración de usuarios
 app.use('/api/upload', uploadRoutes); // Rutas de carga de imágenes
+app.use('/uploads', express.static('C:/Users/donce/Desktop/luxmundi/server/uploads'));
 
 
 // Conexión a la base de datos

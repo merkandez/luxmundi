@@ -1,60 +1,60 @@
-import styled from "styled-components";
-import { FaGithub, FaLinkedin, FaTwitter } from "react-icons/fa";
+import styled from 'styled-components';
+import { FaGithub, FaLinkedin, FaTwitter } from 'react-icons/fa';
 
 const teamMembers = [
   {
-    name: "Jenny Tello",
-    role: "Fotógrafa Principal",
-    image: "https://source.unsplash.com/random/400x400/?portrait,1",
-    bio: "Desde Perú, ha recorrido su país y muchos otros, buscando capturar la esencia de cada lugar que visita. Su amor por la fotografía le permite contar historias visuales que capturan la cultura, las tradiciones y la naturaleza de los rincones más remotos del planeta. Para ella, cada viaje es una oportunidad para crear imágenes que transmitan la belleza de lo inesperado.",
+    name: 'Jenny Tello',
+    role: 'Fotógrafa Principal',
+    image: 'http://localhost:8080/uploads/jenny.svg',
+    bio: 'Desde Perú, ha recorrido su país y muchos otros, buscando capturar la esencia de cada lugar que visita. Su amor por la fotografía le permite contar historias visuales que capturan la cultura, las tradiciones y la naturaleza de los rincones más remotos del planeta. Para ella, cada viaje es una oportunidad para crear imágenes que transmitan la belleza de lo inesperado.',
     social: {
-      twitter: "#",
-      linkedin: "https://www.linkedin.com/in/jennytellogarc%C3%ADa/",
-      github: "https://github.com/jennyfer85",
+      twitter: '#',
+      linkedin: 'https://www.linkedin.com/in/jennytellogarc%C3%ADa/',
+      github: 'https://github.com/jennyfer85',
     },
   },
   {
-    name: "Juliana Amorim",
-    role: "Directora Creativa",
-    image: "https://source.unsplash.com/random/400x400/?portrait,2",
-    bio: "De Brasil, ve los viajes como una forma de conectar con la naturaleza y las culturas indígenas. Su amor por la fotografía de paisajes y fauna le permite mostrar la biodiversidad de su país natal y el resto del mundo. Juliana está convencida de que los viajes nos enseñan a respetar y cuidar el medio ambiente, y busca transmitir este mensaje a través de sus imágenes.",
+    name: 'Juliana Amorim',
+    role: 'Directora Creativa',
+    image: 'http://localhost:8080/uploads/juliana.svg',
+    bio: 'De Brasil, ve los viajes como una forma de conectar con la naturaleza y las culturas indígenas. Su amor por la fotografía de paisajes y fauna le permite mostrar la biodiversidad de su país natal y el resto del mundo. Juliana está convencida de que los viajes nos enseñan a respetar y cuidar el medio ambiente, y busca transmitir este mensaje a través de sus imágenes.',
     social: {
-      twitter: "#",
-      linkedin: "https://www.linkedin.com/in/julianaamrm/",
-      github: "https://github.com/juamrm",
+      twitter: '#',
+      linkedin: 'https://www.linkedin.com/in/julianaamrm/',
+      github: 'https://github.com/juamrm',
     },
   },
   {
-    name: "César Mercado",
-    role: "Guía de Viaje",
-    image: "https://source.unsplash.com/random/400x400/?portrait,3",
-    bio: "Desde España, tiene una profunda admiración por la arquitectura y la historia de los lugares que visita. Su cámara es su herramienta para inmortalizar tanto las maravillas antiguas como las modernas, reflejando la evolución del paisaje humano. La fotografía es su forma de contar cómo los viajes transforman y enriquecen nuestras vidas.",
+    name: 'César Mercado',
+    role: 'Guía de Viaje',
+    image: 'http://localhost:8080/uploads/cesar.svg',
+    bio: 'Desde España, tiene una profunda admiración por la arquitectura y la historia de los lugares que visita. Su cámara es su herramienta para inmortalizar tanto las maravillas antiguas como las modernas, reflejando la evolución del paisaje humano. La fotografía es su forma de contar cómo los viajes transforman y enriquecen nuestras vidas.',
     social: {
-      twitter: "#",
-      linkedin: "https://www.linkedin.com/in/cesarmercadoh/",
-      github: "https://github.com/merkandez",
+      twitter: '#',
+      linkedin: 'https://www.linkedin.com/in/cesarmercadoh/',
+      github: 'https://github.com/merkandez',
     },
   },
   {
-    name: "Mónica Serna",
-    role: "Escritora de Contenido",
-    image: "https://source.unsplash.com/random/400x400/?portrait,4",
-    bio: "De Paraguay, es una viajera incansable que cree que cada lugar tiene una historia que contar. Su pasión por la fotografía de retratos y paisajes urbanos la lleva a capturar la esencia de las ciudades y la gente que las habita. Mónica busca reflejar la diversidad cultural y humana de los destinos que explora, mostrando la riqueza que se encuentra en cada rincón del mundo.",
+    name: 'Mónica Serna',
+    role: 'Escritora de Contenido',
+    image: 'http://localhost:8080/uploads/monica.svg',
+    bio: 'De Paraguay, es una viajera incansable que cree que cada lugar tiene una historia que contar. Su pasión por la fotografía de retratos y paisajes urbanos la lleva a capturar la esencia de las ciudades y la gente que las habita. Mónica busca reflejar la diversidad cultural y humana de los destinos que explora, mostrando la riqueza que se encuentra en cada rincón del mundo.',
     social: {
-      twitter: "#",
-      linkedin: "https://www.linkedin.com/in/monicasernasantander/",
-      github: "https://github.com/monicaSernaS",
+      twitter: '#',
+      linkedin: 'https://www.linkedin.com/in/monicasernasantander/',
+      github: 'https://github.com/monicaSernaS',
     },
   },
   {
-    name: "Jhon Smith",
-    role: "Instructor de Fotografía",
-    image: "https://source.unsplash.com/random/400x400/?portrait,5",
-    bio: "De Colombia, tiene un enfoque único al capturar la vida cotidiana y los momentos espontáneos de las personas. Su pasión por los viajes lo ha llevado a explorar diferentes partes de América Latina y más allá, y en cada destino, busca encontrar la conexión humana en su máxima expresión. A través de sus fotos, Jhon invita a otros a ver el mundo desde una perspectiva más auténtica y cercana..",
+    name: 'Jhon Smith',
+    role: 'Instructor de Fotografía',
+    image: 'http://localhost:8080/uploads/jhon.svg',
+    bio: 'De Colombia, tiene un enfoque único al capturar la vida cotidiana y los momentos espontáneos de las personas. Su pasión por los viajes lo ha llevado a explorar diferentes partes de América Latina y más allá, y en cada destino, busca encontrar la conexión humana en su máxima expresión. A través de sus fotos, Jhon invita a otros a ver el mundo desde una perspectiva más auténtica y cercana..',
     social: {
-      twitter: "#",
-      linkedin: "https://www.linkedin.com/in/jhon-smith-grisales/",
-      github: "https://github.com/Yamete-Kudasai",
+      twitter: '#',
+      linkedin: 'https://www.linkedin.com/in/jhon-smith-grisales/',
+      github: 'https://github.com/Yamete-Kudasai',
     },
   },
 ];
@@ -65,7 +65,9 @@ function AboutUs() {
       <AboutHeader>
         <Title>Nuestro Equipo</Title>
         <Description>
-        En Lux Mundi, nuestro equipo está formado por cinco personas con una profunda pasión por los viajes y la fotografía, que nos une en la misión de compartir el mundo a través de nuestros ojos y cámaras. 
+          En Lux Mundi, nuestro equipo está formado por cinco personas con una
+          profunda pasión por los viajes y la fotografía, que nos une en la
+          misión de compartir el mundo a través de nuestros ojos y cámaras.
         </Description>
       </AboutHeader>
       <TeamGrid>

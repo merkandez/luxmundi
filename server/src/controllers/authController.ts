@@ -76,9 +76,9 @@ export const updateUser = async (
   req: Request,
   res: Response
 ): Promise<void> => {
-  const { id } = req.params; // El ID del usuario que se va a actualizar
+  const { id } = req.params; // ID del usuario a actualizar
   const { username, email, password, avatarUrl, role } = req.body;
-  const userRole = (req as any).user; // Usuario que realiza la solicitud
+  const userRole = (req as any).user; // Información del usuario autenticado
 
   try {
     const user = await User.findByPk(id);
@@ -87,35 +87,36 @@ export const updateUser = async (
       return;
     }
 
-    // Solo un admin puede actualizar el rol
+    // Solo un administrador puede actualizar el rol
     if (role && userRole.role !== 'admin') {
       res.status(403).json({ message: 'No autorizado para cambiar el rol' });
       return;
     }
 
-    // Si hay una nueva contraseña, la encriptamos
+    // Si se proporciona una nueva contraseña, la encriptamos
+    let updatedFields: any = { username, email, avatarUrl };
     if (password) {
-      const hashedPassword = await encrypt(password);
-      user.password = hashedPassword;
+      updatedFields.password = await encrypt(password);
     }
 
-    // Actualizar los datos
-    await user.update({
-      username,
-      email,
-      avatarUrl,
-      role: userRole.role === 'admin' ? role : user.role, // Solo cambia el rol si es admin
-    });
+    // Actualizar solo el rol si el usuario autenticado es un administrador
+    if (userRole.role === 'admin' && role) {
+      updatedFields.role = role;
+    }
+
+    // Actualizar el usuario con los campos necesarios
+    await user.update(updatedFields);
 
     res.json({ message: 'Usuario actualizado con éxito', user });
   } catch (error) {
-    if (error instanceof Error) {
-      res
-        .status(500)
-        .json({ message: 'Error al actualizar usuario', error: error.message });
-    }
+    console.error('Error al actualizar usuario:', error);
+    res.status(500).json({
+      message: 'Error al actualizar usuario',
+      error: error instanceof Error ? error.message : 'Error desconocido',
+    });
   }
 };
+
 // Controlador para eliminar un usuario (solo administradores)
 export const deleteUser = async (
   req: Request,
