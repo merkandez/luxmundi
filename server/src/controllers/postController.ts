@@ -76,27 +76,23 @@ export const deletePost = async (req: Request, res: Response): Promise<void> => 
   }
 };
 
-// Controlador para manejar el like/unlike de un post
+//Controlador para manejar el like/unlike de un post
 export const toggleLike = async (req: Request, res: Response): Promise<void> => {
-  const userId = (req as any).user.id; // Extraer el userId del token (suponiendo que ya tienes JWT)
-  const { postId } = req.params; // ID del post
+  const postId = req.params.postId;
 
   try {
-    // Buscar el post por ID
     const post = await PostModel.findByPk(postId);
-
     if (!post) {
       res.status(404).json({ message: 'Post no encontrado' });
       return;
     }
-    // Incrementar el contador de likes
-    post.likes += 1;
 
-    // Guardar los cambios
+    post.likes += 1; // Alterna el valor del "like"
     await post.save();
 
-    res.json(post); // Responder con el post actualizado
-  } catch (error: any) {
-    res.status(500).json({ message: 'Error al actualizar el like', error: error.message });
+    res.status(200).json({ likes: post.likes });
+  } catch (error) {
+    console.error("Error al actualizar los likes:", error);
+    res.status(500).json({ message: 'Error interno del servidor' });
   }
 };
