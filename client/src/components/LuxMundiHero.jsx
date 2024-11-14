@@ -1,11 +1,34 @@
-import styled from "styled-components";
-import { Swiper, SwiperSlide } from "swiper/react";
-import { Navigation, Pagination, Autoplay } from "swiper/modules";
-import { ButtonGroup } from "./ButtonGroup";
-import "swiper/css";
-import "swiper/css/pagination";
+import React, { useEffect, useState } from 'react';
+import styled from 'styled-components';
+import { Swiper, SwiperSlide } from 'swiper/react';
+import { Pagination, Autoplay } from 'swiper/modules'; // Quitamos Navigation
+import { ButtonGroup } from './ButtonGroup';
+import axios from 'axios';
+import 'swiper/css';
+import 'swiper/css/pagination';
 
 function LuxMundiHero() {
+  const [images, setImages] = useState([]);
+
+  useEffect(() => {
+    const loadRandomImages = async () => {
+      try {
+        const response = await axios.get(
+          `${import.meta.env.VITE_API_URL}/posts/random?limit=5`
+        );
+        if (Array.isArray(response.data)) {
+          setImages(response.data);
+        } else {
+          console.error('La respuesta no es un array:', response.data);
+        }
+      } catch (error) {
+        console.error('Error al cargar las imágenes:', error);
+      }
+    };
+
+    loadRandomImages();
+  }, []);
+
   return (
     <HeroSection>
       <ContentWrapper>
@@ -15,57 +38,42 @@ function LuxMundiHero() {
           <Description>
             Bienvenidos a nuestro rincón digital donde cinco fotógrafos viajeros
             compartimos nuestras aventuras, técnicas y perspectivas únicas.
-            Desde las calles bulliciosas de Asia hasta los paisajes vírgenes de
-            Sudamérica, cada historia se cuenta a través de cinco lentes
-            diferentes.
           </Description>
           <ButtonWrapper>
             <ButtonGroup
               buttons={[
-                { text: "Explore Destinations", variant: "outline" },
-                { text: "Start Creating", variant: "solid" },
+                { text: 'Explore Destinations', variant: 'outline' },
+                { text: 'Start Creating', variant: 'solid' },
               ]}
             />
           </ButtonWrapper>
         </TextContent>
 
         <SliderWrapper>
-          <Swiper
-            modules={[Navigation, Pagination, Autoplay]}
-            pagination={{
-              clickable: true,
-            }}
-            autoplay={{
-              delay: 4000,
-              disableOnInteraction: false,
-            }}
-            loop={true}
-            speed={800}
-          >
-            <SwiperSlide>
-              <Image
-                src="https://source.unsplash.com/random/1200x800/?landscape,travel"
-                alt="Travel Photography"
-              />
-            </SwiperSlide>
-            <SwiperSlide>
-              <Image
-                src="https://source.unsplash.com/random/1200x800/?city,architecture"
-                alt="Urban Photography"
-              />
-            </SwiperSlide>
-            <SwiperSlide>
-              <Image
-                src="https://source.unsplash.com/random/1200x800/?nature,wildlife"
-                alt="Nature Photography"
-              />
-            </SwiperSlide>
-          </Swiper>
+          {images.length > 0 ? (
+            <Swiper
+              modules={[Pagination, Autoplay]} // Eliminamos Navigation
+              pagination={{ clickable: true }}
+              autoplay={{ delay: 3000, disableOnInteraction: false }}
+              loop={true}
+              speed={1000}
+            >
+              {images.map((image, index) => (
+                <SwiperSlide key={index}>
+                  <Image src={image.imageUrl} alt='Random Travel Photography' />
+                </SwiperSlide>
+              ))}
+            </Swiper>
+          ) : (
+            <p>No hay imágenes disponibles</p>
+          )}
         </SliderWrapper>
       </ContentWrapper>
     </HeroSection>
   );
 }
+
+//Estilos
 
 const HeroSection = styled.section`
   background-color: #111111;
@@ -111,7 +119,7 @@ const TextContent = styled.div`
 `;
 
 const Overline = styled.span`
-  font-family: "DM Sans", sans-serif;
+  font-family: 'DM Sans', sans-serif;
   text-transform: uppercase;
   letter-spacing: 2px;
   font-size: 0.9rem;
@@ -121,7 +129,7 @@ const Overline = styled.span`
 `;
 
 const Title = styled.h1`
-  font-family: "DM Sans", sans-serif;
+  font-family: 'DM Sans', sans-serif;
   font-size: 3rem;
   font-weight: 700;
   color: #ffffff;
@@ -138,7 +146,7 @@ const Title = styled.h1`
 `;
 
 const Description = styled.p`
-  font-family: "DM Sans", sans-serif;
+  font-family: 'DM Sans', sans-serif;
   font-size: 1.1rem;
   line-height: 1.6;
   color: #999999;
@@ -152,7 +160,7 @@ const ButtonWrapper = styled.div`
 const SliderWrapper = styled.div`
   flex: 1;
   max-width: 55%;
-  height: 600px;
+  height: 400px;
 
   .swiper {
     width: 100%;

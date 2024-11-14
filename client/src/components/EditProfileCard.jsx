@@ -4,9 +4,10 @@ import { fetchUserById, updateUser } from '../services/adminService';
 import { AuthContext } from '../context/AuthContext';
 import { theme } from "../styles/theme";
 import { Pencil, User } from 'lucide-react';
+import ConfirmationModal from './ConfirmationModal';
 
 const EditProfileCard = ({ onClose }) => {
-  const { userId, isInitialized } = useContext(AuthContext); // Obtener userId e isInitialized
+  const { userId, isInitialized } = useContext(AuthContext);
   const [formData, setFormData] = useState({
     username: '',
     email: '',
@@ -16,6 +17,9 @@ const EditProfileCard = ({ onClose }) => {
     avatarUrl: '',
   });
   const [previewAvatar, setPreviewAvatar] = useState(null);
+  const [showPasswordMismatchModal, setShowPasswordMismatchModal] = useState(false);
+  const [showSuccessModal, setShowSuccessModal] = useState(false);
+  const [showErrorModal, setShowErrorModal] = useState(false);
 
   useEffect(() => {
     const loadUserData = async () => {
@@ -60,7 +64,7 @@ const EditProfileCard = ({ onClose }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (formData.newPassword !== formData.confirmPassword) {
-      alert('Las nuevas contraseñas no coinciden');
+      setShowPasswordMismatchModal(true);
       return;
     }
 
@@ -73,15 +77,14 @@ const EditProfileCard = ({ onClose }) => {
       };
 
       await updateUser(userId, updateData);
-      alert('Perfil actualizado con éxito');
+      setShowSuccessModal(true); // Muestra el modal de éxito
       onClose();
     } catch (error) {
       console.error('Error al actualizar el perfil:', error);
-      alert('Error al actualizar el perfil');
+      setShowErrorModal(true); // Muestra el modal de error
     }
   };
 
-  // Muestra un mensaje de carga si el contexto aún no ha terminado de inicializarse
   if (!isInitialized) {
     return <LoadingMessage>Cargando...</LoadingMessage>;
   }
@@ -129,13 +132,43 @@ const EditProfileCard = ({ onClose }) => {
           <SaveButton type="submit">Guardar Cambios</SaveButton>
         </ButtonGroup>
       </Form>
+
+      {/* Modales de confirmación */}
+      {showPasswordMismatchModal && (
+        <ConfirmationModal
+          isOpen={showPasswordMismatchModal}
+          onClose={() => setShowPasswordMismatchModal(false)}
+          message="Las nuevas contraseñas no coinciden"
+          showButtons={false}
+        />
+      )}
+
+      {showSuccessModal && (
+        <ConfirmationModal
+          isOpen={showSuccessModal}
+          onClose={() => setShowSuccessModal(false)}
+          message="Perfil actualizado con éxito"
+          showButtons={false}
+        />
+      )}
+
+      {showErrorModal && (
+        <ConfirmationModal
+          isOpen={showErrorModal}
+          onClose={() => setShowErrorModal(false)}
+          message="Error al actualizar el perfil"
+          showButtons={false}
+        />
+      )}
     </CardContainer>
   );
 };
 
 export default EditProfileCard;
 
-// Componentes de estilo adicionales
+
+//Estilos
+
 const LoadingMessage = styled.div`
   color: ${theme.colors.text.primary};
   text-align: center;

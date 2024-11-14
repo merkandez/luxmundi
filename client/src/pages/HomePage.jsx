@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import LuxMundiHero from '../components/LuxMundiHero';
 import ExploreSection from '../components/ExploreSection';
-import LogoutButton from '../components/LogoutButton';
 import { fetchPosts } from '../services/postService';
 
 function HomePage() {
@@ -28,7 +27,6 @@ function HomePage() {
   return (
     <HomeWrapper>
       <LuxMundiHero />
-      <LogoutButton />
       {loading ? (
         <LoadingMessage>Cargando destinos...</LoadingMessage>
       ) : (
@@ -51,7 +49,6 @@ const LoadingMessage = styled.div`
 `;
 
 export default HomePage;
-
 
 //Código reservado para cuando tengamos imágenes y que se muestren solo los post en los que todos los campos esten completos, evitando posibles errores
 /* import React, { useState, useEffect } from 'react';

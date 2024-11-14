@@ -1,23 +1,31 @@
-import styled from "styled-components";
-import Card from "./Card";
-import { useState } from "react";
-import PropTypes from "prop-types";
-import { Link } from "react-router-dom";
+import styled from 'styled-components';
+import Card from './Card';
+import { useState } from 'react';
+import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
+import { useSearch } from '../hooks/useSearch';
 
 const ExploreSection = ({ cards = [] }) => {
+  const { searchQuery } = useSearch();
   const [currentPage, setCurrentPage] = useState(1);
   const cardsPerPage = 12;
-  const totalPages = Math.max(1, Math.ceil(cards.length / cardsPerPage));
 
+  const filteredCards = cards.filter(
+    (card) =>
+      card.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      card.content.toLowerCase().includes(searchQuery.toLowerCase())
+  );
+
+  const totalPages = Math.max(1, Math.ceil(filteredCards.length / cardsPerPage));
   const indexOfLastCard = currentPage * cardsPerPage;
   const indexOfFirstCard = indexOfLastCard - cardsPerPage;
-  const currentCards = cards.slice(indexOfFirstCard, indexOfLastCard);
+  const currentCards = filteredCards.slice(indexOfFirstCard, indexOfLastCard);
 
   return (
     <Section id="explore-section">
-      <SectionHeader >
+      <SectionHeader>
         <Title>Destinos</Title>
-        <Subtitle>Discover amazing destinations</Subtitle>
+        <Subtitle>Descubre destinos increíbles</Subtitle>
       </SectionHeader>
 
       <CardGrid>
@@ -66,20 +74,25 @@ const ExploreSection = ({ cards = [] }) => {
 ExploreSection.propTypes = {
   cards: PropTypes.arrayOf(
     PropTypes.shape({
-      id: PropTypes.number.isRequired,         // Asegúrate de que `id` esté definido aquí
+      id: PropTypes.number.isRequired,
       title: PropTypes.string.isRequired,
-      description: PropTypes.string.isRequired,
-      imageUrl: PropTypes.string.isRequired,   // Añade imageUrl como propiedad obligatoria
+      content: PropTypes.string.isRequired,
+      imageUrl: PropTypes.string.isRequired,
     })
   ).isRequired,
 };
 
+// Estilos
 const Section = styled.section`
   padding: 60px 0;
   background-color: #111111;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  width: 100%;
 `;
 
-// Estilos adicionales (se mantienen igual)
 const SectionHeader = styled.div`
   text-align: center;
   margin-bottom: 48px;
@@ -101,11 +114,13 @@ const CardGrid = styled.div`
   grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
   gap: 24px;
   max-width: 1440px;
+  width: 100%;
   margin: 0 auto;
-  padding: 0 24px;
+  padding: 0 16px;
 
-  @media (min-width: 1200px) {
-    grid-template-columns: repeat(4, 1fr);
+  @media (max-width: 768px) {
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    padding: 0 8px;
   }
 `;
 
@@ -150,14 +165,13 @@ const PageNumber = styled.button`
   justify-content: center;
   border-radius: 4px;
   border: none;
-  background: ${(props) => (props.active ? "#29c9a9" : "transparent")};
-  color: ${(props) => (props.active ? "#000" : "#fff")};
+  background: ${(props) => (props.active ? '#29c9a9' : 'transparent')};
+  color: ${(props) => (props.active ? '#000' : '#fff')};
   cursor: pointer;
   transition: all 0.2s ease;
 
   &:hover:not(:disabled) {
-    background: ${(props) =>
-      props.active ? "#29c9a9" : "rgba(41, 201, 169, 0.1)"};
+    background: ${(props) => (props.active ? '#29c9a9' : 'rgba(41, 201, 169, 0.1)')};
   }
 `;
 

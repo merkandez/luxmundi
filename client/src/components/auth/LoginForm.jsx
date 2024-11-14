@@ -1,8 +1,10 @@
-import React, { useContext } from 'react';
+import React, { useState, useContext } from 'react';
 import { useForm } from 'react-hook-form';
 import styled from 'styled-components';
 import { AuthContext } from '../../context/AuthContext';
 import SocialButton from '../SocialButton';
+import ConfirmationModal from '../ConfirmationModal'; // Importa el modal
+
 const socialButtons = [
   {
     icon: 'https://cdn.builder.io/api/v1/image/assets/4a6b075cba4d439db44d5a2134fb5890/dd40f00dc6db3c0364106f8aa8f7a7ccce9226f67ec57e59b892dba3a52f6da7?apiKey=4a6b075cba4d439db44d5a2134fb5890&',
@@ -22,13 +24,28 @@ const LoginForm = ({ onClose, onSwitchToRegister }) => {
     formState: { errors },
   } = useForm();
 
+  // Estado para manejar el modal de confirmación
+  const [modalData, setModalData] = useState({
+    isOpen: false,
+    message: '',
+    showButtons: true,
+  });
+
+  const openModal = (message, showButtons = true) => {
+    setModalData({ isOpen: true, message, showButtons });
+  };
+
+  const closeModal = () => {
+    setModalData({ ...modalData, isOpen: false });
+  };
+
   const onSubmit = async (data) => {
     try {
       await login(data);
-      alert('Inicio de sesión exitoso');
-      onClose();
+      openModal('Inicio de sesión exitoso', false);
+      setTimeout(onClose, 2000); // Cierra el modal después de un breve tiempo
     } catch (error) {
-      alert('Error en el inicio de sesión');
+      openModal('Error en el inicio de sesión');
     }
   };
 
@@ -71,6 +88,14 @@ const LoginForm = ({ onClose, onSwitchToRegister }) => {
           <SignUpLink onClick={onSwitchToRegister}>Regístrate</SignUpLink>
         </SignUpText>
       </StyledForm>
+
+      {/* Modal de confirmación */}
+      <ConfirmationModal
+        isOpen={modalData.isOpen}
+        onClose={closeModal}
+        message={modalData.message}
+        showButtons={modalData.showButtons}
+      />
     </FormContainer>
   );
 };
@@ -174,6 +199,7 @@ const ErrorMessage = styled.span`
   color: #ff4d4f;
   font-size: 12px;
 `;
+
 const SocialButtonsContainer = styled.div`
   display: flex;
   justify-content: center;

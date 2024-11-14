@@ -1,12 +1,12 @@
-import React, { useState, useRef, useEffect } from "react";
-import styled from "styled-components";
-import { Link, useNavigate, useLocation } from "react-router-dom";
-import LoginForm from "../auth/LoginForm";
-import RegisterForm from "../auth/RegisterForm";
-import ModalForm from "../auth/ModalForm";
-import { Button } from "../../styles/components";
-import { theme } from "../../styles/theme";
-import { BsCameraFill } from "react-icons/bs";
+import React, { useState, useRef, useEffect } from 'react';
+import styled from 'styled-components';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
+import LoginForm from '../auth/LoginForm';
+import RegisterForm from '../auth/RegisterForm';
+import ModalForm from '../auth/ModalForm';
+import { Button } from '../../styles/components';
+import { theme } from '../../styles/theme';
+import { BsCameraFill } from 'react-icons/bs';
 import {
   Search,
   X,
@@ -17,11 +17,14 @@ import {
   Info,
   Map,
   Mail,
-} from "lucide-react";
-import ContactModal from "../ContactModal";
-import EditProfileCard from "../EditProfileCard";
+} from 'lucide-react';
+import ContactModal from '../ContactModal';
+import EditProfileCard from '../EditProfileCard';
+import { useContext } from 'react';
+import { SearchContext } from '../../context/SearchContext';
 
 const Header = ({ isAuthenticated, role, logout, avatarUrl, userData }) => {
+  const { setSearchQuery } = useContext(SearchContext);
   const [menuVisible, setMenuVisible] = useState(false);
   const [showLoginForm, setShowLoginForm] = useState(false);
   const [showRegisterForm, setShowRegisterForm] = useState(false);
@@ -45,11 +48,11 @@ const Header = ({ isAuthenticated, role, logout, avatarUrl, userData }) => {
 
   useEffect(() => {
     if (menuVisible) {
-      document.addEventListener("mousedown", handleClickOutside);
+      document.addEventListener('mousedown', handleClickOutside);
     }
 
     return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
+      document.removeEventListener('mousedown', handleClickOutside);
     };
   }, [menuVisible]);
 
@@ -66,25 +69,25 @@ const Header = ({ isAuthenticated, role, logout, avatarUrl, userData }) => {
   const closeForms = () => {
     setShowLoginForm(false);
     setShowRegisterForm(false);
-    setShowEditProfile(false);  // Cierra el modal de edición
+    setShowEditProfile(false); // Cierra el modal de edición
   };
 
   const scrollToDestinos = () => {
-    if (location.pathname !== "/") {
-      navigate("/");
+    if (location.pathname !== '/') {
+      navigate('/');
     }
     setTimeout(() => {
       document
-        .getElementById("explore-section")
-        ?.scrollIntoView({ behavior: "smooth" });
+        .getElementById('explore-section')
+        ?.scrollIntoView({ behavior: 'smooth' });
     }, 100);
   };
 
   const handleLogoClick = () => {
-    if (location.pathname === "/") {
-      window.scrollTo({ top: 0, behavior: "smooth" });
+    if (location.pathname === '/') {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
     } else {
-      navigate("/");
+      navigate('/');
     }
   };
 
@@ -95,9 +98,9 @@ const Header = ({ isAuthenticated, role, logout, avatarUrl, userData }) => {
       }
     };
 
-    window.addEventListener("resize", handleResize);
+    window.addEventListener('resize', handleResize);
     return () => {
-      window.removeEventListener("resize", handleResize);
+      window.removeEventListener('resize', handleResize);
     };
   }, [isMenuOpen]);
 
@@ -112,11 +115,11 @@ const Header = ({ isAuthenticated, role, logout, avatarUrl, userData }) => {
         </LogoSection>
 
         <Nav>
-          <NavLink to="/about">Nosotros</NavLink>
-          <NavLink as="button" onClick={scrollToDestinos}>
+          <NavLink to='/about'>Nosotros</NavLink>
+          <NavLink as='button' onClick={scrollToDestinos}>
             Destinos
           </NavLink>
-          <NavLink as="button" onClick={() => setShowContactModal(true)}>
+          <NavLink as='button' onClick={() => setShowContactModal(true)}>
             Contacto
           </NavLink>
         </Nav>
@@ -124,7 +127,11 @@ const Header = ({ isAuthenticated, role, logout, avatarUrl, userData }) => {
         <RightSection>
           <SearchSection>
             <SearchBar isOpen={isSearchOpen}>
-              <SearchInput placeholder="Buscar..." autoFocus={isSearchOpen} />
+              <SearchInput
+                placeholder='Buscar...'
+                autoFocus={isSearchOpen}
+                onChange={(e) => setSearchQuery(e.target.value)} // Actualiza el contexto de búsqueda
+              />
               <SearchButton onClick={() => setIsSearchOpen(false)}>
                 <X size={14} />
               </SearchButton>
@@ -135,12 +142,12 @@ const Header = ({ isAuthenticated, role, logout, avatarUrl, userData }) => {
           </SearchSection>
 
           {isAuthenticated ? (
-            <ProfileContainer className="desktop-only">
+            <ProfileContainer className='desktop-only'>
               {avatarUrl ? (
                 <AvatarImage
                   onClick={toggleMenu}
                   src={avatarUrl}
-                  alt="Avatar"
+                  alt='Avatar'
                 />
               ) : (
                 <AvatarIconWrapper onClick={toggleMenu}>
@@ -149,12 +156,15 @@ const Header = ({ isAuthenticated, role, logout, avatarUrl, userData }) => {
               )}
               {menuVisible && (
                 <ProfileMenu ref={menuRef}>
-                  <MenuLink as="button" onClick={() => setShowEditProfile(true)}>
+                  <MenuLink
+                    as='button'
+                    onClick={() => setShowEditProfile(true)}
+                  >
                     <User size={18} />
                     Mi Perfil
                   </MenuLink>
-                  {role === "admin" && (
-                    <MenuLink to="/admin" onClick={toggleMenu}>
+                  {role === 'admin' && (
+                    <MenuLink to='/admin' onClick={toggleMenu}>
                       <Settings size={18} />
                       Panel Admin
                     </MenuLink>
@@ -174,10 +184,10 @@ const Header = ({ isAuthenticated, role, logout, avatarUrl, userData }) => {
             </ProfileContainer>
           ) : (
             <AuthButtons>
-              <Button variant="primary" onClick={openLoginForm}>
+              <Button variant='primary' onClick={openLoginForm}>
                 Login
               </Button>
-              <Button variant="secondary" onClick={openRegisterForm}>
+              <Button variant='secondary' onClick={openRegisterForm}>
                 Register
               </Button>
             </AuthButtons>
@@ -190,16 +200,16 @@ const Header = ({ isAuthenticated, role, logout, avatarUrl, userData }) => {
 
         <MobileMenu isOpen={isMenuOpen}>
           <MobileMenuWrapper>
-            <MobileNavLink to="/about">
+            <MobileNavLink to='/about'>
               <Info size={16} />
               Nosotros
             </MobileNavLink>
-            <MobileNavLink as="button" onClick={scrollToDestinos}>
+            <MobileNavLink as='button' onClick={scrollToDestinos}>
               <Map size={16} />
               Destinos
             </MobileNavLink>
             <MobileNavLink
-              as="button"
+              as='button'
               onClick={() => setShowContactModal(true)}
             >
               <Mail size={16} />
@@ -208,12 +218,15 @@ const Header = ({ isAuthenticated, role, logout, avatarUrl, userData }) => {
             {isAuthenticated && (
               <>
                 <MenuDivider />
-                <MobileNavLink as="button" onClick={() => setShowEditProfile(true)}>
+                <MobileNavLink
+                  as='button'
+                  onClick={() => setShowEditProfile(true)}
+                >
                   <User size={16} />
                   Mi Perfil
                 </MobileNavLink>
-                {role === "admin" && (
-                  <MobileNavLink to="/admin">
+                {role === 'admin' && (
+                  <MobileNavLink to='/admin'>
                     <Settings size={16} />
                     Panel Admin
                   </MobileNavLink>
@@ -235,7 +248,10 @@ const Header = ({ isAuthenticated, role, logout, avatarUrl, userData }) => {
 
       {showLoginForm && (
         <ModalForm onClose={closeForms}>
-          <LoginForm onClose={closeForms} onSwitchToRegister={openRegisterForm} />
+          <LoginForm
+            onClose={closeForms}
+            onSwitchToRegister={openRegisterForm}
+          />
         </ModalForm>
       )}
       {showRegisterForm && (
@@ -248,20 +264,22 @@ const Header = ({ isAuthenticated, role, logout, avatarUrl, userData }) => {
           <EditProfileCard
             initialData={userData}
             onSave={(updatedData) => {
-              console.log("Perfil actualizado", updatedData);
+              console.log('Perfil actualizado', updatedData);
               closeForms();
             }}
-            onClose={closeForms} 
+            onClose={closeForms}
           />
         </ModalForm>
       )}
-      <ContactModal isOpen={showContactModal} onClose={() => setShowContactModal(false)} />
+      <ContactModal
+        isOpen={showContactModal}
+        onClose={() => setShowContactModal(false)}
+      />
     </HeaderContainer>
   );
 };
 
 export default Header;
-
 
 // Estilos
 const HeaderContainer = styled.header`
@@ -350,7 +368,7 @@ const NavLink = styled(Link)`
   letter-spacing: 0.3px;
 
   &::after {
-    content: "";
+    content: '';
     position: absolute;
     width: 0;
     height: 2px;
@@ -402,17 +420,17 @@ const SearchBar = styled.div`
   border-radius: 20px;
   background-color: ${theme.colors.background};
   overflow: hidden;
-  width: ${({ isOpen }) => (isOpen ? "140px" : "0")};
-  opacity: ${({ isOpen }) => (isOpen ? "1" : "0")};
+  width: ${({ isOpen }) => (isOpen ? '140px' : '0')};
+  opacity: ${({ isOpen }) => (isOpen ? '1' : '0')};
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   margin-right: 0.5rem;
 
   @media (min-width: ${theme.breakpoints.tablet}) {
-    width: ${({ isOpen }) => (isOpen ? "180px" : "0")};
+    width: ${({ isOpen }) => (isOpen ? '180px' : '0')};
   }
 
   @media (min-width: ${theme.breakpoints.desktop}) {
-    width: ${({ isOpen }) => (isOpen ? "220px" : "0")};
+    width: ${({ isOpen }) => (isOpen ? '220px' : '0')};
   }
 `;
 
@@ -621,7 +639,7 @@ const MobileMenu = styled.div`
   height: auto;
   background-color: ${theme.colors.background};
   border-left: 1px solid ${theme.colors.border};
-  transform: ${({ isOpen }) => (isOpen ? "translateX(0)" : "translateX(100%)")};
+  transform: ${({ isOpen }) => (isOpen ? 'translateX(0)' : 'translateX(100%)')};
   transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   z-index: 999;
   overflow-y: auto;

@@ -4,11 +4,14 @@ import PropTypes from 'prop-types';
 
 const Card = ({ title, content, imageUrl }) => (
   <CardContainer>
-    <Image src={imageUrl} alt={title} />
-    <ContentWrapper>
-      <Title>{title}</Title>
-      <Content>{content}</Content>
-    </ContentWrapper>
+    <ImageContainer>
+      <CardImage src={imageUrl} alt={title} />
+      <Overlay />
+    </ImageContainer>
+    <CardContent>
+      <CardTitle>{title}</CardTitle>
+      <CardDescription>{content}</CardDescription>
+    </CardContent>
   </CardContainer>
 );
 
@@ -18,32 +21,77 @@ Card.propTypes = {
   imageUrl: PropTypes.string.isRequired,
 };
 
+// Estilos
 const CardContainer = styled.div`
-  background-color: #333;
+  background: rgba(255, 255, 255, 0.03);
   border-radius: 8px;
   overflow: hidden;
-  display: flex;
-  flex-direction: column;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  transition: all 0.3s ease;
+  max-width: 300px;
+  margin: 0 auto;
+  cursor: pointer;
+
+  &:hover {
+    transform: translateY(-6px);
+    border-color: rgba(255, 255, 255, 0.2);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+  }
 `;
 
-const Image = styled.img`
+const ImageContainer = styled.div`
+  position: relative;
   width: 100%;
-  height: 180px;
+  height: 200px;
+  overflow: hidden;
+`;
+
+const CardImage = styled.img`
+  width: 100%;
+  height: 100%;
   object-fit: cover;
+  transition: transform 0.3s ease;
+
+  ${CardContainer}:hover & {
+    transform: scale(1.05);
+  }
 `;
 
-const ContentWrapper = styled.div`
-  padding: 16px;
+const Overlay = styled.div`
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to bottom,
+    transparent 0%,
+    rgba(0, 0, 0, 0.5) 100%
+  );
 `;
 
-const Title = styled.h3`
-  margin: 0 0 8px;
+const CardContent = styled.div`
+  padding: 1.25rem;
+`;
+
+const CardTitle = styled.h3`
   color: #fff;
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin-bottom: 0.75rem;
+  line-height: 1.4;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 `;
 
-const Content = styled.p`
-  margin: 0;
-  color: #aaa;
+const CardDescription = styled.p`
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 0.95rem;
+  line-height: 1.5;
+  max-height: 3em; /* Limita la altura para mostrar 3 líneas */
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
 `;
 
 export default Card;

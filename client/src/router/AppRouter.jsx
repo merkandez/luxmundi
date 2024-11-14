@@ -10,7 +10,7 @@ import NotFound from "../pages/NotFound";
 import ContactForm from "../components/ContactForm";
 import { AuthProvider } from "../context/AuthContext";
 import UnderConstruction from "../pages/UnderConstruction";
-import ArticlePage from  '../pages/ArticlePAge';
+import ArticlePage from "../pages/ArticlePage";
 
 
 
@@ -31,6 +31,8 @@ export const router = createBrowserRouter([
       { path: 'post/:postId', element: <ArticlePage/> },
       { path: "under-construction", element: <UnderConstruction />},
       { path: "*", element: <NotFound />},
+      { path: 'post/:postId', element: <ArticlePage/> },
+     
 
       // Rutas protegidas
       {

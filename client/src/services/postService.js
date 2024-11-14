@@ -44,11 +44,25 @@ export const uploadImage = async (imageFile) => {
   const formData = new FormData();
   formData.append('image', imageFile);
 
-  const response = await axios.post(`${import.meta.env.VITE_API_URL}/upload/upload`, formData, {
-    headers: {
-      'Content-Type': 'multipart/form-data',
-      Authorization: `Bearer ${localStorage.getItem('token')}`,
-    },
-  });
+  const response = await axios.post(
+    `${import.meta.env.VITE_API_URL}/upload/upload`,
+    formData,
+    {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+        Authorization: `Bearer ${localStorage.getItem('token')}`,
+      },
+    }
+  );
   return response.data;
+};
+// Función para obtener imagenes aleatorias
+export const fetchRandomImages = async (limit = 5) => {
+  try {
+    const response = await axios.get(`${API_URL}/random?limit=${limit}`);
+    return response.data;
+  } catch (error) {
+    console.error('Error al obtener imágenes aleatorias:', error);
+    throw error;
+  }
 };
