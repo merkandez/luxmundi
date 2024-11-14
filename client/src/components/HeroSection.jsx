@@ -1,44 +1,59 @@
-// HeroSection.jsx
-import React from 'react';
-import styled from 'styled-components';
+import React from "react";
+import styled from "styled-components";
 
-function HeroSection({ title }) {
+function HeroSection({ title, subtitle }) {
   return (
     <HeroWrapper>
       <ContentContainer>
         <MainTitle>{title}</MainTitle>
+        <SubTitle>{subtitle}</SubTitle>
       </ContentContainer>
     </HeroWrapper>
   );
 }
 
 const HeroWrapper = styled.section`
-  background-color: rgba(44, 44, 44, 1);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-  padding: 120px 64px 71px;
-
-  @media (max-width: 991px) {
-    padding: 80px 20px 0;
-  }
-`;
-
-const ContentContainer = styled.div`
-  max-width: 800px;
-  text-align: center;
-`;
-
-const MainTitle = styled.h1`
-  font-size: 2.5rem;
-  font-weight: 700;
-  color: #ffffff;
-  margin: 0;
+    background-color: rgba(44, 44, 44, 1);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    line-height: 1.2;
+    justify-content: center; /* Centra verticalmente */
+    font-size: 30px;
+    padding: 120px 64px 71px; /* Ajuste del padding-top para subir el contenido */
+    @media (max-width: 991px) {
+      padding: 80px 20px 0; /* Ajuste en pantallas más pequeñas */
+    }
+  `;
+  
+  const ContentContainer = styled.div`
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  `;
+  
+  const MainTitle = styled.h1`
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: #ffffff;
+    margin: 0;
 
   @media (max-width: 768px) {
     font-size: 2rem;
   }
-`;
+  `;
+  
+  const SubTitle = styled.h2`
+   font-size: 1.2rem;
+   font-weight: 400;
+   color: #cccccc;
+   margin-top: 8px;
 
-export default HeroSection;
+  @media (max-width: 768px) {
+    font-size: 1rem;
+  }
+  `;
+  
+  export default HeroSection;
