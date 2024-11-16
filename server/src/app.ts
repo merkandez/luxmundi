@@ -1,11 +1,11 @@
 import dotenv from 'dotenv';
 import express from 'express';
 import cors from 'cors';
-import sequelize from './database/connection_db'; // Conexión a la base de datos
-import postRoutes from './routes/postRoutes'; // Rutas de posts
-import authRoutes from './routes/authRoutes'; // Rutas de autenticación
-import userRoutes from './routes/userRoutes'; // administración de usuarios
-import './models/index'; // Importar los modelos
+import sequelize from './database/connection_db';
+import postRoutes from './routes/postRoutes';
+import authRoutes from './routes/authRoutes';
+import userRoutes from './routes/userRoutes';
+import './models/index';
 import uploadRoutes from './routes/uploadRoutes';
 
 dotenv.config();
@@ -16,12 +16,14 @@ const PORT = process.env.PORT || 8080;
 app.use(cors());
 app.use(express.json());
 
-app.use('/api/posts', postRoutes); // Ruta base para las entradas posts del blog
-app.use('/api/auth', authRoutes); // Ruta base para las rutas de autenticación
-app.use('/api/users', userRoutes); // Rutas de administración de usuarios
-app.use('/api/upload', uploadRoutes); // Rutas de carga de imágenes
-app.use('/uploads', express.static('C:/Users/donce/Desktop/luxmundi/server/uploads'));
-
+app.use('/api/posts', postRoutes);
+app.use('/api/auth', authRoutes);
+app.use('/api/users', userRoutes);
+app.use('/api/upload', uploadRoutes);
+app.use(
+  '/uploads',
+  express.static('C:/Users/donce/Desktop/luxmundi/server/uploads')
+);
 
 // Conexión a la base de datos
 sequelize

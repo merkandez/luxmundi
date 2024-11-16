@@ -1,7 +1,12 @@
 import React, { useEffect } from 'react';
 import styled from 'styled-components';
 
-const ConfirmationModal = ({ isOpen, onClose, message, showButtons = true }) => {
+const ConfirmationModal = ({
+  isOpen,
+  onClose,
+  message,
+  showButtons = true,
+}) => {
   // Cierra el modal automáticamente después de 3 segundos si no hay botones
   useEffect(() => {
     if (isOpen && !showButtons) {
@@ -16,8 +21,12 @@ const ConfirmationModal = ({ isOpen, onClose, message, showButtons = true }) => 
   if (!isOpen) return null;
 
   return (
-    <ModalOverlay onClick={onClose}> {/* Cierra al hacer clic en el fondo */}
-      <ModalContent onClick={(e) => e.stopPropagation()}> {/* Evita cierre al hacer clic en el contenido */}
+    <ModalOverlay onClick={onClose}>
+      {' '}
+      {/* Cierra al hacer clic en el fondo */}
+      <ModalContent onClick={(e) => e.stopPropagation()}>
+        {' '}
+        {/* Evita cierre al hacer clic en el contenido */}
         <Message>{message}</Message>
         {showButtons && (
           <ButtonContainer>
@@ -31,7 +40,7 @@ const ConfirmationModal = ({ isOpen, onClose, message, showButtons = true }) => 
 
 export default ConfirmationModal;
 
-// Estilos del modal
+// Estilos
 const ModalOverlay = styled.div`
   position: fixed;
   top: 0;

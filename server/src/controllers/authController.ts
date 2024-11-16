@@ -76,9 +76,9 @@ export const updateUser = async (
   req: Request,
   res: Response
 ): Promise<void> => {
-  const { id } = req.params; // ID del usuario a actualizar
+  const { id } = req.params; 
   const { username, email, password, avatarUrl, role } = req.body;
-  const userRole = (req as any).user; // Información del usuario autenticado
+  const userRole = (req as any).user; 
 
   try {
     const user = await User.findByPk(id);

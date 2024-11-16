@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+/* import React, { useState } from 'react';
 
 const UploadForm = () => {
   const [image, setImage] = useState(null);
@@ -56,4 +56,4 @@ const UploadForm = () => {
   );
 };
 
-export default UploadForm;
+export default UploadForm; */

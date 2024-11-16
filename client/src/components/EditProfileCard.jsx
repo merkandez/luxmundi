@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useContext } from 'react';
 import styled from 'styled-components';
 import { fetchUserById, updateUser } from '../services/adminService';
+import { uploadImage } from '../services/postService';
 import { AuthContext } from '../context/AuthContext';
 import { theme } from "../styles/theme";
 import { Pencil, User } from 'lucide-react';
@@ -69,19 +70,25 @@ const EditProfileCard = ({ onClose }) => {
     }
 
     try {
+      let avatarUrl = formData.avatarUrl;
+
+      if (formData.avatarUrl instanceof File) {
+        const imageData = await uploadImage(formData.avatarUrl);
+        avatarUrl = imageData.url;
+      }
+
       const updateData = {
         username: formData.username,
         email: formData.email,
         password: formData.newPassword || undefined,
-        avatarUrl: formData.avatarUrl,
+        avatarUrl,
       };
 
       await updateUser(userId, updateData);
-      setShowSuccessModal(true); // Muestra el modal de éxito
-      onClose();
+      setShowSuccessModal(true);
     } catch (error) {
       console.error('Error al actualizar el perfil:', error);
-      setShowErrorModal(true); // Muestra el modal de error
+      setShowErrorModal(true);
     }
   };
 
@@ -100,45 +107,77 @@ const EditProfileCard = ({ onClose }) => {
         <EditAvatarButton htmlFor="avatar-upload">
           <Pencil size={18} />
         </EditAvatarButton>
-        <input type="file" id="avatar-upload" accept="image/*" onChange={handleAvatarChange} style={{ display: 'none' }} />
+        <input
+          type="file"
+          id="avatar-upload"
+          accept="image/*"
+          onChange={handleAvatarChange}
+          style={{ display: 'none' }}
+        />
       </AvatarContainer>
 
       <Form onSubmit={handleSubmit}>
         <Title>Editar Perfil</Title>
         <FormGroup>
           <Label htmlFor="username">Nombre de Usuario</Label>
-          <Input type="text" id="username" name="username" value={formData.username} onChange={handleChange} required />
+          <Input
+            type="text"
+            id="username"
+            name="username"
+            value={formData.username}
+            onChange={handleChange}
+            required
+          />
         </FormGroup>
-
         <FormGroup>
           <Label htmlFor="email">Correo Electrónico</Label>
-          <Input type="email" id="email" name="email" value={formData.email} onChange={handleChange} required />
+          <Input
+            type="email"
+            id="email"
+            name="email"
+            value={formData.email}
+            onChange={handleChange}
+            required
+          />
         </FormGroup>
 
         <PasswordSection>
           <SectionTitle>Cambiar Contraseña</SectionTitle>
           <FormGroup>
             <Label htmlFor="newPassword">Nueva Contraseña</Label>
-            <Input type="password" id="newPassword" name="newPassword" value={formData.newPassword} onChange={handleChange} />
+            <Input
+              type="password"
+              id="newPassword"
+              name="newPassword"
+              value={formData.newPassword}
+              onChange={handleChange}
+            />
           </FormGroup>
           <FormGroup>
             <Label htmlFor="confirmPassword">Confirmar Nueva Contraseña</Label>
-            <Input type="password" id="confirmPassword" name="confirmPassword" value={formData.confirmPassword} onChange={handleChange} />
+            <Input
+              type="password"
+              id="confirmPassword"
+              name="confirmPassword"
+              value={formData.confirmPassword}
+              onChange={handleChange}
+            />
           </FormGroup>
         </PasswordSection>
 
         <ButtonGroup>
-          <CancelButton type="button" onClick={onClose}>Cancelar</CancelButton>
+          <CancelButton type="button" onClick={onClose}>
+            Cancelar
+          </CancelButton>
           <SaveButton type="submit">Guardar Cambios</SaveButton>
         </ButtonGroup>
       </Form>
 
-      {/* Modales de confirmación */}
       {showPasswordMismatchModal && (
         <ConfirmationModal
           isOpen={showPasswordMismatchModal}
           onClose={() => setShowPasswordMismatchModal(false)}
-          message="Las nuevas contraseñas no coinciden"
+          message="Las contraseñas no coinciden."
           showButtons={false}
         />
       )}
@@ -147,7 +186,7 @@ const EditProfileCard = ({ onClose }) => {
         <ConfirmationModal
           isOpen={showSuccessModal}
           onClose={() => setShowSuccessModal(false)}
-          message="Perfil actualizado con éxito"
+          message="Perfil actualizado con éxito."
           showButtons={false}
         />
       )}
@@ -156,7 +195,7 @@ const EditProfileCard = ({ onClose }) => {
         <ConfirmationModal
           isOpen={showErrorModal}
           onClose={() => setShowErrorModal(false)}
-          message="Error al actualizar el perfil"
+          message="Error al actualizar el perfil. Por favor, inténtalo de nuevo."
           showButtons={false}
         />
       )}
