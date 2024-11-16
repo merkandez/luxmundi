@@ -1,14 +1,20 @@
-import React from "react";
+import React, { useContext } from "react";
 import styled from "styled-components";
 import { theme } from "../../styles/theme";
 import { LayoutDashboard, Users, FileText } from "lucide-react";
+import { AuthContext } from "../../context/AuthContext"; // Importamos AuthContext
 
 const NavbarAdmin = ({ setActiveComponent }) => {
+  const { user } = useContext(AuthContext); // Obtenemos el usuario del contexto
+
   return (
     <NavContainer>
       <NavHeader>
         <Title>LuxMundi</Title>
-        <Subtitle>Panel Admin</Subtitle>
+        {/* Mostramos el nombre del usuario en el subtítulo */}
+        <Subtitle>
+          Panel Admin {user?.username ? `- ${user.username}` : ""}
+        </Subtitle>
       </NavHeader>
       <NavItems>
         <NavItem onClick={() => setActiveComponent("home")}>

@@ -17,7 +17,7 @@ export const registerUser = async (
       return;
     }
 
-    const hashedPassword = await encrypt(password); // Usamos la función encrypt
+    const hashedPassword = await encrypt(password);
     const newUser = await User.create({
       username,
       email,
@@ -25,8 +25,16 @@ export const registerUser = async (
       avatarUrl,
     });
     res
-      .status(201)
-      .json({ message: 'Usuario registrado con éxito', user: newUser });
+    const token = tokenSign({ id: newUser.id, role: newUser.role }); // Generamos el token JWT
+    const role = newUser.role; 
+    const userId = newUser.id;
+
+    res.status(201).json({
+      message: 'Usuario registrado con éxito',
+      token,
+      role,
+      userId,
+    });
   } catch (error) {
     if (error instanceof Error) {
       res
@@ -49,15 +57,15 @@ export const loginUser = async (req: Request, res: Response): Promise<void> => {
       return;
     }
 
-    const isMatch = await compare(password, user.password); // Usamos la función compare
+    const isMatch = await compare(password, user.password); 
     if (!isMatch) {
       res.status(400).json({ message: 'Credenciales incorrectas' });
       return;
     }
 
-    const token = tokenSign(user); // Generamos el token JWT
-    const role = user.role; // Extraemos el rol del usuario
-    const userId = user.id; // Extraemos el ID del usuario
+    const token = tokenSign(user); 
+    const role = user.role; 
+    const userId = user.id; 
 
     // Incluimos `userId` en la respuesta
     res.json({ message: 'Inicio de sesión exitoso', token, role, userId });

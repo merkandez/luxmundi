@@ -26,15 +26,15 @@ const ContactModal = ({ isOpen, onClose }) => {
 
             <ModalContent>
               <ContactInfo>
-                <Title>Get in Touch</Title>
+                <Title>👋 Hola, estamos aquí.</Title>
                 <Description>
-                  We&apos;d love to hear from you. Fill out the form below or
-                  reach out directly.
+                
+                No seas tímido. En Luxmundi estamos encantados de hablar contigo.
                 </Description>
                 <ContactDetails>
                   <ContactItem>
                     <Mail size={20} />
-                    <span>contact@luxmundi.com</span>
+                    <span>info@luxmundi.com</span>
                   </ContactItem>
                   <ContactItem>
                     <Phone size={20} />
@@ -49,7 +49,7 @@ const ContactModal = ({ isOpen, onClose }) => {
 
               <Form>
                 <InputGroup>
-                  <Label>Name</Label>
+                  <Label>Nombre</Label>
                   <Input type="text" placeholder="Your name" />
                 </InputGroup>
                 <InputGroup>
@@ -57,10 +57,10 @@ const ContactModal = ({ isOpen, onClose }) => {
                   <Input type="email" placeholder="your@email.com" />
                 </InputGroup>
                 <InputGroup>
-                  <Label>Message</Label>
+                  <Label>Mensaje</Label>
                   <Textarea placeholder="Your message..." rows={4} />
                 </InputGroup>
-                <SubmitButton type="submit">Send Message</SubmitButton>
+                <SubmitButton type="submit">Envía tu mensaje</SubmitButton>
               </Form>
             </ModalContent>
           </ModalContainer>

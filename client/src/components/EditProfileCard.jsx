@@ -44,7 +44,7 @@ const EditProfileCard = ({ onClose }) => {
       }
     };
 
-    if (isInitialized) {
+    if (isInitialized && userId) {
       loadUserData();
     }
   }, [userId, isInitialized]);

@@ -5,7 +5,9 @@ const API_URL = `${import.meta.env.VITE_API_URL}/auth`;
 // Función para registrar un usuario
 export const registerUser = async (userData) => {
   try {
-    const response = await axios.post(`${API_URL}/register`, userData);
+    const response = await axios.post(`${API_URL}/register`, userData,  {
+      headers: { 'Content-Type': 'application/json' },
+    });
     return response.data;
   } catch (error) {
     console.error('Error en el registro de usuario:', error);

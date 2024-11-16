@@ -1,10 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { useForm } from 'react-hook-form';
 import { registerUser } from '../../services/authService';
 import styled from 'styled-components';
 import SocialButton from '../SocialButton';
 import LoginForm from './LoginForm';
 import ConfirmationModal from '../ConfirmationModal';
+import { AuthContext } from '../../context/AuthContext'; // Importamos el contexto de autenticación
 
 const socialButtons = [
   {
@@ -18,13 +19,14 @@ const socialButtons = [
 ];
 
 const RegisterForm = ({ onClose }) => {
+  const { setAuthState } = useContext(AuthContext); // Obtenemos la función del contexto
   const [showLoginForm, setShowLoginForm] = useState(false);
   const [modalData, setModalData] = useState({
     isOpen: false,
     message: '',
     showButtons: false,
   });
-  
+
   const {
     register,
     handleSubmit,
@@ -46,10 +48,28 @@ const RegisterForm = ({ onClose }) => {
       openModal('Las contraseñas no coinciden');
       return;
     }
+    console.log("Datos enviados al backend:", data); 
+    const { confirmPassword, ...userData } = data;
+
     try {
-      await registerUser(data);
-      openModal('Registro exitoso', false);
-      setTimeout(onClose, 2000); // Cierra el modal tras un breve tiempo
+      const response = await registerUser(userData); // Solo enviamos username, email y password
+      const { token, userId, role } = response;
+
+      // Guardar los datos en el localStorage
+      localStorage.setItem('token', token);
+      localStorage.setItem('userId', userId);
+      localStorage.setItem('role', role);
+
+      // Actualizar el contexto de autenticación
+      setAuthState({
+        isAuthenticated: true,
+        role,
+        userId,
+      });
+
+      // Mostrar mensaje de éxito y cerrar el modal
+      openModal('Registro exitoso, redirigiendo...', false);
+      setTimeout(onClose, 2000); // Cierra el modal tras 2 segundos
     } catch (error) {
       console.error('Error en el registro:', error);
       openModal('Error en el registro');
@@ -74,7 +94,7 @@ const RegisterForm = ({ onClose }) => {
               {...register('username', {
                 required: 'Este campo es obligatorio',
               })}
-              placeholder='Introduce tu nombre de usuario'
+              placeholder="Introduce tu nombre de usuario"
             />
             {errors.username && (
               <ErrorText>{errors.username.message}</ErrorText>
@@ -83,20 +103,20 @@ const RegisterForm = ({ onClose }) => {
           <FormGroup>
             <Label>Correo electrónico</Label>
             <Input
-              type='email'
+              type="email"
               {...register('email', { required: 'Este campo es obligatorio' })}
-              placeholder='Introduce tu correo electrónico'
+              placeholder="Introduce tu correo electrónico"
             />
             {errors.email && <ErrorText>{errors.email.message}</ErrorText>}
           </FormGroup>
           <FormGroup>
             <Label>Contraseña</Label>
             <Input
-              type='password'
+              type="password"
               {...register('password', {
                 required: 'Este campo es obligatorio',
               })}
-              placeholder='Introduce tu contraseña'
+              placeholder="Introduce tu contraseña"
             />
             {errors.password && (
               <ErrorText>{errors.password.message}</ErrorText>
@@ -105,19 +125,19 @@ const RegisterForm = ({ onClose }) => {
           <FormGroup>
             <Label>Repetir Contraseña</Label>
             <Input
-              type='password'
+              type="password"
               {...register('confirmPassword', {
                 required: 'Este campo es obligatorio',
                 validate: (value) =>
                   value === password || 'Las contraseñas no coinciden',
               })}
-              placeholder='Repite tu contraseña'
+              placeholder="Repite tu contraseña"
             />
             {errors.confirmPassword && (
               <ErrorText>{errors.confirmPassword.message}</ErrorText>
             )}
           </FormGroup>
-          <SubmitButton type='submit'>Registrarse</SubmitButton>
+          <SubmitButton type="submit">Registrarse</SubmitButton>
           <SocialButtonsContainer>
             {socialButtons.map((button, index) => (
               <SocialButton key={index} icon={button.icon} text={button.text} />
@@ -143,6 +163,7 @@ const RegisterForm = ({ onClose }) => {
 };
 
 export default RegisterForm;
+
 
 // Estilos
 const StyledForm = styled.form`
