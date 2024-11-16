@@ -86,12 +86,12 @@ const CardDescription = styled.p`
   color: rgba(255, 255, 255, 0.7);
   font-size: 0.95rem;
   line-height: 1.5;
-  max-height: 3em; /* Limita la altura para mostrar 3 líneas */
+  max-height: 4.5em;
   overflow: hidden;
   text-overflow: ellipsis;
-  display: -webkit-box;
-  -webkit-line-clamp: 3;
-  -webkit-box-orient: vertical;
+  display: -webkit-box; /* Define un contenedor flexible */
+  -webkit-line-clamp: 3; /* Limita el texto a 3 líneas */
+  -webkit-box-orient: vertical; /* Orienta el texto verticalmente */
 `;
 
 export default Card;
