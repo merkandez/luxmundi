@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { uploadImage } from '../../services/postService';
+import ConfirmationModal from '../ConfirmationModal';
 
 const UserManagement = ({
   users,
@@ -17,12 +18,14 @@ const UserManagement = ({
     email: '',
     password: '',
     avatarUrl: '',
-    role: 'user', 
+    role: 'user',
   });
   const [showCreateModal, setShowCreateModal] = useState(false);
   const [showEditModal, setShowEditModal] = useState(false);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [userToDelete, setUserToDelete] = useState(null);
+  const [confirmationMessage, setConfirmationMessage] = useState('');
+  const [isConfirmationOpen, setIsConfirmationOpen] = useState(false);
 
   useEffect(() => {
     setEditData(selectedUser || {});
@@ -36,21 +39,51 @@ const UserManagement = ({
     setEditData({ ...editData, [name]: value });
   };
 
+  const validateInputs = (data) => {
+    const { username, email, password } = data;
+    if (!username || !email || (showCreateModal && !password)) {
+      return false;
+    }
+    return true;
+  };
+
   const handleUpdate = async () => {
+    if (!validateInputs(editData)) {
+      alert('Por favor, completa todos los campos obligatorios.');
+      return;
+    }
     const updateData = { ...editData };
     if (editData.avatarUrl) {
-      updateData.avatarUrl = editData.avatarUrl; // Asegura que es la URL de la imagen
+      updateData.avatarUrl = editData.avatarUrl;
     }
     await onUpdateUser(selectedUser.id, updateData);
     await reloadUsers();
     setShowEditModal(false);
+    setConfirmationMessage(
+      `El usuario "${editData.username}" ha sido actualizado.`
+    );
+    setIsConfirmationOpen(true);
   };
 
   const handleCreateUser = async () => {
+    if (!validateInputs(newUserData)) {
+      alert('Por favor, completa todos los campos obligatorios.');
+      return;
+    }
     await onCreateUser(newUserData);
     await reloadUsers();
-    setNewUserData({ username: '', email: '', password: '', avatarUrl: '' });
+    setNewUserData({
+      username: '',
+      email: '',
+      password: '',
+      avatarUrl: '',
+      role: 'user',
+    });
     setShowCreateModal(false);
+    setConfirmationMessage(
+      `El usuario "${newUserData.username}" ha sido creado.`
+    );
+    setIsConfirmationOpen(true);
   };
 
   const handleDeleteClick = (userId) => {
@@ -74,24 +107,21 @@ const UserManagement = ({
     const file = e.target.files[0];
     try {
       const imageData = await uploadImage(file);
-      // Solo guardar la URL, no el objeto completo
       setNewUserData({ ...newUserData, avatarUrl: imageData.url });
     } catch (error) {
       console.error('Error al subir la imagen:', error);
     }
   };
-  
+
   const handleEditImageUpload = async (e) => {
     const file = e.target.files[0];
     try {
       const imageData = await uploadImage(file);
-      // Solo guardar la URL, no el objeto completo
       setEditData({ ...editData, avatarUrl: imageData.url });
     } catch (error) {
       console.error('Error al subir la imagen:', error);
     }
   };
-  
 
   return (
     <ManagementWrapper>
@@ -146,11 +176,7 @@ const UserManagement = ({
               <Title>Editar Usuario</Title>
               <FormGroup>
                 {editData.avatarUrl && (
-                  <ImagePreview
-                    src={editData.avatarUrl}
-                    alt='Preview'
-                    style={{ width: '100%' }}
-                  />
+                  <ImagePreview src={editData.avatarUrl} alt='Preview' />
                 )}
                 <Label>Nombre de Usuario</Label>
                 <Input
@@ -174,12 +200,12 @@ const UserManagement = ({
               <FormGroup>
                 <Label>Rol</Label>
                 <Select
-                  name="role"
+                  name='role'
                   value={editData.role || 'user'}
                   onChange={handleInputChange}
                 >
-                  <option value="user">Usuario</option>
-                  <option value="admin">Administrador</option>
+                  <option value='user'>Usuario</option>
+                  <option value='admin'>Administrador</option>
                 </Select>
               </FormGroup>
               <FormGroup>
@@ -246,6 +272,19 @@ const UserManagement = ({
                 />
               </FormGroup>
               <FormGroup>
+                <Label>Rol</Label>
+                <Select
+                  name='role'
+                  value={newUserData.role}
+                  onChange={(e) =>
+                    setNewUserData({ ...newUserData, role: e.target.value })
+                  }
+                >
+                  <option value='user'>Usuario</option>
+                  <option value='admin'>Administrador</option>
+                </Select>
+              </FormGroup>
+              <FormGroup>
                 <Label>Imagen de perfil</Label>
                 <Input
                   type='file'
@@ -288,9 +327,18 @@ const UserManagement = ({
           </ModalContent>
         </Modal>
       )}
+
+      <ConfirmationModal
+        isOpen={isConfirmationOpen}
+        onClose={() => setIsConfirmationOpen(false)}
+        message={confirmationMessage}
+        showButtons={false}
+      />
     </ManagementWrapper>
   );
 };
+
+// Estilos
 
 const ManagementWrapper = styled.div`
   background-color: #1e1e1e;
@@ -310,7 +358,7 @@ const FormSection = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  juscontent: center;
+  justify-content: center;
 
   h3 {
     margin-bottom: 15px;
@@ -364,7 +412,6 @@ const DeleteButton = styled(StyledButton)`
     background-color: #f55050; /* Más claro al hacer hover */
   }
 `;
-
 
 const StyledTable = styled.table`
   width: 100%;
@@ -489,6 +536,9 @@ const Title = styled.h2`
 
 const FormGroup = styled.div`
   margin-bottom: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
 `;
 
 const Label = styled.label`
@@ -512,22 +562,12 @@ const Input = styled.input`
 `;
 
 const ImagePreview = styled.img`
-  width: 100%;
-  border-radius: 10px;
-  margin-bottom: 20px;
-  opacity: 0;
-  animation: fadeIn 1s ease forwards;
-
-  @keyframes fadeIn {
-    from {
-      opacity: 0;
-      transform: translateY(10px);
-    }
-    to {
-      opacity: 1;
-      transform: translateY(0);
-    }
-  }
+  width: 25%; /* Ajusta el tamaño según necesites */
+  height: auto;
+  border-radius: 50%; /* Hace la imagen circular */
+  margin: 0 auto; /* Centra la imagen en el contenedor */
+  object-fit: cover; /* Mantiene la proporción de la imagen */
+  margin-bottom: 10px;
 `;
 const Select = styled.select`
   width: 100%;
