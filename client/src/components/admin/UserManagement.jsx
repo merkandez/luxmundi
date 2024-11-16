@@ -17,6 +17,7 @@ const UserManagement = ({
     email: '',
     password: '',
     avatarUrl: '',
+    role: 'user', 
   });
   const [showCreateModal, setShowCreateModal] = useState(false);
   const [showEditModal, setShowEditModal] = useState(false);
@@ -169,6 +170,17 @@ const UserManagement = ({
                   onChange={handleInputChange}
                   placeholder='Email'
                 />
+              </FormGroup>
+              <FormGroup>
+                <Label>Rol</Label>
+                <Select
+                  name="role"
+                  value={editData.role || 'user'}
+                  onChange={handleInputChange}
+                >
+                  <option value="user">Usuario</option>
+                  <option value="admin">Administrador</option>
+                </Select>
               </FormGroup>
               <FormGroup>
                 <Label>Imagen de perfil</Label>
@@ -515,6 +527,19 @@ const ImagePreview = styled.img`
       opacity: 1;
       transform: translateY(0);
     }
+  }
+`;
+const Select = styled.select`
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #3d3d3d;
+  border-radius: 5px;
+  background-color: #3d3d3d;
+  color: #ffffff;
+
+  &:focus {
+    border-color: #29c9a9;
+    outline: none;
   }
 `;
 
