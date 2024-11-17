@@ -1,6 +1,5 @@
 import React, { useState, useContext } from 'react';
 import { useForm } from 'react-hook-form';
-import { registerUser } from '../../services/authService';
 import styled from 'styled-components';
 import SocialButton from '../SocialButton';
 import LoginForm from './LoginForm';

@@ -562,11 +562,11 @@ const Input = styled.input`
 `;
 
 const ImagePreview = styled.img`
-  width: 25%; /* Ajusta el tamaño según necesites */
-  height: auto;
+  width: 35%; /* Ajusta según tu diseño */
+  aspect-ratio: 1; /* Mantiene la proporción de 1:1 para un cuadrado */
   border-radius: 50%; /* Hace la imagen circular */
   margin: 0 auto; /* Centra la imagen en el contenedor */
-  object-fit: cover; /* Mantiene la proporción de la imagen */
+  object-fit: cover; /* Ajusta la imagen dentro del contenedor sin distorsión */
   margin-bottom: 10px;
 `;
 const Select = styled.select`
