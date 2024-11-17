@@ -1,11 +1,11 @@
-import React, { useContext } from "react";
-import styled from "styled-components";
-import { theme } from "../../styles/theme";
-import { LayoutDashboard, Users, FileText } from "lucide-react";
-import { AuthContext } from "../../context/AuthContext"; // Importamos AuthContext
+import React, { useContext } from 'react';
+import styled from 'styled-components';
+import { theme } from '../../styles/theme';
+import { LayoutDashboard, Users, FileText } from 'lucide-react';
+import { AuthContext } from '../../context/AuthContext'; // Importamos AuthContext
 
 const NavbarAdmin = ({ setActiveComponent }) => {
-  const { user } = useContext(AuthContext); // Obtenemos el usuario del contexto
+  const { username } = useContext(AuthContext);
 
   return (
     <NavContainer>
@@ -13,19 +13,20 @@ const NavbarAdmin = ({ setActiveComponent }) => {
         <Title>LuxMundi</Title>
         {/* Mostramos el nombre del usuario en el subtítulo */}
         <Subtitle>
-          Panel Admin {user?.username ? `- ${user.username}` : ""}
+          <span>Hola, {username ? ` ${username}` : ''}</span>
+          <span>Bienvenido al panel de administrador</span>
         </Subtitle>
       </NavHeader>
       <NavItems>
-        <NavItem onClick={() => setActiveComponent("home")}>
+        <NavItem onClick={() => setActiveComponent('home')}>
           <LayoutDashboard size={20} />
           <span>Dashboard</span>
         </NavItem>
-        <NavItem onClick={() => setActiveComponent("PostManagement")}>
+        <NavItem onClick={() => setActiveComponent('PostManagement')}>
           <FileText size={20} />
           <span>Publicaciones</span>
         </NavItem>
-        <NavItem onClick={() => setActiveComponent("UserManagement")}>
+        <NavItem onClick={() => setActiveComponent('UserManagement')}>
           <Users size={20} />
           <span>Usuarios</span>
         </NavItem>
@@ -81,6 +82,9 @@ const Title = styled.h1`
 const Subtitle = styled.p`
   color: ${theme.colors.text.secondary};
   font-size: 0.9rem;
+  span {
+    display: block; /* Hace que cada span sea una línea independiente */
+  }
 `;
 
 const NavItems = styled.div`

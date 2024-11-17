@@ -8,7 +8,7 @@ export const registerUser = async (
   req: Request,
   res: Response
 ): Promise<void> => {
-  const { username, email, password, avatarUrl } = req.body;
+  const { username, email, password } = req.body;
 
   try {
     const existingUser = await User.findOne({ where: { email } });
@@ -22,11 +22,10 @@ export const registerUser = async (
       username,
       email,
       password: hashedPassword,
-      
     });
-    res
+    res;
     const token = tokenSign({ id: newUser.id, role: newUser.role });
-    const role = newUser.role; 
+    const role = newUser.role;
     const userId = newUser.id;
 
     res.status(201).json({
@@ -57,21 +56,27 @@ export const loginUser = async (req: Request, res: Response): Promise<void> => {
       return;
     }
 
-    const isMatch = await compare(password, user.password); 
+    const isMatch = await compare(password, user.password);
     if (!isMatch) {
       res.status(400).json({ message: 'Credenciales incorrectas' });
       return;
     }
 
-    const token = tokenSign(user); 
-    const role = user.role; 
-    const userId = user.id; 
+    const token = tokenSign({ id: user.id, role: user.role });
 
     // Incluimos `userId` en la respuesta
-    res.json({ message: 'Inicio de sesión exitoso', token, role, userId });
+    res.json({
+      message: 'Inicio de sesión exitoso',
+      token,
+      role: user.role,
+      userId: user.id,
+      username: user.username,
+    });
   } catch (error) {
     if (error instanceof Error) {
-      res.status(500).json({ message: 'Error en el servidor', error: error.message });
+      res
+        .status(500)
+        .json({ message: 'Error en el servidor', error: error.message });
     } else {
       res.status(500).json({ message: 'Error en el servidor', error });
     }
@@ -84,9 +89,9 @@ export const updateUser = async (
   req: Request,
   res: Response
 ): Promise<void> => {
-  const { id } = req.params; 
+  const { id } = req.params;
   const { username, email, password, avatarUrl, role } = req.body;
-  const userRole = (req as any).user; 
+  const userRole = (req as any).user;
 
   try {
     const user = await User.findByPk(id);
