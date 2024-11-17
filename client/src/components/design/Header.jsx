@@ -23,7 +23,8 @@ import EditProfileCard from '../EditProfileCard';
 import { useContext } from 'react';
 import { SearchContext } from '../../context/SearchContext';
 
-const Header = ({ isAuthenticated, role, logout, avatarUrl, userData }) => {
+
+const Header = ({ isAuthenticated, role, logout, userData }) => {
   const { setSearchQuery } = useContext(SearchContext);
   const [menuVisible, setMenuVisible] = useState(false);
   const [showLoginForm, setShowLoginForm] = useState(false);
@@ -35,6 +36,7 @@ const Header = ({ isAuthenticated, role, logout, avatarUrl, userData }) => {
   const menuRef = useRef(null);
   const navigate = useNavigate();
   const location = useLocation();
+  const avatarUrl = localStorage.getItem('avatarUrl');
 
   const toggleMenu = () => {
     setMenuVisible((prev) => !prev);

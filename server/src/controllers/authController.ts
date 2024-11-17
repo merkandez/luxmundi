@@ -8,7 +8,7 @@ export const registerUser = async (
   req: Request,
   res: Response
 ): Promise<void> => {
-  const { username, email, password } = req.body;
+  const { username, email, password, avatarUrl } = req.body;
 
   try {
     const existingUser = await User.findOne({ where: { email } });
@@ -22,17 +22,20 @@ export const registerUser = async (
       username,
       email,
       password: hashedPassword,
+      avatarUrl,
     });
     res;
     const token = tokenSign({ id: newUser.id, role: newUser.role });
     const role = newUser.role;
     const userId = newUser.id;
+    
 
     res.status(201).json({
       message: 'Usuario registrado con éxito',
       token,
       role,
       userId,
+      avatarUrl: newUser.avatarUrl,
     });
   } catch (error) {
     if (error instanceof Error) {
@@ -71,6 +74,7 @@ export const loginUser = async (req: Request, res: Response): Promise<void> => {
       role: user.role,
       userId: user.id,
       username: user.username,
+      avatarUrl: user.avatarUrl,
     });
   } catch (error) {
     if (error instanceof Error) {
