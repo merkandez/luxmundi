@@ -22,10 +22,10 @@ export const registerUser = async (
       username,
       email,
       password: hashedPassword,
-      avatarUrl,
+      
     });
     res
-    const token = tokenSign({ id: newUser.id, role: newUser.role }); // Generamos el token JWT
+    const token = tokenSign({ id: newUser.id, role: newUser.role });
     const role = newUser.role; 
     const userId = newUser.id;
 

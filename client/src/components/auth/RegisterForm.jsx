@@ -19,7 +19,6 @@ const socialButtons = [
 ];
 
 const RegisterForm = ({ onClose }) => {
-  const { setAuthState } = useContext(AuthContext); // Obtenemos la función del contexto
   const [showLoginForm, setShowLoginForm] = useState(false);
   const [modalData, setModalData] = useState({
     isOpen: false,
@@ -43,29 +42,20 @@ const RegisterForm = ({ onClose }) => {
     setModalData({ ...modalData, isOpen: false });
   };
 
+  const { registerAndLogin } = useContext(AuthContext); 
+
   const onSubmit = async (data) => {
     if (data.password !== data.confirmPassword) {
       openModal('Las contraseñas no coinciden');
       return;
     }
-    console.log("Datos enviados al backend:", data); 
-    const { confirmPassword, ...userData } = data;
+
+    console.log('Datos enviados al backend:', data);
+    const { confirmPassword, ...userData } = data; // Excluimos confirmPassword
 
     try {
-      const response = await registerUser(userData); // Solo enviamos username, email y password
-      const { token, userId, role } = response;
-
-      // Guardar los datos en el localStorage
-      localStorage.setItem('token', token);
-      localStorage.setItem('userId', userId);
-      localStorage.setItem('role', role);
-
-      // Actualizar el contexto de autenticación
-      setAuthState({
-        isAuthenticated: true,
-        role,
-        userId,
-      });
+      // Usamos registerAndLogin en lugar de registerUser
+      await registerAndLogin(userData);
 
       // Mostrar mensaje de éxito y cerrar el modal
       openModal('Registro exitoso, redirigiendo...', false);
@@ -94,7 +84,7 @@ const RegisterForm = ({ onClose }) => {
               {...register('username', {
                 required: 'Este campo es obligatorio',
               })}
-              placeholder="Introduce tu nombre de usuario"
+              placeholder='Introduce tu nombre de usuario'
             />
             {errors.username && (
               <ErrorText>{errors.username.message}</ErrorText>
@@ -103,20 +93,20 @@ const RegisterForm = ({ onClose }) => {
           <FormGroup>
             <Label>Correo electrónico</Label>
             <Input
-              type="email"
+              type='email'
               {...register('email', { required: 'Este campo es obligatorio' })}
-              placeholder="Introduce tu correo electrónico"
+              placeholder='Introduce tu correo electrónico'
             />
             {errors.email && <ErrorText>{errors.email.message}</ErrorText>}
           </FormGroup>
           <FormGroup>
             <Label>Contraseña</Label>
             <Input
-              type="password"
+              type='password'
               {...register('password', {
                 required: 'Este campo es obligatorio',
               })}
-              placeholder="Introduce tu contraseña"
+              placeholder='Introduce tu contraseña'
             />
             {errors.password && (
               <ErrorText>{errors.password.message}</ErrorText>
@@ -125,19 +115,19 @@ const RegisterForm = ({ onClose }) => {
           <FormGroup>
             <Label>Repetir Contraseña</Label>
             <Input
-              type="password"
+              type='password'
               {...register('confirmPassword', {
                 required: 'Este campo es obligatorio',
                 validate: (value) =>
                   value === password || 'Las contraseñas no coinciden',
               })}
-              placeholder="Repite tu contraseña"
+              placeholder='Repite tu contraseña'
             />
             {errors.confirmPassword && (
               <ErrorText>{errors.confirmPassword.message}</ErrorText>
             )}
           </FormGroup>
-          <SubmitButton type="submit">Registrarse</SubmitButton>
+          <SubmitButton type='submit'>Registrarse</SubmitButton>
           <SocialButtonsContainer>
             {socialButtons.map((button, index) => (
               <SocialButton key={index} icon={button.icon} text={button.text} />
@@ -163,7 +153,6 @@ const RegisterForm = ({ onClose }) => {
 };
 
 export default RegisterForm;
-
 
 // Estilos
 const StyledForm = styled.form`
