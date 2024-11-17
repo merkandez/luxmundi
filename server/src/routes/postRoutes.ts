@@ -6,6 +6,7 @@ import {
   updatePost,
   deletePost,
   getRandomPosts,
+  toggleLike,
 } from '../controllers/postController';
 import { authMiddleware } from '../middlewares/authMiddleware'; // Importamos el middleware autenticación
 import { adminMiddleware } from '../middlewares/adminMiddleware'; // Importamos el middleware de admin
@@ -21,6 +22,5 @@ router.get('/:id', authMiddleware, getPostById);
 router.post('/', authMiddleware, adminMiddleware, createPost);
 router.put('/:id', authMiddleware, adminMiddleware, updatePost);
 router.delete('/:id', authMiddleware, adminMiddleware, deletePost);
-router.get('/random', getRandomPosts); // Ruta para obtener posts aleatorios
-
+router.patch('/:id/likes', authMiddleware, toggleLike);
 export default router;

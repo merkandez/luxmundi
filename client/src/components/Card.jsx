@@ -1,8 +1,9 @@
-import React from 'react';
-import styled from 'styled-components';
-import PropTypes from 'prop-types';
+import React from "react";
+import styled from "styled-components";
+import PropTypes from "prop-types";
+import { Star } from "lucide-react";
 
-const Card = ({ title, content, imageUrl }) => (
+const Card = ({ title, content, imageUrl, likes }) => (
   <CardContainer>
     <ImageContainer>
       <CardImage src={imageUrl} alt={title} />
@@ -11,6 +12,10 @@ const Card = ({ title, content, imageUrl }) => (
     <CardContent>
       <CardTitle>{title}</CardTitle>
       <CardDescription>{content}</CardDescription>
+      <CardFooter>
+        <Star size={20} fill="#29C9A9" stroke="#29C9A9" strokeWidth={2} />
+        <LikesCount>{likes}</LikesCount>
+      </CardFooter>
     </CardContent>
   </CardContainer>
 );
@@ -19,6 +24,7 @@ Card.propTypes = {
   title: PropTypes.string.isRequired,
   content: PropTypes.string.isRequired,
   imageUrl: PropTypes.string.isRequired,
+  likes: PropTypes.number.isRequired, // Prop adicional para los favoritos
 };
 
 // Estilos
@@ -69,13 +75,15 @@ const Overlay = styled.div`
 
 const CardContent = styled.div`
   padding: 1.25rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
 `;
 
 const CardTitle = styled.h3`
   color: #fff;
   font-size: 1.25rem;
   font-weight: 600;
-  margin-bottom: 0.75rem;
   line-height: 1.4;
   white-space: nowrap;
   overflow: hidden;
@@ -89,9 +97,22 @@ const CardDescription = styled.p`
   max-height: 4.5em;
   overflow: hidden;
   text-overflow: ellipsis;
-  display: -webkit-box; /* Define un contenedor flexible */
-  -webkit-line-clamp: 3; /* Limita el texto a 3 líneas */
-  -webkit-box-orient: vertical; /* Orienta el texto verticalmente */
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+`;
+
+const CardFooter = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 8px;
+`;
+
+const LikesCount = styled.span`
+  color: #fff;
+  font-size: 0.9rem;
+  font-weight: 500;
 `;
 
 export default Card;

@@ -69,3 +69,19 @@ export const fetchRandomImages = async (limit = 5) => {
     throw error;
   }
 };
+
+// Función para incrementar el contador de likes
+
+export const toggleLike = async (postId, increment) => {
+  const token = localStorage.getItem("token"); // Obtén el token desde el almacenamiento local
+  const response = await axios.patch(
+    `${API_URL}/${postId}/likes`,
+    { increment },
+    {
+      headers: {
+        Authorization: `Bearer ${token}`, // Agrega el token en los encabezados
+      },
+    }
+  );
+  return response.data;
+};

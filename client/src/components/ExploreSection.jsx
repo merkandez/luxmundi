@@ -1,37 +1,66 @@
-import styled from 'styled-components';
+import { useEffect, useState } from 'react';
+import { fetchPosts } from '../services/postService'; // Cambia a fetchPosts
 import Card from './Card';
-import { useState } from 'react';
-import PropTypes from 'prop-types';
+import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import { useSearch } from '../hooks/useSearch';
 
-const ExploreSection = ({ cards = [] }) => {
+const ExploreSection = () => {
   const { searchQuery } = useSearch();
+  const [posts, setPosts] = useState([]); // Cambia `cards` a `posts`
   const [currentPage, setCurrentPage] = useState(1);
   const cardsPerPage = 12;
 
-  const filteredCards = cards.filter(
-    (card) =>
-      card.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      card.content.toLowerCase().includes(searchQuery.toLowerCase())
+  // Cargar los posts desde el backend
+  useEffect(() => {
+    const loadPosts = async () => {
+      try {
+        const fetchedPosts = await fetchPosts(); // Llama al servicio fetchPosts
+        setPosts(fetchedPosts);
+        console.log("Posts cargados:", fetchedPosts);
+      } catch (error) {
+        console.error('Error al cargar los posts:', error);
+      }
+    };
+
+    loadPosts();
+  }, []); // Ejecutar solo al montar el componente
+
+  const filteredPosts = posts.filter(
+    (post) =>
+      post.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      post.content.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
-  const totalPages = Math.max(1, Math.ceil(filteredCards.length / cardsPerPage));
+  const totalPages = Math.max(
+    1,
+    Math.ceil(filteredPosts.length / cardsPerPage)
+  );
   const indexOfLastCard = currentPage * cardsPerPage;
   const indexOfFirstCard = indexOfLastCard - cardsPerPage;
-  const currentCards = filteredCards.slice(indexOfFirstCard, indexOfLastCard);
+  const currentCards = filteredPosts.slice(indexOfFirstCard, indexOfLastCard);
 
   return (
-    <Section id="explore-section">
+    <Section id='explore-section'>
       <SectionHeader>
         <Title>Destinos</Title>
         <Subtitle>Descubre destinos increíbles</Subtitle>
       </SectionHeader>
 
       <CardGrid>
-        {currentCards.map((card, index) => (
-          <Link to={`/post/${card.id}`} key={index} style={{ textDecoration: 'none' }}>
-            <Card {...card} />
+        {currentCards.map((post) => (
+          <Link
+            to={`/post/${post.id}`}
+            key={post.id}
+            style={{ textDecoration: 'none' }}
+          >
+            <Card
+              id={post.id}
+              title={post.title}
+              content={post.content}
+              imageUrl={post.imageUrl}
+              likes={post.likes || 0} // Número actualizado desde la base de datos
+            />
           </Link>
         ))}
       </CardGrid>
@@ -69,17 +98,6 @@ const ExploreSection = ({ cards = [] }) => {
       )}
     </Section>
   );
-};
-
-ExploreSection.propTypes = {
-  cards: PropTypes.arrayOf(
-    PropTypes.shape({
-      id: PropTypes.number.isRequired,
-      title: PropTypes.string.isRequired,
-      content: PropTypes.string.isRequired,
-      imageUrl: PropTypes.string.isRequired,
-    })
-  ).isRequired,
 };
 
 // Estilos
@@ -171,7 +189,8 @@ const PageNumber = styled.button`
   transition: all 0.2s ease;
 
   &:hover:not(:disabled) {
-    background: ${(props) => (props.active ? '#29c9a9' : 'rgba(41, 201, 169, 0.1)')};
+    background: ${(props) =>
+      props.active ? '#29c9a9' : 'rgba(41, 201, 169, 0.1)'};
   }
 `;
 

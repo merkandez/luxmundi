@@ -7,17 +7,24 @@ export const getAllPosts = async (
   req: Request,
   res: Response
 ): Promise<void> => {
-  const summary: boolean = req.query.summary === 'true'; // Utiliza el tipo booleano para `summary`
+  const summary: boolean = req.query.summary === 'true'; // Determina si es un resumen
 
   try {
     const posts = await PostModel.findAll({
-      attributes: summary ? ['id', 'title', 'content', 'imageUrl'] : undefined, // Selecciona los atributos según el parámetro
+      attributes: summary
+        ? ['id', 'title', 'content', 'imageUrl', 'likes'] // Campos básicos más likes
+        : undefined, // Si no es resumen, devuelve todos los atributos
     });
-    res.json(posts);
+
+    res.json(posts); 
   } catch (error) {
-    res.status(500).json({ message: 'Error al obtener los posts', error });
+    res.status(500).json({
+      message: 'Error al obtener los posts',
+      error: error instanceof Error ? error.message : 'Error desconocido',
+    });
   }
 };
+
 
 // Controlador para obtener un post por ID (disponible solo para usuarios autenticados)
 export const getPostById = async (
@@ -122,3 +129,31 @@ export const getRandomPosts = async (
     });
   }
 };
+// Controlador para actualizar likes
+export const toggleLike = async (req: Request, res: Response): Promise<void> => {
+  const { id } = req.params;
+  
+
+  try {
+    const post = await PostModel.findByPk(id);
+    if (!post) {
+      res.status(404).json({ message: 'Post no encontrado' });
+      return;
+    }
+
+    // Incrementar o decrementar likes
+    const increment = req.body.increment; // true para añadir, false para restar
+    post.likes += increment ? 1 : -1;
+
+    await post.save();
+
+    res.status(200).json({ message: 'Likes actualizados', likes: post.likes });
+  } catch (error: unknown) {
+    if (error instanceof Error) {
+      res.status(500).json({ message: 'Error al actualizar likes', error: error.message });
+    } else {
+      res.status(500).json({ message: 'Error desconocido' });
+    }
+  }
+};
+
