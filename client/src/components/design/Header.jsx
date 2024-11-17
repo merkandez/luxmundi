@@ -23,7 +23,6 @@ import EditProfileCard from '../EditProfileCard';
 import { useContext } from 'react';
 import { SearchContext } from '../../context/SearchContext';
 
-
 const Header = ({ isAuthenticated, role, logout, userData }) => {
   const { setSearchQuery } = useContext(SearchContext);
   const [menuVisible, setMenuVisible] = useState(false);
@@ -145,7 +144,7 @@ const Header = ({ isAuthenticated, role, logout, userData }) => {
 
           {isAuthenticated ? (
             <ProfileContainer className='desktop-only'>
-              {avatarUrl ? (
+              {avatarUrl && avatarUrl.trim() !== '' ? (
                 <AvatarImage
                   onClick={toggleMenu}
                   src={avatarUrl}
@@ -488,6 +487,9 @@ const AuthButtons = styled.div`
 
 const ProfileContainer = styled.div`
   position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 
   &.desktop-only {
     @media (max-width: ${theme.breakpoints.tablet}) {

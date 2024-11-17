@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { fetchUserById, updateUser } from '../services/adminService';
 import { uploadImage } from '../services/postService';
 import { AuthContext } from '../context/AuthContext';
-import { theme } from "../styles/theme";
+import { theme } from '../styles/theme';
 import { Pencil, User } from 'lucide-react';
 import ConfirmationModal from './ConfirmationModal';
 
@@ -18,14 +18,15 @@ const EditProfileCard = ({ onClose }) => {
     avatarUrl: '',
   });
   const [previewAvatar, setPreviewAvatar] = useState(null);
-  const [showPasswordMismatchModal, setShowPasswordMismatchModal] = useState(false);
+  const [showPasswordMismatchModal, setShowPasswordMismatchModal] =
+    useState(false);
   const [showSuccessModal, setShowSuccessModal] = useState(false);
   const [showErrorModal, setShowErrorModal] = useState(false);
 
   useEffect(() => {
     const loadUserData = async () => {
       if (!userId) {
-        console.error("userId no está definido");
+        console.error('userId no está definido');
         return;
       }
       try {
@@ -100,17 +101,17 @@ const EditProfileCard = ({ onClose }) => {
     <CardContainer>
       <AvatarContainer>
         {previewAvatar ? (
-          <AvatarPreview src={previewAvatar} alt="Avatar" />
+          <AvatarPreview src={previewAvatar} alt='Avatar' />
         ) : (
           <UserIcon size={60} />
         )}
-        <EditAvatarButton htmlFor="avatar-upload">
+        <EditAvatarButton htmlFor='avatar-upload'>
           <Pencil size={18} />
         </EditAvatarButton>
         <input
-          type="file"
-          id="avatar-upload"
-          accept="image/*"
+          type='file'
+          id='avatar-upload'
+          accept='image/*'
           onChange={handleAvatarChange}
           style={{ display: 'none' }}
         />
@@ -119,22 +120,22 @@ const EditProfileCard = ({ onClose }) => {
       <Form onSubmit={handleSubmit}>
         <Title>Editar Perfil</Title>
         <FormGroup>
-          <Label htmlFor="username">Nombre de Usuario</Label>
+          <Label htmlFor='username'>Nombre de Usuario</Label>
           <Input
-            type="text"
-            id="username"
-            name="username"
+            type='text'
+            id='username'
+            name='username'
             value={formData.username}
             onChange={handleChange}
             required
           />
         </FormGroup>
         <FormGroup>
-          <Label htmlFor="email">Correo Electrónico</Label>
+          <Label htmlFor='email'>Correo Electrónico</Label>
           <Input
-            type="email"
-            id="email"
-            name="email"
+            type='email'
+            id='email'
+            name='email'
             value={formData.email}
             onChange={handleChange}
             required
@@ -144,21 +145,21 @@ const EditProfileCard = ({ onClose }) => {
         <PasswordSection>
           <SectionTitle>Cambiar Contraseña</SectionTitle>
           <FormGroup>
-            <Label htmlFor="newPassword">Nueva Contraseña</Label>
+            <Label htmlFor='newPassword'>Nueva Contraseña</Label>
             <Input
-              type="password"
-              id="newPassword"
-              name="newPassword"
+              type='password'
+              id='newPassword'
+              name='newPassword'
               value={formData.newPassword}
               onChange={handleChange}
             />
           </FormGroup>
           <FormGroup>
-            <Label htmlFor="confirmPassword">Confirmar Nueva Contraseña</Label>
+            <Label htmlFor='confirmPassword'>Confirmar Nueva Contraseña</Label>
             <Input
-              type="password"
-              id="confirmPassword"
-              name="confirmPassword"
+              type='password'
+              id='confirmPassword'
+              name='confirmPassword'
               value={formData.confirmPassword}
               onChange={handleChange}
             />
@@ -166,10 +167,10 @@ const EditProfileCard = ({ onClose }) => {
         </PasswordSection>
 
         <ButtonGroup>
-          <CancelButton type="button" onClick={onClose}>
+          <CancelButton type='button' onClick={onClose}>
             Cancelar
           </CancelButton>
-          <SaveButton type="submit">Guardar Cambios</SaveButton>
+          <SaveButton type='submit'>Guardar Cambios</SaveButton>
         </ButtonGroup>
       </Form>
 
@@ -177,7 +178,7 @@ const EditProfileCard = ({ onClose }) => {
         <ConfirmationModal
           isOpen={showPasswordMismatchModal}
           onClose={() => setShowPasswordMismatchModal(false)}
-          message="Las contraseñas no coinciden."
+          message='Las contraseñas no coinciden.'
           showButtons={false}
         />
       )}
@@ -186,7 +187,7 @@ const EditProfileCard = ({ onClose }) => {
         <ConfirmationModal
           isOpen={showSuccessModal}
           onClose={() => setShowSuccessModal(false)}
-          message="Perfil actualizado con éxito."
+          message='Perfil actualizado con éxito.'
           showButtons={false}
         />
       )}
@@ -195,7 +196,7 @@ const EditProfileCard = ({ onClose }) => {
         <ConfirmationModal
           isOpen={showErrorModal}
           onClose={() => setShowErrorModal(false)}
-          message="Error al actualizar el perfil. Por favor, inténtalo de nuevo."
+          message='Error al actualizar el perfil. Por favor, inténtalo de nuevo.'
           showButtons={false}
         />
       )}
@@ -204,7 +205,6 @@ const EditProfileCard = ({ onClose }) => {
 };
 
 export default EditProfileCard;
-
 
 //Estilos
 
@@ -257,7 +257,11 @@ const EditAvatarButton = styled.label`
   right: 0;
   background: ${theme.colors.primary};
   color: #fff;
-  padding: 0.4rem;
+  width: 2rem;
+  height: 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   border-radius: 50%;
   cursor: pointer;
 `;
