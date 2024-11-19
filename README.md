@@ -20,21 +20,23 @@ Este proyecto tiene como objetivo inspirar a viajeros de todo el mundo a descubr
 
 - **Admin:** 
   - Puede crear, leer, actualizar y eliminar (CRUD) entradas del blog.
-  - Bonus: Interfaz para cambiar el rol de cualquier usuario a admin.
+  - Bonus: Interfaz para cambiar el rol y editar el perfil de cualquier usuario.
 
 - **User:**
   - Puede visualizar todas las entradas del blog.
-  - Bonus: Cada entrada tiene un botón de "me gusta" 
+  - Bonus: Cada entrada tiene un botón de "me gusta" Esto permite tanto incrementar como decrementar los "likes" de manera precisa en la base de datos y la actualización del número total de likes en la pagina principal.
+  - Avatar Usuario: Permitir al usuario subir su avatar y lo renderiza en la barra de navegación de forma que el usuario puede identificar si se encuentra logueado o no.
+  - La aplicación permite al usuario loguearse al hacer el registro por primera vez.
 
 ### Futuras Implementaciones
 
-- **Likes:** Almacenamiento en la base de datos de los "likes" para registrar qué usuarios han dado "like" a qué posts. Esto permitirá tanto incrementar como decrementar los "likes" de manera precisa y evitar que el mismo usuario pueda dar múltiples "likes" a un mismo post.
+- **Likes:** Almacenamiento en la base de datos de los "likes" para registrar qué usuarios han dado "like" a qué posts.  evitar que el mismo usuario pueda dar múltiples "likes" a un mismo post.
 - **Comentarios:** Implementar que los usuarios puedan comentar las publicaciones.
 - **Publicaciones:** Permitir que los usuarios puedan subir sus propias publicaciones.
 - **Bonus:** Puede crear entradas.
 - **Bonus:** Pruebas en el frontend utilizando Mock Service Worker para probar las llamadas a la API.
 --**Testing:** Mock Service Worker para simular llamadas API en el frontend.
---**Avatar Usuario:** Permitir al usuario subir su avatar.
+
 
 
 ## 📋 Stack Tecnológico
@@ -84,28 +86,58 @@ Asegúrate de tener instalados los siguientes programas en tu sistema:
 
 ### Clonar el Repositorio Para clonar el repositorio, abre tu terminal y ejecuta el siguiente comando:
 
-```bash git clone https://github.com/tuusuario/luxmundi.git cd lux-mundi ```
+``` bash 
+
+git clone https://github.com/tuusuario/luxmundi.git cd lux-mundi
+
+```
 
 ### Instalar Dependencia
 
-```bash npm install ```
+``` bash
+npm install 
+
+```
 
 ### Configurar Variables de Entorno
 
-Crea un archivo .env en la raíz del proyecto con las siguientes variables de entorno:
+Crea un archivo .env en la raíz de la carpeta server con las siguientes variables de entorno:
+DB_DEV_NAME= 'lux_mundi_blog'
+
 ```bash 
-PORT=3000
-DB_HOST=localhost
-DB_USER=tuusuario
-DB_PASSWORD=tucontraseña
-DB_NAME=luxmundi
-JWT_SECRET=tu_secreto_jwt
+DB_USER= 'tuusuario'
+DB_PASSWORD='tucontraseña'
+DB_HOST= 'localhost'
+DB_PORT='tupuertodebasededatos'
+PORT ='8080'
+JWT_SECRET= 'password'
+NODE_ENV='development'
+DB_TEST_NAME='luxmundi_test'
+
+
+CLOUDINARY_CLOUD_NAME= "tucloudinary"
+CLOUDINARY_API_KEY= "tuapikeydeecloudinary"
+CLOUDINARY_API_SECRET= "tu_secreto_jwt"
 ```
+
+y crea otro archivo .env en la raíz de la carpeta client con las siguientes variables de entorno:
+
+```bash 
+
+VITE_API_URL=http://localhost:8080/api
+
+```
+
 ### Ejecutar la Aplicación
 
 Para iniciar la aplicación, modo desarrollo:
 
-```bash run dev ```
+```npm run dev ```
+en la carpeta server y
+
+```npm run dev ```
+
+en la carpeta client
 
 Esto iniciará la aplicación.
 
