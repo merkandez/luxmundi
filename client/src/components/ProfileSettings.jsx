@@ -1,142 +1,227 @@
 import styled from "styled-components";
-import { User, Settings, LogOut, ChevronDown } from "lucide-react";
-import PropTypes from "prop-types";
+import { useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import { User, Settings, LogOut } from "lucide-react";
+import { Link } from "react-router-dom";
 
-const ProfileSettings = ({ username, onLogout }) => {
+const ProfileSettings = () => {
+  const [isOpen, setIsOpen] = useState(false);
+
+  const menuItems = [
+    { icon: <User size={16} />, label: "Mi Perfil", link: "/profile" },
+    { icon: <Settings size={16} />, label: "Ajustes", link: "/settings" },
+  ];
+
   return (
-    <ProfileDropdown>
-      <ProfileTrigger>
-        <Avatar>
-          <User size={18} />
-        </Avatar>
-        <UserInfo>
-          <Username>{username}</Username>
-          <ChevronDown size={14} />
-        </UserInfo>
-      </ProfileTrigger>
+    <Container>
+      <ProfileButton onClick={() => setIsOpen(!isOpen)}>
+        <UserAvatar>
+          <User size={20} />
+        </UserAvatar>
+      </ProfileButton>
 
-      <DropdownMenu>
-        <MenuItem>
-          <User size={16} />
-          <span>Profile</span>
-        </MenuItem>
-        <MenuItem>
-          <Settings size={16} />
-          <span>Settings</span>
-        </MenuItem>
-        <Divider />
-        <MenuItem onClick={onLogout}>
-          <LogOut size={16} />
-          <span>Logout</span>
-        </MenuItem>
-      </DropdownMenu>
-    </ProfileDropdown>
+      <AnimatePresence>
+        {isOpen && (
+          <>
+            <Backdrop
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              onClick={() => setIsOpen(false)}
+            />
+            <MenuWrapper
+              initial={{ opacity: 0, y: 10, scale: 0.95 }}
+              animate={{ opacity: 1, y: 0, scale: 1 }}
+              exit={{ opacity: 0, y: 10, scale: 0.95 }}
+              transition={{ duration: 0.2 }}
+            >
+              <UserInfo>
+                <Avatar>
+                  <User size={24} />
+                </Avatar>
+                <div>
+                  <UserName>John Doe</UserName>
+                  <UserEmail>john@example.com</UserEmail>
+                </div>
+              </UserInfo>
+
+              <MenuItems>
+                {menuItems.map((item, index) => (
+                  <MenuItem key={index} as={Link} to={item.link}>
+                    {item.icon}
+                    <span>{item.label}</span>
+                  </MenuItem>
+                ))}
+              </MenuItems>
+
+              <Divider />
+
+              <LogoutButton onClick={() => console.log("Logout")}>
+                <LogOut size={16} />
+                <span>Logout</span>
+              </LogoutButton>
+            </MenuWrapper>
+          </>
+        )}
+      </AnimatePresence>
+    </Container>
   );
 };
 
-const ProfileDropdown = styled.div`
+const Container = styled.div`
   position: relative;
-  display: inline-block;
+  z-index: 100;
 `;
 
-const ProfileTrigger = styled.button`
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  background: none;
+const ProfileButton = styled.button`
+  background: transparent;
   border: none;
-  color: #fff;
+  padding: 0;
   cursor: pointer;
-  padding: 6px;
-  border-radius: 6px;
-  transition: background-color 0.2s ease;
+  transition: transform 0.2s ease;
 
   &:hover {
-    background-color: rgba(255, 255, 255, 0.1);
+    transform: translateY(-1px);
   }
 `;
 
-const Avatar = styled.div`
-  width: 32px;
-  height: 32px;
+const UserAvatar = styled.div`
+  width: 40px;
+  height: 40px;
   border-radius: 50%;
-  background-color: #2a2a2a;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
   display: flex;
   align-items: center;
   justify-content: center;
-  border: 1px solid #333;
+  color: #fff;
+  transition: all 0.2s ease;
+
+  &:hover {
+    background: rgba(255, 255, 255, 0.15);
+    border-color: rgba(255, 255, 255, 0.3);
+  }
+
+  @media (max-width: 768px) {
+    width: 36px;
+    height: 36px;
+  }
+`;
+
+const Backdrop = styled(motion.div)`
+  position: fixed;
+  inset: 0;
+  background: transparent;
+  z-index: -1;
+`;
+
+const MenuWrapper = styled(motion.div)`
+  position: absolute;
+  top: calc(100% + 12px);
+  right: 0;
+  background: rgba(26, 26, 26, 0.95);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  min-width: 240px;
+  overflow: hidden;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+
+  @media (max-width: 768px) {
+    min-width: 220px;
+  }
+
+  @media (max-width: 480px) {
+    min-width: 200px;
+    position: fixed;
+    left: 1rem;
+    right: 1rem;
+    width: auto;
+  }
 `;
 
 const UserInfo = styled.div`
+  padding: 1rem;
   display: flex;
   align-items: center;
-  gap: 4px;
+  gap: 0.75rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 `;
 
-const Username = styled.span`
-  font-size: 0.9rem;
+const Avatar = styled.div`
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+`;
+
+const UserName = styled.h3`
+  color: #fff;
+  font-size: 0.95rem;
   font-weight: 500;
+  margin: 0;
 `;
 
-const DropdownMenu = styled.div`
-  position: absolute;
-  top: calc(100% + 8px);
-  right: 0;
-  background-color: #1a1a1a;
-  border: 1px solid #333;
+const UserEmail = styled.p`
+  color: rgba(255, 255, 255, 0.6);
+  font-size: 0.85rem;
+  margin: 0;
+`;
+
+const MenuItems = styled.div`
+  padding: 0.5rem;
+`;
+
+const MenuItem = styled(Link)`
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.75rem 1rem;
+  color: #fff;
+  text-decoration: none;
   border-radius: 8px;
-  min-width: 180px;
-  padding: 6px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-  opacity: 0;
-  visibility: hidden;
-  transform: translateY(-8px);
   transition: all 0.2s ease;
 
-  ${ProfileDropdown}:hover & {
-    opacity: 1;
-    visibility: visible;
-    transform: translateY(0);
-  }
-`;
-
-const MenuItem = styled.button`
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  width: 100%;
-  padding: 8px 12px;
-  border: none;
-  background: none;
-  color: #fff;
-  font-size: 0.9rem;
-  text-align: left;
-  cursor: pointer;
-  border-radius: 4px;
-  transition: background-color 0.2s ease;
-
   svg {
-    color: #666;
+    color: rgba(255, 255, 255, 0.6);
   }
 
   &:hover {
-    background-color: #2a2a2a;
-
-    svg {
-      color: #fff;
-    }
+    background: rgba(255, 255, 255, 0.1);
   }
 `;
 
 const Divider = styled.div`
   height: 1px;
-  background-color: #333;
-  margin: 6px 0;
+  background: rgba(255, 255, 255, 0.1);
+  margin: 0.25rem 0;
 `;
 
-ProfileSettings.propTypes = {
-  username: PropTypes.string.isRequired,
-  onLogout: PropTypes.func.isRequired,
-};
+const LogoutButton = styled.button`
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.75rem 1rem;
+  color: #fff;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-size: 0.95rem;
+
+  svg {
+    color: currentColor;
+  }
+
+  &:hover {
+    background: rgba(255, 255, 255, 0.15);
+    color: #fff;
+  }
+`;
 
 export default ProfileSettings;

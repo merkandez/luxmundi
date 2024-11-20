@@ -37,9 +37,9 @@ const Pill = styled.div.withConfig({
   padding: 8px 16px;
   color: ${({ isActive }) =>
     isActive ? "#ffffff" : "rgba(255, 255, 255, 0.7)"};
-  font-weight: ${({ isActive }) => (isActive ? "600" : "400")};
+  font-weight: ${({ isActive }) => (isActive ? "700" : "400")};
   cursor: pointer;
-  transition: color 0.2s ease;
+  transition: all 0.2s ease;
   position: relative;
 
   &:after {
@@ -49,13 +49,14 @@ const Pill = styled.div.withConfig({
     left: 50%;
     width: 0;
     height: 2px;
-    background-color: #fff;
+    background-color: #29c9a9;
     transition: all 0.3s ease;
     transform: translateX(-50%);
   }
 
   &:hover {
-    color: #ffffff;
+    color: #29c9a9;
+    font-weight: 700;
 
     &:after {
       width: 100%;
